@@ -29,7 +29,7 @@ public class GameServiceErrorCode
 
 public class GameServiceResult
 {
-    private string _error;
+    private string _error = "";
 
     public string error
     {
