@@ -5,7 +5,8 @@ using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class DBPlayerData {
+public class DBPlayerData
+{
 
 
     public void DoGetCurrencyList(UnityAction<CurrencyListResult> onFinish)
@@ -319,6 +320,7 @@ public class DBPlayerData {
         if (playerItems.Read())
         {
             playerItem = new PlayerItem();
+            playerItem.itemType = PlayerItem.ItemType.character;
             playerItem.SqLiteIndex = playerItems.GetString(0);
             playerItem.PlayerId = playerItems.GetString(1);
             playerItem.GUID = playerItems.GetString(2);
@@ -338,6 +340,7 @@ public class DBPlayerData {
         if (playerItems.Read())
         {
             playerItem = new PlayerItem();
+            playerItem.itemType = PlayerItem.ItemType.equip;
             playerItem.SqLiteIndex = playerItems.GetString(0);
             playerItem.PlayerId = playerItems.GetString(1);
             playerItem.GUID = playerItems.GetString(2);
@@ -397,6 +400,7 @@ public class DBPlayerData {
         if (playerItems.Read())
         {
             playerItem = new PlayerItem();
+            playerItem.itemType = PlayerItem.ItemType.character;
             playerItem.SqLiteIndex = playerItems.GetString(0);
             playerItem.PlayerId = playerItems.GetString(1);
             playerItem.GUID = playerItems.GetString(2);
@@ -407,5 +411,5 @@ public class DBPlayerData {
         }
         return playerItem;
     }
-#endregion
+    #endregion
 }

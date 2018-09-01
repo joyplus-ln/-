@@ -20,12 +20,6 @@ public class UICharacterStatsGeneric : UIBase
     public Text textHp;
     public Text nameText;
 
-    public Text AAttackText;
-    public Text MAttackText;
-    public Text ADefText;
-    public Text MDefText;
-    public Text CirText;
-    public Text SpeedText;
 
     private UIFollowWorldObject tempObjectFollower;
     public UIFollowWorldObject TempObjectFollower
@@ -71,23 +65,6 @@ public class UICharacterStatsGeneric : UIBase
         if (nameText != null)
             nameText.text = character.Item.GUID;
 
-        if (AAttackText != null)
-            AAttackText.text = "物攻:" + character.GetTotalAttributes().pAtk;
-
-        if (MAttackText != null)
-            MAttackText.text = "魔攻:" + character.GetTotalAttributes().mAtk;
-
-        if (ADefText != null)
-            ADefText.text = "物御:" + character.GetTotalAttributes().pDef;
-
-        if (MDefText != null)
-            MDefText.text = "魔防:" + character.GetTotalAttributes().mDef;
-
-        if (CirText != null)
-            CirText.text = "暴击:" + character.GetTotalAttributes().critChance;
-
-        if (SpeedText != null)
-            SpeedText.text = "速度:" + character.GetTotalAttributes().acc;
 
         if (imageHpGage != null)
             imageHpGage.fillAmount = rate;

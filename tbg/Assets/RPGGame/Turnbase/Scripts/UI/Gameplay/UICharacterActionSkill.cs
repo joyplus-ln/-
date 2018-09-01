@@ -26,7 +26,7 @@ public class UICharacterActionSkill : UICharacterAction
             uiSkill.cskill = cskill;
 
         if (textRemainsTurns != null)
-            textRemainsTurns.text = cskill.GetCoolDownDuration().ToString();
+            textRemainsTurns.text = cskill.GetCoolDownDuration();
 
         if (imageRemainsTurnsGage != null)
             imageRemainsTurnsGage.fillAmount = cskill.GetCDFloat();

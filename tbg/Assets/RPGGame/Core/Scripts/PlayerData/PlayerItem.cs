@@ -10,10 +10,12 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
     //public static readonly Dictionary<string, PlayerItem> DataMap = new Dictionary<string, PlayerItem>();
     public static readonly Dictionary<string, PlayerItem> characterDataMap = new Dictionary<string, PlayerItem>();
     public static readonly Dictionary<string, PlayerItem> equipDataMap = new Dictionary<string, PlayerItem>();
+    //在角色拥有表中唯一
     private string sqliteIndex;
     public string SqLiteIndex { get { return sqliteIndex; } set { sqliteIndex = value; } }
     private string playerId;
     public string PlayerId { get { return playerId; } set { playerId = value; } }
+    //在总角色表中唯一
     private string Guid;
     public string GUID
     {
@@ -364,9 +366,11 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         switch (type)
         {
             case ItemType.character:
+                data.itemType = ItemType.character;
                 characterDataMap[data.SqLiteIndex] = data;
                 break;
             case ItemType.equip:
+                data.itemType = ItemType.equip;
                 equipDataMap[data.SqLiteIndex] = data;
                 break;
             case ItemType.other:

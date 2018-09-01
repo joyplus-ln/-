@@ -141,9 +141,9 @@ public class CustomSkill
     /// 获取还有几回合冷却
     /// </summary>
     /// <returns></returns>
-    public int GetCoolDownDuration()
+    public string GetCoolDownDuration()
     {
-        return CoolDownTurns - TurnsCount > 0 ? CoolDownTurns - TurnsCount : 0;
+        return CoolDownTurns - TurnsCount > 0 ? (CoolDownTurns - TurnsCount) + "回合" : "可用";
     }
 
     /// <summary>

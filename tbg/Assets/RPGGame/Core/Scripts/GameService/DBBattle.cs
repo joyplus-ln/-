@@ -4,7 +4,8 @@ using Mono.Data.Sqlite;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class DBBattle {
+public class DBBattle
+{
 
     public const ushort BATTLE_RESULT_NONE = 0;
     public const ushort BATTLE_RESULT_LOSE = 1;
@@ -475,12 +476,13 @@ public class DBBattle {
         else
         {
             result.updateItems = new List<PlayerItem>();
+            //寻找装备了这个装备的角色，卸下来
             var unEquipItem = GameInstance.dbPlayerData.GetPlayerItemByEquipper(playerId, characterId, equipPosition);
             if (unEquipItem != null)
             {
                 unEquipItem.EquipItemId = "";
                 unEquipItem.EquipPosition = "";
-                GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerItem SET equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
+                GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
                     new SqliteParameter("@equipItemId", unEquipItem.EquipItemId),
                     new SqliteParameter("@equipPosition", unEquipItem.EquipPosition),
                     new SqliteParameter("@id", unEquipItem.SqLiteIndex));
@@ -488,11 +490,15 @@ public class DBBattle {
             }
             foundEquipment.EquipItemId = characterId;
             foundEquipment.EquipPosition = equipPosition;
-            GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerItem SET equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
+            GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
                 new SqliteParameter("@equipItemId", foundEquipment.EquipItemId),
                 new SqliteParameter("@equipPosition", foundEquipment.EquipPosition),
                 new SqliteParameter("@id", foundEquipment.SqLiteIndex));
             result.updateItems.Add(foundEquipment);
+        }
+        if (result.error.Length > 1)
+        {
+            Debug.LogError(result.error);
         }
         onFinish(result);
     }
