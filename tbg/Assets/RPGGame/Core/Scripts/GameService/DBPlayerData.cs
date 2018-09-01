@@ -205,7 +205,7 @@ public class DBPlayerData
 
             if (true)
             {
-                PlayerItem currentItem = new PlayerItem();
+                PlayerItem currentItem = new PlayerItem(PlayerItem.ItemType.character);
                 currentItem.GUID = GameInstance.Singleton.gameDatabase.startCharacterItems[i];//id,@id,
                 GameInstance.SqliteUtils.ExecuteNonQuery(@"INSERT INTO playerHasCharacters (id,playerId, Guid, amount, exp, equipItemId, equipPosition) VALUES ( @id,@playerId, @Guid, @amount, @exp, @equipItemId, @equipPosition)",
                     new SqliteParameter("@id", System.Guid.NewGuid().ToString()),
@@ -319,7 +319,7 @@ public class DBPlayerData
             new SqliteParameter("@id", id));
         if (playerItems.Read())
         {
-            playerItem = new PlayerItem();
+            playerItem = new PlayerItem(PlayerItem.ItemType.character);
             playerItem.itemType = PlayerItem.ItemType.character;
             playerItem.SqLiteIndex = playerItems.GetString(0);
             playerItem.PlayerId = playerItems.GetString(1);
@@ -339,7 +339,7 @@ public class DBPlayerData
             new SqliteParameter("@id", id));
         if (playerItems.Read())
         {
-            playerItem = new PlayerItem();
+            playerItem = new PlayerItem(PlayerItem.ItemType.equip);
             playerItem.itemType = PlayerItem.ItemType.equip;
             playerItem.SqLiteIndex = playerItems.GetString(0);
             playerItem.PlayerId = playerItems.GetString(1);
@@ -399,7 +399,7 @@ public class DBPlayerData
             new SqliteParameter("@equipPosition", equipPosition));
         if (playerItems.Read())
         {
-            playerItem = new PlayerItem();
+            playerItem = new PlayerItem(PlayerItem.ItemType.character);
             playerItem.itemType = PlayerItem.ItemType.character;
             playerItem.SqLiteIndex = playerItems.GetString(0);
             playerItem.PlayerId = playerItems.GetString(1);

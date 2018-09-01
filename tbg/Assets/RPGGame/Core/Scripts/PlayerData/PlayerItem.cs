@@ -52,7 +52,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         set { Itemtype = value; }
     }
 
-    public PlayerItem()
+    public PlayerItem(ItemType itemType)
     {
         SqLiteIndex = "";
         PlayerId = "";
@@ -61,11 +61,12 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         Exp = 0;
         EquipItemId = "";
         EquipPosition = "";
+        this.itemType = itemType;
     }
 
     public PlayerItem Clone()
     {
-        var result = new PlayerItem();
+        var result = new PlayerItem(itemType);
         CloneTo(this, result);
         return result;
     }
@@ -444,7 +445,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
             level = 1;
         //var itemTier = itemData.itemTier;
         var sumExp = 0;
-        var result = new PlayerItem();
+        var result = new PlayerItem(ItemType.character);
         result.itemType = ItemType.character;
         for (var i = 1; i < level; ++i)
         {

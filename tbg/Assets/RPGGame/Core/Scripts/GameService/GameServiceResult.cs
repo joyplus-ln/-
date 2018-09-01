@@ -29,7 +29,18 @@ public class GameServiceErrorCode
 
 public class GameServiceResult
 {
-    public string error = "";
+    private string _error;
+
+    public string error
+    {
+        get { return _error; }
+        set
+        {
+            Debug.LogError(value);
+            _error = value;
+        }
+    }
+
     public bool Success { get { return string.IsNullOrEmpty(error); } }
 }
 
@@ -54,7 +65,7 @@ public class FinishStageResult : PlayerResult
     public List<PlayerCurrency> updateCurrencies = new List<PlayerCurrency>();
     public List<PlayerItem> createItems = new List<PlayerItem>();
     public List<PlayerItem> updateItems = new List<PlayerItem>();
-    public Dictionary<string,PlayerItem.ItemType> deleteItemIds = new Dictionary<string, PlayerItem.ItemType>();
+    public Dictionary<string, PlayerItem.ItemType> deleteItemIds = new Dictionary<string, PlayerItem.ItemType>();
     public PlayerClearStage clearStage;
 }
 

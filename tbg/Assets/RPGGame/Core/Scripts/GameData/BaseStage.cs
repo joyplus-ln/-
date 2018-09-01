@@ -28,7 +28,7 @@ public abstract class BaseStage : BaseGameData
         foreach (var rewardItem in rewardItems)
         {
             var item = rewardItem.item;
-            var newEntry = new PlayerItem();
+            var newEntry = new PlayerItem(PlayerItem.ItemType.other);
             newEntry.SqLiteIndex = item.guid;
             newEntry.GUID = item.guid;
             newEntry.Amount = 1;

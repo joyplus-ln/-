@@ -428,7 +428,7 @@ public class DBMapItem
             var list = new List<PlayerItem>();
             while (reader.Read())
             {
-                var entry = new PlayerItem();
+                var entry = new PlayerItem(PlayerItem.ItemType.character);
                 entry.itemType = PlayerItem.ItemType.character;
                 entry.SqLiteIndex = reader.GetString(0);
                 entry.PlayerId = reader.GetString(1);
@@ -445,7 +445,7 @@ public class DBMapItem
             var equipmentlist = new List<PlayerItem>();
             while (equipmentreader.Read())
             {
-                var entry = new PlayerItem();
+                var entry = new PlayerItem(PlayerItem.ItemType.equip);
                 entry.itemType = PlayerItem.ItemType.equip;
                 entry.SqLiteIndex = equipmentreader.GetString(0);
                 entry.PlayerId = equipmentreader.GetString(1);
@@ -482,7 +482,7 @@ public class DBMapItem
             new SqliteParameter("@Guid", dataId));
         while (materials.Read())
         {
-            var material = new PlayerItem();
+            var material = new PlayerItem(PlayerItem.ItemType.other);
             material.SqLiteIndex = materials.GetInt32(0).ToString();
             material.PlayerId = materials.GetString(1);
             material.GUID = materials.GetString(2);
