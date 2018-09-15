@@ -1,28 +1,63 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 
-public abstract class CustomSkill
+public class CustomSkill
 {
     private List<BaseCharacterEntity> selfs, enemys;
     public SkillUsageScope usageScope = SkillUsageScope.Enemy;
     public string skillName = "技能名称";
     public string des = "这里是自定义技能的描述!";
     public int id;
-    public abstract void DoSkill();
 
-    public abstract void BeforeFight();
-    public abstract void Fight();
-    public abstract void Afterfight();
-    public abstract void ReceiveDamage();
-    public abstract void Beibaoji();
-    public abstract void Beigedang();
-    public abstract void Beimiss();
-    public abstract void Gobaoji();
-    public abstract void Gogedang();
-    public abstract void Gomiss();
+    /// <summary>
+    /// 部分增加属性的被动技能使用
+    /// </summary>
+    public virtual void BattleStart()
+    {
 
-    public void Trigger(TriggerType type)
+    }
+
+    public virtual void DoSkill()
+    {
+    }
+
+    public virtual void BeforeFight()
+    {
+
+    }
+
+    public virtual void Fight()
+    {
+    }
+
+    public virtual void Afterfight()
+    {
+    }
+    public virtual void ReceiveDamage()
+    {
+    }
+    public virtual void Beibaoji()
+    {
+    }
+    public virtual void Beigedang()
+    {
+    }
+    public virtual void Beimiss()
+    {
+    }
+    public virtual void Gobaoji()
+    {
+    }
+    public virtual void Gogedang()
+    {
+    }
+    public virtual void Gomiss()
+    {
+    }
+
+    public virtual void Trigger(TriggerType type)
     {
         switch (type)
         {

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Skill001 : CustomSkill
+public class Skill001 : CustomSkill
 {
 
     public override void DoSkill()

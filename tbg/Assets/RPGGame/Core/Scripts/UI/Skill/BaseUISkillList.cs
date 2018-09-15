@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
 
 public abstract class BaseUISkillList<TUI, TSkill> : UIDataItemList<TUI, TSkill>
@@ -9,6 +10,7 @@ public abstract class BaseUISkillList<TUI, TSkill> : UIDataItemList<TUI, TSkill>
     public void SetListItems(List<BaseSkill> list, UnityAction<TUI> onSetListItem = null)
     {
         ClearListItems();
+        Debug.Log("技能:" + list.Count);
         foreach (var entry in list)
         {
             var ui = SetListItem(entry as TSkill);
