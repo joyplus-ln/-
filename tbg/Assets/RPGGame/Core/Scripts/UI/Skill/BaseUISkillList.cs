@@ -3,27 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class BaseUISkillList<TUI, TSkill> : UIDataItemList<TUI, TSkill>
-    where TUI : UIDataItem<TSkill>
-    where TSkill : BaseSkill
+public abstract class BaseUISkillList<TUI, CustomSkill> : UIDataItemList<TUI, CustomSkill>
+    where TUI : UIDataItem<CustomSkill>
+    where CustomSkill : class 
 {
-    public void SetListItems(List<BaseSkill> list, UnityAction<TUI> onSetListItem = null)
+    public void SetListItems(List<CustomSkill> list, UnityAction<TUI> onSetListItem = null)
     {
         ClearListItems();
         Debug.Log("技能:" + list.Count);
         foreach (var entry in list)
         {
-            var ui = SetListItem(entry as TSkill);
+            var ui = SetListItem(entry);
             if (ui != null && onSetListItem != null)
                 onSetListItem(ui);
         }
     }
 
-    public TUI SetListItem(TSkill data)
+    public TUI SetListItem(CustomSkill data)
     {
-        if (data == null || string.IsNullOrEmpty(data.Id))
+        if (data == null)
             return null;
-        var item = SetListItem(data.Id);
+        var item = SetListItem(data);
         item.SetData(data);
         return item;
     }

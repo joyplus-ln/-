@@ -1,2 +1,2 @@
-﻿public class UISkill : BaseUISkill<Skill> {
+﻿public class UISkill : BaseUISkill<CustomSkill> {
 }

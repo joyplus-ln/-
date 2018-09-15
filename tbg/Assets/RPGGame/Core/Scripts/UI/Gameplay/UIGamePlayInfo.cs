@@ -108,15 +108,9 @@ public class UIGamePlayInfo : MonoBehaviour
     public void SetBuffs()
     {
         if (SelfEntity == null) return;
-        Dictionary<string, BaseCharacterBuff> Buffs = SelfEntity.Buffs;
         Dictionary<string, CustomBuff> Buffs_custom = SelfEntity.Buffs_custom;
-        BuffText.text = "Buffs:" + (Buffs.Count + Buffs_custom.Count);
         int i = 0;
-        foreach (var key in Buffs.Keys)
-        {
-            AddBuffText(i, Buffs[key].Buff.des);
-            i++;
-        }
+
         foreach (var key in Buffs_custom.Keys)
         {
             AddBuffText(i, Buffs_custom[key].des);

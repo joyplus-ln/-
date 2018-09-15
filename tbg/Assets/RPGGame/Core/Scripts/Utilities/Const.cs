@@ -22,7 +22,6 @@ public class Const
     public enum SkillType
     {
         Attack,
-        Normal,
         Custom
     }
 }

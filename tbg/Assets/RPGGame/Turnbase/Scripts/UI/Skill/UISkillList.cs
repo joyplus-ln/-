@@ -1,1 +1,1 @@
-﻿public class UISkillList : BaseUISkillList<UISkill, Skill> { }
+﻿public class UISkillList : BaseUISkillList<UISkill, CustomSkill> { }

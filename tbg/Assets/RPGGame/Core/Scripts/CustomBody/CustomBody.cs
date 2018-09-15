@@ -15,7 +15,7 @@ public class CustomBody
     {
         if (target == null)
             return;
-        self.ApplySkillAndBuff(TriggerType.fight);
+        self.ApplySkillAndBuff(CustomSkill.TriggerType.fight);
         var attributes = self.GetTotalAttributes();
         AttackInfo info = target.ReceiveDamage(
              Mathf.CeilToInt(attributes.pAtk * pAtkRate),
@@ -26,9 +26,9 @@ public class CustomBody
              hitCount,
              fixDamage);
 
-        if (info.gedang) self.ApplySkillAndBuff(TriggerType.beigedang);
-        if (info.baoji) self.ApplySkillAndBuff(TriggerType.beibaoji);
-        if (info.shanbi) self.ApplySkillAndBuff(TriggerType.beimiss);
+        if (info.gedang) self.ApplySkillAndBuff(CustomSkill.TriggerType.beigedang);
+        if (info.baoji) self.ApplySkillAndBuff(CustomSkill.TriggerType.beibaoji);
+        if (info.shanbi) self.ApplySkillAndBuff(CustomSkill.TriggerType.beimiss);
     }
 
     public AttackInfo ReceiveDamage(int pAtk, int mAtk, int acc, float critChance, float critDamageRate, int hitCount = 1, int fixDamage = 0)
@@ -46,7 +46,7 @@ public class CustomBody
             totalDmg = Mathf.CeilToInt(totalDmg * critDamageRate);
             isCritical = true;
             attackInfo.baoji = true;
-            self.ApplySkillAndBuff(TriggerType.gobaoji);
+            self.ApplySkillAndBuff(CustomSkill.TriggerType.gobaoji);
         }
         // Block occurs
         if (Random.value <= attributes.blockChance)
@@ -54,7 +54,7 @@ public class CustomBody
             totalDmg = Mathf.CeilToInt(totalDmg / attributes.blockDamageRate);
             isBlock = true;
             attackInfo.gedang = true;
-            self.ApplySkillAndBuff(TriggerType.gogedang);
+            self.ApplySkillAndBuff(CustomSkill.TriggerType.gogedang);
         }
 
         var hitChance = 0f;
@@ -66,7 +66,7 @@ public class CustomBody
         {
             self.Manager.SpawnMissText(self);
             attackInfo.shanbi = true;
-            self.ApplySkillAndBuff(TriggerType.gomiss);
+            self.ApplySkillAndBuff(CustomSkill.TriggerType.gomiss);
         }
         else
         {
@@ -80,7 +80,7 @@ public class CustomBody
             self.Hp -= (int)totalDmg;
         }
         attackInfo.totalDamage = (int)totalDmg;
-        self.ApplySkillAndBuff(TriggerType.receiveDamage);
+        self.ApplySkillAndBuff(CustomSkill.TriggerType.receiveDamage);
         // Play hurt animation
         //CacheAnimator.ResetTrigger(ANIM_KEY_HURT);
         //CacheAnimator.SetTrigger(ANIM_KEY_HURT);

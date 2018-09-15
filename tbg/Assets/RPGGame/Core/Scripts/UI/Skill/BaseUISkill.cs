@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine.UI;
 
-public abstract class BaseUISkill<TSkill> : UIDataItem<TSkill>
-    where TSkill : BaseSkill
+public abstract class BaseUISkill<CSkill> : UIDataItem<CSkill> where CSkill : class
 {
     public Text textTitle;
     public Text textDescription;
@@ -30,21 +29,21 @@ public abstract class BaseUISkill<TSkill> : UIDataItem<TSkill>
 
     public override void UpdateData()
     {
-        SetupInfo(data);
+        SetupInfo(data as CustomSkill);
         SetupCustomSkillInfo();
     }
 
-    private void SetupInfo(TSkill data)
+    private void SetupInfo(CustomSkill data)
     {
         if (data == null) return;
         if (textTitle != null)
-            textTitle.text = data == null ? "" : data.title;
+            textTitle.text = data == null ? "" : data.id.ToString();
 
         if (textDescription != null)
-            textDescription.text = data == null ? "" : data.description;
+            textDescription.text = data == null ? "" : data.des;
 
         if (skillName != null)
-            skillName.text = data == null ? null : data.title;
+            skillName.text = data == null ? null : data.skillName;
     }
 
     private void SetupCustomSkillInfo()
@@ -63,11 +62,11 @@ public abstract class BaseUISkill<TSkill> : UIDataItem<TSkill>
 
     public override bool IsEmpty()
     {
-        return data == null || string.IsNullOrEmpty(data.Id);
+        return data == null;
     }
 
     public void ShowDataOnMessageDialog()
     {
-        GameInstance.Singleton.ShowMessageDialog(data.title, data.description);
+        GameInstance.Singleton.ShowMessageDialog((data as CustomSkill).skillName, (data as CustomSkill).des);
     }
 }

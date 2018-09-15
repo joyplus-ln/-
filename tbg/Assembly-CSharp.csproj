@@ -82,13 +82,11 @@
     <Compile Include="Assets\RPGGame\Core\Scripts\CustomBuff\CustomBuff.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\CustomSkill\CustomSkill.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\CustomSkill\CustomSkillActionLogic.cs" />
-    <Compile Include="Assets\RPGGame\Core\Scripts\CustomSkill\NormalSkillLogic.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\CustomSkill\Skill001.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\Events\PlayerDataEvents.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\Game\GameInstance.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GameData\Attributes.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GameData\BaseGameData.cs" />
-    <Compile Include="Assets\RPGGame\Core\Scripts\GameData\BaseSkill.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GameData\BaseStage.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GameData\CharacterEffectData.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GameData\Currency.cs" />
@@ -101,9 +99,7 @@
     <Compile Include="Assets\RPGGame\Core\Scripts\GameData\Item\OtherItem.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GameData\LootBox.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GameData\Stamina.cs" />
-    <Compile Include="Assets\RPGGame\Core\Scripts\GamePlay\BaseCharacterBuff.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GamePlay\BaseCharacterEntity.cs" />
-    <Compile Include="Assets\RPGGame\Core\Scripts\GamePlay\BaseCharacterSkill.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GamePlay\BaseDamage.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GamePlay\BaseGamePlayFormation.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GamePlay\BaseGamePlayManager.cs" />
@@ -189,12 +185,8 @@
     <Compile Include="Assets\RPGGame\Turnbase\Script_ex\StageCreater.cs" />
     <Compile Include="Assets\RPGGame\Turnbase\Script_ex\TowerSelectMaker.cs" />
     <Compile Include="Assets\RPGGame\Turnbase\Scripts\GameData\NormalStage.cs" />
-    <Compile Include="Assets\RPGGame\Turnbase\Scripts\GameData\PassiveSkill.cs" />
-    <Compile Include="Assets\RPGGame\Turnbase\Scripts\GameData\Skill.cs" />
     <Compile Include="Assets\RPGGame\Turnbase\Scripts\GameData\TowerStage.cs" />
-    <Compile Include="Assets\RPGGame\Turnbase\Scripts\GamePlay\CharacterBuff.cs" />
     <Compile Include="Assets\RPGGame\Turnbase\Scripts\GamePlay\CharacterEntity.cs" />
-    <Compile Include="Assets\RPGGame\Turnbase\Scripts\GamePlay\CharacterSkill.cs" />
     <Compile Include="Assets\RPGGame\Turnbase\Scripts\GamePlay\Damage.cs" />
     <Compile Include="Assets\RPGGame\Turnbase\Scripts\GamePlay\GamePlayFormation.cs" />
     <Compile Include="Assets\RPGGame\Turnbase\Scripts\GamePlay\GamePlayManager.cs" />
@@ -234,8 +226,6 @@
     <Compile Include="Assets\ThirdParty\Demigiant\DOTweenPro\DOTweenAnimation.cs" />
     <Compile Include="Assets\ThirdParty\Event\EventDispatcher.cs" />
     <Compile Include="Assets\ThirdParty\Event\EventException.cs" />
-    <Compile Include="Assets\ThirdParty\Excel2Json\CharacterUtils.cs" />
-    <Compile Include="Assets\ThirdParty\Excel2Json\EquipUtils.cs" />
     <Compile Include="Assets\ThirdParty\Excel2Json\SkillUtils.cs" />
     <Compile Include="Assets\ThirdParty\PrefsEditor\SecurePlayerPrefs.cs" />
     <Compile Include="Assets\XLua\XLua\Examples\01_Helloworld\Helloworld.cs" />

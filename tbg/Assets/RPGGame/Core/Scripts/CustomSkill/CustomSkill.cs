@@ -5,12 +5,15 @@ using UnityEngine;
 
 public class CustomSkill
 {
+    #region 面板中显示的
+#endregion
     private List<BaseCharacterEntity> selfs, enemys;
     public SkillUsageScope usageScope = SkillUsageScope.Enemy;
     public string skillName = "技能名称";
     public string des = "这里是自定义技能的描述!";
     public int id;
-
+    //被动技能的属性加成
+    public CalculationAttributes SelfAttributes = new CalculationAttributes();
     /// <summary>
     /// 部分增加属性的被动技能使用
     /// </summary>
@@ -94,7 +97,10 @@ public class CustomSkill
             default:
                 break;
         }
+
+
     }
+
 
     public int TurnsCount;
     public int CoolDownTurns;
@@ -107,6 +113,11 @@ public class CustomSkill
         TurnsCount = 0;
     }
 
+    public int GetCoolDownDuration()
+    {
+        return 10;
+    }
+
 
     public void SetNewEntitys(List<BaseCharacterEntity> selfs, List<BaseCharacterEntity> enemys)
     {
@@ -114,7 +125,11 @@ public class CustomSkill
         this.enemys = enemys;
     }
 
+    //增加回合
+    public void IncreaseTurnsCount()
+    {
 
+    }
 
 
     public virtual IEnumerator ApplyBuffLogic()
@@ -130,4 +145,62 @@ public class CustomSkill
     {
         return GamePlayManager.Singleton.ActiveCharacter;
     }
+
+    public enum SkillUsageScope
+    {
+        Self,
+        Ally,
+        Enemy,
+        All,
+    }
+
+    public enum AttackScope
+    {
+        SelectedTarget,
+        SelectedAndOneRandomTargets,
+        SelectedAndTwoRandomTargets,
+        SelectedAndThreeRandomTargets,
+        OneRandomEnemy,
+        TwoRandomEnemies,
+        ThreeRandomEnemies,
+        FourRandomEnemies,
+        AllEnemies,
+    }
+
+    public enum BuffScope
+    {
+        Self,
+        SelectedTarget,
+        SelectedAndOneRandomTargets,
+        SelectedAndTwoRandomTargets,
+        SelectedAndThreeRandomTargets,
+        OneRandomAlly,
+        TwoRandomAllies,
+        ThreeRandomAllies,
+        FourRandomAllies,
+        AllAllies,
+        OneRandomEnemy,
+        TwoRandomEnemies,
+        ThreeRandomEnemies,
+        FourRandomEnemies,
+        AllEnemies,
+        All,
+    }
+
+    public enum TriggerType
+    {
+        beforeFight,
+        fight,
+        afterfight,
+        receiveDamage,
+        beibaoji,
+        beigedang,
+        beimiss,
+        gobaoji,
+        gogedang,
+        gomiss,
+
+    }
+ 
 }
+

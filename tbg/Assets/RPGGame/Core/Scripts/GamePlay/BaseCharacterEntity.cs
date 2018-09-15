@@ -31,30 +31,7 @@ public abstract class BaseCharacterEntity : MonoBehaviour
             if (value == null || item == value || value.CharacterData == null)
                 return;
             item = value;
-            Skills.Clear();
-            var skills = item.CharacterData.skills;
-            if (skills != null)
-                foreach (var skill in skills)
-                {
-                    if (skill != null)
-                    {
-                        // TODO: Implement skill level
-                        Skills.Add(NewSkill(1, skill));
-                    }
-                }
 
-            PassiveSkills.Clear();
-            var passiveskills = item.CharacterData.passiveskills;
-            if (passiveskills != null)
-                foreach (var skill in passiveskills)
-                {
-                    if (skill != null)
-                    {
-                        // TODO: Implement skill level
-                        PassiveSkills.Add(skill);
-                    }
-                }
-            InitPassiveSkill();
 
             var customskill = item.CharacterData.customSkills;
             if (customskill != null)
@@ -65,10 +42,7 @@ public abstract class BaseCharacterEntity : MonoBehaviour
             Revive();
         }
     }
-    public readonly Dictionary<string, BaseCharacterBuff> Buffs = new Dictionary<string, BaseCharacterBuff>();
     public readonly Dictionary<string, CustomBuff> Buffs_custom = new Dictionary<string, CustomBuff>();
-    public readonly List<BaseCharacterSkill> Skills = new List<BaseCharacterSkill>();
-    public readonly List<PassiveSkill> PassiveSkills = new List<PassiveSkill>();
     public readonly List<CustomSkill> CustomSkills = new List<CustomSkill>();
     public BaseGamePlayFormation Formation { get; protected set; }
     public int Position { get; protected set; }
@@ -130,21 +104,7 @@ public abstract class BaseCharacterEntity : MonoBehaviour
             damageContainer = TempTransform;
     }
 
-    //#if UNITY_EDITOR
-    //    private void OnValidate()
-    //    {
-    //        var cacheAnimator = GetComponent<Animator>();
-    //        if (animatorController == null && cacheAnimator != null)
-    //            animatorController = cacheAnimator.runtimeAnimatorController;
-    //        EditorUtility.SetDirty(gameObject);
-    //    }
-    //#endif
 
-    public virtual void InitPassiveSkill()
-    {
-
-
-    }
     public void Revive()
     {
         if (Item == null)
@@ -155,17 +115,17 @@ public abstract class BaseCharacterEntity : MonoBehaviour
 
     public virtual void Dead()
     {
-        var keys = new List<string>(Buffs.Keys);
-        for (var i = keys.Count - 1; i >= 0; --i)
-        {
-            var key = keys[i];
-            if (!Buffs.ContainsKey(key))
-                continue;
+        //var keys = new List<string>(Buffs.Keys);
+        //for (var i = keys.Count - 1; i >= 0; --i)
+        //{
+        //    var key = keys[i];
+        //    if (!Buffs.ContainsKey(key))
+        //        continue;
 
-            var buff = Buffs[key];
-            buff.BuffRemove();
-            Buffs.Remove(key);
-        }
+        //    var buff = Buffs[key];
+        //    buff.BuffRemove();
+        //    Buffs.Remove(key);
+        //}
         var customkeys = new List<string>(Buffs_custom.Keys);
         for (var i = customkeys.Count - 1; i >= 0; --i)
         {
@@ -185,16 +145,21 @@ public abstract class BaseCharacterEntity : MonoBehaviour
         var equipmentBonus = Item.EquipmentBonus;
         result += equipmentBonus;
 
-        var buffs = new List<BaseCharacterBuff>(Buffs.Values);
-        foreach (var buff in buffs)
-        {
-            result += buff.Attributes;
-        }
+        //var buffs = new List<BaseCharacterBuff>(Buffs.Values);
+        //foreach (var buff in buffs)
+        //{
+        //    result += buff.Attributes;
+        //}
 
         var Custom_buffs = new List<CustomBuff>(Buffs_custom.Values);
         foreach (var buff in Custom_buffs)
         {
             result += buff.SelfAttributes;
+        }
+
+        foreach (var cskill in CustomSkills)
+        {
+            result += cskill.SelfAttributes;
         }
 
         // If this is character item, applies rate attributes
@@ -228,25 +193,6 @@ public abstract class BaseCharacterEntity : MonoBehaviour
         Container = formation.containers[position];
     }
 
-    public virtual void ApplyBuff(BaseCharacterEntity caster, int level, BaseSkill skill, int buffIndex)
-    {
-        if (skill == null || buffIndex < 0 || buffIndex >= skill.GetBuffs().Count || skill.GetBuffs()[buffIndex] == null || Hp <= 0)
-            return;
-
-        var buff = NewBuff(level, skill, buffIndex, caster, this);
-        if (buff.GetRemainsDuration() > 0f)
-        {
-            // Buff cannot stack so remove old buff
-            if (Buffs.ContainsKey(buff.Id))
-            {
-                buff.BuffRemove();
-                Buffs.Remove(buff.Id);
-            }
-            Buffs[buff.Id] = buff;
-        }
-        else
-            buff.BuffRemove();
-    }
 
     public virtual void ApplyCustomBuff(CustomBuff buff)
     {
@@ -257,32 +203,10 @@ public abstract class BaseCharacterEntity : MonoBehaviour
         Buffs_custom.Add(buff.guid, buff);
     }
 
-    public virtual void ApplyPassiveBuff(BaseCharacterEntity caster, int level, PassiveSkill skill, int buffIndex)
-    {
-        if (skill == null || buffIndex < 0 || buffIndex >= skill.GetBuffs().Count || skill.GetBuffs()[buffIndex] == null || Hp <= 0)
-            return;
-
-        var buff = NewBuff(level, skill, buffIndex, caster, this);
-        if (buff.GetRemainsDuration() > 0f)
-        {
-            // Buff cannot stack so remove old buff
-            if (Buffs.ContainsKey(buff.Id))
-            {
-                buff.BuffRemove();
-                Buffs.Remove(buff.Id);
-            }
-            Buffs[buff.Id] = buff;
-        }
-        else
-            buff.BuffRemove();
-    }
 
     //public void ChangeActionClip(AnimationClip clip)
     //{
     //    //CacheAnimatorController[ANIM_ACTION_STATE] = clip;
     //}
 
-    public abstract BaseCharacterSkill NewSkill(int level, BaseSkill skill);
-    public abstract BaseCharacterBuff NewBuff(int level, BaseSkill skill, int buffIndex, BaseCharacterEntity giver, BaseCharacterEntity receiver);
-    public abstract BaseCharacterBuff NewPassiveBuff(int level, PassiveSkill skill, int buffIndex, BaseCharacterEntity giver, BaseCharacterEntity receiver);
 }

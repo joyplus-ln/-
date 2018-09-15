@@ -71,7 +71,6 @@ public class ExcelTools : EditorWindow
 
     public CharacterItem character;
     public EquipmentItem equip;
-    public Skill skillitem;
     /// <summary>
     /// 绘制插件界面配置项
     /// </summary>
@@ -95,9 +94,7 @@ public class ExcelTools : EditorWindow
         //equip = (EquipmentItem)EditorGUILayout.ObjectField("equipment:", equip, typeof(EquipmentItem));
         //GUILayout.EndHorizontal();
 
-        GUILayout.BeginHorizontal();
-        skillitem = (Skill)EditorGUILayout.ObjectField("equipment:", skillitem, typeof(Skill));
-        GUILayout.EndHorizontal();
+
 
         keepSource = GUILayout.Toggle(keepSource, "保留Excel源文件");
     }
@@ -351,7 +348,7 @@ public class ExcelTools : EditorWindow
             }
 
             //判断输出类型
-            excel.ConvertToSkill(excelPath, encoding, skillitem);
+            excel.ConvertToSkill(excelPath, encoding, null);
 
             //判断是否保留源文件
             if (!keepSource)

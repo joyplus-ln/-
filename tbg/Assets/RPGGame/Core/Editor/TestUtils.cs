@@ -26,7 +26,7 @@ public class TestUtils
         return;
         CustomSkill skill = SkillUtils.MakeCustomSkill("001");
         skill.id = 001;
-        skill.Trigger(TriggerType.fight);
+        skill.Trigger(CustomSkill.TriggerType.fight);
         return;
         FormulaUtils.GetTowerExtraAttributes(false);
         return;

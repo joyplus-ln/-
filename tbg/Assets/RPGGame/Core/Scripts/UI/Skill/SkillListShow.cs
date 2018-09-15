@@ -24,9 +24,9 @@ public class SkillListShow : MonoBehaviour
         if (entity != null)
         {
             textBuilder.Remove(0, textBuilder.Length);
-            for (int i = 0; i < entity.Skills.Count; i++)
+            for (int i = 0; i < entity.CustomSkills.Count; i++)
             {
-                textBuilder.Append(entity.Skills[i].GetCoolDownDuration());
+                textBuilder.Append(entity.CustomSkills[i].GetCoolDownDuration());
             }
             SkillText.text = textBuilder.ToString();
         }

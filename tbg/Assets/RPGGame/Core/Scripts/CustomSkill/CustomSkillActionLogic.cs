@@ -21,15 +21,15 @@ public class CustomSkillActionLogic
             return false;
         switch (self.SelectedCustomSkill.usageScope)
         {
-            case SkillUsageScope.Self:
+            case CustomSkill.SkillUsageScope.Self:
                 if (target != self)
                     return false;
                 break;
-            case SkillUsageScope.Enemy:
+            case CustomSkill.SkillUsageScope.Enemy:
                 if (target == self || IsSameTeamWith(target))
                     return false;
                 break;
-            case SkillUsageScope.Ally:
+            case CustomSkill.SkillUsageScope.Ally:
                 if (!IsSameTeamWith(target))
                     return false;
                 break;
@@ -55,7 +55,7 @@ public class CustomSkillActionLogic
 
         var attackDamage = new SkillAttackDamage();
 
-        
+
         // Move to target character
         //yield return self.MoveTo(self.ActionTarget, self.Manager.doActionMoveSpeed);
         //isAlreadyReachedTarget = true;
@@ -79,9 +79,9 @@ public class CustomSkillActionLogic
         // Dictionary of actionId, weight
         Dictionary<int, int> actions = new Dictionary<int, int>();
         actions.Add(CharacterEntity.ACTION_ATTACK, 5);
-        for (var i = 0; i < self.Skills.Count; ++i)
+        for (var i = 0; i < self.CustomSkills.Count; ++i)
         {
-            var skill = self.Skills[i] as CharacterSkill;
+            var skill = self.CustomSkills[i];
             if (skill == null || !skill.IsReady())
                 continue;
             actions.Add(i, 5);
@@ -96,14 +96,14 @@ public class CustomSkillActionLogic
         }
         else
         {
-            switch (self.SelectedSkill.CastedSkill.usageScope)
+            switch (self.SelectedCustomSkill.usageScope)
             {
-                case SkillUsageScope.Enemy:
+                case CustomSkill.SkillUsageScope.Enemy:
                     var foes = self.Manager.GetFoes(self);
                     Random.InitState(System.DateTime.Now.Millisecond);
                     self.ActionTarget = foes[Random.Range(0, foes.Count)] as CharacterEntity;
                     break;
-                case SkillUsageScope.Ally:
+                case CustomSkill.SkillUsageScope.Ally:
                     var allies = self.Manager.GetAllies(self);
                     Random.InitState(System.DateTime.Now.Millisecond);
                     self.ActionTarget = allies[Random.Range(0, allies.Count)] as CharacterEntity;
@@ -134,9 +134,9 @@ public class CustomSkillActionLogic
     {
         self.IsDoingAction = true;
         var manager = self.Manager;
-        
-            // Move to target character
-            yield return self.MoveTo(self.ActionTarget, self.Manager.doActionMoveSpeed);
+
+        // Move to target character
+        yield return self.MoveTo(self.ActionTarget, self.Manager.doActionMoveSpeed);
 
         // Apply damage
         self.Attack(self.ActionTarget, null);

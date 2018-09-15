@@ -12,12 +12,12 @@ public class CustomBuff
 
     public virtual void Init()
     {
-        
+
     }
 
     public virtual void BeforeFight()
     {
-        
+
     }
 
     public virtual void Fight()
@@ -61,42 +61,107 @@ public class CustomBuff
 
     }
 
-    public void Trigger(TriggerType type)
+    //是否是眩晕
+    public bool GetIsStun()
+    {
+        return false;
+    }
+
+    //增加回合
+    public void IncreaseTurnsCount()
+    {
+
+    }
+
+    //是否结束了
+    public bool IsEnd()
+    {
+        return false;
+    }
+
+    public void Trigger(CustomSkill.TriggerType type)
     {
         switch (type)
         {
-            case TriggerType.beforeFight:
+            case CustomSkill.TriggerType.beforeFight:
                 BeforeFight();
                 break;
-            case TriggerType.fight:
+            case CustomSkill.TriggerType.fight:
                 Fight();
                 break;
-            case TriggerType.afterfight:
+            case CustomSkill.TriggerType.afterfight:
                 Afterfight();
                 break;
-            case TriggerType.receiveDamage:
+            case CustomSkill.TriggerType.receiveDamage:
                 ReceiveDamage();
                 break;
-            case TriggerType.beibaoji:
+            case CustomSkill.TriggerType.beibaoji:
                 Beibaoji();
                 break;
-            case TriggerType.beigedang:
+            case CustomSkill.TriggerType.beigedang:
                 Beigedang();
                 break;
-            case TriggerType.beimiss:
+            case CustomSkill.TriggerType.beimiss:
                 Beimiss();
                 break;
-            case TriggerType.gobaoji:
+            case CustomSkill.TriggerType.gobaoji:
                 Gobaoji();
                 break;
-            case TriggerType.gogedang:
+            case CustomSkill.TriggerType.gogedang:
                 Gogedang();
                 break;
-            case TriggerType.gomiss:
+            case CustomSkill.TriggerType.gomiss:
                 Gomiss();
                 break;
             default:
                 break;
         }
     }
+}
+
+[System.Serializable]
+public struct SkillAttackDamage
+{
+    public float fixDamage;
+    public float fixDamageIncreaseEachLevel;
+    public float pAtkDamageRate;
+    public float pAtkDamageRateIncreaseEachLevel;
+    public float mAtkDamageRate;
+    public float mAtkDamageRateIncreaseEachLevel;
+    [Tooltip("This will devide with calculated damage to show damage number text")]
+    public int hitCount;
+
+    public float GetFixDamage(int level = 1)
+    {
+        return fixDamage + (fixDamageIncreaseEachLevel * level);
+    }
+
+    public float GetPAtkDamageRate(int level = 1)
+    {
+        return pAtkDamageRate + (pAtkDamageRateIncreaseEachLevel * level);
+    }
+
+    public float GetMAtkDamageRate(int level = 1)
+    {
+        return mAtkDamageRate + (mAtkDamageRateIncreaseEachLevel * level);
+    }
+
+    public SkillAttackDamage(int level = 1)
+    {
+        fixDamage = 0;
+        fixDamageIncreaseEachLevel = 0;
+        pAtkDamageRate = 0;
+        pAtkDamageRateIncreaseEachLevel = 0;
+        mAtkDamageRate = 0;
+        mAtkDamageRateIncreaseEachLevel = 0;
+        hitCount = 1;
+    }
+}
+
+[System.Serializable]
+public class SkillAttack
+{
+    public CustomSkill.AttackScope attackScope;
+    [Tooltip("Skill damage formula = `a.fixDamage` + ((`a.pAtkDamageRate` * `a.pAtk`) - `b.pDef`) + ((`a.mAtkDamageRate` * `a.mAtk`) - `b.mDef`)")]
+    public SkillAttackDamage attackDamage;
 }

@@ -10,12 +10,16 @@ public class CharacterItem : BaseActorItem
     public string region;
     public string quality;
     public string customSkill;
-    public string passiveskill;
 
     [Header("Character Data")]
-    public List<BaseSkill> skills;
-    public List<PassiveSkill> passiveskills;
     public List<string> customSkills;
+
+    public List<CustomSkill> GetCustomSkills()
+    {
+        List<CustomSkill> customs = new List<CustomSkill>();
+        Debug.LogError("获取了技能列表，但是这里是空的，代码还没填");
+        return customs;
+    }
 
 }
 

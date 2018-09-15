@@ -188,7 +188,7 @@ public class TowerGamePlayManager : BaseGamePlayManager
         }
         ActiveCharacter = activatingCharacter;
         bool isStun = activatingCharacter.IsStun();
-        ActiveCharacter.ApplySkillAndBuff(TriggerType.beforeFight);
+        ActiveCharacter.ApplySkillAndBuff(CustomSkill.TriggerType.beforeFight);
         ActiveCharacter.DecreaseBuffsTurn();
         ActiveCharacter.DecreaseSkillsTurn();
         ActiveCharacter.ResetStates();
@@ -226,18 +226,18 @@ public class TowerGamePlayManager : BaseGamePlayManager
             foeTeamFormation.SetCharactersSelectable(true);
         else
         {
-            switch (character.SelectedSkill.CastedSkill.usageScope)
+            switch (character.SelectedCustomSkill.usageScope)
             {
-                case SkillUsageScope.Self:
+                case CustomSkill.SkillUsageScope.Self:
                     character.selectable = true;
                     break;
-                case SkillUsageScope.Ally:
+                case CustomSkill.SkillUsageScope.Ally:
                     allyTeamFormation.SetCharactersSelectable(true);
                     break;
-                case SkillUsageScope.Enemy:
+                case CustomSkill.SkillUsageScope.Enemy:
                     foeTeamFormation.SetCharactersSelectable(true);
                     break;
-                case SkillUsageScope.All:
+                case CustomSkill.SkillUsageScope.All:
                     allyTeamFormation.SetCharactersSelectable(true);
                     foeTeamFormation.SetCharactersSelectable(true);
                     break;

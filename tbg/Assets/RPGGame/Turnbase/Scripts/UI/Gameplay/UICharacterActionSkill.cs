@@ -9,31 +9,13 @@ public class UICharacterActionSkill : UICharacterAction
     public Text textRemainsTurns;
     public Image imageRemainsTurnsGage;
     public int skillIndex;
-    public CharacterSkill skill;
     public CustomSkill cskill;
 
     private void Update()
     {
-        NormalSkill();
         CustomSkill();
     }
 
-    void NormalSkill()
-    {
-        if (skill == null)
-            return;
-
-        var rate = 1 - skill.GetCoolDownDurationRate();
-
-        if (uiSkill != null)
-            uiSkill.data = skill.Skill as Skill;
-
-        if (textRemainsTurns != null)
-            textRemainsTurns.text = skill.GetCoolDownDuration() <= 0 ? "" : skill.GetCoolDownDuration().ToString("N0");
-
-        if (imageRemainsTurnsGage != null)
-            imageRemainsTurnsGage.fillAmount = rate;
-    }
 
     void CustomSkill()
     {
@@ -53,15 +35,6 @@ public class UICharacterActionSkill : UICharacterAction
 
     protected override void OnActionSelected()
     {
-        if (cskill != null)
-        {
-            ActionManager.ActiveCharacter.SetAction(skillIndex,Const.SkillType.Custom);
-        }
-        else
-        {
-            ActionManager.ActiveCharacter.SetAction(skillIndex, Const.SkillType.Normal);
-        }
-        
-
+        ActionManager.ActiveCharacter.SetAction(skillIndex, Const.SkillType.Custom);
     }
 }

@@ -196,7 +196,7 @@ public class GamePlayManager : BaseGamePlayManager
         }
         ActiveCharacter = activatingCharacter;
         bool isStun = activatingCharacter.IsStun();
-        ActiveCharacter.ApplySkillAndBuff(TriggerType.beforeFight);
+        ActiveCharacter.ApplySkillAndBuff(CustomSkill.TriggerType.beforeFight);
         ActiveCharacter.DecreaseBuffsTurn();
         ActiveCharacter.DecreaseSkillsTurn();
         ActiveCharacter.ResetStates();
@@ -234,10 +234,7 @@ public class GamePlayManager : BaseGamePlayManager
             foeTeamFormation.SetCharactersSelectable(true);
         else
         {
-            if (character.skilltype == Const.SkillType.Normal)
-                ShowNormalSkillScopesOrDoAction(character, allyTeamFormation, foeTeamFormation);
-            else
-                ShowCustomSkillScopesOrDoAction(character, allyTeamFormation, foeTeamFormation);
+            ShowCustomSkillScopesOrDoAction(character, allyTeamFormation, foeTeamFormation);
         }
     }
 
@@ -245,41 +242,22 @@ public class GamePlayManager : BaseGamePlayManager
     {
         switch (character.SelectedCustomSkill.usageScope)
         {
-            case SkillUsageScope.Self:
+            case CustomSkill.SkillUsageScope.Self:
                 character.selectable = true;
                 break;
-            case SkillUsageScope.Ally:
+            case CustomSkill.SkillUsageScope.Ally:
                 allyTeamFormation.SetCharactersSelectable(true);
                 break;
-            case SkillUsageScope.Enemy:
+            case CustomSkill.SkillUsageScope.Enemy:
                 foeTeamFormation.SetCharactersSelectable(true);
                 break;
-            case SkillUsageScope.All:
+            case CustomSkill.SkillUsageScope.All:
                 allyTeamFormation.SetCharactersSelectable(true);
                 foeTeamFormation.SetCharactersSelectable(true);
                 break;
         }
     }
 
-    void ShowNormalSkillScopesOrDoAction(CharacterEntity character, GamePlayFormation allyTeamFormation, GamePlayFormation foeTeamFormation)
-    {
-        switch (character.SelectedSkill.CastedSkill.usageScope)
-        {
-            case SkillUsageScope.Self:
-                character.selectable = true;
-                break;
-            case SkillUsageScope.Ally:
-                allyTeamFormation.SetCharactersSelectable(true);
-                break;
-            case SkillUsageScope.Enemy:
-                foeTeamFormation.SetCharactersSelectable(true);
-                break;
-            case SkillUsageScope.All:
-                allyTeamFormation.SetCharactersSelectable(true);
-                foeTeamFormation.SetCharactersSelectable(true);
-                break;
-        }
-    }
 
     //self
     public List<BaseCharacterEntity> GetAllies(CharacterEntity character)

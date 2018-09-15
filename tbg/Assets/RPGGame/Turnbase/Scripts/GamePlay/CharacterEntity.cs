@@ -35,16 +35,15 @@ public class CharacterEntity : BaseCharacterEntity
     public bool IsDoingAction { get; set; }
     public Const.SkillType skilltype;
     public bool IsMovingToTarget { get; private set; }
-    public CharacterSkill SelectedSkill { get { return Skills[Action] as CharacterSkill; } }
 
     public CustomSkill SelectedCustomSkill
     {
         get
         {
             if (Action < 0) return null;
-            if (Action - Skills.Count >= CustomSkills.Count)
+            if (Action >= CustomSkills.Count)
                 return null;
-            return CustomSkills[Action - Skills.Count];
+            return CustomSkills[Action];
         }
     }
 
@@ -55,7 +54,6 @@ public class CharacterEntity : BaseCharacterEntity
     private Coroutine movingCoroutine;
     public bool isReachedTargetCharacter;
 
-    private NormalSkillLogic normalSkillLogic;
     private CustomSkillActionLogic customSkillActionLogic;
     private CustomBody customBody;
 
@@ -129,7 +127,6 @@ public class CharacterEntity : BaseCharacterEntity
 
     private void Start()
     {
-        normalSkillLogic = new NormalSkillLogic(this);
         customSkillActionLogic = new CustomSkillActionLogic(this);
         customBody = new CustomBody(this);
     }
@@ -143,14 +140,6 @@ public class CharacterEntity : BaseCharacterEntity
         int hitCount = 1, int fixDamage = 0)
     {
         return customBody.ReceiveDamage(pAtk, mAtk, acc, critChance, critDamageRate, hitCount, fixDamage);
-    }
-    public override void InitPassiveSkill()
-    {
-        base.InitPassiveSkill();
-        foreach (var passiveskill in PassiveSkills)
-        {
-            passiveskill.Init(this);
-        }
     }
 
 
@@ -178,14 +167,14 @@ public class CharacterEntity : BaseCharacterEntity
 
     public bool IsStun()
     {
-        var keys = new List<string>(Buffs.Keys);
+        var keys = new List<string>(Buffs_custom.Keys);
         for (var i = keys.Count - 1; i >= 0; --i)
         {
             var key = keys[i];
-            if (!Buffs.ContainsKey(key))
+            if (!Buffs_custom.ContainsKey(key))
                 continue;
 
-            var buff = Buffs[key] as CharacterBuff;
+            var buff = Buffs_custom[key];
             if (buff.GetIsStun())
                 return true;
         }
@@ -193,28 +182,28 @@ public class CharacterEntity : BaseCharacterEntity
     }
     public void DecreaseBuffsTurn()
     {
-        var keys = new List<string>(Buffs.Keys);
+        var keys = new List<string>(Buffs_custom.Keys);
         for (var i = keys.Count - 1; i >= 0; --i)
         {
             var key = keys[i];
-            if (!Buffs.ContainsKey(key))
+            if (!Buffs_custom.ContainsKey(key))
                 continue;
 
-            var buff = Buffs[key] as CharacterBuff;
+            var buff = Buffs_custom[key];
             buff.IncreaseTurnsCount();
             if (buff.IsEnd())
             {
                 buff.BuffRemove();
-                Buffs.Remove(key);
+                Buffs_custom.Remove(key);
             }
         }
     }
 
     public void DecreaseSkillsTurn()
     {
-        for (var i = Skills.Count - 1; i >= 0; --i)
+        for (var i = CustomSkills.Count - 1; i >= 0; --i)
         {
-            var skill = Skills[i] as CharacterSkill;
+            var skill = CustomSkills[i];
             skill.IncreaseTurnsCount();
         }
     }
@@ -323,7 +312,7 @@ public class CharacterEntity : BaseCharacterEntity
 
     public void NotifyEndAction()
     {
-        ApplySkillAndBuff(TriggerType.afterfight);
+        ApplySkillAndBuff(CustomSkill.TriggerType.afterfight);
         Manager.NotifyEndAction(this);
     }
     #endregion
@@ -346,31 +335,17 @@ public class CharacterEntity : BaseCharacterEntity
         }
     }
 
-    public override BaseCharacterSkill NewSkill(int level, BaseSkill skill)
-    {
-        return new CharacterSkill(level, skill);
-    }
 
-    public override BaseCharacterBuff NewBuff(int level, BaseSkill skill, int buffIndex, BaseCharacterEntity giver, BaseCharacterEntity receiver)
-    {
-        return new CharacterBuff(level, skill, buffIndex, giver, receiver);
-    }
 
-    public override BaseCharacterBuff NewPassiveBuff(int level, PassiveSkill skill, int buffIndex, BaseCharacterEntity giver, BaseCharacterEntity receiver)
-    {
-        return new CharacterBuff(level, skill, buffIndex, giver, receiver);
-    }
+
+
 
     #endregion
 
 
-    public void ApplySkillAndBuff(TriggerType type)
+    public void ApplySkillAndBuff(CustomSkill.TriggerType type)
     {
-        foreach (var skill in PassiveSkills)
-        {
-            if (skill.type == type)
-                skill.ApplyPassiveSkill();
-        }
+
         foreach (var custombuff in Buffs_custom.Values)
         {
             custombuff.Trigger(type);
@@ -387,7 +362,8 @@ public class CharacterEntity : BaseCharacterEntity
 
     public void RandomAction()
     {
-        normalSkillLogic.RandomAction();
+        //normalSkillLogic.RandomAction();
+        customSkillActionLogic.RandomAction();
     }
 
     //返回true是执行，返回false是不可执行
@@ -401,14 +377,10 @@ public class CharacterEntity : BaseCharacterEntity
             if (target == this || IsSameTeamWith(target))
                 return false;
             ActionTarget = target;
-            normalSkillLogic.DoAction();
             DoAttackAction();
             return true;
         }
-        if (skilltype == Const.SkillType.Normal)
-            return normalSkillLogic.DoAction(target);
-        else
-            return customSkillActionLogic.DoAction(target);
+        return customSkillActionLogic.DoAction(target);
 
     }
 
@@ -425,7 +397,7 @@ public class CharacterEntity : BaseCharacterEntity
         yield return MoveTo(ActionTarget, Manager.doActionMoveSpeed);
         // Play attack animation
         // Apply damage
-        Attack(ActionTarget,null);
+        Attack(ActionTarget, null);
         // Wait damages done
         while (Damages.Count > 0)
         {
