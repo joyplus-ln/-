@@ -145,17 +145,17 @@ public class PlayerOtherItem : BasePlayerData, IPlayerOtherItem
 
     protected static void UpdateItem(string id)
     {
-        GameInstance.GameService.DpdateOtherItem(id, DataMap[id].Amount);
+        GameInstance.dbDataUtils.DpdateOtherItem(id, DataMap[id].Amount);
     }
 
     protected static void AddItem(string id)
     {
-        GameInstance.GameService.AddOtherItem(id, DataMap[id].Amount);
+        GameInstance.dbDataUtils.AddOtherItem(id, DataMap[id].Amount);
     }
 
     protected static void DeleteItem(string id)
     {
-        GameInstance.GameService.DeleteOtherItem(id);
+        GameInstance.dbDataUtils.DeleteOtherItem(id);
     }
 }
 [System.Serializable]

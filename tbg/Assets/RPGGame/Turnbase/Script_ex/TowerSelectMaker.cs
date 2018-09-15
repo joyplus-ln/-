@@ -53,7 +53,7 @@ public class TowerSelectMaker : MonoBehaviour
 
     public void Go()
     {
-
+        Debug.Log("开始塔冒险");
         BaseGamePlayManager.StartTowerStage(GameInstance.GameDatabase.towerStages[0], PlayerSQLPrefs.yzTowerCurrentLevel);
     }
 }

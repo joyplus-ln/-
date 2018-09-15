@@ -34,7 +34,7 @@ public class UILose : UIBase
     public void OnClickRevive()
     {
         Hide();
-        Manager.Revive(Show);
+        //Manager.Revive(Show);
     }
 
     public void OnClickRestart()

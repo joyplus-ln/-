@@ -26,27 +26,23 @@ public class UIAuthentication : UIBase
 
     public void OnClickLogin()
     {
-        var gameService = GameInstance.GameService;
-        gameService.Login(Username, Password, OnLoginSuccess, OnError);
+        GameInstance.dbDataUtils.DoLogin(Username, Password, OnLoginSuccess);
     }
 
     public void OnClickRegister()
     {
-        var gameService = GameInstance.GameService;
-        gameService.Register(Username, Password, OnRegisterSuccess, OnError);
+        GameInstance.dbDataUtils.DoRegister(Username, Password, OnRegisterSuccess);
     }
 
     public void OnClickRegisterOrLogin()
     {
-        var gameService = GameInstance.GameService;
-        gameService.RegisterOrLogin(Username, Password, OnLoginSuccess, OnError);
+        GameInstance.dbDataUtils.DoRegisterOrLogin(Username, Password, OnLoginSuccess);
     }
 
     public void OnClickGuestLogin()
     {
-        var gameService = GameInstance.GameService;
         var duid = SystemInfo.deviceUniqueIdentifier;
-        gameService.GuestLogin(duid, OnLoginSuccess, OnError);
+        GameInstance.dbDataUtils.DoGuestLogin(duid, OnLoginSuccess);
     }
 
     private void OnLoginSuccess(PlayerResult result)

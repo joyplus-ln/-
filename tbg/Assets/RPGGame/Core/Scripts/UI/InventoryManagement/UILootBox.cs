@@ -67,7 +67,6 @@ public class UILootBox : UIDataItem<LootBox>
     public void OnClickOpen(int packIndex)
     {
         var gameInstance = GameInstance.Singleton;
-        var gameService = GameInstance.GameService;
         if (packIndex > data.lootboxPacks.Length - 1)
             packIndex = 0;
         var price = data.lootboxPacks[packIndex].price;
@@ -88,7 +87,7 @@ public class UILootBox : UIDataItem<LootBox>
                 }
                 break;
         }
-        gameService.OpenLootBox(data.Id, packIndex, OnOpenLootBoxSuccess, OnOpenLootBoxFail);
+        GameInstance.dbDataUtils.DoOpenLootBox(data.Id, packIndex, OnOpenLootBoxSuccess);
     }
 
     private void OnOpenLootBoxSuccess(ItemResult result)

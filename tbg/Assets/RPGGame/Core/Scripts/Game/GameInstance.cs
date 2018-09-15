@@ -23,7 +23,6 @@ public class GameInstance : MonoBehaviour
     public BaseCharacterEntity model;//公用model
     public static GameInstance Singleton { get; private set; }
     public static GameDatabase GameDatabase { get; private set; }
-    public static BaseGameService GameService { get; private set; }
     public static readonly List<string> AvailableLootBoxes = new List<string>();
 
     private readonly Queue<UIMessageDialog.Data> messageDialogData = new Queue<UIMessageDialog.Data>();
@@ -38,6 +37,9 @@ public class GameInstance : MonoBehaviour
     private static bool isPlayerClearStageListLoaded;
     private static bool isAvailableLootBoxListLoaded;
     private static int countLoading = 0;
+
+    private static DBMapItem dbMapItem;
+    public static DBDataUtils dbDataUtils;
 
     private void Awake()
     {
@@ -55,13 +57,15 @@ public class GameInstance : MonoBehaviour
         else
             GameDatabase.Setup();
 
-        GameService = GetComponent<BaseGameService>();
-        if (GameService == null)
-            Debug.LogError("`Game Service` component has not been attacted");
-        GameService.onServiceStart.RemoveListener(OnGameServiceStart);
-        GameService.onServiceStart.AddListener(OnGameServiceStart);
-        GameService.onServiceFinish.RemoveListener(OnGameServiceFinish);
-        GameService.onServiceFinish.AddListener(OnGameServiceFinish);
+        dbMapItem = new DBMapItem();
+        dbMapItem.Init();
+        dbDataUtils = new DBDataUtils();
+        dbDataUtils.Init();
+
+        //GameService.onServiceStart.RemoveListener(OnGameServiceStart);
+        //GameService.onServiceStart.AddListener(OnGameServiceStart);
+        //GameService.onServiceFinish.RemoveListener(OnGameServiceFinish);
+        //GameService.onServiceFinish.AddListener(OnGameServiceFinish);
 
         HideMessageDialog();
         HideInputDialog();
@@ -100,7 +104,7 @@ public class GameInstance : MonoBehaviour
 
         var player = result.player;
         Player.CurrentPlayer = player;
-        GameService.SetPrefsLogin(player.Id, player.LoginToken);
+        dbDataUtils.SetPrefsLogin(player.Id, player.LoginToken);
 
         if (string.IsNullOrEmpty(player.ProfileName) || string.IsNullOrEmpty(player.ProfileName.Trim()))
             SetProfileName();
@@ -266,7 +270,7 @@ public class GameInstance : MonoBehaviour
         GetUnlockItemList();
         GetClearStageList();
         GetAvailableLootBoxList();
-        GameService.GetLocalPrefs();
+        GameInstance.dbDataUtils.GetPlayerLocalInfo();
     }
 
     /// <summary>
@@ -275,7 +279,7 @@ public class GameInstance : MonoBehaviour
     private void GetAuthList()
     {
         isPlayerAuthListLoaded = false;
-        GameService.GetAuthList(OnGetAuthListSuccess, (error) => OnGameServiceError(error, GetAuthList));
+        GameInstance.dbDataUtils.DoGetAuthList(OnGetAuthListSuccess);
     }
 
     private void OnGetAuthListSuccess(AuthListResult result)
@@ -290,9 +294,9 @@ public class GameInstance : MonoBehaviour
     /// </summary>
     private void GetCurrencyList()
     {
-        
-           isPlayerCurrencyListLoaded = false;
-        GameService.GetCurrencyList(OnGetCurrencyListSuccess, (error) => OnGameServiceError(error, GetCurrencyList));
+
+        isPlayerCurrencyListLoaded = false;
+        GameInstance.dbDataUtils.DoGetCurrencyList(OnGetCurrencyListSuccess);
     }
 
     private void OnGetCurrencyListSuccess(CurrencyListResult result)
@@ -308,7 +312,7 @@ public class GameInstance : MonoBehaviour
     private void GetFormationList()
     {
         isPlayerFormationListLoaded = false;
-        GameService.GetFormationList(OnGetFormationListSuccess, (error) => OnGameServiceError(error, GetFormationList));
+        GameInstance.dbDataUtils.DoGetFormationList(OnGetFormationListSuccess);
     }
 
     private void OnGetFormationListSuccess(FormationListResult result)
@@ -324,13 +328,13 @@ public class GameInstance : MonoBehaviour
     private void GetItemList()
     {
         isPlayerItemListLoaded = false;
-        GameService.GetItemList(OnGetItemListSuccess, (error) => OnGameServiceError(error, GetItemList));
+        GameInstance.dbDataUtils.DoGetItemList(OnGetItemListSuccess);
     }
 
     private void GetOtherItemList()
     {
         isPlayerOtherItemListLoaded = false;
-        GameService.GetOtherItemList(OnGetOtherItemListSuccess, (error) => OnGameServiceError(error, GetItemList));
+        GameInstance.dbDataUtils.DoGetOtherItemList(OnGetOtherItemListSuccess);
     }
 
     private void OnGetItemListSuccess(ItemListResult result)
@@ -353,7 +357,7 @@ public class GameInstance : MonoBehaviour
     private void GetStaminaList()
     {
         isPlayerStaminaListLoaded = false;
-        GameService.GetStaminaList(OnGetStaminaListSuccess, (error) => OnGameServiceError(error, GetStaminaList));
+        GameInstance.dbDataUtils.DoGetStaminaList(OnGetStaminaListSuccess);
     }
 
     private void OnGetStaminaListSuccess(StaminaListResult result)
@@ -369,7 +373,7 @@ public class GameInstance : MonoBehaviour
     private void GetUnlockItemList()
     {
         isPlayerUnlockItemListLoaded = false;
-        GameService.GetUnlockItemList(OnGetUnlockItemListSuccess, (error) => OnGameServiceError(error, GetUnlockItemList));
+        GameInstance.dbDataUtils.DoGetUnlockItemList(OnGetUnlockItemListSuccess);
     }
 
     private void OnGetUnlockItemListSuccess(UnlockItemListResult result)
@@ -385,7 +389,7 @@ public class GameInstance : MonoBehaviour
     private void GetClearStageList()
     {
         isPlayerClearStageListLoaded = false;
-        GameService.GetClearStageList(OnGetClearStageListSuccess, (error) => OnGameServiceError(error, GetClearStageList));
+        GameInstance.dbDataUtils.DoGetClearStageList(OnGetClearStageListSuccess);
     }
 
     private void OnGetClearStageListSuccess(ClearStageListResult result)
@@ -401,7 +405,8 @@ public class GameInstance : MonoBehaviour
     private void GetAvailableLootBoxList()
     {
         isAvailableLootBoxListLoaded = false;
-        GameService.GetAvailableLootBoxList(OnGetAvailableLootBoxListSuccess, (error) => OnGameServiceError(error, GetClearStageList));
+
+        GameInstance.dbDataUtils.DoGetAvailableLootBoxList(OnGetAvailableLootBoxListSuccess);
     }
 
     private void OnGetAvailableLootBoxListSuccess(AvailableLootBoxListResult result)
@@ -498,7 +503,7 @@ public class GameInstance : MonoBehaviour
             () =>
             {
                 var input = inputDialog.InputContent;
-                GameService.SetProfileName(input, onSuccess, onError);
+                GameInstance.dbDataUtils.DoSetProfileName(input, onSuccess);
             });
         inputDialog.InputPlaceHolder = LanguageManager.Texts[GameText.PLACE_HOLDER_PROFILE_NAME];
     }

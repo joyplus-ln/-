@@ -88,14 +88,21 @@ public class UIItemLevelUp : UIItemWithMaterials
     public void OnClickLevelUp()
     {
         var gameInstance = GameInstance.Singleton;
-        var gameService = GameInstance.GameService;
         if (!PlayerCurrency.HaveEnoughSoftCurrency(totalLevelUpPrice))
         {
             gameInstance.WarnNotEnoughSoftCurrency();
             return;
         }
         var idAmountPair = GetSelectedItemIdAmountPair();
-        gameService.LevelUpItem(Item.SqLiteIndex, idAmountPair, Item.GetItemType(), OnLevelUpSuccess, OnLevelUpFail);
+        switch (Item.itemType)
+        {
+            case PlayerItem.ItemType.character:
+                GameInstance.dbDataUtils.DoCharacterLevelUpItem(Item.SqLiteIndex, idAmountPair, OnLevelUpSuccess);
+                break;
+            case PlayerItem.ItemType.equip:
+                GameInstance.dbDataUtils.DoCharacterLevelUpItem(Item.SqLiteIndex, idAmountPair, OnLevelUpSuccess);
+                break;
+        }
     }
 
     private void OnLevelUpSuccess(ItemResult result)

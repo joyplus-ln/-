@@ -10,7 +10,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace>
     </RootNamespace>
-    <ProjectGuid>{0D4901AC-F389-D166-2909-4CB67E88D14F}</ProjectGuid>
+    <ProjectGuid>{4A932AC6-BE46-A863-1B76-6F1D4942C729}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -109,14 +109,9 @@
     <Compile Include="Assets\RPGGame\Core\Scripts\GamePlay\BaseGamePlayManager.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GamePlay\GameEffect.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GamePlay\TargetingRigidbody.cs" />
-    <Compile Include="Assets\RPGGame\Core\Scripts\GameService\BaseGameService.cs" />
+    <Compile Include="Assets\RPGGame\Core\Scripts\GameService\DBDataUtils.cs" />
+    <Compile Include="Assets\RPGGame\Core\Scripts\GameService\DBMapItem.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GameService\GameServiceResult.cs" />
-    <Compile Include="Assets\RPGGame\Core\Scripts\GameService\Implement\SQLite\SQLiteGameService.cs" />
-    <Compile Include="Assets\RPGGame\Core\Scripts\GameService\Implement\SQLite\SQLiteGameServiceAuth.cs" />
-    <Compile Include="Assets\RPGGame\Core\Scripts\GameService\Implement\SQLite\SQLiteGameServiceBattle.cs" />
-    <Compile Include="Assets\RPGGame\Core\Scripts\GameService\Implement\SQLite\SQLiteGameServiceHelpers.cs" />
-    <Compile Include="Assets\RPGGame\Core\Scripts\GameService\Implement\SQLite\SQLiteGameServiceItem.cs" />
-    <Compile Include="Assets\RPGGame\Core\Scripts\GameService\Implement\SQLite\SQLLiteGameServiceOtherItem.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GameService\SqliteUtils.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\PlayerData\BasePlayerData.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\PlayerData\Interface\IPlayer.cs" />
@@ -320,16 +315,16 @@
     <None Include="Assets\ThirdParty\Demigiant\readme_DOTweenPro.txt" />
     <None Include="Assets\XLua\XLua\Resources\tdr\tdr.lua.txt" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>D:/2018.2.0/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -527,37 +522,37 @@
       <HintPath>D:/2018.2.0/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Data.Sqlite">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/RPGGame/Plugins/SQLite/Common/Mono.Data.Sqlite.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/RPGGame/Plugins/SQLite/Common/Mono.Data.Sqlite.dll</HintPath>
     </Reference>
     <Reference Include="System.Data">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/RPGGame/Plugins/SQLite/Common/System.Data.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/RPGGame/Plugins/SQLite/Common/System.Data.dll</HintPath>
     </Reference>
     <Reference Include="DemiLib">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Demigiant/DemiLib/Core/DemiLib.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Demigiant/DemiLib/Core/DemiLib.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Demigiant/DOTween/DOTween.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="DOTween43">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Demigiant/DOTween/DOTween43.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Demigiant/DOTween/DOTween43.dll</HintPath>
     </Reference>
     <Reference Include="DOTween46">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Demigiant/DOTween/DOTween46.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Demigiant/DOTween/DOTween46.dll</HintPath>
     </Reference>
     <Reference Include="DOTween50">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Demigiant/DOTween/DOTween50.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Demigiant/DOTween/DOTween50.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenPro">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
     </Reference>
     <Reference Include="Excel">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Excel2Json/Plugins/Excel.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Excel2Json/Plugins/Excel.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Excel2Json/Plugins/ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Excel2Json/Plugins/ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Excel2Json/Plugins/Newtonsoft.Json.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Excel2Json/Plugins/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>C:/Users/Administrator/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>

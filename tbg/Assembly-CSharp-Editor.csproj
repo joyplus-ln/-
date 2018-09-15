@@ -10,7 +10,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace>
     </RootNamespace>
-    <ProjectGuid>{5D0B8F5D-3DC7-3997-8E51-5F43A9E81FA2}</ProjectGuid>
+    <ProjectGuid>{A82ABF69-0EAA-A52E-2B1B-1B26B565478E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -102,16 +102,16 @@
     <None Include="Assets\XLua\XLua\Src\Editor\Template\LuaEnumWrapGCM.tpl.txt" />
     <None Include="Assets\XLua\XLua\Src\Editor\Template\PackUnpack.tpl.txt" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>D:/2018.2.0/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -357,46 +357,46 @@
       <HintPath>D:/2018.2.0/Unity/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Data.Sqlite">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/RPGGame/Plugins/SQLite/Common/Mono.Data.Sqlite.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/RPGGame/Plugins/SQLite/Common/Mono.Data.Sqlite.dll</HintPath>
     </Reference>
     <Reference Include="System.Data">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/RPGGame/Plugins/SQLite/Common/System.Data.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/RPGGame/Plugins/SQLite/Common/System.Data.dll</HintPath>
     </Reference>
     <Reference Include="DemiLib">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Demigiant/DemiLib/Core/DemiLib.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Demigiant/DemiLib/Core/DemiLib.dll</HintPath>
     </Reference>
     <Reference Include="DemiEditor">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Demigiant/DemiLib/Core/Editor/DemiEditor.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Demigiant/DemiLib/Core/Editor/DemiEditor.dll</HintPath>
     </Reference>
     <Reference Include="DOTween">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Demigiant/DOTween/DOTween.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="DOTween43">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Demigiant/DOTween/DOTween43.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Demigiant/DOTween/DOTween43.dll</HintPath>
     </Reference>
     <Reference Include="DOTween46">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Demigiant/DOTween/DOTween46.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Demigiant/DOTween/DOTween46.dll</HintPath>
     </Reference>
     <Reference Include="DOTween50">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Demigiant/DOTween/DOTween50.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Demigiant/DOTween/DOTween50.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenEditor">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenPro">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenProEditor">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Demigiant/DOTweenPro/Editor/DOTweenProEditor.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Demigiant/DOTweenPro/Editor/DOTweenProEditor.dll</HintPath>
     </Reference>
     <Reference Include="Excel">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Excel2Json/Plugins/Excel.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Excel2Json/Plugins/Excel.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Excel2Json/Plugins/ICSharpCode.SharpZipLib.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Excel2Json/Plugins/ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>F:/my/turnback/TurnBaseGame/TurnBaseGame/Assets/ThirdParty/Excel2Json/Plugins/Newtonsoft.Json.dll</HintPath>
+      <HintPath>G:/github/tbg/tbg/Assets/ThirdParty/Excel2Json/Plugins/Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Advertisements">
       <HintPath>C:/Users/Administrator/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
@@ -446,7 +446,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{0D4901AC-F389-D166-2909-4CB67E88D14F}</Project>
+      <Project>{4A932AC6-BE46-A863-1B76-6F1D4942C729}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
   </ItemGroup>

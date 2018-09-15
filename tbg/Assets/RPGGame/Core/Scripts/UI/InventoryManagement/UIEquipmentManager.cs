@@ -158,11 +158,11 @@ public class UIEquipmentManager : UIBase
         var position = GetEquipmentPosition(uiItem);
         if (SelectedItem != null)
         {
-            GameInstance.GameService.EquipItem(Character.SqLiteIndex, SelectedItem.data.SqLiteIndex, position, OnSetEquipmentSuccess, OnSetEquipmentFail);
+            GameInstance.dbDataUtils.DoEquipItem(Character.SqLiteIndex, SelectedItem.data.SqLiteIndex, position, OnSetEquipmentSuccess);
             ClearSelectedItem();
         }
         else if (!uiItem.IsEmpty())
-            GameInstance.GameService.UnEquipItem(uiItem.data.SqLiteIndex, OnSetEquipmentSuccess, OnSetEquipmentFail);
+            GameInstance.dbDataUtils.DoUnEquipItem(uiItem.data.SqLiteIndex, OnSetEquipmentSuccess);
     }
 
     private void OnSetEquipmentSuccess(ItemResult result)

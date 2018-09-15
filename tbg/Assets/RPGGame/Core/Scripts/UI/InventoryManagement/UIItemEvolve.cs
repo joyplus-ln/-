@@ -120,7 +120,6 @@ public class UIItemEvolve : UIItemWithMaterials
     public void OnClickEvolve()
     {
         var gameInstance = GameInstance.Singleton;
-        var gameService = GameInstance.GameService;
         if (!PlayerCurrency.HaveEnoughSoftCurrency(Item.EvolvePrice))
         {
             gameInstance.WarnNotEnoughSoftCurrency();
