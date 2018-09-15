@@ -2051,12 +2051,12 @@ Prefab:
     - target: {fileID: 224536717709334506, guid: ce8396daf8c054a45b4ab54afc47b28a,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 9.000017e-39
       objectReference: {fileID: 0}
     - target: {fileID: 224536717709334506, guid: ce8396daf8c054a45b4ab54afc47b28a,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 5.051095e-39
       objectReference: {fileID: 0}
     - target: {fileID: 1266225675926918, guid: ce8396daf8c054a45b4ab54afc47b28a, type: 2}
       propertyPath: m_IsActive

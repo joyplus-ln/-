@@ -431,6 +431,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         //var itemTier = itemData.itemTier;
         var sumExp = 0;
         var result = new PlayerItem();
+        result.itemType = ItemType.character;
         for (var i = 1; i < level; ++i)
         {
             //sumExp += itemTier.expTable.Calculate(i + 1, itemTier.maxLevel);
