@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab232b4dcac7cd64ea772b2f82173081, type: 3}
+  m_Name: DemoGameDatabase
+  m_EditorClassIdentifier: 
+  playerMaxLevel: 1000
+  playerExpTable:
+    minValue: 20
+    maxValue: 2000000
+    growth: 2
+  softCurrency:
+    id: GOLD
+    icon: {fileID: 21300000, guid: 74e0bc6e889f16546bfc7f28d7119402, type: 3}
+    startAmount: 10000
+  hardCurrency:
+    id: GEM
+    icon: {fileID: 21300000, guid: af9dd3fb02788de45bd0b30849865d82, type: 3}
+    startAmount: 1000
+  stageStamina:
+    id: STAGE_STAMINA
+    icon: {fileID: 21300000, guid: 7aa250f1b825cf24d8154d504c4c9195, type: 3}
+    maxAmountTable:
+      minValue: 15
+      maxValue: 430
+      growth: 2.5
+    recoverUnit: 1
+    recoverDuration: 3
+  stageFormations:
+  - id: STAGE_FORMATION_A
+    title: A
+    icon: {fileID: 0}
+  - id: STAGE_FORMATION_B
+    title: B
+    icon: {fileID: 0}
+  - id: STAGE_FORMATION_C
+    title: C
+    icon: {fileID: 0}
+  startCharacterItems:
+  - 1002
+  - 1003
+  otherItem:
+  - Id: id001
+    Des: 123456
+    Exp: 1000
+  stages:
+  - {fileID: 11400000, guid: 3eab0c642409adf4db50b5d0ebc52ca4, type: 2}
+  - {fileID: 11400000, guid: cab292f11ff705846b9511c284897a2a, type: 2}
+  - {fileID: 11400000, guid: dd678e0ee245d354f8c973ef626ca3dd, type: 2}
+  - {fileID: 11400000, guid: fa882646f5e7cc241aad4d5edbbc24e8, type: 2}
+  - {fileID: 11400000, guid: 1e169cbbe4597bf44a90749693467ab3, type: 2}
+  - {fileID: 11400000, guid: 0933a1418df1c1f4b8f10db8354e65c7, type: 2}
+  - {fileID: 11400000, guid: c134ecfc775e08f43b303b9503a0375f, type: 2}
+  - {fileID: 11400000, guid: 0b63250b820a57e4b962008ef2eb7c49, type: 2}
+  - {fileID: 11400000, guid: 8520999f6ab4a814abb72ddb3a68c1c3, type: 2}
+  - {fileID: 11400000, guid: 4aed156fd995fa7448bf62fbe1f9946d, type: 2}
+  - {fileID: 11400000, guid: fa44f541e051daf43922adbbb3eb74fc, type: 2}
+  - {fileID: 11400000, guid: cd6bbf9373960594b8d267116faf75ee, type: 2}
+  - {fileID: 11400000, guid: 766f5688460863041901224c97dde1fb, type: 2}
+  - {fileID: 11400000, guid: a9430e83c121aaa40b3a3f79fecb39b9, type: 2}
+  - {fileID: 11400000, guid: 38684627945c53e4ba2a60b033a1ead0, type: 2}
+  - {fileID: 11400000, guid: b36da2ededc678d4ba00b0d58fd20185, type: 2}
+  - {fileID: 11400000, guid: e26a4211a9526204f86ebe85ed48abc5, type: 2}
+  - {fileID: 11400000, guid: 5ddd866778fec7d438988d1b91093481, type: 2}
+  - {fileID: 11400000, guid: 8cac3d6db57bf0245b62449feab48b66, type: 2}
+  towerStages:
+  - {fileID: 11400000, guid: 31b0e7ebb41b75f4fa98f4d17303043a, type: 2}
+  lootBoxes:
+  - {fileID: 11400000, guid: e7eee23d8b3c40a458d77af08c833517, type: 2}
+  - {fileID: 11400000, guid: bfa5c0269f0550b4f9d76de7ee272779, type: 2}
+  unlockStages:
+  - {fileID: 11400000, guid: 3eab0c642409adf4db50b5d0ebc52ca4, type: 2}
+  characterBaseAttributes:
+    hp: 0
+    pAtk: 0
+    pDef: 0
+    mAtk: 0
+    mDef: 0
+    spd: 0
+    eva: 0
+    acc: 0
+    hpRate: 0
+    pAtkRate: 0
+    pDefRate: 0
+    mAtkRate: 0
+    mDefRate: 0
+    spdRate: 0
+    evaRate: 0
+    accRate: 0
+    critChance: 0.05
+    critDamageRate: 1.5
+    blockChance: 0.05
+    blockDamageRate: 1.5
+  revivePrice: 5
+  minAtkVaryRate: 0.01
+  maxAtkVaryRate: 0.2
+  resetItemLevelAfterEvolve: 1
+  SsrColor: {r: 1, g: 1, b: 1, a: 1}

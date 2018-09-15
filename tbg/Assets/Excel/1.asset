@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e36500cdce81d5944b2cd6cef0c4d17d, type: 3}
+  m_Name: 1
+  m_EditorClassIdentifier: 
+  title: 1
+  description: ceshi
+  icon: {fileID: 21300000, guid: 86f2562c44671d64992acc67dd8cc74d, type: 3}
+  castAnimation: {fileID: 11400000, guid: 7e195e261cde96542b38f3a4ddd67346, type: 2}
+  usageScope: 1
+  coolDownTurns: 1
+  coolDownIncreaseEachLevel: 1
+  attacks: []
+  buffs:
+  - icon: {fileID: 0}
+    type: 1
+    buffEffects:
+      bodyEffect: {fileID: 0}
+      floorEffect: {fileID: 0}
+    applyChance: 1
+    applyChanceIncreaseEachLevel: 1
+    attributes:
+      hp: 1
+      pAtk: 1
+      pDef: 1
+      mAtk: 1
+      mDef: 1
+      spd: 1
+      eva: 1
+      acc: 1
+      hpRate: 1
+      pAtkRate: 1
+      pDefRate: 1
+      mAtkRate: 1
+      mDefRate: 1
+      spdRate: 1
+      evaRate: 1
+      accRate: 1
+      critChance: 1
+      critDamageRate: 1
+      blockChance: 1
+      blockDamageRate: 1
+    attributesIncreaseEachLevel:
+      hp: 1
+      pAtk: 1
+      pDef: 1
+      mAtk: 1
+      mDef: 1
+      spd: 1
+      eva: 1
+      acc: 1
+      hpRate: 1
+      pAtkRate: 1
+      pDefRate: 1
+      mAtkRate: 1
+      mDefRate: 1
+      spdRate: 1
+      evaRate: 1
+      accRate: 1
+      critChance: 1
+      critDamageRate: 1
+      blockChance: 1
+      blockDamageRate: 1
+    pAtkHealRate: 1
+    pAtkHealRateIncreaseEachLevel: 1
+    mAtkHealRate: 1
+    mAtkHealRateIncreaseEachLevel: 1
+    clearBuffs: 1
+    clearNerfs: 1
+    isStun: 1
+    buffScope: 1
+    applyTurns: 1
+    applyTurnsIncreaseEachLevel: 1

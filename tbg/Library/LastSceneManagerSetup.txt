@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/RPGGame/Demo/Scenes/LoginSceneSQLite.unity
+  isLoaded: 1
+  isActive: 1

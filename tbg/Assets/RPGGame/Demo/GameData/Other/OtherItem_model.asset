@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6fcb28b3d8fe024f87e4e89341a0588, type: 3}
+  m_Name: OtherItem_model
+  m_EditorClassIdentifier: 
+  title: 
+  description: 
+  icon: {fileID: 0}
+  category: 
+  itemTier: {fileID: 0}
+  maxStack: 1
+  useFixSellPrice: 0
+  fixSellPrice: 0
+  useFixLevelUpPrice: 0
+  fixLevelUpPrice: 0
+  useFixRewardExp: 0
+  fixRewardExp: 0
+  attributes:
+    hp:
+      minValue: 0
+      maxValue: 0
+      growth: 0
+    pAtk:
+      minValue: 0
+      maxValue: 0
+      growth: 0
+    pDef:
+      minValue: 0
+      maxValue: 0
+      growth: 0
+    mAtk:
+      minValue: 0
+      maxValue: 0
+      growth: 0
+    mDef:
+      minValue: 0
+      maxValue: 0
+      growth: 0
+    spd:
+      minValue: 0
+      maxValue: 0
+      growth: 0
+    eva:
+      minValue: 0
+      maxValue: 0
+      growth: 0
+    acc:
+      minValue: 0
+      maxValue: 0
+      growth: 0
+  hpRateToSetMax: 1
+  pAtkRateToSetMax: 1
+  pDefRateToSetMax: 1
+  mAtkRateToSetMax: 1
+  mDefRateToSetMax: 1
+  spdRateToSetMax: 1
+  evaRateToSetMax: 1
+  accRateToSetMax: 1
+  createEvolveItems: []

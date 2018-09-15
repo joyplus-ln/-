@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd4d453785d383b4c91014d5e9089fca, type: 3}
+  m_Name: 1.EastNotFail
+  m_EditorClassIdentifier: 
+  title: "\u4E1C\u65B9\u4E0D\u8D25"
+  description: "\u4E1C\u65B9\u4E0D\u8D25-\u7B11\u50B2\u6C5F\u6E56"
+  icon: {fileID: 21300000, guid: 7f5bdf4db142c5449aba1fe65738014a, type: 3}
+  category: 
+  itemTier: {fileID: 11400000, guid: ca503a7be248b784ebe10c1df6982e84, type: 2}
+  maxStack: 1
+  useFixSellPrice: 1
+  fixSellPrice: 1000000
+  useFixLevelUpPrice: 0
+  fixLevelUpPrice: 0
+  useFixRewardExp: 1
+  fixRewardExp: 1000000
+  attributes:
+    hp:
+      minValue: 3000
+      maxValue: 20000
+      growth: 1.5
+    pAtk:
+      minValue: 200
+      maxValue: 2000
+      growth: 1.5
+    pDef:
+      minValue: 300
+      maxValue: 1500
+      growth: 1.5
+    mAtk:
+      minValue: 5
+      maxValue: 200
+      growth: 1.5
+    mDef:
+      minValue: 200
+      maxValue: 1200
+      growth: 1.5
+    spd:
+      minValue: 160
+      maxValue: 5000
+      growth: 1.5
+    eva:
+      minValue: 92
+      maxValue: 230
+      growth: 1.5
+    acc:
+      minValue: 82
+      maxValue: 205
+      growth: 1.5
+  hpRateToSetMax: 2.5
+  pAtkRateToSetMax: 2.5
+  pDefRateToSetMax: 2.5
+  mAtkRateToSetMax: 2.5
+  mDefRateToSetMax: 2.5
+  spdRateToSetMax: 2.5
+  evaRateToSetMax: 2.5
+  accRateToSetMax: 2.5
+  createEvolveItems: []
+  attackAnimations:
+  - {fileID: 11400000, guid: cb4b16e64c3b9f444ae0349e99c2c881, type: 2}
+  skills:
+  - {fileID: 11400000, guid: 7a36ebd42e104fb44a92729a2829f96d, type: 2}
+  - {fileID: 11400000, guid: faa790ca4f2d95c46b1177bbff14c240, type: 2}
+  passiveskills:
+  - {fileID: 11400000, guid: 7ce81e0b935d0be4694d845d653b344d, type: 2}
+  customSkills: []
+  model: {fileID: 114561034024018868, guid: d9668b2993bdfff4d839c864d46ba619, type: 2}
+  evolveInfo:
+    requiredMaterials: []
+    evolveItem: {fileID: 0}
