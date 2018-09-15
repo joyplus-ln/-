@@ -5,53 +5,10 @@ using UnityEngine;
 
 public class Skill001 : CustomSkill
 {
-
-    public override void DoSkill()
+    public Skill001()
     {
-
-    }
-    public override void BeforeFight()
-    {
-
-    }
-
-    public override void Fight()
-    {
-        Debug.Log("fight" + id);
-
-    }
-
-    public override void Afterfight()
-    {
-
-    }
-
-    public override void ReceiveDamage()
-    {
-    }
-
-    public override void Beibaoji()
-    {
-    }
-
-    public override void Beigedang()
-    {
-    }
-
-    public override void Beimiss()
-    {
-    }
-
-    public override void Gobaoji()
-    {
-    }
-
-    public override void Gogedang()
-    {
-    }
-
-    public override void Gomiss()
-    {
+        skillName = "排山倒海";
+        des = "攻击敌人,同时增加自己气血上限";
     }
 
     public override IEnumerator ApplyBuffLogic()

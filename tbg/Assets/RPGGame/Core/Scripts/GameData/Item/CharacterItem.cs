@@ -30,6 +30,22 @@ public class CharacterItem : BaseActorItem
         return customs;
     }
 
+    //战斗中使用的，不至于共用
+    public List<CustomSkill> GetBattleCustomSkills()
+    {
+        string[] cskills = customSkill.Split(';');
+        List<CustomSkill> customs = new List<CustomSkill>();
+        for (int i = 0; i < cskills.Length; i++)
+        {
+            if (!string.IsNullOrEmpty(cskills[i]))
+            {
+                customs.Add(SkillUtils.MakeCustomSkill(cskills[i]));
+            }
+        }
+        customSkills = customs;
+        return customs;
+    }
+
 }
 
 [System.Serializable]

@@ -32,7 +32,11 @@ public abstract class BaseCharacterEntity : MonoBehaviour
                 return;
             item = value;
 
-            CustomSkills.AddRange(item.CharacterData.GetCustomSkills());
+            CustomSkills.AddRange(item.CharacterData.GetBattleCustomSkills());
+            for (int i = 0; i < CustomSkills.Count; i++)
+            {
+                CustomSkills[i].Init();
+            }
             Debug.LogError("我有几个技能？" + CustomSkills.Count);
             Revive();
         }
@@ -197,11 +201,4 @@ public abstract class BaseCharacterEntity : MonoBehaviour
         }
         Buffs_custom.Add(buff.guid, buff);
     }
-
-
-    //public void ChangeActionClip(AnimationClip clip)
-    //{
-    //    //CacheAnimatorController[ANIM_ACTION_STATE] = clip;
-    //}
-
 }

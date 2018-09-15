@@ -26,10 +26,10 @@ public class UICharacterActionSkill : UICharacterAction
             uiSkill.cskill = cskill;
 
         if (textRemainsTurns != null)
-            textRemainsTurns.text = "0CD";
+            textRemainsTurns.text = cskill.GetCoolDownDuration().ToString();
 
         if (imageRemainsTurnsGage != null)
-            imageRemainsTurnsGage.fillAmount = 1;
+            imageRemainsTurnsGage.fillAmount = cskill.GetCDFloat();
 
     }
 

@@ -107,16 +107,6 @@ public class UICharacterStatsGeneric : UIBase
         }
 
         var i = 0;
-        var buffKeys = character.Buffs_custom.Keys;
-        foreach (var buffKey in buffKeys)
-        {
-            if (i >= uiBuffs.Length)
-                break;
-            var ui = uiBuffs[i];
-            ui.custombuff = character.Buffs_custom[buffKey];
-            ui.Show();
-            ++i;
-        }
         var custom_buffKeys = character.Buffs_custom.Keys;
         foreach (var buffKey in custom_buffKeys)
         {

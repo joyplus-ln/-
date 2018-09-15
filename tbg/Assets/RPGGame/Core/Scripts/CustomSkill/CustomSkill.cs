@@ -3,17 +3,37 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
 
+public enum SkillType
+{
+    active,
+    passive
+}
 public class CustomSkill
 {
+
     #region 面板中显示的
-#endregion
-    private List<BaseCharacterEntity> selfs, enemys;
-    public SkillUsageScope usageScope = SkillUsageScope.Enemy;
     public string skillName = "技能名称";
     public string des = "这里是自定义技能的描述!";
+    //冷却 技能CD
+    public int CoolDownTurns = 10;
+    #endregion
+    private List<BaseCharacterEntity> selfs, enemys;
+    public SkillUsageScope usageScope = SkillUsageScope.Enemy;
+
+
     public int id;
+
+    //主动技能，被动技能,默认主动
+    public SkillType skilltype = SkillType.active;
     //被动技能的属性加成
     public CalculationAttributes SelfAttributes = new CalculationAttributes();
+
+    #region 一堆方法
+    public virtual void Init()
+    {
+        //初始可用
+        TurnsCount = CoolDownTurns;
+    }
     /// <summary>
     /// 部分增加属性的被动技能使用
     /// </summary>
@@ -21,6 +41,7 @@ public class CustomSkill
     {
 
     }
+
 
     public virtual void DoSkill()
     {
@@ -101,9 +122,12 @@ public class CustomSkill
 
     }
 
+    #endregion
+
+
 
     public int TurnsCount;
-    public int CoolDownTurns;
+
     public bool IsReady()
     {
         return TurnsCount >= CoolDownTurns;
@@ -113,9 +137,22 @@ public class CustomSkill
         TurnsCount = 0;
     }
 
+    /// <summary>
+    /// 获取还有几回合冷却
+    /// </summary>
+    /// <returns></returns>
     public int GetCoolDownDuration()
     {
-        return 10;
+        return CoolDownTurns - TurnsCount > 0 ? CoolDownTurns - TurnsCount : 0;
+    }
+
+    /// <summary>
+    /// 获取回合冷却百分比
+    /// </summary>
+    /// <returns></returns>
+    public float GetCDFloat()
+    {
+        return (float)TurnsCount / CoolDownTurns;
     }
 
 
@@ -128,7 +165,7 @@ public class CustomSkill
     //增加回合
     public void IncreaseTurnsCount()
     {
-
+        TurnsCount++;
     }
 
 
@@ -201,6 +238,6 @@ public class CustomSkill
         gomiss,
 
     }
- 
+
 }
 
