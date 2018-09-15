@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
-    x: 1204
-    y: 303
+    x: 701
+    y: 261
     width: 604
     height: 654
   m_ShowMode: 0
@@ -62,8 +62,8 @@ MonoBehaviour:
     y: 0
     width: 604
     height: 654
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 100, y: 122}
+  m_MaxSize: {x: 4000, y: 4022}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 122}
   m_MaxSize: {x: 4000, y: 4022}
   vertical: 0
-  controlID: 49
+  controlID: 64
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -113,7 +113,7 @@ MonoBehaviour:
     y: 0
     width: 1904
     height: 976
-  m_MinSize: {x: 950, y: 300}
+  m_MinSize: {x: 950, y: 492}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &6
 MonoBehaviour:
@@ -158,10 +158,10 @@ MonoBehaviour:
     y: 30
     width: 1904
     height: 926
-  m_MinSize: {x: 911, y: 442}
-  m_MaxSize: {x: 22006, y: 10021}
+  m_MinSize: {x: 917, y: 442}
+  m_MaxSize: {x: 22012, y: 10021}
   vertical: 0
-  controlID: 139
+  controlID: 100
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_MinSize: {x: 202, y: 442}
   m_MaxSize: {x: 4002, y: 8042}
   vertical: 1
-  controlID: 118
+  controlID: 181
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -224,8 +224,8 @@ MonoBehaviour:
     y: 0
     width: 317
     height: 926
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 204, y: 221}
+  m_MaxSize: {x: 4004, y: 4021}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -274,8 +274,8 @@ MonoBehaviour:
     y: 0
     width: 544
     height: 926
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 277, y: 71}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -325,8 +325,8 @@ MonoBehaviour:
     y: 221
     width: 694
     height: 705
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}
@@ -352,8 +352,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1204
-    y: 325
+    x: 701
+    y: 283
     width: 604
     height: 632
   m_PersistentViewDataDictionary: {fileID: 0}
@@ -416,7 +416,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0070fcffa480fcffa880fcffae80fcffb080fcffd080fcffd280fcff368efcff4696fcffacbcfcff7058fdffe6fbfffff4ffffff000000001a76010004970100ceaf010014b5010078b70100b0b70100dcb70100
+    m_ExpandedIDs: b6ceffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -500,7 +500,7 @@ MonoBehaviour:
     height: 905
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SearchFilter:
-    m_NameFilter: UIInventoryManager
+    m_NameFilter: gameplaym
     m_ClassNames: []
     m_AssetLabels: []
     m_AssetBundleNames: []
@@ -511,20 +511,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/RPGGame/Core/Scripts/UI/InventoryManagement
+    - Assets/RPGGame/Turnbase/Scripts/GamePlay
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/RPGGame/Core/Scripts/UI/InventoryManagement
+  - Assets/RPGGame/Turnbase/Scripts/GamePlay
   m_LastFoldersGridSize: 16
-  m_LastProjectPath: F:\my\turnback\TurnBaseGame\TurnBaseGame
+  m_LastProjectPath: G:\github\tbg\tbg
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 316}
+    scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000007e2c0000b62c0000e62d0000ea2d0000082e0000242e0000b42e0000ba2f0000f42f00002630000046310000f0310000063200003c330000503300006633000032340000ac3400004e3500004a3b00004c3b000000ca9a3b
+    m_ExpandedIDs: 000000009a590000bc590000765a00007a5a0000885a00009c5a0000fc5a0000b05b0000f45b0000a45c0000e45c00000e5d00001c5d0000bc5d0000ec5d0000fa5d0000825e0000de5e00005c5f0000b2600000b4600000b660000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -552,7 +552,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000007e2c00009c2c0000b62c0000e62d0000ea2d0000082e0000242e0000b42e0000ba2f0000f42f0000263000004631000056310000ba310000f031000006320000fe3200003c330000503300006633000032340000ac3400004e3500004a3b00004c3b0000
+    m_ExpandedIDs: 000000009a590000bc590000765a00007a5a0000885a00009c5a0000fc5a0000b05b0000f45b0000a45c00000e5d00001c5d0000ec5d0000fa5d0000085e0000825e0000de5e00005c5f0000b2600000b4600000b6600000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -583,18 +583,18 @@ MonoBehaviour:
     m_ExpandedInstanceIDs: 722a0000602900009e2a0000a02a0000aa2a0000a62a000028520000a2520000b22d0000202d0000662b0000a03300000e310000242f00002e32000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: ManageScene
-      m_OriginalName: ManageScene
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 13608
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_CreateAssetUtility:
