@@ -22,7 +22,7 @@ public class LoginSceneManager : MonoBehaviour
 
     public void OnClickStart()
     {
-        GameInstance.dbDataUtils.DoValidateLoginToken(true, OnValidateLoginTokenSuccess);
+        GameInstance.dbLogin.DoValidateLoginToken(true, OnValidateLoginTokenSuccess);
         HideClickStart();
     }
 

@@ -38,8 +38,12 @@ public class GameInstance : MonoBehaviour
     private static bool isAvailableLootBoxListLoaded;
     private static int countLoading = 0;
 
-    private static DBMapItem dbMapItem;
+    public static DBMapItem dbMapItem;
     public static DBDataUtils dbDataUtils;
+    public static SqliteUtils SqliteUtils;
+    public static DBLogin dbLogin;
+    public static DBPlayerData dbPlayerData;
+    public static DBBattle dbBattle;
 
     private void Awake()
     {
@@ -56,7 +60,11 @@ public class GameInstance : MonoBehaviour
             Debug.LogError("`Game Database` has not been set");
         else
             GameDatabase.Setup();
-
+        SqliteUtils = new SqliteUtils();
+        SqliteUtils.Init();
+        dbLogin = new DBLogin();
+        dbPlayerData = new DBPlayerData();
+        dbBattle = new DBBattle();
         dbMapItem = new DBMapItem();
         dbMapItem.Init();
         dbDataUtils = new DBDataUtils();
@@ -104,7 +112,7 @@ public class GameInstance : MonoBehaviour
 
         var player = result.player;
         Player.CurrentPlayer = player;
-        dbDataUtils.SetPrefsLogin(player.Id, player.LoginToken);
+        dbLogin.SetPrefsLogin(player.Id, player.LoginToken);
 
         if (string.IsNullOrEmpty(player.ProfileName) || string.IsNullOrEmpty(player.ProfileName.Trim()))
             SetProfileName();
@@ -270,7 +278,7 @@ public class GameInstance : MonoBehaviour
         GetUnlockItemList();
         GetClearStageList();
         GetAvailableLootBoxList();
-        GameInstance.dbDataUtils.GetPlayerLocalInfo();
+        GameInstance.dbPlayerData.GetPlayerLocalInfo();
     }
 
     /// <summary>
@@ -279,7 +287,7 @@ public class GameInstance : MonoBehaviour
     private void GetAuthList()
     {
         isPlayerAuthListLoaded = false;
-        GameInstance.dbDataUtils.DoGetAuthList(OnGetAuthListSuccess);
+        GameInstance.dbLogin.DoGetAuthList(OnGetAuthListSuccess);
     }
 
     private void OnGetAuthListSuccess(AuthListResult result)
@@ -296,7 +304,7 @@ public class GameInstance : MonoBehaviour
     {
 
         isPlayerCurrencyListLoaded = false;
-        GameInstance.dbDataUtils.DoGetCurrencyList(OnGetCurrencyListSuccess);
+        GameInstance.dbPlayerData.DoGetCurrencyList(OnGetCurrencyListSuccess);
     }
 
     private void OnGetCurrencyListSuccess(CurrencyListResult result)
@@ -312,7 +320,7 @@ public class GameInstance : MonoBehaviour
     private void GetFormationList()
     {
         isPlayerFormationListLoaded = false;
-        GameInstance.dbDataUtils.DoGetFormationList(OnGetFormationListSuccess);
+        GameInstance.dbBattle.DoGetFormationList(OnGetFormationListSuccess);
     }
 
     private void OnGetFormationListSuccess(FormationListResult result)
@@ -328,13 +336,13 @@ public class GameInstance : MonoBehaviour
     private void GetItemList()
     {
         isPlayerItemListLoaded = false;
-        GameInstance.dbDataUtils.DoGetItemList(OnGetItemListSuccess);
+        GameInstance.dbMapItem.DoGetItemList(OnGetItemListSuccess);
     }
 
     private void GetOtherItemList()
     {
         isPlayerOtherItemListLoaded = false;
-        GameInstance.dbDataUtils.DoGetOtherItemList(OnGetOtherItemListSuccess);
+        GameInstance.dbMapItem.DoGetOtherItemList(OnGetOtherItemListSuccess);
     }
 
     private void OnGetItemListSuccess(ItemListResult result)
@@ -357,7 +365,7 @@ public class GameInstance : MonoBehaviour
     private void GetStaminaList()
     {
         isPlayerStaminaListLoaded = false;
-        GameInstance.dbDataUtils.DoGetStaminaList(OnGetStaminaListSuccess);
+        GameInstance.dbPlayerData.DoGetStaminaList(OnGetStaminaListSuccess);
     }
 
     private void OnGetStaminaListSuccess(StaminaListResult result)
@@ -373,7 +381,7 @@ public class GameInstance : MonoBehaviour
     private void GetUnlockItemList()
     {
         isPlayerUnlockItemListLoaded = false;
-        GameInstance.dbDataUtils.DoGetUnlockItemList(OnGetUnlockItemListSuccess);
+        GameInstance.dbBattle.DoGetUnlockItemList(OnGetUnlockItemListSuccess);
     }
 
     private void OnGetUnlockItemListSuccess(UnlockItemListResult result)
@@ -389,7 +397,7 @@ public class GameInstance : MonoBehaviour
     private void GetClearStageList()
     {
         isPlayerClearStageListLoaded = false;
-        GameInstance.dbDataUtils.DoGetClearStageList(OnGetClearStageListSuccess);
+        GameInstance.dbBattle.DoGetClearStageList(OnGetClearStageListSuccess);
     }
 
     private void OnGetClearStageListSuccess(ClearStageListResult result)
@@ -503,7 +511,7 @@ public class GameInstance : MonoBehaviour
             () =>
             {
                 var input = inputDialog.InputContent;
-                GameInstance.dbDataUtils.DoSetProfileName(input, onSuccess);
+                GameInstance.dbLogin.DoSetProfileName(input, onSuccess);
             });
         inputDialog.InputPlaceHolder = LanguageManager.Texts[GameText.PLACE_HOLDER_PROFILE_NAME];
     }

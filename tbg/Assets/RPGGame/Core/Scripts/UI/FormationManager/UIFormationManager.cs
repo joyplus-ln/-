@@ -178,7 +178,7 @@ public class UIFormationManager : UIBase
             uiFormation.Hide();
         }
         SelectedFormation = UIFormationToggles[formationName];
-        GameInstance.dbDataUtils.DoSelectFormation(formationName, OnSelectFormationSuccess);
+        GameInstance.dbBattle.DoSelectFormation(formationName, OnSelectFormationSuccess);
     }
 
     private void OnSelectFormationSuccess(PlayerResult result)

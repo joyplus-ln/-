@@ -109,8 +109,11 @@
     <Compile Include="Assets\RPGGame\Core\Scripts\GamePlay\BaseGamePlayManager.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GamePlay\GameEffect.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GamePlay\TargetingRigidbody.cs" />
+    <Compile Include="Assets\RPGGame\Core\Scripts\GameService\DBBattle.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GameService\DBDataUtils.cs" />
+    <Compile Include="Assets\RPGGame\Core\Scripts\GameService\DBLogin.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GameService\DBMapItem.cs" />
+    <Compile Include="Assets\RPGGame\Core\Scripts\GameService\DBPlayerData.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GameService\GameServiceResult.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\GameService\SqliteUtils.cs" />
     <Compile Include="Assets\RPGGame\Core\Scripts\PlayerData\BasePlayerData.cs" />

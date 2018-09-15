@@ -97,10 +97,10 @@ public class UIItemLevelUp : UIItemWithMaterials
         switch (Item.itemType)
         {
             case PlayerItem.ItemType.character:
-                GameInstance.dbDataUtils.DoCharacterLevelUpItem(Item.SqLiteIndex, idAmountPair, OnLevelUpSuccess);
+                GameInstance.dbPlayerData.DoCharacterLevelUpItem(Item.SqLiteIndex, idAmountPair, OnLevelUpSuccess);
                 break;
             case PlayerItem.ItemType.equip:
-                GameInstance.dbDataUtils.DoCharacterLevelUpItem(Item.SqLiteIndex, idAmountPair, OnLevelUpSuccess);
+                GameInstance.dbPlayerData.DoCharacterLevelUpItem(Item.SqLiteIndex, idAmountPair, OnLevelUpSuccess);
                 break;
         }
     }

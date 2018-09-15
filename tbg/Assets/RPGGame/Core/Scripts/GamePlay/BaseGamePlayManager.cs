@@ -80,7 +80,7 @@ public abstract class BaseGamePlayManager : MonoBehaviour
     protected virtual void WinGame()
     {
         var deadCharacters = CountDeadCharacters();
-        GameInstance.dbDataUtils.DoFinishStage(GetStageType(), BattleSession, DBDataUtils.BATTLE_RESULT_WIN, deadCharacters, (result) =>
+        GameInstance.dbBattle.DoFinishStage(GetStageType(), BattleSession, DBBattle.BATTLE_RESULT_WIN, deadCharacters, (result) =>
          {
              isEnding = true;
              Time.timeScale = 1;
@@ -101,7 +101,7 @@ public abstract class BaseGamePlayManager : MonoBehaviour
     public void Giveup(UnityAction onError)
     {
         var deadCharacters = CountDeadCharacters();
-        GameInstance.dbDataUtils.DoFinishStage(GetStageType(), BattleSession, DBDataUtils.BATTLE_RESULT_LOSE, deadCharacters, (result) =>
+        GameInstance.dbBattle.DoFinishStage(GetStageType(), BattleSession, DBBattle.BATTLE_RESULT_LOSE, deadCharacters, (result) =>
          {
              isEnding = true;
              Time.timeScale = 1;
@@ -117,7 +117,7 @@ public abstract class BaseGamePlayManager : MonoBehaviour
     public static void StartStage(BaseStage data)
     {
         PlayingStage = data;
-        GameInstance.dbDataUtils.DoStartStage(data.Id, (result) =>
+        GameInstance.dbBattle.DoStartStage(data.Id, (result) =>
         {
             GameInstance.Singleton.OnGameServiceStartStageResult(result);
             BattleSession = result.session;
@@ -128,7 +128,7 @@ public abstract class BaseGamePlayManager : MonoBehaviour
     public static void StartTowerStage(BaseStage data, int level)
     {
         PlayingStage = data;
-        GameInstance.dbDataUtils.DoStartTowerStage(data.Id + "_" + level, (result) =>
+        GameInstance.dbBattle.DoStartTowerStage(data.Id + "_" + level, (result) =>
         {
             GameInstance.Singleton.OnGameServiceStartStageResult(result);
             BattleSession = result.session;

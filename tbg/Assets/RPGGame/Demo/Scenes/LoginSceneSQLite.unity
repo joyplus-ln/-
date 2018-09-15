@@ -1210,17 +1210,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 158b1f3f45643a24faa4864e067c8823, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onServiceStart:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  onServiceFinish:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  dbPath: ./tbRpgDb.sqlite3
 --- !u!1001 &1355132466
 Prefab:
   m_ObjectHideFlags: 0

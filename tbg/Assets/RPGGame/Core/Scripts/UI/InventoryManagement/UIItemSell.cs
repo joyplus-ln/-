@@ -101,15 +101,14 @@ public class UIItemSell : UIItemSelection
     }
     public void OnClickSell()
     {
-        var gameInstance = GameInstance.Singleton;
         var idAmountPair = GetSelectedItemIdAmountPair();
         switch (type)
         {
             case PlayerItem.ItemType.character:
-                GameInstance.dbDataUtils.DoSellCharacterItems(idAmountPair, OnSellSuccess);
+                GameInstance.dbMapItem.DoSellCharacterItems(idAmountPair, OnSellSuccess);
                 break;
             case PlayerItem.ItemType.equip:
-                GameInstance.dbDataUtils.DoSellCharacterItems(idAmountPair, OnSellSuccess);
+                GameInstance.dbMapItem.DoSellCharacterItems(idAmountPair, OnSellSuccess);
                 break;
         }
 

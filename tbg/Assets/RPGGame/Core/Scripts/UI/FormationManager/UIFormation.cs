@@ -81,11 +81,11 @@ public class UIFormation : UIBase
         {
             if (manager.SelectedItem != null)
             {
-                GameInstance.dbDataUtils.DoSetFormation(manager.SelectedItem.data.SqLiteIndex, formationName, position, OnSetFormationSuccess);
+                GameInstance.dbBattle.DoSetFormation(manager.SelectedItem.data.SqLiteIndex, formationName, position, OnSetFormationSuccess);
                 manager.ClearSelectedItem();
             }
             else if (!uiItem.IsEmpty())
-                GameInstance.dbDataUtils.DoSetFormation(string.Empty, formationName, position, OnSetFormationSuccess);
+                GameInstance.dbBattle.DoSetFormation(string.Empty, formationName, position, OnSetFormationSuccess);
         }
     }
 
