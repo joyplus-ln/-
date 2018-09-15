@@ -11,13 +11,22 @@ public class CharacterItem : BaseActorItem
     public string quality;
     public string customSkill;
 
-    [Header("Character Data")]
-    public List<string> customSkills;
+    private List<CustomSkill> customSkills { get; set; }
 
     public List<CustomSkill> GetCustomSkills()
     {
+        if (customSkills != null)
+            return customSkills;
+        string[] cskills = customSkill.Split(';');
         List<CustomSkill> customs = new List<CustomSkill>();
-        Debug.LogError("获取了技能列表，但是这里是空的，代码还没填");
+        for (int i = 0; i < cskills.Length; i++)
+        {
+            if (!string.IsNullOrEmpty(cskills[i]))
+            {
+                customs.Add(SkillUtils.MakeCustomSkill(cskills[i]));
+            }
+        }
+        customSkills = customs;
         return customs;
     }
 

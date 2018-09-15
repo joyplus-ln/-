@@ -37,7 +37,7 @@ public class UIItemSkillList : MonoBehaviour
         if (data.CharacterData != null)
         {
             List<CustomSkill> skills = new List<CustomSkill>();
-            if (data.CharacterData.customSkills != null)
+            if (data.CharacterData.GetCustomSkills() != null)
                 skills.AddRange(data.CharacterData.GetCustomSkills());
             uiSkillList.SetListItems(skills);
             uiSkillList.Show();

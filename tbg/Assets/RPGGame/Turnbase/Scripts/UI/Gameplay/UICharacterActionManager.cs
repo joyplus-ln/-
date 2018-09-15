@@ -68,15 +68,6 @@ public class UICharacterActionManager : UIBase
             ui.Show();
             ++i;
         }
-        foreach (var skill in Manager.ActiveCharacter.CustomSkills)
-        {
-            if (i >= UICharacterSkills.Count)
-                break;
-            var ui = UICharacterSkills[i];
-            ui.cskill = skill;
-            ui.Show();
-            ++i;
-        }
 
         for (; i < UICharacterSkills.Count; ++i)
         {

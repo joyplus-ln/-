@@ -32,13 +32,8 @@ public abstract class BaseCharacterEntity : MonoBehaviour
                 return;
             item = value;
 
-
-            var customskill = item.CharacterData.customSkills;
-            if (customskill != null)
-                for (int i = 0; i < customskill.Count; i++)
-                {
-                    CustomSkills.Add(SkillUtils.MakeCustomSkill(customskill[i]));
-                }
+            CustomSkills.AddRange(item.CharacterData.GetCustomSkills());
+            Debug.LogError("我有几个技能？" + CustomSkills.Count);
             Revive();
         }
     }
