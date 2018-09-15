@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class UIItemList : UIDataItemList<UIItem, PlayerItem>
@@ -11,6 +12,7 @@ public class UIItemList : UIDataItemList<UIItem, PlayerItem>
     public void SetListItems(List<PlayerItem> list, UnityAction<UIItem> onSetListItem = null)
     {
         ClearListItems();
+        Debug.Log("item list " + list.Count);
         foreach (var entry in list)
         {
             var ui = SetListItem(entry);

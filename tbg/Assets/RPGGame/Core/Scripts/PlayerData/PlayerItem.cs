@@ -41,8 +41,14 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
     private int collectExp = -1;
     private int dirtyExp = -1;  // Exp for dirty check to calculate `Level` and `CollectExp` fields
     private Dictionary<string, int> evolveMaterials = null;
+    public ItemType Itemtype = ItemType.nothing;
 
-    public ItemType itemType = ItemType.nothing;
+    public ItemType itemType
+    {
+        get { return Itemtype; }
+
+        set { Itemtype = value; }
+    }
 
     public PlayerItem()
     {
@@ -71,6 +77,8 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         to.Exp = from.Exp;
         to.EquipItemId = from.EquipItemId;
         to.EquipPosition = from.EquipPosition;
+        to.itemType = from.itemType;
+
     }
 
     public PlayerItem CreateLevelUpItem(int increaseExp)
@@ -96,7 +104,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
                         return GameDatabase.equipments[GUID];
                     break;
             }
-            Debug.LogError("不存在这个id 肯定是哪里出错了:" + GUID);
+            Debug.LogError("不存在这个id 肯定是哪里出错了:" + GUID + ":" + itemType);
             return null;
         }
     }
@@ -310,6 +318,8 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
     {
         get { return EquipmentData != null; }
     }
+
+
 
     public bool IsInTeamFormation(string formationName)
     {

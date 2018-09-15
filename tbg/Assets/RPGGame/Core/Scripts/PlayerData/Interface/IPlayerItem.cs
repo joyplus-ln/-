@@ -7,8 +7,9 @@
     int Exp { get; set; }
     string EquipItemId { get; set; }
     string EquipPosition { get; set; }
+    PlayerItem.ItemType itemType { get; set; }
 
-    
+
 }
 public interface IPlayerOtherItem
 {

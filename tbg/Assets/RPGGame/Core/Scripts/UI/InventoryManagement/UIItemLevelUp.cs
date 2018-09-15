@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
@@ -47,23 +48,20 @@ public class UIItemLevelUp : UIItemWithMaterials
 
     protected override List<PlayerItem> GetAvailableItemList()
     {
+        Debug.Log("获取可用的item");
         if (!Item.IsReachMaxLevel)
         {
             if (Item.CharacterData != null)
             {
-                var list = PlayerItem.characterDataMap.Values.Where(a => a.CharacterData != null && !a.SqLiteIndex.Equals(Item.SqLiteIndex) && a.CanBeMaterial).ToList();
-                var elist = PlayerItem.equipDataMap.Values.Where(a => a.CharacterData != null && !a.SqLiteIndex.Equals(Item.SqLiteIndex) && a.CanBeMaterial).ToList();
-                list.AddRange(elist);
+                var list = PlayerItem.characterDataMap.Values.Where(a => a.CharacterData != null && !a.SqLiteIndex.Equals(Item.SqLiteIndex)/* && a.CanBeMaterial*/).ToList();
                 list.SortRewardExp();
                 return list;
             }
             if (Item.EquipmentData != null)
             {
-                var list = PlayerItem.characterDataMap.Values.Where(a => a.EquipmentData != null && !a.SqLiteIndex.Equals(Item.SqLiteIndex) && a.CanBeMaterial).ToList();
                 var elist = PlayerItem.equipDataMap.Values.Where(a => a.EquipmentData != null && !a.SqLiteIndex.Equals(Item.SqLiteIndex) && a.CanBeMaterial).ToList();
-                list.AddRange(elist);
-                list.SortRewardExp();
-                return list;
+                elist.SortRewardExp();
+                return elist;
             }
         }
         return new List<PlayerItem>();
