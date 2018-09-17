@@ -29,6 +29,11 @@ public class LoginSceneManager : MonoBehaviour
     private void OnValidateLoginTokenSuccess(PlayerResult result)
     {
         var gameInstance = GameInstance.Singleton;
+        if (result.error.Length > 1)
+        {
+            OnValidateLoginTokenError(result.error);
+            return;
+        }
         gameInstance.OnGameServiceLogin(result);
     }
 

@@ -8,6 +8,7 @@ using UnityEngine;
 public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
 {
     //public static readonly Dictionary<string, PlayerItem> DataMap = new Dictionary<string, PlayerItem>();
+    //玩家拥有的
     public static readonly Dictionary<string, PlayerItem> characterDataMap = new Dictionary<string, PlayerItem>();
     public static readonly Dictionary<string, PlayerItem> equipDataMap = new Dictionary<string, PlayerItem>();
     //在角色拥有表中唯一

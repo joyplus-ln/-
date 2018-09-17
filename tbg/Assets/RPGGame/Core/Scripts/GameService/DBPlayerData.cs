@@ -220,6 +220,35 @@ public class DBPlayerData
             }
         }
     }
+
+    /// <summary>
+    /// 插入初始otheritem
+    /// </summary>
+    public void InsertStartEquiptem(Player player)
+    {
+        for (var i = 0; i < GameInstance.Singleton.gameDatabase.startEquipsItems.Count; ++i)
+        {
+            if (!GameInstance.Singleton.gameDatabase.equipments.ContainsKey(GameInstance.Singleton.gameDatabase.startEquipsItems[i]))
+                continue;
+            var startItem = GameInstance.Singleton.gameDatabase.equipments[GameInstance.Singleton.gameDatabase.startEquipsItems[i]];
+
+            if (true)
+            {
+                PlayerItem currentItem = new PlayerItem(PlayerItem.ItemType.equip);
+                currentItem.GUID = GameInstance.Singleton.gameDatabase.startEquipsItems[i];//id,@id,
+                GameInstance.SqliteUtils.ExecuteNonQuery(@"INSERT INTO playerHasEquips (id,playerId, Guid, amount, exp, equipItemId, equipPosition) VALUES ( @id,@playerId, @Guid, @amount, @exp, @equipItemId, @equipPosition)",
+                    new SqliteParameter("@id", System.Guid.NewGuid().ToString()),
+                    new SqliteParameter("@playerId", player.Id),
+                    new SqliteParameter("@Guid", currentItem.GUID),
+                    new SqliteParameter("@amount", currentItem.Amount),
+                    new SqliteParameter("@exp", currentItem.Exp),
+                    new SqliteParameter("@equipItemId", currentItem.EquipItemId),
+                    new SqliteParameter("@equipPosition", currentItem.EquipPosition));
+                //HelperUnlockItem(player.Id, startItem.guid);
+
+            }
+        }
+    }
     /// <summary>
     /// 角色升级
     /// </summary>

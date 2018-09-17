@@ -24,6 +24,7 @@ public class GameDatabase : ScriptableObject
     };
 
     public List<string> startCharacterItems;
+    public List<string> startEquipsItems;
     //[Header("Item database")]
     //[Tooltip("List of game items, place all items here (includes character, equipment)")]
     //public List<BaseItem> items;
@@ -65,7 +66,6 @@ public class GameDatabase : ScriptableObject
     public Dictionary<string, CharacterItem> characters = new Dictionary<string, CharacterItem>();
     public Dictionary<string, EquipmentItem> equipments = new Dictionary<string, EquipmentItem>();
     //装备
-    public readonly Dictionary<string, CharacterItem> EquipItems = new Dictionary<string, CharacterItem>();
     public readonly Dictionary<string, Currency> Currencies = new Dictionary<string, Currency>();
     public readonly Dictionary<string, Stamina> Staminas = new Dictionary<string, Stamina>();
     public readonly Dictionary<string, Formation> Formations = new Dictionary<string, Formation>();

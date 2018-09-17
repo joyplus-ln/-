@@ -241,6 +241,7 @@ public class DBLogin
             new SqliteParameter("@playerId", player.Id));
         //todo 插入新玩家数据
         GameInstance.dbPlayerData.InsertStartPlayerCharacter(player);
+        GameInstance.dbPlayerData.InsertStartEquiptem(player);
         GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE player SET profileName=@profileName, loginToken=@loginToken, exp=@exp, selectedFormation=@selectedFormation WHERE id=@id",
             new SqliteParameter("@profileName", player.ProfileName),
             new SqliteParameter("@loginToken", player.LoginToken),
@@ -343,5 +344,5 @@ public class DBLogin
         }
         return player;
     }
-#endregion
+    #endregion
 }
