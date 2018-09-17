@@ -109,10 +109,9 @@ public class UIEquipmentManager : UIBase
 
         if (uiEquipmentList != null)
         {
-            var list = PlayerItem.characterDataMap.Values.Where(a => a.PlayerId == playerId && a.EquipmentData != null).ToList();
+            //var list = PlayerItem.characterDataMap.Values.Where(a => a.PlayerId == playerId && a.EquipmentData != null).ToList();
             var elist = PlayerItem.equipDataMap.Values.Where(a => a.PlayerId == playerId && a.EquipmentData != null).ToList();
-            list.AddRange(elist);
-            list.SortLevel();
+            elist.SortLevel();
             uiEquipmentList.selectable = true;
             uiEquipmentList.multipleSelection = false;
             uiEquipmentList.eventSelect.RemoveListener(SelectItem);
@@ -120,7 +119,7 @@ public class UIEquipmentManager : UIBase
             uiEquipmentList.eventDeselect.RemoveListener(DeselectItem);
             uiEquipmentList.eventDeselect.AddListener(DeselectItem);
             //  TODO: Set equipment status
-            uiEquipmentList.SetListItems(list, (ui) =>
+            uiEquipmentList.SetListItems(elist, (ui) =>
             {
             });
         }
