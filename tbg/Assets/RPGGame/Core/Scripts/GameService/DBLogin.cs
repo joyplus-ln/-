@@ -329,6 +329,7 @@ public class DBLogin
 
     public Player GetPlayerByLoginToken(string playerId, string loginToken)
     {
+        Debug.LogError("---" + playerId);
         Player player = null;
         var players = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM player WHERE id=@playerId AND loginToken=@loginToken",
             new SqliteParameter("@playerId", playerId),

@@ -46,6 +46,9 @@ MonoBehaviour:
   startCharacterItems:
   - 1002
   - 1003
+  startEquipsItems:
+  - 2001
+  - 2002
   otherItem:
   - Id: id001
     Des: 123456
