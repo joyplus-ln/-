@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -21105,7 +21105,7 @@ CanvasGroup:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 714145495}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -22257,7 +22257,7 @@ MonoBehaviour:
     exp: 0
     equipItemId: 
     equipPosition: 
-    itemType: 3
+    Itemtype: 0
   ShowOnceCustomSkill: 0
   textTitle: {fileID: 456418438}
   textDescription: {fileID: 0}
@@ -41592,7 +41592,7 @@ MonoBehaviour:
     exp: 0
     equipItemId: 
     equipPosition: 
-    itemType: 3
+    Itemtype: 0
   ShowOnceCustomSkill: 0
   textTitle: {fileID: 926738578}
   textDescription: {fileID: 0}
@@ -51682,7 +51682,7 @@ MonoBehaviour:
     exp: 0
     equipItemId: 
     equipPosition: 
-    itemType: 3
+    Itemtype: 0
   ShowOnceCustomSkill: 0
   textTitle: {fileID: 1695191351}
   textDescription: {fileID: 0}
