@@ -419,6 +419,13 @@ public class DBPlayerData
     }
 
 
+    /// <summary>
+    /// 从用户表中查找这件装备装在哪个角色身上
+    /// </summary>
+    /// <param name="playerId"></param>
+    /// <param name="equipItemId"></param>
+    /// <param name="equipPosition"></param>
+    /// <returns></returns>
     public PlayerItem GetPlayerItemByEquipper(string playerId, string equipItemId, string equipPosition)
     {
         PlayerItem playerItem = null;
@@ -428,8 +435,7 @@ public class DBPlayerData
             new SqliteParameter("@equipPosition", equipPosition));
         if (playerItems.Read())
         {
-            playerItem = new PlayerItem(PlayerItem.ItemType.character);
-            playerItem.itemType = PlayerItem.ItemType.character;
+            playerItem = new PlayerItem(PlayerItem.ItemType.equip);
             playerItem.SqLiteIndex = playerItems.GetString(0);
             playerItem.PlayerId = playerItems.GetString(1);
             playerItem.GUID = playerItems.GetString(2);
