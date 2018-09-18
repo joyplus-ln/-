@@ -351,7 +351,7 @@ public class DBBattle
                         new SqliteParameter("@Guid", player.SelectedFormation));
                     while (formations.Read())
                     {
-                        var itemId = formations.GetInt32(0).ToString();
+                        var itemId = formations.GetString(0);
                         var character = GameInstance.dbPlayerData.GetPlayerCharacterItemById(itemId);
                         if (character != null)
                         {
@@ -441,7 +441,7 @@ public class DBBattle
             result.updateItems = new List<PlayerItem>();
             unEquipItem.EquipItemId = "";
             unEquipItem.EquipPosition = "";
-            GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerItem SET equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
+            GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
                 new SqliteParameter("@equipItemId", unEquipItem.EquipItemId),
                 new SqliteParameter("@equipPosition", unEquipItem.EquipPosition),
                 new SqliteParameter("@id", unEquipItem.SqLiteIndex));
