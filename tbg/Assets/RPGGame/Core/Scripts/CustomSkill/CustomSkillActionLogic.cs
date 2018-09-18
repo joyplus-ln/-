@@ -46,32 +46,7 @@ public class CustomSkillActionLogic
     }
 
     //custom skill logic
-    IEnumerator SkillAttackRoutine()
-    {
-        var skill = self.SelectedCustomSkill;
 
-        var foes = self.Manager.GetFoes(self);
-        var isAlreadyReachedTarget = false;
-
-        var attackDamage = new SkillAttackDamage();
-
-
-        // Move to target character
-        //yield return self.MoveTo(self.ActionTarget, self.Manager.doActionMoveSpeed);
-        //isAlreadyReachedTarget = true;
-
-        self.Attack(self.ActionTarget, null, attackDamage.GetPAtkDamageRate(), attackDamage.GetMAtkDamageRate(), attackDamage.hitCount, (int)attackDamage.GetFixDamage());
-        self.ClearActionState();
-        yield return 0;
-
-        // End attack loop
-        // Wait damages done
-        while (self.Damages.Count > 0)
-        {
-            yield return 0;
-        }
-
-    }
 
     public void RandomAction()
     {
@@ -161,22 +136,45 @@ public class CustomSkillActionLogic
         yield return self.MoveTo(self.Manager.MapCenterPosition, self.Manager.doActionMoveSpeed);
         self.ClearActionState();
         // Buffs
-        yield return self.StartCoroutine(ApplyBuffsRoutine());
-        // Attacks
         yield return self.StartCoroutine(SkillAttackRoutine());
+        // Attacks
+        //yield return self.StartCoroutine(ApplyBuffsRoutine());
         // Move back to formation
         yield return self.MoveTo(self.Container.position, self.Manager.actionDoneMoveSpeed);
         self.NotifyEndAction();
         self.IsDoingAction = false;
     }
-
-    //custom buff
-    IEnumerator ApplyBuffsRoutine()
+    IEnumerator SkillAttackRoutine()
     {
-        var allies = self.Manager.GetAllies(self);
-        var foes = self.Manager.GetFoes(self);
-        self.SelectedCustomSkill.SetNewEntitys(allies, foes);
-        yield return self.SelectedCustomSkill.ApplyBuffLogic();
+        var selfEnsmys = self.Manager.GetAllies(self);
+        var enemyfoes = self.Manager.GetFoes(self);
+        self.SelectedCustomSkill.SetNewEntitys(self, selfEnsmys, enemyfoes);
+        //var isAlreadyReachedTarget = false;
+
+
+
+        // Move to target character
+        //yield return self.MoveTo(self.ActionTarget, self.Manager.doActionMoveSpeed);
+        //isAlreadyReachedTarget = true;
+        self.ClearActionState();
         yield return 0;
+
+        // End attack loop
+        // Wait damages done
+        while (self.Damages.Count > 0)
+        {
+            yield return 0;
+        }
+
     }
+    //buff放到技能里边放
+    ////custom buff
+    //IEnumerator ApplyBuffsRoutine()
+    //{
+    //    var selfEnsmys = self.Manager.GetAllies(self);
+    //    var enemyfoes = self.Manager.GetFoes(self);
+    //    self.SelectedCustomSkill.SetNewEntitys(selfEnsmys, enemyfoes);
+    //    yield return self.SelectedCustomSkill.ApplyBuffLogic();
+    //    yield return 0;
+    //}
 }

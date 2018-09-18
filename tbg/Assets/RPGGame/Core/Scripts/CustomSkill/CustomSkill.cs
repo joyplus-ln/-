@@ -17,7 +17,8 @@ public class CustomSkill
     //冷却 技能CD
     public int CoolDownTurns = 10;
     #endregion
-    private List<BaseCharacterEntity> selfs, enemys;
+    protected List<BaseCharacterEntity> selfs, enemys;
+    protected CharacterEntity selfOnly;
     public SkillUsageScope usageScope = SkillUsageScope.Enemy;
 
 
@@ -156,8 +157,9 @@ public class CustomSkill
     }
 
 
-    public void SetNewEntitys(List<BaseCharacterEntity> selfs, List<BaseCharacterEntity> enemys)
+    public void SetNewEntitys(CharacterEntity selfOnly, List<BaseCharacterEntity> selfs, List<BaseCharacterEntity> enemys)
     {
+        this.selfOnly = selfOnly;
         this.selfs = selfs;
         this.enemys = enemys;
     }
