@@ -64,20 +64,19 @@ public class CustomBody
         // Cannot evade, receive damage
         if (hitChance < 0 || Random.value > hitChance)
         {
-            self.Manager.SpawnMissText(self);
+
             attackInfo.shanbi = true;
+            DeductBlood((int)totalDmg, DmgType.Miss);
             self.ApplySkillAndBuff(CustomSkill.TriggerType.gomiss);
         }
         else
         {
             if (isBlock)
-                self.Manager.SpawnBlockText((int)totalDmg, self);
+                DeductBlood((int)totalDmg, DmgType.Block);
             else if (isCritical)
-                self.Manager.SpawnCriticalText((int)totalDmg, self);
+                DeductBlood((int)totalDmg, DmgType.Critical);
             else
-                self.Manager.SpawnDamageText((int)totalDmg, self);
-
-            self.Hp -= (int)totalDmg;
+                DeductBlood((int)totalDmg, DmgType.Normal);
         }
         attackInfo.totalDamage = (int)totalDmg;
         self.ApplySkillAndBuff(CustomSkill.TriggerType.receiveDamage);
@@ -86,4 +85,39 @@ public class CustomBody
         //CacheAnimator.SetTrigger(ANIM_KEY_HURT);
         return attackInfo;
     }
+
+    public void DeductBlood(int totalDmg, DmgType type)
+    {
+        switch (type)
+        {
+            case DmgType.Normal:
+                self.Manager.SpawnDamageText(totalDmg, self);
+                break;
+            case DmgType.Block:
+                self.Manager.SpawnBlockText(totalDmg, self);
+                break;
+            case DmgType.Critical:
+                self.Manager.SpawnCriticalText(totalDmg, self);
+                break;
+            case DmgType.Miss:
+                self.Manager.SpawnMissText(self);
+                return;
+                break;
+                case DmgType.Heal:
+                self.Manager.SpawnAddHealText("+",totalDmg,self);
+                break;
+        }
+        self.Hp -= totalDmg;
+    }
+}
+
+public enum DmgType
+{
+    Normal,
+    Block,
+    Critical,
+    Miss,
+    Heal
+
+
 }

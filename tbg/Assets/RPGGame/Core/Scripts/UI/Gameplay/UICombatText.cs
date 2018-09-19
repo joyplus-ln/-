@@ -31,6 +31,17 @@ public class UICombatText : MonoBehaviour
         }
     }
 
+    private string customstring;
+    public string CustomStr
+    {
+        get { return customstring; }
+        set
+        {
+            customstring = value;
+            TempText.text += customstring;
+        }
+    }
+
     private int amount;
     public int Amount
     {
@@ -38,7 +49,7 @@ public class UICombatText : MonoBehaviour
         set
         {
             amount = value;
-            TempText.text = amount.ToString("N0");
+            TempText.text += amount.ToString("N0");
         }
     }
 

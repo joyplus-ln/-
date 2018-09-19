@@ -57,6 +57,11 @@ public class CharacterEntity : BaseCharacterEntity
     private CustomSkillActionLogic customSkillActionLogic;
     private CustomBody customBody;
 
+    public CustomBody Custombody
+    {
+        get { return customBody; }
+    }
+
     #region Temp components
     private TargetingRigidbody cacheTargetingRigidbody;
     public TargetingRigidbody CacheTargetingRigidbody

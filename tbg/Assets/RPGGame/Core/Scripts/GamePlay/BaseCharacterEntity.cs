@@ -37,7 +37,7 @@ public abstract class BaseCharacterEntity : MonoBehaviour
             {
                 CustomSkills[i].Init();
             }
-            Debug.LogError("我有几个技能？" + CustomSkills.Count);
+            Debug.Log("我有几个技能？" + CustomSkills.Count);
             Revive();
         }
     }
@@ -195,6 +195,7 @@ public abstract class BaseCharacterEntity : MonoBehaviour
 
     public virtual void ApplyCustomBuff(CustomBuff buff)
     {
+        buff.SetSelf(this as CharacterEntity);
         if (Buffs_custom.ContainsKey(buff.guid))
         {
             return;

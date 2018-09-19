@@ -150,7 +150,7 @@ public class CustomSkillActionLogic
         var enemyfoes = self.Manager.GetFoes(self);
         self.SelectedCustomSkill.SetNewEntitys(self, selfEnsmys, enemyfoes);
         //var isAlreadyReachedTarget = false;
-
+        yield return self.SelectedCustomSkill.DoSkillLogic();
 
 
         // Move to target character

@@ -8,11 +8,22 @@ public class CustomBuff
     public string guid;
     public string buffText;
 
+    protected CharacterEntity selfOnly;
+    protected CharacterEntity giver;
     public CalculationAttributes SelfAttributes = new CalculationAttributes();
 
     public virtual void Init()
     {
+    }
 
+    public virtual void SetSelf(CharacterEntity selfOnly)
+    {
+        this.selfOnly = selfOnly;
+    }
+
+    public virtual void SetGiver(CharacterEntity giver)
+    {
+        this.giver = giver;
     }
 
     public virtual void BeforeFight()

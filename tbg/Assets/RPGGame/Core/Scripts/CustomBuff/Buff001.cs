@@ -16,6 +16,8 @@
     {
         SelfAttributes.hp += 1000;
         SelfAttributes.mAtk += 200;
+        selfOnly.Custombody.DeductBlood(-1000,DmgType.Heal);
+        
     }
 
     public override void Afterfight()

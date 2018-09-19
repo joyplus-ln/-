@@ -173,11 +173,11 @@ public class CustomSkill
 
     public virtual IEnumerator ApplyBuffLogic()
     {
-        yield return 0;
+        yield return null;
     }
     public virtual IEnumerator DoSkillLogic()
     {
-        yield return 0;
+        yield return null;
     }
 
     protected CharacterEntity GetSelf()

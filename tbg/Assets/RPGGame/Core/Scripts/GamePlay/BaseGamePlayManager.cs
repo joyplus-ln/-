@@ -42,11 +42,11 @@ public abstract class BaseGamePlayManager : MonoBehaviour
         SpawnCombatText(combatBlockPrefab, amount, character);
     }
 
-    public void SpawnHealText(int amount, BaseCharacterEntity character)
+    public void SpawnAddHealText(string custr,int amount, BaseCharacterEntity character)
     {
-        SpawnCombatText(combatHealPrefab, amount, character);
+        SpawnCombatText(combatHealPrefab, amount, character, custr);
     }
-
+    //毒
     public void SpawnPoisonText(int amount, BaseCharacterEntity character)
     {
         SpawnCombatText(combatPoisonPrefab, amount, character);
@@ -61,11 +61,13 @@ public abstract class BaseGamePlayManager : MonoBehaviour
         combatText.TempText.text = LanguageManager.Texts[GameText.COMBAT_MISS];
     }
 
-    public void SpawnCombatText(UICombatText prefab, int amount, BaseCharacterEntity character)
+    //战斗
+    public void SpawnCombatText(UICombatText prefab, int amount, BaseCharacterEntity character, string customStr = "")
     {
         var combatText = Instantiate(prefab, combatTextContainer);
         combatText.transform.localScale = Vector3.one;
         combatText.TempObjectFollower.targetObject = character.bodyEffectContainer;
+        combatText.CustomStr = customStr;
         combatText.Amount = amount;
     }
 
