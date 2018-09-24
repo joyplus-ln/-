@@ -34,22 +34,22 @@ public abstract class BaseGamePlayManager : MonoBehaviour
 
     public void SpawnCriticalText(int amount, BaseCharacterEntity character)
     {
-        SpawnCombatText(combatCriticalPrefab, amount, character);
+        SpawnCombatText(combatCriticalPrefab, amount, character,"暴击");
     }
 
     public void SpawnBlockText(int amount, BaseCharacterEntity character)
     {
-        SpawnCombatText(combatBlockPrefab, amount, character);
+        SpawnCombatText(combatBlockPrefab, amount, character,"格挡");
     }
 
-    public void SpawnAddHealText(string custr,int amount, BaseCharacterEntity character)
+    public void SpawnAddHealText(string custr, int amount, BaseCharacterEntity character)
     {
         SpawnCombatText(combatHealPrefab, amount, character, custr);
     }
     //毒
     public void SpawnPoisonText(int amount, BaseCharacterEntity character)
     {
-        SpawnCombatText(combatPoisonPrefab, amount, character);
+        SpawnCombatText(combatPoisonPrefab, amount, character,"中毒");
     }
 
     public void SpawnMissText(BaseCharacterEntity character)
@@ -69,6 +69,14 @@ public abstract class BaseGamePlayManager : MonoBehaviour
         combatText.TempObjectFollower.targetObject = character.bodyEffectContainer;
         combatText.CustomStr = customStr;
         combatText.Amount = amount;
+    }
+
+    public void SpawnCombatCustomText(BaseCharacterEntity character, string customStr)
+    {
+        var combatText = Instantiate(combatPoisonPrefab, combatTextContainer);
+        combatText.transform.localScale = Vector3.one;
+        combatText.TempObjectFollower.targetObject = character.bodyEffectContainer;
+        combatText.CustomStr = customStr;
     }
 
 

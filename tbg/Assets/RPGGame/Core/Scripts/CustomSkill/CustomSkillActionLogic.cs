@@ -131,16 +131,15 @@ public class CustomSkillActionLogic
     IEnumerator DoSkillActionRoutine()
     {
         self.IsDoingAction = true;
-        var skill = self.SelectedCustomSkill;
         // Cast
-        yield return self.MoveTo(self.Manager.MapCenterPosition, self.Manager.doActionMoveSpeed);
+
         self.ClearActionState();
         // Buffs
         yield return self.StartCoroutine(SkillAttackRoutine());
         // Attacks
         //yield return self.StartCoroutine(ApplyBuffsRoutine());
         // Move back to formation
-        yield return self.MoveTo(self.Container.position, self.Manager.actionDoneMoveSpeed);
+
         self.NotifyEndAction();
         self.IsDoingAction = false;
     }

@@ -185,6 +185,15 @@ public class CustomSkill
         return GamePlayManager.Singleton.ActiveCharacter;
     }
 
+    protected IEnumerator MoveToTarget()
+    {
+        yield return selfOnly.MoveTo(selfOnly.Manager.MapCenterPosition, selfOnly.Manager.doActionMoveSpeed);
+    }
+
+    protected IEnumerator MoveToSelfPos()
+    {
+        yield return selfOnly.MoveTo(selfOnly.Container.position, selfOnly.Manager.actionDoneMoveSpeed);
+    }
     public enum SkillUsageScope
     {
         Self,

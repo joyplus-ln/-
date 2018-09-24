@@ -22,9 +22,12 @@ public class Skill001 : CustomSkill
 
     public override IEnumerator DoSkillLogic()
     {
+        selfOnly.Manager.SpawnCombatCustomText(selfOnly, skillName);
+        yield return MoveToTarget();
         var attackDamage = new SkillAttackDamage();
         selfOnly.Attack(selfOnly.ActionTarget, null, attackDamage.GetPAtkDamageRate(), attackDamage.GetMAtkDamageRate(), attackDamage.hitCount, (int)attackDamage.GetFixDamage());
         yield return ApplyBuffLogic();
+        yield return MoveToSelfPos();
         yield return null;
     }
 }

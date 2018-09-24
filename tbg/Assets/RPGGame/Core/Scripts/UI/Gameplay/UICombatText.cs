@@ -26,7 +26,10 @@ public class UICombatText : MonoBehaviour
         get
         {
             if (tempText == null)
+            {
                 tempText = GetComponent<Text>();
+                tempText.text = "";
+            }
             return tempText;
         }
     }
