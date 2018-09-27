@@ -26,6 +26,7 @@ public class GamePlayManager : BaseGamePlayManager
     public Transform uiCharacterStatsContainer;
     public UICharacterStats uiCharacterStatsPrefab;
     public UICharacterActionManager uiCharacterActionManager;
+    public UseSkillManager uiUseSkillManager;
     public CharacterEntity ActiveCharacter { get; private set; }
     public int CurrentWave { get; private set; }
     //public NormalStage CastedNormalStage { get { return PlayingStage as NormalStage; } }
@@ -50,6 +51,7 @@ public class GamePlayManager : BaseGamePlayManager
             inputCamera = Camera.main;
         // Setup uis
         uiCharacterActionManager.Hide();
+        uiUseSkillManager.Hide();
         // Setup player formation
         playerFormation.isPlayerFormation = true;
         playerFormation.foeFormation = foeFormation;
@@ -80,6 +82,7 @@ public class GamePlayManager : BaseGamePlayManager
             if (IsAutoPlay)
             {
                 uiCharacterActionManager.Hide();
+                uiUseSkillManager.Hide();
                 if (ActiveCharacter != null)
                     ActiveCharacter.RandomAction();
             }
@@ -207,7 +210,10 @@ public class GamePlayManager : BaseGamePlayManager
                 if (IsAutoPlay)
                     ActiveCharacter.RandomAction();
                 else
+                {
                     uiCharacterActionManager.Show();
+                    uiUseSkillManager.SetData(ActiveCharacter);
+                }
             }
             else
             {

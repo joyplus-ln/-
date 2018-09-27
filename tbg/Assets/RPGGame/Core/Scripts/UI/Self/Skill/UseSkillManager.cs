@@ -6,19 +6,21 @@ public class UseSkillManager : MonoBehaviour
 {
     public List<UseSKillItem> useSKillItems = new List<UseSKillItem>();
     public Transform SelectedTransform;
+
+    public CharacterEntity ActiveCharacter { set; get; }
     // Use this for initialization
     void Start()
     {
-        SetData(5);
     }
 
-    public void SetData(int num)
+    public void SetData(CharacterEntity ActiveCharacter)
     {
+        this.ActiveCharacter = ActiveCharacter;
         for (int i = 0; i < useSKillItems.Count; i++)
         {
-            if (i < num)
+            if (i < ActiveCharacter.CustomSkills.Count)
             {
-                useSKillItems[i].SetData(this);
+                useSKillItems[i].SetData(this, i);
                 useSKillItems[i].gameObject.SetActive(true);
             }
             else
@@ -26,6 +28,11 @@ public class UseSkillManager : MonoBehaviour
                 useSKillItems[i].gameObject.SetActive(false);
             }
         }
+    }
+
+    public void Hide()
+    {
+
     }
 
 }
