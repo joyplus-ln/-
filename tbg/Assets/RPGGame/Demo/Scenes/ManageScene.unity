@@ -5292,6 +5292,11 @@ Prefab:
     - {fileID: 114334448661131728, guid: d14dcc6f9ccaffb449a1043604885053, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: d14dcc6f9ccaffb449a1043604885053, type: 2}
   m_IsPrefabAsset: 0
+--- !u!224 &507791527 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 224977445275959802, guid: d14dcc6f9ccaffb449a1043604885053,
+    type: 2}
+  m_PrefabInternal: {fileID: 507791526}
 --- !u!1001 &508889710
 Prefab:
   m_ObjectHideFlags: 0
@@ -23172,6 +23177,7 @@ GameObject:
   - component: {fileID: 1857818303}
   - component: {fileID: 1857818302}
   - component: {fileID: 1857818301}
+  - component: {fileID: 1857818304}
   m_Layer: 5
   m_Name: UICharacterList
   m_TagString: Untagged
@@ -23267,6 +23273,19 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1857818298}
   m_CullTransparentMesh: 0
+--- !u!114 &1857818304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1857818298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b118aab48f6dc0b41b260fbf1cfb800d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 1284602104132672, guid: a702cdfeb2e75d54e817f666e40ff2e2, type: 2}
+  content: {fileID: 507791527}
 --- !u!1001 &1868721521
 Prefab:
   m_ObjectHideFlags: 0
