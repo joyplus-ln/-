@@ -19879,7 +19879,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1429627412}
-  - component: {fileID: 1429627409}
   - component: {fileID: 1429627411}
   - component: {fileID: 1429627410}
   - component: {fileID: 1429627413}
@@ -19890,29 +19889,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &1429627409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1429627408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4cc06db76c590ba4199af0e10f05a706, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  root: {fileID: 1429627408}
-  hideOnAwake: 0
-  eventShow:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  eventHide:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1429627410
 MonoBehaviour:
   m_ObjectHideFlags: 0
