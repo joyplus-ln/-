@@ -12208,6 +12208,30 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224520315587141970, guid: 7da0ad9e715167f4686e786651e7c5ce,
     type: 2}
   m_PrefabInternal: {fileID: 592334114}
+--- !u!224 &592334116 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 224914599483148908, guid: 7da0ad9e715167f4686e786651e7c5ce,
+    type: 2}
+  m_PrefabInternal: {fileID: 592334114}
+--- !u!1 &592334117 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1559862024077486, guid: 7da0ad9e715167f4686e786651e7c5ce,
+    type: 2}
+  m_PrefabInternal: {fileID: 592334114}
+--- !u!114 &592334118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 592334117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9555cd039d63be4b8542c1fd0dde466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: {fileID: 592334116}
+  skillitem: {fileID: 114598084464321426, guid: 37e4a761371474b448c93088d9a66016,
+    type: 2}
 --- !u!1001 &600036209
 Prefab:
   m_ObjectHideFlags: 0
@@ -24198,6 +24222,7 @@ MonoBehaviour:
   content: {fileID: 507791527}
   SelectedGameObject: {fileID: 1225496367}
   AttributeShowScript: {fileID: 573751719}
+  skillListUi: {fileID: 592334118}
 --- !u!1001 &1868721521
 Prefab:
   m_ObjectHideFlags: 0

@@ -37,7 +37,6 @@ public abstract class BaseCharacterEntity : MonoBehaviour
             {
                 CustomSkills[i].Init();
             }
-            Debug.Log("我有几个技能？" + CustomSkills.Count);
             Revive();
         }
     }

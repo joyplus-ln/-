@@ -10,6 +10,7 @@ public class CharacterListUI : MonoBehaviour
     public GameObject SelectedGameObject;
     private CharacterListItem currentSelectedItem;
     public AttributeShow AttributeShowScript;
+    public SkillListUI skillListUi;
     // Use this for initialization
     void Start()
     {
@@ -33,5 +34,6 @@ public class CharacterListUI : MonoBehaviour
     {
         this.currentSelectedItem = currentSelectedItem;
         AttributeShowScript.SetupInfo(selectedItem.Attributes);
+        skillListUi.SetData(selectedItem.CharacterData.GetCustomSkills());
     }
 }
