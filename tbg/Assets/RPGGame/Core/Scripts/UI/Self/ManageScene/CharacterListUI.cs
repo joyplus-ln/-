@@ -11,6 +11,7 @@ public class CharacterListUI : MonoBehaviour
     private CharacterListItem currentSelectedItem;
     public AttributeShow AttributeShowScript;
     public SkillListUI skillListUi;
+    public WearEquipment wearEquipment;
     // Use this for initialization
     void Start()
     {
@@ -35,5 +36,6 @@ public class CharacterListUI : MonoBehaviour
         this.currentSelectedItem = currentSelectedItem;
         AttributeShowScript.SetupInfo(selectedItem.Attributes);
         skillListUi.SetData(selectedItem.CharacterData.GetCustomSkills());
+        wearEquipment.SetData(selectedItem);
     }
 }
