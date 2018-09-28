@@ -7,6 +7,9 @@ public class CharacterListUI : MonoBehaviour
 
     public GameObject item;
     public Transform content;
+    public GameObject SelectedGameObject;
+    private CharacterListItem currentSelectedItem;
+    public AttributeShow AttributeShowScript;
     // Use this for initialization
     void Start()
     {
@@ -20,9 +23,15 @@ public class CharacterListUI : MonoBehaviour
         foreach (var key in PlayerItem.characterDataMap.Keys)
         {
             yield return items = Instantiate(item);
+            items.GetComponent<CharacterListItem>().Init(this, PlayerItem.characterDataMap[key]);
             items.transform.SetParent(content, false);
         }
 
     }
 
+    public void SelectedItem(CharacterListItem currentSelectedItem, PlayerItem selectedItem)
+    {
+        this.currentSelectedItem = currentSelectedItem;
+        AttributeShowScript.SetupInfo(selectedItem.Attributes);
+    }
 }
