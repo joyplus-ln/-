@@ -15,7 +15,7 @@ public class DBBattle
         PlayerFormation oldFormation = null;
         if (!string.IsNullOrEmpty(characterId))
         {
-            var oldFormations = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM playerFormation WHERE playerId=@playerId AND Guid=@Guid AND itemId=@itemId LIMIT 1",
+            var oldFormations = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerFormation WHERE playerId=@playerId AND Guid=@Guid AND itemId=@itemId LIMIT 1",
                 new SqliteParameter("@playerId", playerId),
                 new SqliteParameter("@Guid", formationName),
                 new SqliteParameter("@itemId", characterId));
@@ -30,13 +30,13 @@ public class DBBattle
             }
             if (oldFormation != null)
             {
-                GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerFormation SET itemId=@itemId WHERE id=@id",
+                GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerFormation SET itemId=@itemId WHERE id=@id",
                     new SqliteParameter("@itemId", oldFormation.ItemId),
                     new SqliteParameter("@id", oldFormation.Id));
             }
         }
         PlayerFormation formation = null;
-        var targetFormations = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM playerFormation WHERE playerId=@playerId AND Guid=@Guid AND position=@position LIMIT 1",
+        var targetFormations = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerFormation WHERE playerId=@playerId AND Guid=@Guid AND position=@position LIMIT 1",
             new SqliteParameter("@playerId", playerId),
             new SqliteParameter("@Guid", formationName),
             new SqliteParameter("@position", position));
@@ -57,7 +57,7 @@ public class DBBattle
             formation.DataId = formationName;
             formation.Position = position;
             formation.ItemId = characterId;
-            GameInstance.SqliteUtils.ExecuteNonQuery(@"INSERT INTO playerFormation (id, playerId, Guid, position, itemId)
+            GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerFormation (id, playerId, Guid, position, itemId)
                 VALUES (@id, @playerId, @Guid, @position, @itemId)",
                 new SqliteParameter("@id", formation.Id),
                 new SqliteParameter("@playerId", formation.PlayerId),
@@ -70,12 +70,12 @@ public class DBBattle
             if (oldFormation != null)
             {
                 oldFormation.ItemId = formation.ItemId;
-                GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerFormation SET itemId=@itemId WHERE id=@id",
+                GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerFormation SET itemId=@itemId WHERE id=@id",
                     new SqliteParameter("@itemId", oldFormation.ItemId),
                     new SqliteParameter("@id", oldFormation.Id));
             }
             formation.ItemId = characterId;
-            GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerFormation SET itemId=@itemId WHERE id=@id",
+            GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerFormation SET itemId=@itemId WHERE id=@id",
                 new SqliteParameter("@itemId", formation.ItemId),
                 new SqliteParameter("@id", formation.Id));
         }
@@ -84,7 +84,7 @@ public class DBBattle
     private PlayerClearStage HelperClearStage(string playerId, string dataId, int grade)
     {
         PlayerClearStage clearStage = null;
-        var clearStages = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM playerClearStage WHERE playerId=@playerId AND Guid=@Guid LIMIT 1",
+        var clearStages = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerClearStage WHERE playerId=@playerId AND Guid=@Guid LIMIT 1",
             new SqliteParameter("@playerId", playerId),
             new SqliteParameter("@Guid", dataId));
         if (!clearStages.Read())
@@ -94,7 +94,7 @@ public class DBBattle
             clearStage.PlayerId = playerId;
             clearStage.DataId = dataId;
             clearStage.BestRating = grade;
-            GameInstance.SqliteUtils.ExecuteNonQuery(@"INSERT INTO playerClearStage (id, playerId, Guid, bestRating)
+            GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerClearStage (id, playerId, Guid, bestRating)
                 VALUES (@id, @playerId, @Guid, @bestRating)",
                 new SqliteParameter("@id", clearStage.Id),
                 new SqliteParameter("@playerId", clearStage.PlayerId),
@@ -111,7 +111,7 @@ public class DBBattle
             if (clearStage.BestRating < grade)
             {
                 clearStage.BestRating = grade;
-                GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerClearStage SET bestRating=@bestRating WHERE id=@id",
+                GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerClearStage SET bestRating=@bestRating WHERE id=@id",
                     new SqliteParameter("@bestRating", clearStage.BestRating),
                     new SqliteParameter("@id", clearStage.Id));
             }
@@ -122,7 +122,7 @@ public class DBBattle
     private PlayerBattle GetPlayerBattleBySession(string playerId, string session)
     {
         PlayerBattle playerBattle = null;
-        var playerBattles = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM playerBattle WHERE playerId=@playerId AND session=@session",
+        var playerBattles = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerBattle WHERE playerId=@playerId AND session=@session",
             new SqliteParameter("@playerId", playerId),
             new SqliteParameter("@session", session));
         if (playerBattles.Read())
@@ -154,7 +154,7 @@ public class DBBattle
         else
         {
             player.SelectedFormation = formationName;
-            GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE player SET selectedFormation=@selectedFormation WHERE id=@id",
+            GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE player SET selectedFormation=@selectedFormation WHERE id=@id",
                 new SqliteParameter("@selectedFormation", player.SelectedFormation),
                 new SqliteParameter("@id", player.Id));
             result.player = player;
@@ -179,7 +179,7 @@ public class DBBattle
         else
         {
             HelperSetFormation(playerId, characterId, formationName, position);
-            var reader = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM playerFormation WHERE playerId=@playerId", new SqliteParameter("@playerId", playerId));
+            var reader = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerFormation WHERE playerId=@playerId", new SqliteParameter("@playerId", playerId));
             var list = new List<PlayerFormation>();
             while (reader.Read())
             {
@@ -213,7 +213,7 @@ public class DBBattle
             result.error = GameServiceErrorCode.INVALID_STAGE_DATA;
         else
         {
-            GameInstance.SqliteUtils.ExecuteNonQuery(@"DELETE FROM playerBattle WHERE playerId=@playerId AND battleResult=@battleResult",
+            GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerBattle WHERE playerId=@playerId AND battleResult=@battleResult",
                 new SqliteParameter("@playerId", playerId),
                 new SqliteParameter("@battleResult", BATTLE_RESULT_NONE));
             var stage = gameDb.Stages[stageDataId];
@@ -228,7 +228,7 @@ public class DBBattle
                 playerBattle.DataId = stageDataId;
                 playerBattle.Session = System.Guid.NewGuid().ToString();
                 playerBattle.BattleResult = BATTLE_RESULT_NONE;
-                GameInstance.SqliteUtils.ExecuteNonQuery(@"INSERT INTO playerBattle (id, playerId, Guid, session, battleResult, rating) VALUES (@id, @playerId, @Guid, @session, @battleResult, @rating)",
+                GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerBattle (id, playerId, Guid, session, battleResult, rating) VALUES (@id, @playerId, @Guid, @session, @battleResult, @rating)",
                     new SqliteParameter("@id", playerBattle.Id),
                     new SqliteParameter("@playerId", playerBattle.PlayerId),
                     new SqliteParameter("@Guid", playerBattle.DataId),
@@ -259,7 +259,7 @@ public class DBBattle
             result.error = GameServiceErrorCode.INVALID_LOGIN_TOKEN;
         else
         {
-            GameInstance.SqliteUtils.ExecuteNonQuery(@"DELETE FROM playerBattle WHERE playerId=@playerId AND battleResult=@battleResult",
+            GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerBattle WHERE playerId=@playerId AND battleResult=@battleResult",
                 new SqliteParameter("@playerId", playerId),
                 new SqliteParameter("@battleResult", BATTLE_RESULT_NONE));
             var stageStaminaTable = gameDb.stageStamina;
@@ -270,7 +270,7 @@ public class DBBattle
             playerBattle.DataId = stageDataId;
             playerBattle.Session = System.Guid.NewGuid().ToString();
             playerBattle.BattleResult = BATTLE_RESULT_NONE;
-            GameInstance.SqliteUtils.ExecuteNonQuery(@"INSERT INTO playerBattle (id, playerId, Guid, session, battleResult, rating) VALUES (@id, @playerId, @Guid, @session, @battleResult, @rating)",
+            GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerBattle (id, playerId, Guid, session, battleResult, rating) VALUES (@id, @playerId, @Guid, @session, @battleResult, @rating)",
                 new SqliteParameter("@id", playerBattle.Id),
                 new SqliteParameter("@playerId", playerBattle.PlayerId),
                 new SqliteParameter("@Guid", playerBattle.DataId),
@@ -312,7 +312,7 @@ public class DBBattle
             }
             battle.Rating = rating;
             result.rating = rating;
-            GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerBattle SET battleResult=@battleResult, rating=@rating WHERE id=@id",
+            GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerBattle SET battleResult=@battleResult, rating=@rating WHERE id=@id",
                 new SqliteParameter("@battleResult", battle.BattleResult),
                 new SqliteParameter("@rating", battle.Rating),
                 new SqliteParameter("@id", battle.Id));
@@ -333,12 +333,12 @@ public class DBBattle
                 result.rewardPlayerExp = rewardPlayerExp;
                 // Player exp
                 player.Exp += rewardPlayerExp;
-                GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE player SET exp=@exp WHERE id=@playerId",
+                GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE player SET exp=@exp WHERE id=@playerId",
                     new SqliteParameter("@exp", player.Exp),
                     new SqliteParameter("@playerId", playerId));
                 result.player = player;
                 // Character exp
-                var countFormation = GameInstance.SqliteUtils.ExecuteScalar(@"SELECT COUNT(*) FROM playerFormation WHERE playerId=@playerId AND Guid=@Guid",
+                var countFormation = GameInstance.dbDataUtils.ExecuteScalar(@"SELECT COUNT(*) FROM playerFormation WHERE playerId=@playerId AND Guid=@Guid",
                     new SqliteParameter("@playerId", playerId),
                     new SqliteParameter("@Guid", player.SelectedFormation));
                 if (countFormation != null && (long)countFormation > 0)
@@ -346,7 +346,7 @@ public class DBBattle
                     var devivedExp = (int)(stage.rewardCharacterExp / (long)countFormation);
                     result.rewardCharacterExp = devivedExp;
 
-                    var formations = GameInstance.SqliteUtils.ExecuteReader(@"SELECT itemId FROM playerFormation WHERE playerId=@playerId AND Guid=@Guid",
+                    var formations = GameInstance.dbDataUtils.ExecuteReader(@"SELECT itemId FROM playerFormation WHERE playerId=@playerId AND Guid=@Guid",
                         new SqliteParameter("@playerId", playerId),
                         new SqliteParameter("@Guid", player.SelectedFormation));
                     while (formations.Read())
@@ -356,7 +356,7 @@ public class DBBattle
                         if (character != null)
                         {
                             character.Exp += devivedExp;
-                            GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerHasCharacters SET exp=@exp WHERE id=@id",
+                            GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasCharacters SET exp=@exp WHERE id=@id",
                                 new SqliteParameter("@exp", character.Exp),
                                 new SqliteParameter("@Guid", character.GUID));
                             result.updateItems.Add(character);
@@ -368,7 +368,7 @@ public class DBBattle
                 var rewardSoftCurrency = Random.Range(stage.randomSoftCurrencyMinAmount, stage.randomSoftCurrencyMaxAmount);
                 result.rewardSoftCurrency = rewardSoftCurrency;
                 softCurrency.Amount += rewardSoftCurrency;
-                GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
+                GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
                     new SqliteParameter("@amount", softCurrency.Amount),
                     new SqliteParameter("@id", softCurrency.Id));
                 result.updateCurrencies.Add(softCurrency);
@@ -441,7 +441,7 @@ public class DBBattle
             result.updateItems = new List<PlayerItem>();
             unEquipItem.EquipItemId = "";
             unEquipItem.EquipPosition = "";
-            GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
+            GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
                 new SqliteParameter("@equipItemId", unEquipItem.EquipItemId),
                 new SqliteParameter("@equipPosition", unEquipItem.EquipPosition),
                 new SqliteParameter("@Guid", unEquipItem.GUID));
@@ -482,7 +482,7 @@ public class DBBattle
             {
                 unEquipItem.EquipItemId = "";
                 unEquipItem.EquipPosition = "";
-                GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
+                GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
                     new SqliteParameter("@equipItemId", unEquipItem.EquipItemId),
                     new SqliteParameter("@equipPosition", unEquipItem.EquipPosition),
                     new SqliteParameter("@Guid", unEquipItem.GUID));
@@ -490,7 +490,7 @@ public class DBBattle
             }
             foundEquipment.EquipItemId = characterId;
             foundEquipment.EquipPosition = equipPosition;
-            GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
+            GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
                 new SqliteParameter("@equipItemId", foundEquipment.EquipItemId),
                 new SqliteParameter("@equipPosition", foundEquipment.EquipPosition),
                 new SqliteParameter("@Guid", foundEquipment.GUID));
@@ -509,14 +509,14 @@ public class DBBattle
         var playerId = cplayer.Id;
         var loginToken = cplayer.LoginToken;
         var result = new ClearStageListResult();
-        var player = GameInstance.SqliteUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
+        var player = GameInstance.dbDataUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
             new SqliteParameter("@playerId", playerId),
             new SqliteParameter("@loginToken", loginToken));
         if (player == null || (long)player <= 0)
             result.error = GameServiceErrorCode.INVALID_LOGIN_TOKEN;
         else
         {
-            var reader = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM playerClearStage WHERE playerId=@playerId", new SqliteParameter("@playerId", playerId));
+            var reader = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerClearStage WHERE playerId=@playerId", new SqliteParameter("@playerId", playerId));
             var list = new List<PlayerClearStage>();
             while (reader.Read())
             {
@@ -538,14 +538,14 @@ public class DBBattle
         var playerId = cplayer.Id;
         var loginToken = cplayer.LoginToken;
         var result = new FormationListResult();
-        var player = GameInstance.SqliteUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
+        var player = GameInstance.dbDataUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
             new SqliteParameter("@playerId", playerId),
             new SqliteParameter("@loginToken", loginToken));
         if (player == null || (long)player <= 0)
             result.error = GameServiceErrorCode.INVALID_LOGIN_TOKEN;
         else
         {
-            var reader = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM playerFormation WHERE playerId=@playerId", new SqliteParameter("@playerId", playerId));
+            var reader = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerFormation WHERE playerId=@playerId", new SqliteParameter("@playerId", playerId));
             var list = new List<PlayerFormation>();
             while (reader.Read())
             {
@@ -568,14 +568,14 @@ public class DBBattle
         var playerId = cplayer.Id;
         var loginToken = cplayer.LoginToken;
         var result = new UnlockItemListResult();
-        var player = GameInstance.SqliteUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
+        var player = GameInstance.dbDataUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
             new SqliteParameter("@playerId", playerId),
             new SqliteParameter("@loginToken", loginToken));
         if (player == null || (long)player <= 0)
             result.error = GameServiceErrorCode.INVALID_LOGIN_TOKEN;
         else
         {
-            var reader = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM playerUnlockItem WHERE playerId=@playerId", new SqliteParameter("@playerId", playerId));
+            var reader = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerUnlockItem WHERE playerId=@playerId", new SqliteParameter("@playerId", playerId));
             var list = new List<PlayerUnlockItem>();
             while (reader.Read())
             {

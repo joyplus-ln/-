@@ -51,14 +51,14 @@ public class DBLogin
         var playerId = cplayer.Id;
         var loginToken = cplayer.LoginToken;
         var result = new AuthListResult();
-        var player = GameInstance.SqliteUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
+        var player = GameInstance.dbDataUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
             new SqliteParameter("@playerId", playerId),
             new SqliteParameter("@loginToken", loginToken));
         if (player == null || (long)player <= 0)
             result.error = GameServiceErrorCode.INVALID_LOGIN_TOKEN;
         else
         {
-            var reader = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM playerAuth WHERE playerId=@playerId", new SqliteParameter("@playerId", playerId));
+            var reader = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerAuth WHERE playerId=@playerId", new SqliteParameter("@playerId", playerId));
             var list = new List<PlayerAuth>();
             while (reader.Read())
             {
@@ -158,7 +158,7 @@ public class DBLogin
         var loginToken = cplayer.LoginToken;
         var result = new PlayerResult();
         var player = GetPlayerByLoginToken(playerId, loginToken);
-        var playerWithName = GameInstance.SqliteUtils.ExecuteScalar("SELECT COUNT(*) FROM player WHERE profileName=@profileName", new SqliteParameter("profileName", profileName));
+        var playerWithName = GameInstance.dbDataUtils.ExecuteScalar("SELECT COUNT(*) FROM player WHERE profileName=@profileName", new SqliteParameter("profileName", profileName));
         if (player == null)
             result.error = GameServiceErrorCode.INVALID_LOGIN_TOKEN;
         else if (string.IsNullOrEmpty(profileName))
@@ -168,7 +168,7 @@ public class DBLogin
         else
         {
             player.ProfileName = profileName;
-            GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE player SET profileName=@profileName WHERE id=@id",
+            GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE player SET profileName=@profileName WHERE id=@id",
                 new SqliteParameter("@profileName", player.ProfileName),
                 new SqliteParameter("@id", player.Id));
             result.player = player;
@@ -197,7 +197,7 @@ public class DBLogin
 
     private bool IsPlayerWithUsernameFound(string type, string username)
     {
-        var count = GameInstance.SqliteUtils.ExecuteScalar(@"SELECT COUNT(*) FROM playerAuth WHERE type=@type AND username=@username",
+        var count = GameInstance.dbDataUtils.ExecuteScalar(@"SELECT COUNT(*) FROM playerAuth WHERE type=@type AND username=@username",
             new SqliteParameter("@type", type),
             new SqliteParameter("@username", username));
         return count != null && (long)count > 0;
@@ -224,25 +224,25 @@ public class DBLogin
         softCurrency.Amount = softCurrencyTable.startAmount + softCurrency.PurchasedAmount;
         hardCurrency.Amount = hardCurrencyTable.startAmount + hardCurrency.PurchasedAmount;
 
-        GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
+        GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
             new SqliteParameter("@amount", softCurrency.Amount),
             new SqliteParameter("@id", softCurrency.Id));
-        GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
+        GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
             new SqliteParameter("@amount", hardCurrency.Amount),
             new SqliteParameter("@id", hardCurrency.Id));
 
-        GameInstance.SqliteUtils.ExecuteNonQuery(@"DELETE FROM playerClearStage WHERE playerId=@playerId",
+        GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerClearStage WHERE playerId=@playerId",
             new SqliteParameter("@playerId", player.Id));
-        GameInstance.SqliteUtils.ExecuteNonQuery(@"DELETE FROM playerFormation WHERE playerId=@playerId",
+        GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerFormation WHERE playerId=@playerId",
             new SqliteParameter("@playerId", player.Id));
-        GameInstance.SqliteUtils.ExecuteNonQuery(@"DELETE FROM playerStamina WHERE playerId=@playerId",
+        GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerStamina WHERE playerId=@playerId",
             new SqliteParameter("@playerId", player.Id));
-        GameInstance.SqliteUtils.ExecuteNonQuery(@"DELETE FROM playerUnlockItem WHERE playerId=@playerId",
+        GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerUnlockItem WHERE playerId=@playerId",
             new SqliteParameter("@playerId", player.Id));
         //todo 插入新玩家数据
         GameInstance.dbPlayerData.InsertStartPlayerCharacter(player);
         GameInstance.dbPlayerData.InsertStartEquiptem(player);
-        GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE player SET profileName=@profileName, loginToken=@loginToken, exp=@exp, selectedFormation=@selectedFormation WHERE id=@id",
+        GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE player SET profileName=@profileName, loginToken=@loginToken, exp=@exp, selectedFormation=@selectedFormation WHERE id=@id",
             new SqliteParameter("@profileName", player.ProfileName),
             new SqliteParameter("@loginToken", player.LoginToken),
             new SqliteParameter("@exp", player.Exp),
@@ -266,7 +266,7 @@ public class DBLogin
         playerAuth.Type = type;
         playerAuth.Username = username;
         playerAuth.Password = password;
-        GameInstance.SqliteUtils.ExecuteNonQuery(@"INSERT INTO playerAuth (id, playerId, type, username, password) VALUES (@id, @playerId, @type, @username, @password)",
+        GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerAuth (id, playerId, type, username, password) VALUES (@id, @playerId, @type, @username, @password)",
             new SqliteParameter("@id", playerAuth.Id),
             new SqliteParameter("@playerId", playerAuth.PlayerId),
             new SqliteParameter("@type", playerAuth.Type),
@@ -277,7 +277,7 @@ public class DBLogin
         player.Id = playerId;
         player = SetNewPlayerData(player);
         GameInstance.dbPlayerData.UpdatePlayerStamina(player);
-        GameInstance.SqliteUtils.ExecuteNonQuery(@"INSERT INTO player (id, profileName, loginToken, exp, selectedFormation,prefs) VALUES (@id, @profileName, @loginToken, @exp, @selectedFormation,@prefs)",
+        GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO player (id, profileName, loginToken, exp, selectedFormation,prefs) VALUES (@id, @profileName, @loginToken, @exp, @selectedFormation,@prefs)",
             new SqliteParameter("@id", player.Id),
             new SqliteParameter("@profileName", player.ProfileName),
             new SqliteParameter("@loginToken", player.LoginToken),
@@ -290,7 +290,7 @@ public class DBLogin
     private bool TryGetPlayer(string type, string username, string password, out Player player)
     {
         player = null;
-        var playerAuths = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM playerAuth WHERE type=@type AND username=@username AND password=@password",
+        var playerAuths = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerAuth WHERE type=@type AND username=@username AND password=@password",
             new SqliteParameter("@type", type),
             new SqliteParameter("@username", username),
             new SqliteParameter("@password", password));
@@ -302,7 +302,7 @@ public class DBLogin
         playerAuth.Type = playerAuths.GetString(2);
         playerAuth.Username = playerAuths.GetString(3);
         playerAuth.Password = playerAuths.GetString(4);
-        var players = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM player WHERE id=@id",
+        var players = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM player WHERE id=@id",
             new SqliteParameter("@id", playerAuth.PlayerId));
         if (players.Read())
         {
@@ -321,7 +321,7 @@ public class DBLogin
     private Player UpdatePlayerLoginToken(Player player)
     {
         player.LoginToken = System.Guid.NewGuid().ToString();
-        GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE player SET loginToken=@loginToken WHERE id=@id",
+        GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE player SET loginToken=@loginToken WHERE id=@id",
             new SqliteParameter("@loginToken", player.loginToken),
             new SqliteParameter("@id", player.Id));
         return player;
@@ -331,7 +331,7 @@ public class DBLogin
     {
         Debug.LogError("---" + playerId);
         Player player = null;
-        var players = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM player WHERE id=@playerId AND loginToken=@loginToken",
+        var players = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM player WHERE id=@playerId AND loginToken=@loginToken",
             new SqliteParameter("@playerId", playerId),
             new SqliteParameter("@loginToken", loginToken));
         if (players.Read())

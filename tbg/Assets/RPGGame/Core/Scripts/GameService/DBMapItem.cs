@@ -21,7 +21,7 @@ public class DBMapItem
 
     public Dictionary<string, CharacterItem> GetSqliteCharacters()
     {
-        var reader = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM Character");
+        var reader = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM Character");
         var list = new Dictionary<string, CharacterItem>();
         CharacterItem item = null;
         while (reader.Read())
@@ -75,7 +75,7 @@ public class DBMapItem
 
     public Dictionary<string, EquipmentItem> GetSqliteEquipments()
     {
-        var reader = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM Equipment");
+        var reader = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM Equipment");
         var list = new Dictionary<string, EquipmentItem>();
         EquipmentItem item = null;
         while (reader.Read())
@@ -167,7 +167,7 @@ public class DBMapItem
 
     public void AddOtherItem(string id, int amount)//Guid
     {
-        GameInstance.SqliteUtils.ExecuteNonQuery(@"INSERT INTO playerOtherItem (id,playerId,Guid,amount) VALUES (@id,@playerId,@Guid,@amount)",
+        GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerOtherItem (id,playerId,Guid,amount) VALUES (@id,@playerId,@Guid,@amount)",
             new SqliteParameter("@id", id),
             new SqliteParameter("@playerId", Player.CurrentPlayerId),
             new SqliteParameter("@Guid", "otherItem" + System.Guid.NewGuid()),
@@ -177,7 +177,7 @@ public class DBMapItem
 
     public void DpdateOtherItem(string id, int amount)
     {
-        GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerOtherItem SET amount=@amount WHERE id=@id AND playerId=@playerId",
+        GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerOtherItem SET amount=@amount WHERE id=@id AND playerId=@playerId",
             new SqliteParameter("@amount", amount),
             new SqliteParameter("@playerId", Player.CurrentPlayerId),
             new SqliteParameter("@id", id));
@@ -185,7 +185,7 @@ public class DBMapItem
 
     public void DeleteOtherItem(string id)
     {
-        GameInstance.SqliteUtils.ExecuteNonQuery(@"DELETE FROM playerOtherItem WHERE id=@id",
+        GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerOtherItem WHERE id=@id",
             new SqliteParameter("@id", id),
             new SqliteParameter("@playerId", Player.CurrentPlayerId));
     }
@@ -251,7 +251,7 @@ public class DBMapItem
             else
             {
                 softCurrency.Amount -= requireCurrency;
-                GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
+                GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
                     new SqliteParameter("@amount", softCurrency.Amount),
                     new SqliteParameter("@id", softCurrency.Id));
 
@@ -259,7 +259,7 @@ public class DBMapItem
                 updateItems.Add(foundItem);
                 foreach (var updateItem in updateItems)
                 {
-                    GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET playerId=@playerId, Guid=@Guid, amount=@amount, exp=@exp, equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
+                    GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET playerId=@playerId, Guid=@Guid, amount=@amount, exp=@exp, equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
                         new SqliteParameter("@playerId", updateItem.PlayerId),
                         new SqliteParameter("@Guid", updateItem.GUID),
                         new SqliteParameter("@amount", updateItem.Amount),
@@ -270,7 +270,7 @@ public class DBMapItem
                 }
                 foreach (var deleteItemId in deleteItemIds)
                 {
-                    GameInstance.SqliteUtils.ExecuteNonQuery(@"DELETE FROM playerHasEquips WHERE id=@id", new SqliteParameter("@id", deleteItemId));
+                    GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerHasEquips WHERE id=@id", new SqliteParameter("@id", deleteItemId));
                 }
                 result.updateCurrencies.Add(softCurrency);
                 result.updateItems = updateItems;
@@ -319,12 +319,12 @@ public class DBMapItem
                     deleteItemIds.Add(sellingItem.GUID, PlayerItem.ItemType.character);
             }
             softCurrency.Amount += returnCurrency;
-            GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
+            GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
                 new SqliteParameter("@amount", softCurrency.Amount),
                 new SqliteParameter("@id", softCurrency.Id));
             foreach (var updateItem in updateItems)
             {
-                GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerHasCharacters SET playerId=@playerId, Guid=@Guid, amount=@amount, exp=@exp, equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
+                GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasCharacters SET playerId=@playerId, Guid=@Guid, amount=@amount, exp=@exp, equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
                     new SqliteParameter("@playerId", updateItem.PlayerId),
                     new SqliteParameter("@Guid", updateItem.GUID),
                     new SqliteParameter("@amount", updateItem.Amount),
@@ -335,7 +335,7 @@ public class DBMapItem
             }
             foreach (var deleteItemId in deleteItemIds)
             {
-                GameInstance.SqliteUtils.ExecuteNonQuery(@"DELETE FROM playerHasCharacters WHERE id=@id", new SqliteParameter("@id", deleteItemId));
+                GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerHasCharacters WHERE id=@id", new SqliteParameter("@id", deleteItemId));
             }
             result.updateCurrencies.Add(softCurrency);
             result.updateItems = updateItems;
@@ -380,12 +380,12 @@ public class DBMapItem
                     deleteItemIds.Add(sellingItem.GUID, PlayerItem.ItemType.character);
             }
             softCurrency.Amount += returnCurrency;
-            GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
+            GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
                 new SqliteParameter("@amount", softCurrency.Amount),
                 new SqliteParameter("@id", softCurrency.Id));
             foreach (var updateItem in updateItems)
             {
-                GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET playerId=@playerId, Guid=@Guid, amount=@amount, exp=@exp, equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
+                GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET playerId=@playerId, Guid=@Guid, amount=@amount, exp=@exp, equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
                     new SqliteParameter("@playerId", updateItem.PlayerId),
                     new SqliteParameter("@Guid", updateItem.GUID),
                     new SqliteParameter("@amount", updateItem.Amount),
@@ -396,7 +396,7 @@ public class DBMapItem
             }
             foreach (var deleteItemId in deleteItemIds)
             {
-                GameInstance.SqliteUtils.ExecuteNonQuery(@"DELETE FROM playerHasEquips WHERE id=@id", new SqliteParameter("@id", deleteItemId));
+                GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerHasEquips WHERE id=@id", new SqliteParameter("@id", deleteItemId));
             }
             result.updateCurrencies.Add(softCurrency);
             result.updateItems = updateItems;
@@ -417,14 +417,14 @@ public class DBMapItem
         var playerId = cplayer.Id;
         var loginToken = cplayer.LoginToken;
         var result = new ItemListResult();
-        var player = GameInstance.SqliteUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
+        var player = GameInstance.dbDataUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
             new SqliteParameter("@playerId", playerId),
             new SqliteParameter("@loginToken", loginToken));
         if (player == null || (long)player <= 0)
             result.error = GameServiceErrorCode.INVALID_LOGIN_TOKEN;
         else
         {
-            var reader = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM playerHasCharacters WHERE playerId=@playerId", new SqliteParameter("@playerId", playerId));
+            var reader = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerHasCharacters WHERE playerId=@playerId", new SqliteParameter("@playerId", playerId));
             var list = new List<PlayerItem>();
             while (reader.Read())
             {
@@ -441,7 +441,7 @@ public class DBMapItem
             }
 
 
-            var equipmentreader = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM playerHasEquips WHERE playerId=@playerId", new SqliteParameter("@playerId", playerId));
+            var equipmentreader = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerHasEquips WHERE playerId=@playerId", new SqliteParameter("@playerId", playerId));
             var equipmentlist = new List<PlayerItem>();
             while (equipmentreader.Read())
             {
@@ -477,7 +477,7 @@ public class DBMapItem
         deleteItemIds = new List<string>();
         if (!GameInstance.GameDatabase.characters.ContainsKey(dataId))
             return false;
-        var materials = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM playerItem WHERE playerId=@playerId AND Guid=@Guid",
+        var materials = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerItem WHERE playerId=@playerId AND Guid=@Guid",
             new SqliteParameter("@playerId", playerId),
             new SqliteParameter("@Guid", dataId));
         while (materials.Read())
@@ -528,14 +528,14 @@ public class DBMapItem
         var playerId = cplayer.Id;
         var loginToken = cplayer.LoginToken;
         var result = new OtherItemListResult();
-        var player = GameInstance.SqliteUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
+        var player = GameInstance.dbDataUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
             new SqliteParameter("@playerId", playerId),
             new SqliteParameter("@loginToken", loginToken));
         if (player == null || (long)player <= 0)
             result.error = GameServiceErrorCode.INVALID_LOGIN_TOKEN;
         else
         {
-            var reader = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM playerOtherItem WHERE playerId=@playerId", new SqliteParameter("@playerId", playerId));
+            var reader = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerOtherItem WHERE playerId=@playerId", new SqliteParameter("@playerId", playerId));
             var list = new List<PlayerOtherItem>();
             while (reader.Read())
             {

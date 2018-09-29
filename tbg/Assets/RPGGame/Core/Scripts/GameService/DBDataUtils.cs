@@ -359,14 +359,14 @@ public class DBDataUtils
                 {
                     case LootBoxRequirementType.RequireSoftCurrency:
                         softCurrency.Amount -= price;
-                        GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
+                        GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
                             new SqliteParameter("@amount", softCurrency.Amount),
                             new SqliteParameter("@id", softCurrency.Id));
                         result.updateCurrencies.Add(softCurrency);
                         break;
                     case LootBoxRequirementType.RequireHardCurrency:
                         hardCurrency.Amount -= price;
-                        GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
+                        GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
                             new SqliteParameter("@amount", hardCurrency.Amount),
                             new SqliteParameter("@id", hardCurrency.Id));
                         result.updateCurrencies.Add(hardCurrency);
