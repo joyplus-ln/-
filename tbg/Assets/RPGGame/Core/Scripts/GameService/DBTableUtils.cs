@@ -89,7 +89,7 @@ public class DbRowsReader
         currentRow = -1;
     }
 }
-public class SqliteUtils
+public class DBTableUtils
 {
     public string dbPath = "./table.sqlite3";
 

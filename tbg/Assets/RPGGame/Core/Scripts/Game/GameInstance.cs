@@ -40,7 +40,7 @@ public class GameInstance : MonoBehaviour
 
     public static DBMapItem dbMapItem;
     public static DBDataUtils dbDataUtils;
-    public static SqliteUtils SqliteUtils;
+    public static DBTableUtils dbTableUtils;
     public static DBLogin dbLogin;
     public static DBPlayerData dbPlayerData;
     public static DBBattle dbBattle;
@@ -60,8 +60,8 @@ public class GameInstance : MonoBehaviour
             Debug.LogError("`Game Database` has not been set");
         else
             GameDatabase.Setup();
-        SqliteUtils = new SqliteUtils();
-        SqliteUtils.Init();
+        dbTableUtils = new DBTableUtils();
+        dbTableUtils.Init();
         dbDataUtils = new DBDataUtils();
         dbDataUtils.Init();
         dbLogin = new DBLogin();

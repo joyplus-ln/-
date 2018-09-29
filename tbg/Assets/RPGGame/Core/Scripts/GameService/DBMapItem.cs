@@ -21,7 +21,7 @@ public class DBMapItem
 
     public Dictionary<string, CharacterItem> GetSqliteCharacters()
     {
-        var reader = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM Character");
+        var reader = GameInstance.dbTableUtils.ExecuteReader(@"SELECT * FROM Character");
         var list = new Dictionary<string, CharacterItem>();
         CharacterItem item = null;
         while (reader.Read())
@@ -75,7 +75,7 @@ public class DBMapItem
 
     public Dictionary<string, EquipmentItem> GetSqliteEquipments()
     {
-        var reader = GameInstance.SqliteUtils.ExecuteReader(@"SELECT * FROM Equipment");
+        var reader = GameInstance.dbTableUtils.ExecuteReader(@"SELECT * FROM Equipment");
         var list = new Dictionary<string, EquipmentItem>();
         EquipmentItem item = null;
         while (reader.Read())
