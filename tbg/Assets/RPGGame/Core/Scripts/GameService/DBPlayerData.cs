@@ -290,7 +290,7 @@ public class DBPlayerData
             }
             foreach (var materialItem in materialItems)
             {
-                var usingAmount = materials[materialItem.SqLiteIndex];
+                var usingAmount = materials[materialItem.ItemID];
                 if (usingAmount > materialItem.Amount)
                     usingAmount = materialItem.Amount;
                 requireCurrency += levelUpPrice * usingAmount;
@@ -299,7 +299,7 @@ public class DBPlayerData
                 if (materialItem.Amount > 0)
                     updateItems.Add(materialItem);
                 else
-                    deleteItemIds.Add(materialItem.SqLiteIndex, PlayerItem.ItemType.character);
+                    deleteItemIds.Add(materialItem.ItemID, PlayerItem.ItemType.character);
             }
             if (requireCurrency > softCurrency.Amount)
                 result.error = GameServiceErrorCode.NOT_ENOUGH_SOFT_CURRENCY;
@@ -321,7 +321,7 @@ public class DBPlayerData
                         new SqliteParameter("@exp", updateItem.Exp),
                         new SqliteParameter("@equipItemId", updateItem.EquipItemId),
                         new SqliteParameter("@equipPosition", updateItem.EquipPosition),
-                        new SqliteParameter("@id", updateItem.SqLiteIndex));
+                        new SqliteParameter("@Guid", updateItem.GUID));
                 }
                 foreach (var deleteItemId in deleteItemIds)
                 {
@@ -350,7 +350,7 @@ public class DBPlayerData
         {
             playerItem = new PlayerItem(PlayerItem.ItemType.character);
             playerItem.itemType = PlayerItem.ItemType.character;
-            playerItem.SqLiteIndex = playerItems.GetString(0);
+            playerItem.ItemID = playerItems.GetString(0);
             playerItem.PlayerId = playerItems.GetString(1);
             playerItem.GUID = playerItems.GetString(2);
             playerItem.Amount = playerItems.GetInt32(3);
@@ -370,7 +370,7 @@ public class DBPlayerData
         {
             playerItem = new PlayerItem(PlayerItem.ItemType.equip);
             playerItem.itemType = PlayerItem.ItemType.equip;
-            playerItem.SqLiteIndex = playerItems.GetString(0);
+            playerItem.ItemID = playerItems.GetString(0);
             playerItem.PlayerId = playerItems.GetString(1);
             playerItem.GUID = playerItems.GetString(2);
             playerItem.Amount = playerItems.GetInt32(3);
@@ -436,7 +436,7 @@ public class DBPlayerData
         if (playerItems.Read())
         {
             playerItem = new PlayerItem(PlayerItem.ItemType.equip);
-            playerItem.SqLiteIndex = playerItems.GetString(0);
+            playerItem.ItemID = playerItems.GetString(0);
             playerItem.PlayerId = playerItems.GetString(1);
             playerItem.GUID = playerItems.GetString(2);
             playerItem.Amount = playerItems.GetInt32(3);

@@ -29,7 +29,7 @@ public abstract class BaseStage : BaseGameData
         {
             var item = rewardItem.item;
             var newEntry = new PlayerItem(PlayerItem.ItemType.other);
-            newEntry.SqLiteIndex = item.guid;
+            newEntry.ItemID = item.guid;
             newEntry.GUID = item.guid;
             newEntry.Amount = 1;
             dict[item.guid] = newEntry;

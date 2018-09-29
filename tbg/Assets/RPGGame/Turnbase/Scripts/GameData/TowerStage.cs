@@ -30,7 +30,7 @@ public class TowerStage : BaseStage
                 if (!string.IsNullOrEmpty(foe.characterId))
                 {
                     var newEntry = PlayerItem.CreateActorItemWithLevel(GameInstance.Singleton.gameDatabase.characters[foe.characterId], foe.level,Const.StageType.Tower);
-                    newEntry.SqLiteIndex = GameInstance.Singleton.gameDatabase.characters[foe.characterId].guid + "_" + foe.level;
+                    newEntry.GUID = GameInstance.Singleton.gameDatabase.characters[foe.characterId].guid + "_" + foe.level;
                     dict[GameInstance.Singleton.gameDatabase.characters[foe.characterId].guid + "_" + foe.level] = newEntry;
                 }
             }
@@ -47,7 +47,7 @@ public class TowerStage : BaseStage
                 if (item != null)
                 {
                     var newEntry = PlayerItem.CreateActorItemWithLevel(item, foe.level,Const.StageType.Tower);
-                    newEntry.SqLiteIndex = GameInstance.Singleton.gameDatabase.characters[foe.characterId].guid + "_" + foe.level;
+                    newEntry.GUID = GameInstance.Singleton.gameDatabase.characters[foe.characterId].guid + "_" + foe.level;
                     dict[GameInstance.Singleton.gameDatabase.characters[foe.characterId].guid + "_" + foe.level] = newEntry;
                 }
             }

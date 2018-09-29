@@ -139,8 +139,8 @@ public class UIItemEvolve : UIItemWithMaterials
         var updateItems = result.updateItems;
         foreach (var updateItem in updateItems)
         {
-            var id = updateItem.SqLiteIndex;
-            if (updateItem.SqLiteIndex == Item.SqLiteIndex)
+            var id = updateItem.GUID;
+            if (updateItem.GUID == Item.GUID)
                 Item = updateItem;
             if (items.ContainsKey(id))
                 items[id].SetData(updateItem);

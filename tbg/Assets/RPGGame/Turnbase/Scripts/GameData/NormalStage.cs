@@ -51,7 +51,7 @@ public class NormalStage : BaseStage
                 {
 
                     var newEntry = PlayerItem.CreateActorItemWithLevel(GameInstance.Singleton.gameDatabase.characters[foe.characterId], foe.level, Const.StageType.Normal);
-                    newEntry.SqLiteIndex = GameInstance.Singleton.gameDatabase.characters[foe.characterId].guid + "_" + foe.level;
+                    newEntry.GUID = GameInstance.Singleton.gameDatabase.characters[foe.characterId].guid + "_" + foe.level;
                     dict[GameInstance.Singleton.gameDatabase.characters[foe.characterId].guid + "_" + foe.level] = newEntry;
                 }
             }
@@ -68,7 +68,7 @@ public class NormalStage : BaseStage
                 if (item != null)
                 {
                     var newEntry = PlayerItem.CreateActorItemWithLevel(item, foe.level, Const.StageType.Normal);
-                    newEntry.SqLiteIndex = GameInstance.Singleton.gameDatabase.characters[foe.characterId].guid + "_" + foe.level;
+                    newEntry.GUID = GameInstance.Singleton.gameDatabase.characters[foe.characterId].guid + "_" + foe.level;
                     dict[GameInstance.Singleton.gameDatabase.characters[foe.characterId].guid + "_" + foe.level] = newEntry;
                 }
             }

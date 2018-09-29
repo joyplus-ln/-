@@ -53,13 +53,13 @@ public class UIItemLevelUp : UIItemWithMaterials
         {
             if (Item.CharacterData != null)
             {
-                var list = PlayerItem.characterDataMap.Values.Where(a => a.CharacterData != null && !a.SqLiteIndex.Equals(Item.SqLiteIndex)/* && a.CanBeMaterial*/).ToList();
+                var list = PlayerItem.characterDataMap.Values.Where(a => a.CharacterData != null && !a.GUID.Equals(Item.GUID)/* && a.CanBeMaterial*/).ToList();
                 list.SortRewardExp();
                 return list;
             }
             if (Item.EquipmentData != null)
             {
-                var elist = PlayerItem.equipDataMap.Values.Where(a => a.EquipmentData != null && !a.SqLiteIndex.Equals(Item.SqLiteIndex) && a.CanBeMaterial).ToList();
+                var elist = PlayerItem.equipDataMap.Values.Where(a => a.EquipmentData != null && !a.GUID.Equals(Item.GUID) && a.CanBeMaterial).ToList();
                 elist.SortRewardExp();
                 return elist;
             }
@@ -97,10 +97,10 @@ public class UIItemLevelUp : UIItemWithMaterials
         switch (Item.itemType)
         {
             case PlayerItem.ItemType.character:
-                GameInstance.dbPlayerData.DoCharacterLevelUpItem(Item.SqLiteIndex, idAmountPair, OnLevelUpSuccess);
+                GameInstance.dbPlayerData.DoCharacterLevelUpItem(Item.GUID, idAmountPair, OnLevelUpSuccess);
                 break;
             case PlayerItem.ItemType.equip:
-                GameInstance.dbPlayerData.DoCharacterLevelUpItem(Item.SqLiteIndex, idAmountPair, OnLevelUpSuccess);
+                GameInstance.dbPlayerData.DoCharacterLevelUpItem(Item.GUID, idAmountPair, OnLevelUpSuccess);
                 break;
         }
     }
@@ -115,8 +115,8 @@ public class UIItemLevelUp : UIItemWithMaterials
         var updateItems = result.updateItems;
         foreach (var updateItem in updateItems)
         {
-            var id = updateItem.SqLiteIndex;
-            if (updateItem.SqLiteIndex == Item.SqLiteIndex)
+            var id = updateItem.GUID;
+            if (updateItem.GUID == Item.GUID)
                 Item = updateItem;
             if (items.ContainsKey(id))
                 items[id].SetData(updateItem);

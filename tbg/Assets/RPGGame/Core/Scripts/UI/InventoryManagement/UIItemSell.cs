@@ -124,7 +124,7 @@ public class UIItemSell : UIItemSelection
         var updateItem = result.updateItems;
         foreach (var entry in updateItem)
         {
-            var id = entry.SqLiteIndex;
+            var id = entry.GUID;
             if (items.ContainsKey(id))
                 items[id].SetData(entry);
         }

@@ -133,7 +133,7 @@ public abstract class UIDataItemList<TUIDataItem, TUIDataItemType> : UIList<TUID
         var uiItem = ui as UIItem;
         var item = uiItem.data;
         if (!multipleSelection)
-            DeselectedItems(item.SqLiteIndex);
+            DeselectedItems(item.GUID);
         eventSelect.Invoke(uiItem);
     }
 

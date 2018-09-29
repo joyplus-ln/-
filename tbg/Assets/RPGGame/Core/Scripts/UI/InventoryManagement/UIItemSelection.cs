@@ -54,7 +54,7 @@ public abstract class UIItemSelection : UIBase
     {
         if (uiSelectedItemList == null)
             return;
-        uiSelectedItemList.RemoveListItem(ui.data.SqLiteIndex);
+        uiSelectedItemList.RemoveListItem(ui.data.GUID);
     }
 
     public Dictionary<string, UIItem> GetAvailableItems()

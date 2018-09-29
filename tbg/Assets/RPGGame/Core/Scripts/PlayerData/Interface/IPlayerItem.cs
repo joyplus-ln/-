@@ -1,6 +1,6 @@
 ﻿public interface IPlayerItem
 {
-    string SqLiteIndex { get; set; }
+    string ItemID { get; set; }
     string PlayerId { get; set; }
     string GUID { get; set; }
     int Amount { get; set; }
@@ -13,7 +13,7 @@
 }
 public interface IPlayerOtherItem
 {
-    string SqLiteIndex { get; set; }
+    string ItemID { get; set; }
     string PlayerId { get; set; }
     string DataId { get; set; }
     int Amount { get; set; }

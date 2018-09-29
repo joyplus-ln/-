@@ -444,7 +444,7 @@ public class UIItem : UIDataItem<PlayerItem>
     {
         if (uiSell != null)
         {
-            uiSell.SetSelectingItemIds(new List<string>() { data.SqLiteIndex });
+            uiSell.SetSelectingItemIds(new List<string>() { data.GUID });
             eventSelectSellItem.Invoke();
         }
     }

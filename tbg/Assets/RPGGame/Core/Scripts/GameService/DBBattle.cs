@@ -358,7 +358,7 @@ public class DBBattle
                             character.Exp += devivedExp;
                             GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerHasCharacters SET exp=@exp WHERE id=@id",
                                 new SqliteParameter("@exp", character.Exp),
-                                new SqliteParameter("@id", character.SqLiteIndex));
+                                new SqliteParameter("@Guid", character.GUID));
                             result.updateItems.Add(character);
                         }
                     }
@@ -444,7 +444,7 @@ public class DBBattle
             GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
                 new SqliteParameter("@equipItemId", unEquipItem.EquipItemId),
                 new SqliteParameter("@equipPosition", unEquipItem.EquipPosition),
-                new SqliteParameter("@id", unEquipItem.SqLiteIndex));
+                new SqliteParameter("@Guid", unEquipItem.GUID));
             result.updateItems.Add(unEquipItem);
         }
         onFinish(result);
@@ -485,7 +485,7 @@ public class DBBattle
                 GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
                     new SqliteParameter("@equipItemId", unEquipItem.EquipItemId),
                     new SqliteParameter("@equipPosition", unEquipItem.EquipPosition),
-                    new SqliteParameter("@id", unEquipItem.SqLiteIndex));
+                    new SqliteParameter("@Guid", unEquipItem.GUID));
                 result.updateItems.Add(unEquipItem);
             }
             foundEquipment.EquipItemId = characterId;
@@ -493,7 +493,7 @@ public class DBBattle
             GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
                 new SqliteParameter("@equipItemId", foundEquipment.EquipItemId),
                 new SqliteParameter("@equipPosition", foundEquipment.EquipPosition),
-                new SqliteParameter("@id", foundEquipment.SqLiteIndex));
+                new SqliteParameter("@Guid", foundEquipment.GUID));
             result.updateItems.Add(foundEquipment);
         }
         if (result.error.Length > 1)

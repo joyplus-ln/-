@@ -6,8 +6,8 @@ using UnityEngine;
 public class PlayerOtherItem : BasePlayerData, IPlayerOtherItem
 {
     public static readonly Dictionary<string, PlayerOtherItem> DataMap = new Dictionary<string, PlayerOtherItem>();
-    public string sqLiteIndex;
-    public string SqLiteIndex { get { return sqLiteIndex; } set { sqLiteIndex = value; } }
+    public string itemid;
+    public string ItemID { get { return itemid; } set { itemid = value; } }
     public string playerId;
     public string PlayerId { get { return playerId; } set { playerId = value; } }
     public string dataId;
@@ -45,7 +45,7 @@ public class PlayerOtherItem : BasePlayerData, IPlayerOtherItem
     private int level = -1;
     public PlayerOtherItem()
     {
-        SqLiteIndex = "";
+        itemid = "";
         PlayerId = "";
         DataId = "";
         Amount = 1;
@@ -68,9 +68,9 @@ public class PlayerOtherItem : BasePlayerData, IPlayerOtherItem
     {
         foreach (PlayerOtherItem item in list)
         {
-            if (item == null || string.IsNullOrEmpty(item.SqLiteIndex))
+            if (item == null || string.IsNullOrEmpty(item.ItemID))
                 return;
-            DataMap[item.SqLiteIndex] = item;
+            DataMap[item.ItemID] = item;
         }
     }
 
@@ -88,7 +88,7 @@ public class PlayerOtherItem : BasePlayerData, IPlayerOtherItem
         foreach (var value in values)
         {
             if (value.PlayerId == playerId)
-                RemoveData(value.SqLiteIndex);
+                RemoveData(value.ItemID);
         }
     }
 
@@ -168,7 +168,7 @@ public class GameOtherItem
     public PlayerOtherItem CloneTo()
     {
         PlayerOtherItem cloneitem = new PlayerOtherItem();
-        cloneitem.SqLiteIndex = Id;
+        cloneitem.ItemID = Id;
         cloneitem.Amount = 1;
         return cloneitem;
     }

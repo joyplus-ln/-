@@ -23,9 +23,9 @@ public class UIItemList : UIDataItemList<UIItem, PlayerItem>
 
     public UIItem SetListItem(PlayerItem data)
     {
-        if (data == null || string.IsNullOrEmpty(data.SqLiteIndex))
+        if (data == null || string.IsNullOrEmpty(data.GUID))
             return null;
-        var item = SetListItem(data.SqLiteIndex);
+        var item = SetListItem(data.GUID);
         item.SetData(data);
         return item;
     }

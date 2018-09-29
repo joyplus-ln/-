@@ -12,8 +12,8 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
     public static readonly Dictionary<string, PlayerItem> characterDataMap = new Dictionary<string, PlayerItem>();
     public static readonly Dictionary<string, PlayerItem> equipDataMap = new Dictionary<string, PlayerItem>();
     //在角色拥有表中唯一
-    private string sqliteIndex;
-    public string SqLiteIndex { get { return sqliteIndex; } set { sqliteIndex = value; } }
+    private string itemid;
+    public string ItemID { get { return itemid; } set { itemid = value; } }
     private string playerId;
     public string PlayerId { get { return playerId; } set { playerId = value; } }
     //在总角色表中唯一
@@ -55,7 +55,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
 
     public PlayerItem(ItemType itemType)
     {
-        SqLiteIndex = "";
+        itemid = "";
         PlayerId = "";
         GUID = "";
         Amount = 1;
@@ -74,7 +74,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
 
     public static void CloneTo(IPlayerItem from, IPlayerItem to)
     {
-        to.SqLiteIndex = from.SqLiteIndex;
+        to.ItemID = from.ItemID;
         to.PlayerId = from.PlayerId;
         to.GUID = from.GUID;
         to.Amount = from.Amount;
@@ -260,7 +260,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
             var valueList = PlayerFormation.DataMap.Values;
             var list = valueList.Where(entry =>
                 entry.PlayerId == PlayerId &&
-                entry.ItemId == SqLiteIndex).ToList();
+                entry.ItemId == ItemID).ToList();
             return list;
         }
     }
@@ -289,7 +289,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
             var list = valueList.Where(entry =>
                 entry.PlayerId == PlayerId &&
                 entry.EquipmentData != null &&
-                entry.EquipItemId == SqLiteIndex &&
+                entry.EquipItemId == ItemID &&
                 !string.IsNullOrEmpty(entry.EquipPosition) &&
                 entry.Amount > 0).ToList();
 
@@ -310,12 +310,12 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
 
     public bool CanSell
     {
-        get { return !PlayerFormation.ContainsDataWithItemId(SqLiteIndex) && EquippedByItem == null; }
+        get { return !PlayerFormation.ContainsDataWithItemId(GUID) && EquippedByItem == null; }
     }
 
     public bool CanBeMaterial
     {
-        get { return !PlayerFormation.ContainsDataWithItemId(SqLiteIndex) && EquippedByItem == null; }
+        get { return !PlayerFormation.ContainsDataWithItemId(GUID) && EquippedByItem == null; }
     }
 
     public bool CanBeEquipped
@@ -363,17 +363,17 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
 
     public static void SetData(PlayerItem data, ItemType type)
     {
-        if (data == null || string.IsNullOrEmpty(data.SqLiteIndex))
+        if (data == null || string.IsNullOrEmpty(data.ItemID))
             return;
         switch (type)
         {
             case ItemType.character:
                 data.itemType = ItemType.character;
-                characterDataMap[data.SqLiteIndex] = data;
+                characterDataMap[data.ItemID] = data;
                 break;
             case ItemType.equip:
                 data.itemType = ItemType.equip;
-                equipDataMap[data.SqLiteIndex] = data;
+                equipDataMap[data.ItemID] = data;
                 break;
             case ItemType.other:
                 break;
@@ -424,14 +424,14 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         foreach (var value in values)
         {
             if (value.PlayerId == playerId)
-                RemoveData(value.SqLiteIndex, ItemType.character);
+                RemoveData(value.ItemID, ItemType.character);
         }
 
         var evalues = equipDataMap.Values;
         foreach (var value in evalues)
         {
             if (value.PlayerId == playerId)
-                RemoveData(value.SqLiteIndex, ItemType.equip);
+                RemoveData(value.ItemID, ItemType.equip);
         }
     }
 

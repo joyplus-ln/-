@@ -36,6 +36,14 @@ public class FormationList : MonoBehaviour
 
     public void Confirm(int index)
     {
+        Debug.LogError(PlayerFormation.DataMap.Count);
+        GameInstance.dbBattle.DoSetFormation(currentSelected.CharacterData.guid, "STAGE_FORMATION_A", index, OnGameServiceFormationListResult);
+    }
+    public void OnGameServiceFormationListResult(FormationListResult result)
+    {
+        if (!result.Success)
+            return;
 
+        PlayerFormation.SetDataRange(result.list);
     }
 }

@@ -235,7 +235,7 @@ public class DBMapItem
             }
             foreach (var materialItem in materialItems)
             {
-                var usingAmount = materials[materialItem.SqLiteIndex];
+                var usingAmount = materials[materialItem.ItemID];
                 if (usingAmount > materialItem.Amount)
                     usingAmount = materialItem.Amount;
                 requireCurrency += levelUpPrice * usingAmount;
@@ -244,7 +244,7 @@ public class DBMapItem
                 if (materialItem.Amount > 0)
                     updateItems.Add(materialItem);
                 else
-                    deleteItemIds.Add(materialItem.SqLiteIndex, PlayerItem.ItemType.equip);
+                    deleteItemIds.Add(materialItem.ItemID, PlayerItem.ItemType.equip);
             }
             if (requireCurrency > softCurrency.Amount)
                 result.error = GameServiceErrorCode.NOT_ENOUGH_SOFT_CURRENCY;
@@ -266,7 +266,7 @@ public class DBMapItem
                         new SqliteParameter("@exp", updateItem.Exp),
                         new SqliteParameter("@equipItemId", updateItem.EquipItemId),
                         new SqliteParameter("@equipPosition", updateItem.EquipPosition),
-                        new SqliteParameter("@id", updateItem.SqLiteIndex));
+                        new SqliteParameter("@Guid", updateItem.GUID));
                 }
                 foreach (var deleteItemId in deleteItemIds)
                 {
@@ -308,7 +308,7 @@ public class DBMapItem
             }
             foreach (var sellingItem in sellingItems)
             {
-                var usingAmount = items[sellingItem.SqLiteIndex];
+                var usingAmount = items[sellingItem.GUID];
                 if (usingAmount > sellingItem.Amount)
                     usingAmount = sellingItem.Amount;
                 returnCurrency += sellingItem.SellPrice * usingAmount;
@@ -316,7 +316,7 @@ public class DBMapItem
                 if (sellingItem.Amount > 0)
                     updateItems.Add(sellingItem);
                 else
-                    deleteItemIds.Add(sellingItem.SqLiteIndex, PlayerItem.ItemType.character);
+                    deleteItemIds.Add(sellingItem.GUID, PlayerItem.ItemType.character);
             }
             softCurrency.Amount += returnCurrency;
             GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
@@ -331,7 +331,7 @@ public class DBMapItem
                     new SqliteParameter("@exp", updateItem.Exp),
                     new SqliteParameter("@equipItemId", updateItem.EquipItemId),
                     new SqliteParameter("@equipPosition", updateItem.EquipPosition),
-                    new SqliteParameter("@id", updateItem.SqLiteIndex));
+                    new SqliteParameter("@Guid", updateItem.GUID));
             }
             foreach (var deleteItemId in deleteItemIds)
             {
@@ -369,7 +369,7 @@ public class DBMapItem
             }
             foreach (var sellingItem in sellingItems)
             {
-                var usingAmount = items[sellingItem.SqLiteIndex];
+                var usingAmount = items[sellingItem.GUID];
                 if (usingAmount > sellingItem.Amount)
                     usingAmount = sellingItem.Amount;
                 returnCurrency += sellingItem.SellPrice * usingAmount;
@@ -377,7 +377,7 @@ public class DBMapItem
                 if (sellingItem.Amount > 0)
                     updateItems.Add(sellingItem);
                 else
-                    deleteItemIds.Add(sellingItem.SqLiteIndex, PlayerItem.ItemType.character);
+                    deleteItemIds.Add(sellingItem.GUID, PlayerItem.ItemType.character);
             }
             softCurrency.Amount += returnCurrency;
             GameInstance.SqliteUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
@@ -392,7 +392,7 @@ public class DBMapItem
                     new SqliteParameter("@exp", updateItem.Exp),
                     new SqliteParameter("@equipItemId", updateItem.EquipItemId),
                     new SqliteParameter("@equipPosition", updateItem.EquipPosition),
-                    new SqliteParameter("@id", updateItem.SqLiteIndex));
+                    new SqliteParameter("@Guid", updateItem.GUID));
             }
             foreach (var deleteItemId in deleteItemIds)
             {
@@ -430,7 +430,7 @@ public class DBMapItem
             {
                 var entry = new PlayerItem(PlayerItem.ItemType.character);
                 entry.itemType = PlayerItem.ItemType.character;
-                entry.SqLiteIndex = reader.GetString(0);
+                entry.ItemID = reader.GetString(0);
                 entry.PlayerId = reader.GetString(1);
                 entry.GUID = reader.GetString(2);
                 entry.Amount = reader.GetInt32(3);
@@ -447,7 +447,7 @@ public class DBMapItem
             {
                 var entry = new PlayerItem(PlayerItem.ItemType.equip);
                 entry.itemType = PlayerItem.ItemType.equip;
-                entry.SqLiteIndex = equipmentreader.GetString(0);
+                entry.ItemID = equipmentreader.GetString(0);
                 entry.PlayerId = equipmentreader.GetString(1);
                 entry.GUID = equipmentreader.GetString(2);
                 entry.Amount = equipmentreader.GetInt32(3);
@@ -483,8 +483,8 @@ public class DBMapItem
         while (materials.Read())
         {
             var material = new PlayerItem(PlayerItem.ItemType.other);
-            material.SqLiteIndex = materials.GetInt32(0).ToString();
-            material.PlayerId = materials.GetString(1);
+            //material.SqLiteIndex = materials.GetInt32(0).ToString();
+            material.ItemID = materials.GetString(1);
             material.GUID = materials.GetString(2);
             material.Amount = materials.GetInt32(3);
             material.Exp = materials.GetInt32(4);
@@ -511,7 +511,7 @@ public class DBMapItem
                 if (material.Amount > 0)
                     updateItem.Add(material);
                 else
-                    deleteItemIds.Add(material.SqLiteIndex);
+                    deleteItemIds.Add(material.ItemID);
 
                 if (amount == 0)
                     break;
@@ -540,7 +540,7 @@ public class DBMapItem
             while (reader.Read())
             {
                 var entry = new PlayerOtherItem();
-                entry.SqLiteIndex = reader.GetString(0);
+                entry.ItemID = reader.GetString(0);
                 entry.DataId = reader.GetString(1);
                 entry.PlayerId = reader.GetString(2);
                 entry.Amount = reader.GetInt32(3);
