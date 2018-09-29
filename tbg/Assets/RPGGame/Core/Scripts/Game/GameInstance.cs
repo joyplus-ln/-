@@ -62,13 +62,13 @@ public class GameInstance : MonoBehaviour
             GameDatabase.Setup();
         SqliteUtils = new SqliteUtils();
         SqliteUtils.Init();
+        dbDataUtils = new DBDataUtils();
+        dbDataUtils.Init();
         dbLogin = new DBLogin();
         dbPlayerData = new DBPlayerData();
         dbBattle = new DBBattle();
         dbMapItem = new DBMapItem();
         dbMapItem.Init();
-        dbDataUtils = new DBDataUtils();
-        dbDataUtils.Init();
 
         //GameService.onServiceStart.RemoveListener(OnGameServiceStart);
         //GameService.onServiceStart.AddListener(OnGameServiceStart);

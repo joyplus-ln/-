@@ -91,10 +91,9 @@ public class DbRowsReader
 }
 public class SqliteUtils
 {
-    public string dbPath = "./tbRpgDb.sqlite3";
+    public string dbPath = "./table.sqlite3";
 
     public static SqliteConnection connection;
-    public SqliteUtils sqliteUtils;
 
     public void Init()
     {
@@ -106,105 +105,8 @@ public class SqliteUtils
                 dbPath = "/" + dbPath;
             dbPath = Application.persistentDataPath + dbPath;
         }
-        sqliteUtils = new SqliteUtils();
-        if (!File.Exists(dbPath))
-            SqliteConnection.CreateFile(dbPath);
-
         // open connection
         connection = new SqliteConnection("URI=file:" + dbPath);
-
-        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS player (
-            id TEXT NOT NULL PRIMARY KEY,
-            profileName TEXT NOT NULL,
-            loginToken TEXT NOT NULL,
-            exp INTEGER NOT NULL,
-            selectedFormation TEXT NOT NULL,
-            prefs TEXT NOT NULL
-            )");
-
-        //ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerItem (
-        //    id TEXT NOT NULL PRIMARY KEY,
-        //    playerId TEXT NOT NULL,
-        //    Guid TEXT NOT NULL,
-        //    amount INTEGER NOT NULL,
-        //    exp INTEGER NOT NULL,
-        //    equipItemId TEXT NOT NULL,
-        //    equipPosition TEXT NOT NULL)");
-
-        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerAuth (
-            id TEXT NOT NULL PRIMARY KEY,
-            playerId TEXT NOT NULL,
-            type TEXT NOT NULL,
-            username TEXT NOT NULL,
-            password TEXT NOT NULL)");
-
-        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerCurrency (
-            id TEXT NOT NULL PRIMARY KEY,
-            playerId TEXT NOT NULL,
-            Guid TEXT NOT NULL,
-            amount INTEGER NOT NULL,
-            purchasedAmount INTEGER NOT NULL)");
-
-        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerStamina (
-            id TEXT NOT NULL PRIMARY KEY,
-            playerId TEXT NOT NULL,
-            Guid TEXT NOT NULL,
-            amount INTEGER NOT NULL,
-            recoveredTime INTEGER NOT NULL)");
-
-        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerFormation (
-            id TEXT NOT NULL PRIMARY KEY,
-            playerId TEXT NOT NULL,
-            Guid TEXT NOT NULL,
-            position INTEGER NOT NULL,
-            itemId TEXT NOT NULL)");
-
-        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerUnlockItem (
-            id TEXT NOT NULL PRIMARY KEY,
-            playerId TEXT NOT NULL,
-            Guid TEXT NOT NULL,
-            amount INTEGER NOT NULL)");
-
-        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerClearStage (
-            id TEXT NOT NULL PRIMARY KEY,
-            playerId TEXT NOT NULL,
-            Guid TEXT NOT NULL,
-            bestRating INTEGER NOT NULL)");
-
-        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerBattle (
-            id TEXT NOT NULL PRIMARY KEY,
-            playerId TEXT NOT NULL,
-            Guid TEXT NOT NULL,
-            session TEXT NOT NULL,
-            battleResult INTEGER NOT NULL,
-            rating INTEGER NOT NULL)");
-
-
-        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerOtherItem (
-            id TEXT NOT NULL PRIMARY KEY,
-            Guid TEXT NOT NULL,
-            playerId TEXT NOT NULL,
-            amount INTEGER NOT NULL)");
-
-
-        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerHasCharacters (
-            id TEXT PRIMARY KEY,
-            playerId TEXT NOT NULL,
-            Guid TEXT NOT NULL,
-            amount INTEGER NOT NULL,
-            exp INTEGER NOT NULL,
-            equipItemId TEXT NOT NULL,
-            equipPosition TEXT NOT NULL)");
-
-        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerHasEquips (
-            id TEXT PRIMARY KEY,
-            playerId TEXT NOT NULL,
-            Guid TEXT NOT NULL,
-            amount INTEGER NOT NULL,
-            exp INTEGER NOT NULL,
-            equipItemId TEXT NOT NULL,
-            equipPosition TEXT NOT NULL)");
-
     }
 
     #region 数据库操作

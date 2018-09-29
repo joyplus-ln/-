@@ -9,14 +9,169 @@ using UnityEngine.Events;
 public class DBDataUtils
 {
 
+    public string dbPath = "./data.sqlite3";
 
+    public static SqliteConnection connection;
 
     public void Init()
     {
+        if (Application.isMobilePlatform)
+        {
+            if (dbPath.StartsWith("./"))
+                dbPath = dbPath.Substring(1);
+            if (!dbPath.StartsWith("/"))
+                dbPath = "/" + dbPath;
+            dbPath = Application.persistentDataPath + dbPath;
+        }
+        if (!File.Exists(dbPath))
+            SqliteConnection.CreateFile(dbPath);
 
+        // open connection
+        connection = new SqliteConnection("URI=file:" + dbPath);
+
+        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS player (
+            id TEXT NOT NULL PRIMARY KEY,
+            profileName TEXT NOT NULL,
+            loginToken TEXT NOT NULL,
+            exp INTEGER NOT NULL,
+            selectedFormation TEXT NOT NULL,
+            prefs TEXT NOT NULL
+            )");
+
+        //ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerItem (
+        //    id TEXT NOT NULL PRIMARY KEY,
+        //    playerId TEXT NOT NULL,
+        //    Guid TEXT NOT NULL,
+        //    amount INTEGER NOT NULL,
+        //    exp INTEGER NOT NULL,
+        //    equipItemId TEXT NOT NULL,
+        //    equipPosition TEXT NOT NULL)");
+
+        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerAuth (
+            id TEXT NOT NULL PRIMARY KEY,
+            playerId TEXT NOT NULL,
+            type TEXT NOT NULL,
+            username TEXT NOT NULL,
+            password TEXT NOT NULL)");
+
+        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerCurrency (
+            id TEXT NOT NULL PRIMARY KEY,
+            playerId TEXT NOT NULL,
+            Guid TEXT NOT NULL,
+            amount INTEGER NOT NULL,
+            purchasedAmount INTEGER NOT NULL)");
+
+        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerStamina (
+            id TEXT NOT NULL PRIMARY KEY,
+            playerId TEXT NOT NULL,
+            Guid TEXT NOT NULL,
+            amount INTEGER NOT NULL,
+            recoveredTime INTEGER NOT NULL)");
+
+        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerFormation (
+            id TEXT NOT NULL PRIMARY KEY,
+            playerId TEXT NOT NULL,
+            Guid TEXT NOT NULL,
+            position INTEGER NOT NULL,
+            itemId TEXT NOT NULL)");
+
+        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerUnlockItem (
+            id TEXT NOT NULL PRIMARY KEY,
+            playerId TEXT NOT NULL,
+            Guid TEXT NOT NULL,
+            amount INTEGER NOT NULL)");
+
+        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerClearStage (
+            id TEXT NOT NULL PRIMARY KEY,
+            playerId TEXT NOT NULL,
+            Guid TEXT NOT NULL,
+            bestRating INTEGER NOT NULL)");
+
+        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerBattle (
+            id TEXT NOT NULL PRIMARY KEY,
+            playerId TEXT NOT NULL,
+            Guid TEXT NOT NULL,
+            session TEXT NOT NULL,
+            battleResult INTEGER NOT NULL,
+            rating INTEGER NOT NULL)");
+
+
+        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerOtherItem (
+            id TEXT NOT NULL PRIMARY KEY,
+            Guid TEXT NOT NULL,
+            playerId TEXT NOT NULL,
+            amount INTEGER NOT NULL)");
+
+
+        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerHasCharacters (
+            id TEXT PRIMARY KEY,
+            playerId TEXT NOT NULL,
+            Guid TEXT NOT NULL,
+            amount INTEGER NOT NULL,
+            exp INTEGER NOT NULL,
+            equipItemId TEXT NOT NULL,
+            equipPosition TEXT NOT NULL)");
+
+        ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerHasEquips (
+            id TEXT PRIMARY KEY,
+            playerId TEXT NOT NULL,
+            Guid TEXT NOT NULL,
+            amount INTEGER NOT NULL,
+            exp INTEGER NOT NULL,
+            equipItemId TEXT NOT NULL,
+            equipPosition TEXT NOT NULL)");
 
     }
 
+    #region 数据库操作
+
+    public void ExecuteNonQuery(string sql, params SqliteParameter[] args)
+    {
+        connection.Open();
+        using (var cmd = new SqliteCommand(sql, connection))
+        {
+            foreach (var arg in args)
+            {
+                cmd.Parameters.Add(arg);
+            }
+            cmd.ExecuteNonQuery();
+        }
+        connection.Close();
+    }
+
+    public object ExecuteScalar(string sql, params SqliteParameter[] args)
+    {
+        object result;
+        connection.Open();
+        using (var cmd = new SqliteCommand(sql, connection))
+        {
+            foreach (var arg in args)
+            {
+                cmd.Parameters.Add(arg);
+            }
+            result = cmd.ExecuteScalar();
+        }
+        connection.Close();
+        return result;
+    }
+
+    public DbRowsReader ExecuteReader(string sql, params SqliteParameter[] args)
+    {
+        DbRowsReader result = new DbRowsReader();
+        connection.Open();
+        using (var cmd = new SqliteCommand(sql, connection))
+        {
+            foreach (var arg in args)
+            {
+                cmd.Parameters.Add(arg);
+            }
+            result.Init(cmd.ExecuteReader());
+        }
+        connection.Close();
+        return result;
+    }
+
+    #endregion
 
 
 
@@ -39,8 +194,6 @@ public class DBDataUtils
 
 
 
-
- 
 
     //playerHasCharacters
     //private bool AddItems1(string playerId,
@@ -107,7 +260,7 @@ public class DBDataUtils
 
 
 
-  
+
 
     //private void HelperUnlockItem(string playerId, string dataId)
     //{
@@ -131,11 +284,11 @@ public class DBDataUtils
     //    }
     //}
 
-  
 
 
 
-   
+
+
 
     //private PlayerItem GetPlayerItemById(string id)
     //{
@@ -158,11 +311,11 @@ public class DBDataUtils
 
 
 
-   
+
 
     #region 商城
 
-   
+
 
 
     public void DoGetAvailableLootBoxList(UnityAction<AvailableLootBoxListResult> onFinish)
