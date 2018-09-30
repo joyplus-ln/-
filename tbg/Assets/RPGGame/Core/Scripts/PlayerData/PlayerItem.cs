@@ -212,7 +212,29 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         get { return Level == MaxLevel; }
     }
 
-
+    public CalculationAttributes GetItemAttributes()
+    {
+        if (CharacterData != null)
+        {
+            var result = new CalculationAttributes();
+            result += CharacterData.attributes.CreateCalculationAttributes(Level, MaxLevel);
+            if (GameDatabase != null)
+                result += GameDatabase.characterBaseAttributes;
+            if (ExtrAttributesData != null)
+                result += ExtrAttributesData;
+            result += EquipmentBonus;
+            return result;
+        }
+        if (EquipmentData != null)
+        {
+            var result = new CalculationAttributes();
+            result += EquipmentData.attributes.CreateCalculationAttributes(Level, MaxLevel);
+            result += EquipmentData.extraAttributes;
+            return result;
+        }
+        Debug.LogError("属性 null 不属于 char or equip");
+        return null;
+    }
     public CalculationAttributes EquipmentBonus
     {
         get
@@ -289,7 +311,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
             var list = valueList.Where(entry =>
                 entry.PlayerId == PlayerId &&
                 entry.EquipmentData != null &&
-                entry.EquipItemGuid == ItemID &&
+                entry.EquipItemGuid == GUID &&
                 !string.IsNullOrEmpty(entry.EquipPosition) &&
                 entry.Amount > 0).ToList();
 
@@ -440,7 +462,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         RemoveDataRange(Player.CurrentPlayerId);
     }
 
-    public static PlayerItem CreateActorItemWithLevel(BaseActorItem itemData, int level, Const.StageType type,bool isplayer)
+    public static PlayerItem CreateActorItemWithLevel(BaseActorItem itemData, int level, Const.StageType type, bool isplayer)
     {
         if (level <= 0)
             level = 1;

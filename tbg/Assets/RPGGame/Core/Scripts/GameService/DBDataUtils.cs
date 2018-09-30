@@ -109,7 +109,7 @@ public class DBDataUtils
             Guid TEXT NOT NULL,
             amount INTEGER NOT NULL,
             exp INTEGER NOT NULL,
-            id TEXT PRIMARY KEY)");
+            id INTEGER PRIMARY KEY)");
 
         ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerHasEquips (
             itemid TEXT NOT NULL,
@@ -119,7 +119,7 @@ public class DBDataUtils
             exp INTEGER NOT NULL,
             equipItemGuid TEXT NOT NULL,
             equipPosition TEXT NOT NULL,
-            id TEXT PRIMARY KEY)");
+            id INTEGER PRIMARY KEY)");
 
     }
 
