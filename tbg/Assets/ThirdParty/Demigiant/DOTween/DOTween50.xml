@@ -20,7 +20,7 @@
         <member name="M:DG.Tweening.ShortcutExtensions50.DOComplete(UnityEngine.Audio.AudioMixer,System.Boolean)">
             <summary>
             Completes all tweens that have this target as a reference
-            (meaning tweens that were started from this target, or that had this target added as an Id)
+            (meaning tweens that were started from this target, or that had this target added as an characterGuid)
             and returns the total number of tweens completed
             (meaning the tweens that don't have infinite loops and were not already complete)
             </summary>
@@ -30,7 +30,7 @@
         <member name="M:DG.Tweening.ShortcutExtensions50.DOKill(UnityEngine.Audio.AudioMixer,System.Boolean)">
             <summary>
             Kills all tweens that have this target as a reference
-            (meaning tweens that were started from this target, or that had this target added as an Id)
+            (meaning tweens that were started from this target, or that had this target added as an characterGuid)
             and returns the total number of tweens killed.
             </summary>
             <param name="complete">If TRUE completes the tween before killing it</param>
@@ -38,14 +38,14 @@
         <member name="M:DG.Tweening.ShortcutExtensions50.DOFlip(UnityEngine.Audio.AudioMixer)">
             <summary>
             Flips the direction (backwards if it was going forward or viceversa) of all tweens that have this target as a reference
-            (meaning tweens that were started from this target, or that had this target added as an Id)
+            (meaning tweens that were started from this target, or that had this target added as an characterGuid)
             and returns the total number of tweens flipped.
             </summary>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions50.DOGoto(UnityEngine.Audio.AudioMixer,System.Single,System.Boolean)">
             <summary>
             Sends to the given position all tweens that have this target as a reference
-            (meaning tweens that were started from this target, or that had this target added as an Id)
+            (meaning tweens that were started from this target, or that had this target added as an characterGuid)
             and returns the total number of tweens involved.
             </summary>
             <param name="to">Time position to reach
@@ -55,56 +55,56 @@
         <member name="M:DG.Tweening.ShortcutExtensions50.DOPause(UnityEngine.Audio.AudioMixer)">
             <summary>
             Pauses all tweens that have this target as a reference
-            (meaning tweens that were started from this target, or that had this target added as an Id)
+            (meaning tweens that were started from this target, or that had this target added as an characterGuid)
             and returns the total number of tweens paused.
             </summary>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions50.DOPlay(UnityEngine.Audio.AudioMixer)">
             <summary>
             Plays all tweens that have this target as a reference
-            (meaning tweens that were started from this target, or that had this target added as an Id)
+            (meaning tweens that were started from this target, or that had this target added as an characterGuid)
             and returns the total number of tweens played.
             </summary>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions50.DOPlayBackwards(UnityEngine.Audio.AudioMixer)">
             <summary>
             Plays backwards all tweens that have this target as a reference
-            (meaning tweens that were started from this target, or that had this target added as an Id)
+            (meaning tweens that were started from this target, or that had this target added as an characterGuid)
             and returns the total number of tweens played.
             </summary>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions50.DOPlayForward(UnityEngine.Audio.AudioMixer)">
             <summary>
             Plays forward all tweens that have this target as a reference
-            (meaning tweens that were started from this target, or that had this target added as an Id)
+            (meaning tweens that were started from this target, or that had this target added as an characterGuid)
             and returns the total number of tweens played.
             </summary>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions50.DORestart(UnityEngine.Audio.AudioMixer)">
             <summary>
             Restarts all tweens that have this target as a reference
-            (meaning tweens that were started from this target, or that had this target added as an Id)
+            (meaning tweens that were started from this target, or that had this target added as an characterGuid)
             and returns the total number of tweens restarted.
             </summary>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions50.DORewind(UnityEngine.Audio.AudioMixer)">
             <summary>
             Rewinds all tweens that have this target as a reference
-            (meaning tweens that were started from this target, or that had this target added as an Id)
+            (meaning tweens that were started from this target, or that had this target added as an characterGuid)
             and returns the total number of tweens rewinded.
             </summary>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions50.DOSmoothRewind(UnityEngine.Audio.AudioMixer)">
             <summary>
             Smoothly rewinds all tweens that have this target as a reference
-            (meaning tweens that were started from this target, or that had this target added as an Id)
+            (meaning tweens that were started from this target, or that had this target added as an characterGuid)
             and returns the total number of tweens rewinded.
             </summary>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions50.DOTogglePause(UnityEngine.Audio.AudioMixer)">
             <summary>
             Toggles the paused state (plays if it was paused, pauses if it was playing) of all tweens that have this target as a reference
-            (meaning tweens that were started from this target, or that had this target added as an Id)
+            (meaning tweens that were started from this target, or that had this target added as an characterGuid)
             and returns the total number of tweens involved.
             </summary>
         </member>

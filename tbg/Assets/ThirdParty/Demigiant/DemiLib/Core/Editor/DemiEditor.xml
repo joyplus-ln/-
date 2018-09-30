@@ -119,7 +119,7 @@
             <summary>
             Starts a drag operation on a GUI element.
             </summary>
-            <param name="dragId">ID for this drag operation (must be the same for both StartDrag and Drag</param>
+            <param name="dragcharacterGuid">ID for this drag operation (must be the same for both StartDrag and Drag</param>
             <param name="editor">Reference to the current editor drawing the GUI (used when a Repaint is needed)</param>
             <param name="draggableList">List containing the dragged item and all other relative draggable items</param>
             <param name="draggedItemIndex">DraggableList index of the item being dragged</param>
@@ -129,7 +129,7 @@
             <summary>
             Starts a drag operation on a GUI element.
             </summary>
-            <param name="dragId">ID for this drag operation (must be the same for both StartDrag and Drag</param>
+            <param name="dragcharacterGuid">ID for this drag operation (must be the same for both StartDrag and Drag</param>
             <param name="editorWindow">Reference to the current editor drawing the GUI (used when a Repaint is needed)</param>
             <param name="draggableList">List containing the dragged item and all other relative draggable items</param>
             <param name="draggedItemIndex">DraggableList index of the item being dragged</param>
@@ -141,7 +141,7 @@
             (or complete it if the mouse was released).
             Returns TRUE if the drag operation was concluded and accepted.
             </summary>
-            <param name="dragId">ID for this drag operation (must be the same for both StartDrag and Drag</param>
+            <param name="dragcharacterGuid">ID for this drag operation (must be the same for both StartDrag and Drag</param>
             <param name="draggableList">List containing the draggable item and all other relative draggable items</param>
             <param name="currDraggableItemIndex">Current index of the draggable item being drawn</param>
         </member>
@@ -151,7 +151,7 @@
             (or complete it if the mouse was released).
             Returns TRUE if the drag operation was concluded and accepted.
             </summary>
-            <param name="dragId">ID for this drag operation (must be the same for both StartDrag and Drag</param>
+            <param name="dragcharacterGuid">ID for this drag operation (must be the same for both StartDrag and Drag</param>
             <param name="draggableList">List containing the draggable item and all other relative draggable items</param>
             <param name="currDraggableItemIndex">Current index of the draggable item being drawn</param>
             <param name="dragEvidenceColor">Color to use for drag divider and selection</param>
