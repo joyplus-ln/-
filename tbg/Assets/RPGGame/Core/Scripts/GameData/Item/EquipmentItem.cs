@@ -21,9 +21,9 @@ public class EquipmentItem : BaseActorItem
             jsonEquippablePositions += "\"" + entry + "\"";
         }
         jsonEquippablePositions = "[" + jsonEquippablePositions + "]";
-        return "{\"SqliteId\":\"" + SqliteId + "\"," +
+        return "{\"SqliteId\":\""  + "\"," +
             "\"category\":\"" + category + "\"," +
-               "\"guid\":\"" + guid + "\"," +
+               "\"itemid\":\"" + itemid + "\"," +
             "\"type\":\"" + Type + "\"," +
             "\"maxStack\":" + MaxStack + "," +
             "\"equippablePositions\":" + jsonEquippablePositions + "}";

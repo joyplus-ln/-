@@ -104,22 +104,22 @@ public class DBDataUtils
 
 
         ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerHasCharacters (
-            id TEXT PRIMARY KEY,
+            itemid TEXT NOT NULL,
             playerId TEXT NOT NULL,
             Guid TEXT NOT NULL,
             amount INTEGER NOT NULL,
             exp INTEGER NOT NULL,
-            equipItemId TEXT NOT NULL,
-            equipPosition TEXT NOT NULL)");
+            id TEXT PRIMARY KEY)");
 
         ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerHasEquips (
-            id TEXT PRIMARY KEY,
+            itemid TEXT NOT NULL,
             playerId TEXT NOT NULL,
             Guid TEXT NOT NULL,
             amount INTEGER NOT NULL,
             exp INTEGER NOT NULL,
-            equipItemId TEXT NOT NULL,
-            equipPosition TEXT NOT NULL)");
+            equipItemGuid TEXT NOT NULL,
+            equipPosition TEXT NOT NULL,
+            id TEXT PRIMARY KEY)");
 
     }
 
@@ -215,12 +215,12 @@ public class DBDataUtils
     //    while (oldEntries.Read())
     //    {
     //        var entry = new PlayerItem();
-    //        entry.Id = oldEntries.GetString(0);
+    //        entry.characterGuid = oldEntries.GetString(0);
     //        entry.PlayerId = oldEntries.GetString(1);
     //        entry.GUID = oldEntries.GetString(2);
     //        entry.Amount = oldEntries.GetInt32(3);
     //        entry.Exp = oldEntries.GetInt32(4);
-    //        entry.EquipItemId = oldEntries.GetString(5);
+    //        entry.equipItemGuid = oldEntries.GetString(5);
     //        entry.EquipPosition = oldEntries.GetString(6);
     //        var sumAmount = entry.Amount + amount;
     //        if (sumAmount > maxStack)
@@ -262,24 +262,24 @@ public class DBDataUtils
 
 
 
-    //private void HelperUnlockItem(string playerId, string dataId)
+    //private void HelperUnlockItem(string playerId, string formationId)
     //{
     //    PlayerUnlockItem unlockItem = null;
     //    var oldUnlockItems = ExecuteReader(@"SELECT * FROM playerUnlockItem WHERE playerId=@playerId AND Guid=@Guid LIMIT 1",
     //        new SqliteParameter("@playerId", playerId),
-    //        new SqliteParameter("@Guid", dataId));
+    //        new SqliteParameter("@Guid", formationId));
     //    if (!oldUnlockItems.Read())
     //    {
     //        unlockItem = new PlayerUnlockItem();
-    //        unlockItem.Id = PlayerUnlockItem.GetId(playerId, dataId);
+    //        unlockItem.characterGuid = PlayerUnlockItem.GetId(playerId, formationId);
     //        unlockItem.PlayerId = playerId;
-    //        unlockItem.DataId = dataId;
+    //        unlockItem.formationId = formationId;
     //        unlockItem.Amount = 0;
     //        ExecuteNonQuery(@"INSERT INTO playerUnlockItem (id, playerId, Guid, amount)
     //            VALUES (@id, @playerId, @Guid, @amount)",
-    //            new SqliteParameter("@id", unlockItem.Id),
+    //            new SqliteParameter("@id", unlockItem.characterGuid),
     //            new SqliteParameter("@playerId", unlockItem.PlayerId),
-    //            new SqliteParameter("@Guid", unlockItem.DataId),
+    //            new SqliteParameter("@Guid", unlockItem.formationId),
     //            new SqliteParameter("@amount", unlockItem.Amount));
     //    }
     //}
@@ -298,12 +298,12 @@ public class DBDataUtils
     //    if (playerItems.Read())
     //    {
     //        playerItem = new PlayerItem();
-    //        playerItem.Id = playerItems.GetString(0);
+    //        playerItem.characterGuid = playerItems.GetString(0);
     //        playerItem.PlayerId = playerItems.GetString(1);
     //        playerItem.GUID = playerItems.GetString(2);
     //        playerItem.Amount = playerItems.GetInt32(3);
     //        playerItem.Exp = playerItems.GetInt32(4);
-    //        playerItem.EquipItemId = playerItems.GetString(5);
+    //        playerItem.equipItemGuid = playerItems.GetString(5);
     //        playerItem.EquipPosition = playerItems.GetString(6);
     //    }
     //    return playerItem;
@@ -379,22 +379,22 @@ public class DBDataUtils
                     var createItems = new List<PlayerItem>();
                     var updateItems = new List<PlayerItem>();
                     //todo 开商城的数据
-                    //if (AddItems(playerId, rewardItem.Id, rewardItem.amount, out createItems, out updateItems))
+                    //if (AddItems(playerId, rewardItem.characterGuid, rewardItem.amount, out createItems, out updateItems))
                     //{
 
                     //    foreach (var createEntry in createItems)
                     //    {
-                    //        createEntry.Id = System.Guid.NewGuid().ToString();
-                    //        ExecuteNonQuery(@"INSERT INTO playerItem (id, playerId, Guid, amount, exp, equipItemId, equipPosition) VALUES (@id, @playerId, @Guid, @amount, @exp, @equipItemId, @equipPosition)",
-                    //            new SqliteParameter("@id", createEntry.Id),
+                    //        createEntry.characterGuid = System.Guid.NewGuid().ToString();
+                    //        ExecuteNonQuery(@"INSERT INTO playerItem (id, playerId, Guid, amount, exp, equipItemGuid, equipPosition) VALUES (@id, @playerId, @Guid, @amount, @exp, @equipItemId, @equipPosition)",
+                    //            new SqliteParameter("@id", createEntry.characterGuid),
                     //            new SqliteParameter("@playerId", createEntry.PlayerId),
                     //            new SqliteParameter("@Guid", createEntry.GUID),
                     //            new SqliteParameter("@amount", createEntry.Amount),
                     //            new SqliteParameter("@exp", createEntry.Exp),
-                    //            new SqliteParameter("@equipItemId", createEntry.EquipItemId),
+                    //            new SqliteParameter("@equipItemGuid", createEntry.equipItemGuid),
                     //            new SqliteParameter("@equipPosition", createEntry.EquipPosition));
                     //        result.createItems.Add(createEntry);
-                    //        HelperUnlockItem(player.Id, rewardItem.Id);
+                    //        HelperUnlockItem(player.characterGuid, rewardItem.characterGuid);
                     //    }
                     //    foreach (var updateEntry in updateItems)
                     //    {
@@ -403,9 +403,9 @@ public class DBDataUtils
                     //            new SqliteParameter("@Guid", updateEntry.GUID),
                     //            new SqliteParameter("@amount", updateEntry.Amount),
                     //            new SqliteParameter("@exp", updateEntry.Exp),
-                    //            new SqliteParameter("@equipItemId", updateEntry.EquipItemId),
+                    //            new SqliteParameter("@equipItemGuid", updateEntry.equipItemGuid),
                     //            new SqliteParameter("@equipPosition", updateEntry.EquipPosition),
-                    //            new SqliteParameter("@id", updateEntry.Id));
+                    //            new SqliteParameter("@id", updateEntry.characterGuid));
                     //        result.updateItems.Add(updateEntry);
                     //    }
                     //}

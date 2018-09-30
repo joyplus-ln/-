@@ -6,11 +6,11 @@ using UnityEngine;
 public class PlayerFormation : BasePlayerData, IPlayerFormation
 {
     public static readonly Dictionary<string, PlayerFormation> DataMap = new Dictionary<string, PlayerFormation>();
-    public string Id { get { return GetId(PlayerId, DataId, Position); } set { } }
+    public string characterGuid { get { return GetId(PlayerId, formationId, Position); } set { } }
     public string playerId;
     public string PlayerId { get { return playerId; } set { playerId = value; } }
-    public string dataId;
-    public string DataId { get { return dataId; } set { dataId = value; } }
+    public string FormationId;
+    public string formationId { get { return FormationId; } set { FormationId = value; } }
     public int position;
     public int Position { get { return position; } set { position = value; } }
     public string itemId;
@@ -22,7 +22,7 @@ public class PlayerFormation : BasePlayerData, IPlayerFormation
         get
         {
             Formation formation;
-            if (GameDatabase != null && !string.IsNullOrEmpty(DataId) && GameDatabase.Formations.TryGetValue(DataId, out formation))
+            if (GameDatabase != null && !string.IsNullOrEmpty(formationId) && GameDatabase.Formations.TryGetValue(formationId, out formation))
                 return formation;
             return null;
         }
@@ -38,23 +38,24 @@ public class PlayerFormation : BasePlayerData, IPlayerFormation
 
     public static void CloneTo(IPlayerFormation from, IPlayerFormation to)
     {
-        to.Id = from.Id;
+        to.characterGuid = from.characterGuid;
         to.PlayerId = from.PlayerId;
-        to.DataId = from.DataId;
+        to.formationId = from.formationId;
         to.Position = from.Position;
         to.ItemId = from.ItemId;
     }
 
     public static string GetId(string playerId, string dataId, int position)
     {
+        return playerId;
         return playerId + "_" + dataId + "_" + position;
     }
 
     public static void SetData(PlayerFormation data)
     {
-        if (data == null || string.IsNullOrEmpty(data.Id))
+        if (data == null || string.IsNullOrEmpty(data.characterGuid))
             return;
-        DataMap[data.Id] = data;
+        DataMap[data.characterGuid] = data;
     }
 
     public static bool TryGetData(string playerId, string dataId, int position, out PlayerFormation data)
@@ -99,7 +100,7 @@ public class PlayerFormation : BasePlayerData, IPlayerFormation
         foreach (var value in values)
         {
             if (value.PlayerId == playerId)
-                RemoveData(value.Id);
+                RemoveData(value.characterGuid);
         }
     }
 

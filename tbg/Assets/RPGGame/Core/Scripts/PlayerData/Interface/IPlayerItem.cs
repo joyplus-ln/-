@@ -5,7 +5,7 @@
     string GUID { get; set; }
     int Amount { get; set; }
     int Exp { get; set; }
-    string EquipItemId { get; set; }
+    string EquipItemGuid { get; set; }
     string EquipPosition { get; set; }
     PlayerItem.ItemType itemType { get; set; }
 

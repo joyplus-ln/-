@@ -44,7 +44,7 @@ public class UIItemEvolve : UIItemWithMaterials
         //            var evolveItemDataId = evolveItem.Key;
         //            var evolveItemAmount = evolveItem.Value;
         //            var materialItem = new PlayerItem();
-        //            materialItem.Id = evolveItemDataId;
+        //            materialItem.characterGuid = evolveItemDataId;
         //            materialItem.GUID = evolveItemDataId;
         //            materialItem.Amount = 1;
         //            var newUIMaterial = uiSelectedItemList.SetListItem(materialItem);
@@ -84,7 +84,7 @@ public class UIItemEvolve : UIItemWithMaterials
         //if (Item.CanEvolve)
         //{
         //    var evolveMaterialDataIds = Item.EvolveMaterials.Keys.ToList();
-        //    var list = PlayerItem.DataMap.Values.Where(a => !a.Id.Equals(Item.Id) && evolveMaterialDataIds.Contains(a.GUID)).ToList();
+        //    var list = PlayerItem.DataMap.Values.Where(a => !a.characterGuid.Equals(Item.characterGuid) && evolveMaterialDataIds.Contains(a.GUID)).ToList();
         //    list.SortLevel();
         //    return list;
         //}
@@ -128,7 +128,7 @@ public class UIItemEvolve : UIItemWithMaterials
         var idAmountPair = GetSelectedItemIdAmountPair();
         UnityEngine.Debug.LogError("暂时去掉了进化功能");
         return;
-        //gameService.EvolveItem(Item.Id, idAmountPair, OnEvolveSuccess, OnEvolveFail);
+        //gameService.EvolveItem(Item.characterGuid, idAmountPair, OnEvolveSuccess, OnEvolveFail);
     }
 
     private void OnEvolveSuccess(ItemResult result)

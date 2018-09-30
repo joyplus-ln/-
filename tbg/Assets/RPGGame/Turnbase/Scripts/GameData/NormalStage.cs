@@ -50,9 +50,9 @@ public class NormalStage : BaseStage
                 if (!string.IsNullOrEmpty(foe.characterId))
                 {
 
-                    var newEntry = PlayerItem.CreateActorItemWithLevel(GameInstance.Singleton.gameDatabase.characters[foe.characterId], foe.level, Const.StageType.Normal);
-                    newEntry.GUID = GameInstance.Singleton.gameDatabase.characters[foe.characterId].guid + "_" + foe.level;
-                    dict[GameInstance.Singleton.gameDatabase.characters[foe.characterId].guid + "_" + foe.level] = newEntry;
+                    var newEntry = PlayerItem.CreateActorItemWithLevel(GameInstance.Singleton.gameDatabase.characters[foe.characterId], foe.level, Const.StageType.Normal, false);
+                    newEntry.GUID = GameInstance.Singleton.gameDatabase.characters[foe.characterId].itemid + "_" + foe.level;
+                    dict[GameInstance.Singleton.gameDatabase.characters[foe.characterId].itemid + "_" + foe.level] = newEntry;
                 }
             }
         }
@@ -67,9 +67,9 @@ public class NormalStage : BaseStage
                 var item = GameInstance.Singleton.gameDatabase.characters[foe.characterId];
                 if (item != null)
                 {
-                    var newEntry = PlayerItem.CreateActorItemWithLevel(item, foe.level, Const.StageType.Normal);
-                    newEntry.GUID = GameInstance.Singleton.gameDatabase.characters[foe.characterId].guid + "_" + foe.level;
-                    dict[GameInstance.Singleton.gameDatabase.characters[foe.characterId].guid + "_" + foe.level] = newEntry;
+                    var newEntry = PlayerItem.CreateActorItemWithLevel(item, foe.level, Const.StageType.Normal, false);
+                    newEntry.GUID = GameInstance.Singleton.gameDatabase.characters[foe.characterId].itemid + "_" + foe.level;
+                    dict[GameInstance.Singleton.gameDatabase.characters[foe.characterId].itemid + "_" + foe.level] = newEntry;
                 }
             }
         }

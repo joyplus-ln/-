@@ -29,10 +29,10 @@ public abstract class BaseStage : BaseGameData
         {
             var item = rewardItem.item;
             var newEntry = new PlayerItem(PlayerItem.ItemType.other);
-            newEntry.ItemID = item.guid;
-            newEntry.GUID = item.guid;
+            newEntry.ItemID = item.itemid;
+            newEntry.GUID = item.itemid;
             newEntry.Amount = 1;
-            dict[item.guid] = newEntry;
+            dict[item.itemid] = newEntry;
         }
         return new List<PlayerItem>(dict.Values);
     }

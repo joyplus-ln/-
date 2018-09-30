@@ -1,8 +1,8 @@
 ﻿public interface IPlayerFormation
 {
-    string Id { get; set; }
+    string characterGuid { get; set; }
     string PlayerId { get; set; }
-    string DataId { get; set; }
+    string formationId { get; set; }
     int Position { get; set; }
     string ItemId { get; set; }
 }

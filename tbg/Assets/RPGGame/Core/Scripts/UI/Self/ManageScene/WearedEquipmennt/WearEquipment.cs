@@ -15,7 +15,7 @@ public class WearEquipment : MonoBehaviour
 
     public void SetData(PlayerItem selectedItem)
     {
-        List<PlayerItem> items = PlayerItem.equipDataMap.Values.Where(x => x.EquipItemId == selectedItem.CharacterData.guid).ToList();
+        List<PlayerItem> items = PlayerItem.equipDataMap.Values.Where(x => x.EquipItemGuid == selectedItem.CharacterData.itemid).ToList();
         for (int i = 0; i < items.Count; i++)
         {
             switch (items[i].EquipmentData.category)

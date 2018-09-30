@@ -94,7 +94,7 @@ public class PlayerUnlockItem : BasePlayerData, IPlayerUnlockItem
 
     public static bool IsUnlock(string playerId, BaseItem itemData)
     {
-        var Id = GetId(playerId, itemData.guid);
+        var Id = GetId(playerId, itemData.itemid);
         if (DataMap.ContainsKey(Id))
             return true;
         return false;

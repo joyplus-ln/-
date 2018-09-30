@@ -12,7 +12,7 @@ public abstract class BaseItemAmount<T> where T : BaseItem
 
     public string Id
     {
-        get { return item == null ? "" : item.guid; }
+        get { return item == null ? "" : item.itemid; }
     }
 
     public virtual string ToJson()
@@ -90,7 +90,7 @@ public abstract class SpecificItemEvolve
         var evolveItem = GetEvolveItem();
         var evolveItemId = "";
         if (evolveItem != null)
-            evolveItemId = evolveItem.guid;
+            evolveItemId = evolveItem.itemid;
 
         return "{\"requiredMaterials\":" + jsonRequiredMaterials + "," +
             "\"evolveItem\":\"" + evolveItemId + "\"}";
@@ -139,17 +139,12 @@ public class CreateEvolveItemData
 
 public abstract class BaseItem
 {
-    public string guid;
+    public string itemid;
     public string title;
     [Multiline]
     public string description;
 
-    // public string Id { get { return name; } }
-    public int SqliteId
-    {
-        set;
-        get;
-    }
+    // public string characterGuid { get { return name; } }
 
     [Header("General information")]
     //public Sprite icon;
@@ -177,8 +172,8 @@ public abstract class BaseItem
 
     public virtual string ToJson()
     {
-        return "{\"SqliteId\":\"" + SqliteId + "\"," +
-               "\"guid\":\"" + guid + "\"," +
+        return "{\"SqliteId\":\""  + "\"," +
+               "\"itemid\":\"" + itemid + "\"," +
             "\"category\":\"" + category + "\"," +
             "\"type\":\"" + Type + "\"," +
             "\"maxStack\":" + MaxStack + "}";
@@ -198,8 +193,8 @@ public abstract class BaseActorItem : BaseItem
 
     public override string ToJson()
     {
-        return "{\"SqliteId\":\"" + SqliteId + "\"," +
-               "\"guid\":\"" + guid + "\"," +
+        return "{\"SqliteId\":\"" + "\"," +
+               "\"itemid\":\"" + itemid + "\"," +
             "\"category\":\"" + category + "\"," +
             "\"type\":\"" + Type + "\"," +
             "\"maxStack\":" + MaxStack;

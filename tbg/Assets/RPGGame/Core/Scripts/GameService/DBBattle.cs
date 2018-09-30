@@ -22,9 +22,9 @@ public class DBBattle
             if (oldFormations.Read())
             {
                 oldFormation = new PlayerFormation();
-                oldFormation.Id = oldFormations.GetString(0);
+                oldFormation.characterGuid = oldFormations.GetString(0);
                 oldFormation.PlayerId = oldFormations.GetString(1);
-                oldFormation.DataId = oldFormations.GetString(2);
+                oldFormation.formationId = oldFormations.GetString(2);
                 oldFormation.Position = oldFormations.GetInt32(3);
                 oldFormation.ItemId = oldFormations.GetString(4);
             }
@@ -32,7 +32,7 @@ public class DBBattle
             {
                 GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerFormation SET itemId=@itemId WHERE id=@id",
                     new SqliteParameter("@itemId", oldFormation.ItemId),
-                    new SqliteParameter("@id", oldFormation.Id));
+                    new SqliteParameter("@id", oldFormation.characterGuid));
             }
         }
         PlayerFormation formation = null;
@@ -43,25 +43,25 @@ public class DBBattle
         if (targetFormations.Read())
         {
             formation = new PlayerFormation();
-            formation.Id = targetFormations.GetString(0);
+            formation.characterGuid = targetFormations.GetString(0);
             formation.PlayerId = targetFormations.GetString(1);
-            formation.DataId = targetFormations.GetString(2);
+            formation.formationId = targetFormations.GetString(2);
             formation.Position = targetFormations.GetInt32(3);
             formation.ItemId = targetFormations.GetString(4);
         }
         if (formation == null)
         {
             formation = new PlayerFormation();
-            formation.Id = PlayerFormation.GetId(playerId, formationName, position);
+            formation.characterGuid = PlayerFormation.GetId(playerId, formationName, position);
             formation.PlayerId = playerId;
-            formation.DataId = formationName;
+            formation.formationId = formationName;
             formation.Position = position;
             formation.ItemId = characterId;
             GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerFormation (id, playerId, Guid, position, itemId)
                 VALUES (@id, @playerId, @Guid, @position, @itemId)",
-                new SqliteParameter("@id", formation.Id),
+                new SqliteParameter("@id", formation.characterGuid),
                 new SqliteParameter("@playerId", formation.PlayerId),
-                new SqliteParameter("@Guid", formation.DataId),
+                new SqliteParameter("@Guid", formation.formationId),
                 new SqliteParameter("@position", formation.Position),
                 new SqliteParameter("@itemId", formation.ItemId));
         }
@@ -72,12 +72,12 @@ public class DBBattle
                 oldFormation.ItemId = formation.ItemId;
                 GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerFormation SET itemId=@itemId WHERE id=@id",
                     new SqliteParameter("@itemId", oldFormation.ItemId),
-                    new SqliteParameter("@id", oldFormation.Id));
+                    new SqliteParameter("@id", oldFormation.characterGuid));
             }
             formation.ItemId = characterId;
             GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerFormation SET itemId=@itemId WHERE id=@id",
                 new SqliteParameter("@itemId", formation.ItemId),
-                new SqliteParameter("@id", formation.Id));
+                new SqliteParameter("@id", formation.characterGuid));
         }
     }
 
@@ -184,9 +184,9 @@ public class DBBattle
             while (reader.Read())
             {
                 var entry = new PlayerFormation();
-                entry.Id = reader.GetString(0);
+                entry.characterGuid = reader.GetString(0);
                 entry.PlayerId = reader.GetString(1);
-                entry.DataId = reader.GetString(2);
+                entry.formationId = reader.GetString(2);
                 entry.Position = reader.GetInt32(3);
                 entry.ItemId = reader.GetString(4);
                 list.Add(entry);
@@ -356,7 +356,7 @@ public class DBBattle
                         if (character != null)
                         {
                             character.Exp += devivedExp;
-                            GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasCharacters SET exp=@exp WHERE id=@id",
+                            GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasCharacters SET exp=@exp WHERE Guid=@Guid",
                                 new SqliteParameter("@exp", character.Exp),
                                 new SqliteParameter("@Guid", character.GUID));
                             result.updateItems.Add(character);
@@ -381,33 +381,33 @@ public class DBBattle
                     var createItems = new List<PlayerItem>();
                     var updateItems = new List<PlayerItem>();
                     //todo 战斗胜利后的结算
-                    //if (AddItems(player.Id, rewardItem.Id, rewardItem.amount, out createItems, out updateItems))
+                    //if (AddItems(player.characterGuid, rewardItem.characterGuid, rewardItem.amount, out createItems, out updateItems))
                     //{
                     //    foreach (var createEntry in createItems)
                     //    {
-                    //        createEntry.Id = System.Guid.NewGuid().ToString();
-                    //        ExecuteNonQuery(@"INSERT INTO playerItem (id, playerId, Guid, amount, exp, equipItemId, equipPosition) VALUES (@id, @playerId, @Guid, @amount, @exp, @equipItemId, @equipPosition)",
-                    //            new SqliteParameter("@id", createEntry.Id),
+                    //        createEntry.characterGuid = System.Guid.NewGuid().ToString();
+                    //        ExecuteNonQuery(@"INSERT INTO playerItem (id, playerId, Guid, amount, exp, equipItemGuid, equipPosition) VALUES (@id, @playerId, @Guid, @amount, @exp, @equipItemId, @equipPosition)",
+                    //            new SqliteParameter("@id", createEntry.characterGuid),
                     //            new SqliteParameter("@playerId", createEntry.PlayerId),
                     //            new SqliteParameter("@Guid", createEntry.GUID),
                     //            new SqliteParameter("@amount", createEntry.Amount),
                     //            new SqliteParameter("@exp", createEntry.Exp),
-                    //            new SqliteParameter("@equipItemId", createEntry.EquipItemId),
+                    //            new SqliteParameter("@equipItemGuid", createEntry.equipItemId),
                     //            new SqliteParameter("@equipPosition", createEntry.EquipPosition));
                     //        result.rewardItems.Add(createEntry);
                     //        result.createItems.Add(createEntry);
-                    //        HelperUnlockItem(player.Id, rewardItem.Id);
+                    //        HelperUnlockItem(player.characterGuid, rewardItem.characterGuid);
                     //    }
                     //    foreach (var updateEntry in updateItems)
                     //    {
-                    //        ExecuteNonQuery(@"UPDATE playerItem SET playerId=@playerId, Guid=@Guid, amount=@amount, exp=@exp, equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
+                    //        ExecuteNonQuery(@"UPDATE playerItem SET playerId=@playerId, Guid=@Guid, amount=@amount, exp=@exp, equipItemGuid=@equipItemGuid, equipPosition=@equipPosition WHERE id=@id",
                     //            new SqliteParameter("@playerId", updateEntry.PlayerId),
                     //            new SqliteParameter("@Guid", updateEntry.GUID),
                     //            new SqliteParameter("@amount", updateEntry.Amount),
                     //            new SqliteParameter("@exp", updateEntry.Exp),
-                    //            new SqliteParameter("@equipItemId", updateEntry.EquipItemId),
+                    //            new SqliteParameter("@equipItemGuid", updateEntry.equipItemGuid),
                     //            new SqliteParameter("@equipPosition", updateEntry.EquipPosition),
-                    //            new SqliteParameter("@id", updateEntry.Id));
+                    //            new SqliteParameter("@id", updateEntry.characterGuid));
                     //        result.rewardItems.Add(updateEntry);
                     //        result.updateItems.Add(updateEntry);
                     //    }
@@ -439,10 +439,10 @@ public class DBBattle
         else
         {
             result.updateItems = new List<PlayerItem>();
-            unEquipItem.EquipItemId = "";
+            unEquipItem.EquipItemGuid = "";
             unEquipItem.EquipPosition = "";
-            GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
-                new SqliteParameter("@equipItemId", unEquipItem.EquipItemId),
+            GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET equipItemGuid=@equipItemGuid, equipPosition=@equipPosition WHERE Guid=@Guid",
+                new SqliteParameter("@equipItemGuid", unEquipItem.EquipItemGuid),
                 new SqliteParameter("@equipPosition", unEquipItem.EquipPosition),
                 new SqliteParameter("@Guid", unEquipItem.GUID));
             result.updateItems.Add(unEquipItem);
@@ -480,18 +480,18 @@ public class DBBattle
             var unEquipItem = GameInstance.dbPlayerData.GetPlayerItemByEquipper(playerId, characterId, equipPosition);
             if (unEquipItem != null)
             {
-                unEquipItem.EquipItemId = "";
+                unEquipItem.EquipItemGuid = "";
                 unEquipItem.EquipPosition = "";
-                GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
-                    new SqliteParameter("@equipItemId", unEquipItem.EquipItemId),
+                GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET equipItemGuid=@equipItemGuid, equipPosition=@equipPosition WHERE Guid=@Guid",
+                    new SqliteParameter("@equipItemGuid", unEquipItem.EquipItemGuid),
                     new SqliteParameter("@equipPosition", unEquipItem.EquipPosition),
                     new SqliteParameter("@Guid", unEquipItem.GUID));
                 result.updateItems.Add(unEquipItem);
             }
-            foundEquipment.EquipItemId = characterId;
+            foundEquipment.EquipItemGuid = equipmentId;
             foundEquipment.EquipPosition = equipPosition;
-            GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
-                new SqliteParameter("@equipItemId", foundEquipment.EquipItemId),
+            GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET equipItemGuid=@equipItemGuid, equipPosition=@equipPosition WHERE Guid=@Guid",
+                new SqliteParameter("@equipItemGuid", foundEquipment.EquipItemGuid),
                 new SqliteParameter("@equipPosition", foundEquipment.EquipPosition),
                 new SqliteParameter("@Guid", foundEquipment.GUID));
             result.updateItems.Add(foundEquipment);
@@ -550,9 +550,9 @@ public class DBBattle
             while (reader.Read())
             {
                 var entry = new PlayerFormation();
-                entry.Id = reader.GetString(0);
+                entry.characterGuid = reader.GetString(0);
                 entry.PlayerId = reader.GetString(1);
-                entry.DataId = reader.GetString(2);
+                entry.formationId = reader.GetString(2);
                 entry.Position = reader.GetInt32(3);
                 entry.ItemId = reader.GetString(4);
                 list.Add(entry);

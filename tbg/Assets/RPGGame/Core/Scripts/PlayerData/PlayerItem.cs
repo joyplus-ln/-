@@ -35,8 +35,8 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
     public int Amount { get { return amount; } set { amount = value; } }
     public int exp;
     public int Exp { get { return exp; } set { exp = value; } }
-    public string equipItemId;
-    public string EquipItemId { get { return equipItemId; } set { equipItemId = value; } }
+    public string equipItemguid;
+    public string EquipItemGuid { get { return equipItemguid; } set { equipItemguid = value; } }
     public string equipPosition;
     public string EquipPosition { get { return equipPosition; } set { equipPosition = value; } }
 
@@ -60,7 +60,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         GUID = "";
         Amount = 1;
         Exp = 0;
-        EquipItemId = "";
+        EquipItemGuid = "";
         EquipPosition = "";
         this.itemType = itemType;
     }
@@ -79,7 +79,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         to.GUID = from.GUID;
         to.Amount = from.Amount;
         to.Exp = from.Exp;
-        to.EquipItemId = from.EquipItemId;
+        to.EquipItemGuid = from.EquipItemGuid;
         to.EquipPosition = from.EquipPosition;
         to.itemType = from.itemType;
 
@@ -100,15 +100,15 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
             switch (itemType)
             {
                 case ItemType.character:
-                    if (GameDatabase != null && GameDatabase.characters.ContainsKey(GUID))
-                        return GameDatabase.characters[GUID];
+                    if (GameDatabase != null && GameDatabase.characters.ContainsKey(ItemID))
+                        return GameDatabase.characters[ItemID];
                     break;
                 case ItemType.equip:
-                    if (GameDatabase != null && GameDatabase.equipments.ContainsKey(GUID))
-                        return GameDatabase.equipments[GUID];
+                    if (GameDatabase != null && GameDatabase.equipments.ContainsKey(ItemID))
+                        return GameDatabase.equipments[ItemID];
                     break;
             }
-            Debug.LogError("不存在这个id 肯定是哪里出错了:" + GUID + ":" + itemType);
+            Debug.LogError("不存在这个id 肯定是哪里出错了:" + GUID + ":" + itemType + ":" + ItemID);
             return null;
         }
     }
@@ -270,7 +270,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         get
         {
             PlayerItem equippedByItem;
-            if (EquipmentData != null && !string.IsNullOrEmpty(EquipItemId) && equipDataMap.TryGetValue(EquipItemId, out equippedByItem))
+            if (EquipmentData != null && !string.IsNullOrEmpty(EquipItemGuid) && equipDataMap.TryGetValue(EquipItemGuid, out equippedByItem))
                 return equippedByItem;
             return null;
         }
@@ -289,7 +289,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
             var list = valueList.Where(entry =>
                 entry.PlayerId == PlayerId &&
                 entry.EquipmentData != null &&
-                entry.EquipItemId == ItemID &&
+                entry.EquipItemGuid == ItemID &&
                 !string.IsNullOrEmpty(entry.EquipPosition) &&
                 entry.Amount > 0).ToList();
 
@@ -330,7 +330,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         var formations = InTeamFormations;
         foreach (var formation in formations)
         {
-            if (formation.DataId == formationName)
+            if (formation.formationId == formationName)
                 return true;
         }
         return false;
@@ -440,7 +440,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         RemoveDataRange(Player.CurrentPlayerId);
     }
 
-    public static PlayerItem CreateActorItemWithLevel(BaseActorItem itemData, int level, Const.StageType type)
+    public static PlayerItem CreateActorItemWithLevel(BaseActorItem itemData, int level, Const.StageType type,bool isplayer)
     {
         if (level <= 0)
             level = 1;
@@ -453,7 +453,9 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
             //sumExp += itemTier.expTable.Calculate(i + 1, itemTier.maxLevel);
             sumExp += Const.NextEXP;
         }
-        result.GUID = itemData.guid;
+        result.ItemID = itemData.itemid;
+        //if(!isplayer)
+        //result.GUID = itemData.;
         result.Exp = sumExp;
         result.ExtrAttributesData = GetExtraAttributes(type);
         return result;

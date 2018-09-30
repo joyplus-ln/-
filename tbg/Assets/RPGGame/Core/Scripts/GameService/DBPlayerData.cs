@@ -206,16 +206,15 @@ public class DBPlayerData
             if (true)
             {
                 PlayerItem currentItem = new PlayerItem(PlayerItem.ItemType.character);
-                currentItem.GUID = GameInstance.Singleton.gameDatabase.startCharacterItems[i];//id,@id,
-                GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerHasCharacters (id,playerId, Guid, amount, exp, equipItemId, equipPosition) VALUES ( @id,@playerId, @Guid, @amount, @exp, @equipItemId, @equipPosition)",
-                    new SqliteParameter("@id", System.Guid.NewGuid().ToString()),
+                currentItem.ItemID = GameInstance.Singleton.gameDatabase.startCharacterItems[i];//id,@id,
+                GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerHasCharacters (itemid,playerId, Guid, amount, exp) VALUES ( @itemid,@playerId, @Guid, @amount, @exp)",
+                    new SqliteParameter("@itemid", currentItem.ItemID),
                     new SqliteParameter("@playerId", player.Id),
-                    new SqliteParameter("@Guid", currentItem.GUID),
+                    new SqliteParameter("@Guid", System.Guid.NewGuid().ToString()),
                     new SqliteParameter("@amount", currentItem.Amount),
-                    new SqliteParameter("@exp", currentItem.Exp),
-                    new SqliteParameter("@equipItemId", currentItem.EquipItemId),
-                    new SqliteParameter("@equipPosition", currentItem.EquipPosition));
-                //HelperUnlockItem(player.Id, startItem.guid);
+                    new SqliteParameter("@exp", currentItem.Exp)
+                    );
+                //HelperUnlockItem(player.characterGuid, startItem.guid);
 
             }
         }
@@ -235,16 +234,16 @@ public class DBPlayerData
             if (true)
             {
                 PlayerItem currentItem = new PlayerItem(PlayerItem.ItemType.equip);
-                currentItem.GUID = GameInstance.Singleton.gameDatabase.startEquipsItems[i];//id,@id,
-                GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerHasEquips (id,playerId, Guid, amount, exp, equipItemId, equipPosition) VALUES ( @id,@playerId, @Guid, @amount, @exp, @equipItemId, @equipPosition)",
-                    new SqliteParameter("@id", System.Guid.NewGuid().ToString()),
+                currentItem.ItemID = GameInstance.Singleton.gameDatabase.startEquipsItems[i];//id,@id,
+                GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerHasEquips (itemid,playerId, Guid, amount, exp, equipItemGuid, equipPosition) VALUES ( @itemid,@playerId, @Guid, @amount, @exp, @equipItemGuid, @equipPosition)",
+                    new SqliteParameter("@itemid", currentItem.ItemID),
                     new SqliteParameter("@playerId", player.Id),
-                    new SqliteParameter("@Guid", currentItem.GUID),
+                    new SqliteParameter("@Guid", System.Guid.NewGuid().ToString()),
                     new SqliteParameter("@amount", currentItem.Amount),
                     new SqliteParameter("@exp", currentItem.Exp),
-                    new SqliteParameter("@equipItemId", currentItem.EquipItemId),
+                    new SqliteParameter("@equipItemGuid", currentItem.EquipItemGuid),
                     new SqliteParameter("@equipPosition", currentItem.EquipPosition));
-                //HelperUnlockItem(player.Id, startItem.guid);
+                //HelperUnlockItem(player.characterGuid, startItem.guid);
 
             }
         }
@@ -299,7 +298,7 @@ public class DBPlayerData
                 if (materialItem.Amount > 0)
                     updateItems.Add(materialItem);
                 else
-                    deleteItemIds.Add(materialItem.ItemID, PlayerItem.ItemType.character);
+                    deleteItemIds.Add(materialItem.GUID, PlayerItem.ItemType.character);
             }
             if (requireCurrency > softCurrency.Amount)
                 result.error = GameServiceErrorCode.NOT_ENOUGH_SOFT_CURRENCY;
@@ -314,18 +313,16 @@ public class DBPlayerData
                 updateItems.Add(foundItem);
                 foreach (var updateItem in updateItems)
                 {
-                    GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasCharacters SET playerId=@playerId, Guid=@Guid, amount=@amount, exp=@exp, equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
+                    GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasCharacters SET playerId=@playerId, itemid=@itemid, amount=@amount, exp=@exp WHERE Guid=@Guid",
                         new SqliteParameter("@playerId", updateItem.PlayerId),
-                        new SqliteParameter("@Guid", updateItem.GUID),
+                        new SqliteParameter("@itemid", updateItem.ItemID),
                         new SqliteParameter("@amount", updateItem.Amount),
                         new SqliteParameter("@exp", updateItem.Exp),
-                        new SqliteParameter("@equipItemId", updateItem.EquipItemId),
-                        new SqliteParameter("@equipPosition", updateItem.EquipPosition),
                         new SqliteParameter("@Guid", updateItem.GUID));
                 }
                 foreach (var deleteItemId in deleteItemIds)
                 {
-                    GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerHasCharacters WHERE id=@id", new SqliteParameter("@id", deleteItemId));
+                    GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerHasCharacters WHERE Guid=@Guid", new SqliteParameter("@Guid", deleteItemId));
                 }
                 result.updateCurrencies.Add(softCurrency);
                 result.updateItems = updateItems;
@@ -341,11 +338,11 @@ public class DBPlayerData
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public PlayerItem GetPlayerCharacterItemById(string id)
+    public PlayerItem GetPlayerCharacterItemById(string Guid)
     {
         PlayerItem playerItem = null;
-        var playerItems = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerHasCharacters WHERE id=@id",
-            new SqliteParameter("@id", id));
+        var playerItems = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerHasCharacters WHERE Guid=@Guid",
+            new SqliteParameter("@Guid", Guid));
         if (playerItems.Read())
         {
             playerItem = new PlayerItem(PlayerItem.ItemType.character);
@@ -355,17 +352,17 @@ public class DBPlayerData
             playerItem.GUID = playerItems.GetString(2);
             playerItem.Amount = playerItems.GetInt32(3);
             playerItem.Exp = playerItems.GetInt32(4);
-            playerItem.EquipItemId = playerItems.GetString(5);
+            playerItem.EquipItemGuid = playerItems.GetString(5);
             playerItem.EquipPosition = playerItems.GetString(6);
         }
         return playerItem;
     }
 
-    public PlayerItem GetPlayerEquipmentItemById(string id)
+    public PlayerItem GetPlayerEquipmentItemById(string Guid)
     {
         PlayerItem playerItem = null;
-        var playerItems = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerHasEquips WHERE id=@id",
-            new SqliteParameter("@id", id));
+        var playerItems = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerHasEquips WHERE Guid=@Guid",
+            new SqliteParameter("@Guid", Guid));
         if (playerItems.Read())
         {
             playerItem = new PlayerItem(PlayerItem.ItemType.equip);
@@ -375,7 +372,7 @@ public class DBPlayerData
             playerItem.GUID = playerItems.GetString(2);
             playerItem.Amount = playerItems.GetInt32(3);
             playerItem.Exp = playerItems.GetInt32(4);
-            playerItem.EquipItemId = playerItems.GetString(5);
+            playerItem.EquipItemGuid = playerItems.GetString(5);
             playerItem.EquipPosition = playerItems.GetString(6);
         }
         return playerItem;
@@ -426,12 +423,12 @@ public class DBPlayerData
     /// <param name="equipItemId"></param>
     /// <param name="equipPosition"></param>
     /// <returns></returns>
-    public PlayerItem GetPlayerItemByEquipper(string playerId, string equipItemId, string equipPosition)
+    public PlayerItem GetPlayerItemByEquipper(string playerId, string equipItemGuid, string equipPosition)
     {
         PlayerItem playerItem = null;
-        var playerItems = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerHasEquips WHERE playerId=@playerId AND equipItemId=@equipItemId AND equipPosition=@equipPosition",
+        var playerItems = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerHasEquips WHERE playerId=@playerId AND equipItemGuid=@equipItemGuid AND equipPosition=@equipPosition",
             new SqliteParameter("@playerId", playerId),
-            new SqliteParameter("@equipItemId", equipItemId),
+            new SqliteParameter("@equipItemGuid", equipItemGuid),
             new SqliteParameter("@equipPosition", equipPosition));
         if (playerItems.Read())
         {
@@ -441,7 +438,7 @@ public class DBPlayerData
             playerItem.GUID = playerItems.GetString(2);
             playerItem.Amount = playerItems.GetInt32(3);
             playerItem.Exp = playerItems.GetInt32(4);
-            playerItem.EquipItemId = playerItems.GetString(5);
+            playerItem.EquipItemGuid = playerItems.GetString(5);
             playerItem.EquipPosition = playerItems.GetString(6);
         }
         return playerItem;
