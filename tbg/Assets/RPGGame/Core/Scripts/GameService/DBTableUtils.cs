@@ -46,7 +46,7 @@ public class DbRowsReader
 
     public string GetString(int index)
     {
-        return (string)data[currentRow][index];
+        return (data[currentRow][index]).ToString();
     }
 
     public bool GetBoolean(int index)

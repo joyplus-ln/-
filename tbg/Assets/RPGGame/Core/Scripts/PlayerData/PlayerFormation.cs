@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerFormation : BasePlayerData, IPlayerFormation
 {
     public static readonly Dictionary<string, PlayerFormation> DataMap = new Dictionary<string, PlayerFormation>();
-    public string characterGuid { get { return GetId(PlayerId, formationId, Position); } set { } }
+    public string characterGuid { get; set; }
     public string playerId;
     public string PlayerId { get { return playerId; } set { playerId = value; } }
     public string FormationId;
@@ -51,6 +51,11 @@ public class PlayerFormation : BasePlayerData, IPlayerFormation
         return playerId + "_" + dataId + "_" + position;
     }
 
+    public string GetFormationID()
+    {
+        return PlayerId + "_" + formationId + "_" + Position;
+    }
+
     public static void SetData(PlayerFormation data)
     {
         if (data == null || string.IsNullOrEmpty(data.characterGuid))
@@ -60,7 +65,16 @@ public class PlayerFormation : BasePlayerData, IPlayerFormation
 
     public static bool TryGetData(string playerId, string dataId, int position, out PlayerFormation data)
     {
-        return DataMap.TryGetValue(GetId(playerId, dataId, position), out data);
+        foreach(var item in DataMap.Values)
+        {
+            if(item.GetFormationID().Equals(playerId + "_" + dataId + "_" + position))
+            {
+                data = item;
+                return true;
+            }
+        }
+        data = null;
+        return false;
     }
 
     public static bool TryGetData(string dataId, int position, out PlayerFormation data)

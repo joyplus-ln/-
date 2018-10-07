@@ -352,8 +352,6 @@ public class DBPlayerData
             playerItem.GUID = playerItems.GetString(2);
             playerItem.Amount = playerItems.GetInt32(3);
             playerItem.Exp = playerItems.GetInt32(4);
-            playerItem.EquipItemGuid = playerItems.GetString(5);
-            playerItem.EquipPosition = playerItems.GetString(6);
         }
         return playerItem;
     }

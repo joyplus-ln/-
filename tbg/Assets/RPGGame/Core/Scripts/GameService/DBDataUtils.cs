@@ -69,11 +69,12 @@ public class DBDataUtils
             recoveredTime INTEGER NOT NULL)");
 
         ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerFormation (
-            id TEXT NOT NULL PRIMARY KEY,
+            id INTEGER PRIMARY KEY,
             playerId TEXT NOT NULL,
             Guid TEXT NOT NULL,
             position INTEGER NOT NULL,
-            itemId TEXT NOT NULL)");
+            itemId TEXT NOT NULL,
+            itemguid TEXT NOT NULL)");
 
         ExecuteNonQuery(@"CREATE TABLE IF NOT EXISTS playerUnlockItem (
             id TEXT NOT NULL PRIMARY KEY,

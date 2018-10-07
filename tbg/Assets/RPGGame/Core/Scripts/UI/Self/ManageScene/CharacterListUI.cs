@@ -38,4 +38,9 @@ public class CharacterListUI : MonoBehaviour
         skillListUi.SetData(selectedItem.CharacterData.GetCustomSkills());
         wearEquipment.SetData(selectedItem);
     }
+
+    public PlayerItem GetSelectedPlayerItem()
+    {
+        return currentSelectedItem.characterItem;
+    }
 }

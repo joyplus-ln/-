@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class FormationManager : MonoBehaviour
 {
 
-    public Transform formation1, formation12, formation13, formation14, formation15;
+    public FormationItemShow[] formations;
 
     // Use this for initialization
     void Start()
@@ -13,5 +14,17 @@ public class FormationManager : MonoBehaviour
 
     }
 
+    void ShowFormation()
+    {
+        List<PlayerFormation> list = PlayerFormation.DataMap.Values.Where(a => a.playerId == Player.CurrentPlayerId).ToList();
+        for (int i = 0; i < list.Count;i++)
+        {
+            formations[list[i].Position].Show(list[i]);
+        }
+    }
 
+    public void Refresh()
+    {
+        ShowFormation(); 
+    }
 }

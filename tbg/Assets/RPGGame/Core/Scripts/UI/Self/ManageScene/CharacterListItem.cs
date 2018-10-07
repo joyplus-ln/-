@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterListItem : MonoBehaviour
 {
     private CharacterListUI listui;
-    private PlayerItem characterItem;
+    public PlayerItem characterItem;
     // Use this for initialization
     void Start()
     {

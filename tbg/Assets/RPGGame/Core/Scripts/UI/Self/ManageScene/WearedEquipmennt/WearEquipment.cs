@@ -7,6 +7,7 @@ public class WearEquipment : MonoBehaviour
 {
 
     public WearEquipmentItem weapon, cloth, shoot;
+    public WearEquipmentList wearEquipmentList;
     // Use this for initialization
     void Start()
     {
@@ -35,6 +36,11 @@ public class WearEquipment : MonoBehaviour
         {
             Debug.LogError("ERROR !");
         }
+    }
+
+    public void Selected(string name)
+    {
+        wearEquipmentList.ShowAll(name);
     }
 
 }
