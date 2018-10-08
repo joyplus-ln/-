@@ -20,7 +20,7 @@ public class SkillUtils
     public static CustomBuff MakeCustomBuff(string BuffId)
     {
 
-        object ect = Assembly.Load("Assembly-CSharp").CreateInstance("Buff" + BuffId);//加载程序集，创建程序集里面的 命名空间.类型名 实例
+        object ect = Assembly.Load("Assembly-CSharp").CreateInstance(BuffId);//加载程序集，创建程序集里面的 命名空间.类型名 实例
         CustomBuff custombuff = (CustomBuff)ect;
         custombuff.guid = System.Guid.NewGuid().ToString();
         custombuff.Init();

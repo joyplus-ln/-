@@ -167,6 +167,17 @@ public struct SkillAttackDamage
         mAtkDamageRateIncreaseEachLevel = 0;
         hitCount = 1;
     }
+
+    public SkillAttackDamage(float fixDamage, float pAtkDamageRate, float mAtkDamageRate, float fixDamageIncreaseEachLevel = 0, float pAtkDamageRateIncreaseEachLevel = 0, float mAtkDamageRateIncreaseEachLevel = 0)
+    {
+        this.fixDamage = fixDamage;
+        this.pAtkDamageRate = pAtkDamageRate;
+        this.mAtkDamageRate = mAtkDamageRate;
+        this.fixDamageIncreaseEachLevel = 0;
+        this.pAtkDamageRateIncreaseEachLevel = 0;
+        this.mAtkDamageRateIncreaseEachLevel = 0;
+        this.hitCount = 1;
+    }
 }
 
 [System.Serializable]

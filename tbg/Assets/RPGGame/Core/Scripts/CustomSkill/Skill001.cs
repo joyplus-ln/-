@@ -13,7 +13,7 @@ public class Skill001 : CustomSkill
 
     public override IEnumerator ApplyBuffLogic()
     {
-        CustomBuff buff001 = SkillUtils.MakeCustomBuff("001");
+        CustomBuff buff001 = SkillUtils.MakeCustomBuff("Buff001");
         buff001.SetGiver(selfOnly);
         GetSelf().ApplyCustomBuff(buff001);
         Debug.Log("执行了 添加自定义buff 001");
