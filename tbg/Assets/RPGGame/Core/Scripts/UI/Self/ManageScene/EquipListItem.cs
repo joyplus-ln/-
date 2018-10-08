@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class EquipListItem : MonoBehaviour {
+public class EquipListItem : MonoBehaviour
+{
 
 
     private EquipListUI listui;
     private PlayerItem equipItem;
+
+    public Text lvName;
     // Use this for initialization
     void Start()
     {
@@ -17,6 +21,7 @@ public class EquipListItem : MonoBehaviour {
     {
         this.listui = listui;
         this.equipItem = equipItem;
+        lvName.text = equipItem.EquipmentData.quality + "-LV" + equipItem.Level + "-" + equipItem.EquipmentData.title;
     }
 
     public void PointDown()

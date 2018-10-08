@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterListItem : MonoBehaviour
 {
     private CharacterListUI listui;
     public PlayerItem characterItem;
+
+    public Text lvName;
     // Use this for initialization
     void Start()
     {
@@ -16,6 +19,7 @@ public class CharacterListItem : MonoBehaviour
     {
         this.listui = listui;
         this.characterItem = characterItem;
+        lvName.text = characterItem.CharacterData.quality + "-LV" + characterItem.Level + "-" + characterItem.CharacterData.title;
     }
 
     public void PointDown()

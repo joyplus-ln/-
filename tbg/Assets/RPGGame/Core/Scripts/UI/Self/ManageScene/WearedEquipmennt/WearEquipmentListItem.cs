@@ -2,11 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WearEquipmentListItem : MonoBehaviour {
 
     WearEquipmentList wearEquipmentList;
     PlayerItem playerItem;
+
+    public Text lvName;
 	// Use this for initialization
 	void Start () {
 		
@@ -18,6 +21,7 @@ public class WearEquipmentListItem : MonoBehaviour {
     {
         this.wearEquipmentList = wearEquipmentList;
         this.playerItem = playerItem;
+        lvName.text = playerItem.EquipmentData.quality + "-LV" + playerItem.Level + "-" + playerItem.EquipmentData.title;
     }
 
     public void Click()

@@ -63,7 +63,7 @@ public class UICharacterStatsGeneric : UIBase
             textHp.text = character.Hp + "/" + character.MaxHp;
 
         if (nameText != null)
-            nameText.text = character.Item.GUID;
+            nameText.text = character.Item.CharacterData.title;
 
 
         if (imageHpGage != null)
