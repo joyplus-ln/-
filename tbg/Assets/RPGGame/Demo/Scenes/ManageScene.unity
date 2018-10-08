@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.5748171, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2978,12 +2978,12 @@ Prefab:
     - target: {fileID: 224787915296552056, guid: d14dcc6f9ccaffb449a1043604885053,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 533.5
       objectReference: {fileID: 0}
     - target: {fileID: 224787915296552056, guid: d14dcc6f9ccaffb449a1043604885053,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -1505.2053
       objectReference: {fileID: 0}
     - target: {fileID: 224787915296552056, guid: d14dcc6f9ccaffb449a1043604885053,
         type: 2}
@@ -2993,7 +2993,7 @@ Prefab:
     - target: {fileID: 224787915296552056, guid: d14dcc6f9ccaffb449a1043604885053,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 1610.4106
       objectReference: {fileID: 0}
     - target: {fileID: 224787915296552056, guid: d14dcc6f9ccaffb449a1043604885053,
         type: 2}
@@ -3003,7 +3003,7 @@ Prefab:
     - target: {fileID: 224787915296552056, guid: d14dcc6f9ccaffb449a1043604885053,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224787915296552056, guid: d14dcc6f9ccaffb449a1043604885053,
         type: 2}
@@ -3013,7 +3013,7 @@ Prefab:
     - target: {fileID: 224787915296552056, guid: d14dcc6f9ccaffb449a1043604885053,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224787915296552056, guid: d14dcc6f9ccaffb449a1043604885053,
         type: 2}
@@ -3068,22 +3068,22 @@ Prefab:
     - target: {fileID: 224770194295175774, guid: d14dcc6f9ccaffb449a1043604885053,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224770194295175774, guid: d14dcc6f9ccaffb449a1043604885053,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 0.99999994
       objectReference: {fileID: 0}
     - target: {fileID: 224977445275959802, guid: d14dcc6f9ccaffb449a1043604885053,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 224977445275959802, guid: d14dcc6f9ccaffb449a1043604885053,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0000692794
+      value: 0.00009577688
       objectReference: {fileID: 0}
     - target: {fileID: 224770194295175774, guid: d14dcc6f9ccaffb449a1043604885053,
         type: 2}
@@ -5073,10 +5073,10 @@ RectTransform:
   m_Father: {fileID: 26766064}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1067, y: 0}
+  m_SizeDelta: {x: 1067, y: 700}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &403237731
 MonoBehaviour:
@@ -14602,7 +14602,7 @@ CanvasGroup:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 714145495}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -20267,7 +20267,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1289221223
 MonoBehaviour:
   m_ObjectHideFlags: 0

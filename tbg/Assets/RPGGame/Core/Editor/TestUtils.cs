@@ -46,4 +46,15 @@ public class TestUtils
         GameObject.Find("HomePrefab").GetComponent<CanvasGroup>().alpha = 0.7f;
 
     }
+
+    [MenuItem("Test/Option4")]
+    public static void SaveString4()
+    {
+        GameObject.Find("HomePrefab").GetComponent<CanvasGroup>().alpha = 0;
+    }
+    [MenuItem("Test/Option5")]
+    public static void SaveString5()
+    {
+        GameObject.Find("HomePrefab").GetComponent<CanvasGroup>().alpha = 1;
+    }
 }

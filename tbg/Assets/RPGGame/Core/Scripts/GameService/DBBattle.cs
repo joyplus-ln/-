@@ -12,29 +12,30 @@ public class DBBattle
     public const ushort BATTLE_RESULT_WIN = 2;
     private void HelperSetFormation(string itemguid,string playerId, string characterId, string formationName, int position)
     {
-        //PlayerFormation oldFormation = null;
-        //if (!string.IsNullOrEmpty(characterId))
-        //{
-        //    var oldFormations = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerFormation WHERE playerId=@playerId AND Guid=@Guid AND itemId=@itemId LIMIT 1",
-        //        new SqliteParameter("@playerId", playerId),
-        //        new SqliteParameter("@Guid", formationName),
-        //        new SqliteParameter("@itemId", characterId));
-        //    if (oldFormations.Read())
-        //    {
-        //        oldFormation = new PlayerFormation();
-        //        oldFormation.characterGuid = oldFormations.GetString(5);
-        //        oldFormation.PlayerId = oldFormations.GetString(1);
-        //        oldFormation.formationId = oldFormations.GetString(2);
-        //        oldFormation.Position = oldFormations.GetInt32(3);
-        //        oldFormation.ItemId = oldFormations.GetString(4);
-        //    }
-        //    if (oldFormation != null)
-        //    {
-        //        GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerFormation SET itemId=@itemId WHERE itemguid=@itemguid",
-        //            new SqliteParameter("@itemId", oldFormation.ItemId),
-        //            new SqliteParameter("@itemguid", oldFormation.characterGuid));
-        //    }
-        //}
+        PlayerFormation oldFormation = null;
+        if (!string.IsNullOrEmpty(characterId))
+        {
+            var oldFormations = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerFormation WHERE playerId=@playerId AND Guid=@Guid AND position=@position LIMIT 1",
+                new SqliteParameter("@playerId", playerId),
+                new SqliteParameter("@Guid", formationName),
+                new SqliteParameter("@position", position));
+            if (oldFormations.Read())
+            {
+                oldFormation = new PlayerFormation();
+                oldFormation.characterGuid = oldFormations.GetString(5);
+                oldFormation.PlayerId = oldFormations.GetString(1);
+                oldFormation.formationId = oldFormations.GetString(2);
+                oldFormation.Position = oldFormations.GetInt32(3);
+                oldFormation.ItemId = oldFormations.GetString(4);
+            }
+            if (oldFormation != null)
+            {
+                GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerFormation WHERE playerId=@playerId AND Guid=@Guid AND position=@position",
+                new SqliteParameter("@playerId", playerId),
+                new SqliteParameter("@Guid", formationName),
+                new SqliteParameter("@position", position));
+            }
+        }
         PlayerFormation formation = null;
         var targetFormations = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerFormation WHERE playerId=@playerId AND Guid=@Guid AND itemguid=@itemguid LIMIT 1",
             new SqliteParameter("@itemguid", itemguid),
@@ -57,8 +58,6 @@ public class DBBattle
             formation.formationId = formationName;
             formation.Position = position;
             formation.ItemId = characterId;
-            Debug.LogError("kkk111--->" + itemguid);
-            Debug.LogError("kkk--->" + formation.characterGuid);
             GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerFormation (itemguid, playerId, Guid, position, itemId,id)
                 VALUES (@itemguid, @playerId, @Guid, @position, @itemId,@id)",
                 new SqliteParameter("@itemguid", formation.characterGuid),
