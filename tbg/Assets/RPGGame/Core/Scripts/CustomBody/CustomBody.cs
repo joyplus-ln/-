@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class CustomBody
@@ -83,7 +84,14 @@ public class CustomBody
         // Play hurt animation
         //CacheAnimator.ResetTrigger(ANIM_KEY_HURT);
         //CacheAnimator.SetTrigger(ANIM_KEY_HURT);
+        AnimReceiveDamage();
         return attackInfo;
+    }
+
+    //播放动画 receiveDamage
+    void AnimReceiveDamage()
+    {
+        self.transform.DOShakePosition(0.3f, 1, 10, 30f);
     }
 
     public void DeductBlood(int totalDmg, DmgType type)
@@ -103,8 +111,8 @@ public class CustomBody
                 self.Manager.SpawnMissText(self);
                 return;
                 break;
-                case DmgType.Heal:
-                self.Manager.SpawnAddHealText("+",totalDmg,self);
+            case DmgType.Heal:
+                self.Manager.SpawnAddHealText("+", totalDmg, self);
                 break;
         }
         self.Hp -= totalDmg;
