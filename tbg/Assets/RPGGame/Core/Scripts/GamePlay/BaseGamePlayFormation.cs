@@ -16,9 +16,9 @@ public class BaseGamePlayFormation : MonoBehaviour
             PlayerFormation playerFormation = null;
             if (PlayerFormation.TryGetData(formationName, i, out playerFormation))
             {
-                var itemId = playerFormation.ItemId;
+                var characterGuid = playerFormation.characterGuid;
                 PlayerItem item = null;
-                if (!string.IsNullOrEmpty(itemId) && PlayerItem.characterDataMap.TryGetValue(itemId, out item))
+                if (!string.IsNullOrEmpty(characterGuid) && PlayerItem.characterDataMap.TryGetValue(characterGuid, out item))
                     SetCharacter(i, item);
             }
         }

@@ -14,10 +14,15 @@ public class FormationManager : MonoBehaviour
 
     }
 
+    private void OnEnable()
+    {
+        Refresh();
+    }
+
     void ShowFormation()
     {
         List<PlayerFormation> list = PlayerFormation.DataMap.Values.Where(a => a.playerId == Player.CurrentPlayerId).ToList();
-        for (int i = 0; i < list.Count;i++)
+        for (int i = 0; i < list.Count; i++)
         {
             formations[list[i].Position].Show(list[i]);
         }
@@ -25,6 +30,6 @@ public class FormationManager : MonoBehaviour
 
     public void Refresh()
     {
-        ShowFormation(); 
+        ShowFormation();
     }
 }

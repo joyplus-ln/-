@@ -22,7 +22,7 @@ public class DBBattle
             if (oldFormations.Read())
             {
                 oldFormation = new PlayerFormation();
-                oldFormation.characterGuid = oldFormations.GetString(5);
+                oldFormation.characterGuid = oldFormations.GetString(0);
                 oldFormation.PlayerId = oldFormations.GetString(1);
                 oldFormation.formationId = oldFormations.GetString(2);
                 oldFormation.Position = oldFormations.GetInt32(3);

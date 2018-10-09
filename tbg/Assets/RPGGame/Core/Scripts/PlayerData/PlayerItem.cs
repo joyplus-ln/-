@@ -385,17 +385,17 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
 
     public static void SetData(PlayerItem data, ItemType type)
     {
-        if (data == null || string.IsNullOrEmpty(data.ItemID))
+        if (data == null || string.IsNullOrEmpty(data.GUID))
             return;
         switch (type)
         {
             case ItemType.character:
                 data.itemType = ItemType.character;
-                characterDataMap[data.ItemID] = data;
+                characterDataMap[data.GUID] = data;
                 break;
             case ItemType.equip:
                 data.itemType = ItemType.equip;
-                equipDataMap[data.ItemID] = data;
+                equipDataMap[data.GUID] = data;
                 break;
             case ItemType.other:
                 break;
