@@ -159,12 +159,12 @@ public class GamePlayFormation : BaseGamePlayFormation
         return Characters.Values.Where(a => a.Hp <= 0).ToList().Count;
     }
 
-    public Vector2 GetTarget1Position(int pos)
+    public Vector3 GetTarget1Position(int pos)
     {
             return SelfPosition1Transforms[pos].position;
     }
 
-    public Vector2 GetTarget2Position(int pos)
+    public Vector3 GetTarget2Position(int pos)
     {
             return SelfPosition2Transforms[pos].position;
     }
