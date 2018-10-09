@@ -7,6 +7,9 @@ public class GamePlayFormation : BaseGamePlayFormation
 {
     public GamePlayFormation foeFormation;
     public bool isPlayerFormation;
+
+    public Transform[] SelfPosition1Transforms;
+    public Transform[] SelfPosition2Transforms;
     public GamePlayManager Manager { get { return GamePlayManager.Singleton; } }
     public readonly Dictionary<int, UICharacterStats> UIStats = new Dictionary<int, UICharacterStats>();
 
@@ -154,5 +157,15 @@ public class GamePlayFormation : BaseGamePlayFormation
     public int CountDeadCharacters()
     {
         return Characters.Values.Where(a => a.Hp <= 0).ToList().Count;
+    }
+
+    public Vector2 GetTarget1Position(int pos)
+    {
+            return SelfPosition1Transforms[pos].position;
+    }
+
+    public Vector2 GetTarget2Position(int pos)
+    {
+            return SelfPosition2Transforms[pos].position;
     }
 }

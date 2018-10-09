@@ -194,6 +194,14 @@ public class CustomSkill
     {
         yield return selfOnly.MoveTo(selfOnly.Container.position, selfOnly.Manager.actionDoneMoveSpeed);
     }
+
+    public virtual IEnumerator Patk(SkillAttackDamage atkAttackDamage)
+    {
+        yield return selfOnly.MoveTo(selfOnly.ActionTarget.CastedFormation.GetTarget2Position(selfOnly.ActionTarget.Position), 1);
+        selfOnly.Attack(selfOnly.ActionTarget, null, atkAttackDamage.GetPAtkDamageRate(), atkAttackDamage.GetMAtkDamageRate(), atkAttackDamage.hitCount, (int)atkAttackDamage.GetFixDamage());
+        yield return selfOnly.MoveTo(selfOnly.ActionTarget.CastedFormation.GetTarget1Position(selfOnly.ActionTarget.Position), 1);
+    }
+
     public enum SkillUsageScope
     {
         Self,
