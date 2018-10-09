@@ -6,7 +6,6 @@ public abstract class BaseUIStagePreparation<TUI, TStage> : UIDataItem<TStage>
     where TUI : UIDataItem<TStage>
     where TStage : BaseStage
 {
-    public UIFormation uiCurrentFormation;
     public UIItem uiFormationSlotPrefab;
     public TUI uiStage;
     public override void Clear()
@@ -28,10 +27,5 @@ public abstract class BaseUIStagePreparation<TUI, TStage> : UIDataItem<TStage>
     public override void Show()
     {
         base.Show();
-        if (uiCurrentFormation != null)
-        {
-            uiCurrentFormation.formationName = Player.CurrentPlayer.SelectedFormation;
-            uiCurrentFormation.SetFormationData(uiFormationSlotPrefab);
-        }
     }
 }

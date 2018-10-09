@@ -44,22 +44,16 @@ public class UIItem : UIDataItem<PlayerItem>
     public Text nameText;//角色名字
     [Header("Relates Level Up UIs")]
     public Button buttonLevelUp;
-    public UIItemLevelUp uiLevelUp;
     public UnityEvent eventSelectLevelUpItem;
     [Header("Relates Evolve UIs")]
     public Button buttonEvolve;
-    public UIItemEvolve uiEvolve;
     public UnityEvent eventSelectEvolveItem;
     [Header("Relates Sell UIs")]
     public Button buttonSell;
-    public UIItemSell uiSell;
     public UnityEvent eventSelectSellItem;
     [Header("Relates Equipment Manager UIs")]
     public Button buttonEquipmentManage;
-    public UIEquipmentManager uiEquipmentManager;
     public UnityEvent eventSelectEquipmentManageCharacter;
-    [Header("Relates Formation Manager UIs")]
-    public UIFormationManager uiFormationManager;
     [Header("Usage status")]
     public GameObject inTeamObject;
     public GameObject inSelectedTeamObject;
@@ -139,15 +133,9 @@ public class UIItem : UIDataItem<PlayerItem>
             if (!notShowInTeamStatus)
             {
                 var isInAnyTeam = data.InTeamFormations.Count > 0;
-                var isInSelectedTeam = uiFormationManager != null && data.IsInTeamFormation(uiFormationManager.SelectedFormationName);
                 if (inTeamObject != null)
                     inTeamObject.SetActive(isInAnyTeam);
-                if (inSelectedTeamObject != null)
-                {
-                    inSelectedTeamObject.SetActive(isInSelectedTeam);
-                    if (inTeamObject != null && isInSelectedTeam)
-                        inTeamObject.SetActive(false);
-                }
+        
             }
             else
             {
@@ -278,30 +266,6 @@ public class UIItem : UIDataItem<PlayerItem>
     {
         SetupInfo(data);
         SetupSelectedAmount();
-        if (buttonLevelUp != null)
-        {
-            buttonLevelUp.onClick.RemoveListener(OnClickLevelUp);
-            buttonLevelUp.onClick.AddListener(OnClickLevelUp);
-            buttonLevelUp.interactable = !IsEmpty() && data.CanLevelUp;
-        }
-        if (buttonEvolve != null)
-        {
-            buttonEvolve.onClick.RemoveListener(OnClickEvolve);
-            buttonEvolve.onClick.AddListener(OnClickEvolve);
-            buttonEvolve.interactable = !IsEmpty() && false;//  buttonEvolve.interactable = !IsEmpty() && data.CanEvolve;
-        }
-        if (buttonSell != null)
-        {
-            buttonSell.onClick.RemoveListener(OnClickSell);
-            buttonSell.onClick.AddListener(OnClickSell);
-            buttonSell.interactable = !IsEmpty() && data.CanSell;
-        }
-        if (buttonEquipmentManage != null)
-        {
-            buttonEquipmentManage.onClick.RemoveListener(OnClickManageEquipment);
-            buttonEquipmentManage.onClick.AddListener(OnClickManageEquipment);
-            buttonEquipmentManage.interactable = !IsEmpty() && data.CharacterData != null;
-        }
     }
 
     public override void Clear()
@@ -420,42 +384,6 @@ public class UIItem : UIDataItem<PlayerItem>
         SelectedAmount = amount;
         if (invokeEvent)
             eventSelect.Invoke(this);
-    }
-
-    public void OnClickLevelUp()
-    {
-        if (uiLevelUp != null)
-        {
-            uiLevelUp.Item = data;
-            eventSelectLevelUpItem.Invoke();
-        }
-    }
-
-    public void OnClickEvolve()
-    {
-        if (uiEvolve != null)
-        {
-            uiEvolve.Item = data;
-            eventSelectEvolveItem.Invoke();
-        }
-    }
-
-    public void OnClickSell()
-    {
-        if (uiSell != null)
-        {
-            uiSell.SetSelectingItemIds(new List<string>() { data.GUID });
-            eventSelectSellItem.Invoke();
-        }
-    }
-
-    public void OnClickManageEquipment()
-    {
-        if (uiEquipmentManager != null)
-        {
-            uiEquipmentManager.Character = data;
-            eventSelectEquipmentManageCharacter.Invoke();
-        }
     }
 
     public override bool IsEmpty()
