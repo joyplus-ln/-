@@ -16,10 +16,13 @@ public class WearEquipment : MonoBehaviour
 
     public void SetData(PlayerItem selectedItem)
     {
-        List<PlayerItem> items = PlayerItem.equipDataMap.Values.Where(x => x.EquipItemGuid == selectedItem.CharacterData.itemid).ToList();
+        weapon.Clear();
+        cloth.Clear();
+        shoot.Clear();
+        List<PlayerItem> items = PlayerItem.equipDataMap.Values.Where(x => x.EquipItemGuid == selectedItem.GUID).ToList();
         for (int i = 0; i < items.Count; i++)
         {
-            switch (items[i].EquipmentData.category)
+            switch (items[i].EquipPosition)
             {
                 case "weapon":
                     weapon.SetData(items[i]);

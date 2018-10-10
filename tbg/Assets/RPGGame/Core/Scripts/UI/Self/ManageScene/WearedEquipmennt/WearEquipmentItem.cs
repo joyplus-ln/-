@@ -22,4 +22,9 @@ public class WearEquipmentItem : MonoBehaviour {
     {
         wearEquipment.Selected(Name);
     }
+
+    public void Clear()
+    {
+        nameText.text = "";
+    }
 }
