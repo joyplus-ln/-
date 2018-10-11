@@ -91,7 +91,7 @@ public class CustomBody
     //播放动画 receiveDamage
     void AnimReceiveDamage()
     {
-        self.transform.DOShakePosition(0.3f, 1, 10, 30f);
+        self.transform.DOShakePosition(1, new Vector3(15, 15, 15));
     }
 
     public void DeductBlood(int totalDmg, DmgType type)
