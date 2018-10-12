@@ -15,6 +15,11 @@ public class FormationItemShow : MonoBehaviour
 
     public void Show(PlayerFormation item)
     {
-        nameText.text = PlayerItem.characterDataMap[item.characterGuid].CharacterData.title;
+        if (item == null)
+        {
+            nameText.text = "";
+            return;
+        }
+        nameText.text = item.Position + ":" + PlayerItem.characterDataMap[item.characterGuid].CharacterData.title;
     }
 }

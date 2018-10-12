@@ -46,7 +46,7 @@ public class FormationList : MonoBehaviour
     {
         if (!result.Success)
             return;
-
+        PlayerFormation.DataMap.Clear();
         PlayerFormation.SetDataRange(result.list);
         formationManager.Refresh();
     }
