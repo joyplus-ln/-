@@ -265,7 +265,11 @@ public class GamePlayManager : BaseGamePlayManager
     }
 
 
-    //self
+    /// <summary>
+    /// 获取所有己方英雄
+    /// </summary>
+    /// <param name="character"></param>
+    /// <returns></returns>
     public List<BaseCharacterEntity> GetAllies(CharacterEntity character)
     {
         if (character.IsPlayerCharacter)
@@ -274,7 +278,11 @@ public class GamePlayManager : BaseGamePlayManager
             return foeFormation.Characters.Values.Where(a => a.Hp > 0).ToList();
     }
 
-    //enemy
+    /// <summary>
+    /// 获取所有友方英雄
+    /// </summary>
+    /// <param name="character"></param>
+    /// <returns></returns>
     public List<BaseCharacterEntity> GetFoes(CharacterEntity character)
     {
         if (character.IsPlayerCharacter)

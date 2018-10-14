@@ -114,7 +114,7 @@ public class CustomSkillActionLogic
         yield return self.MoveTo(self.ActionTarget, self.Manager.doActionMoveSpeed);
 
         // Apply damage
-        self.Attack(self.ActionTarget, null);
+        self.Attack(self.ActionTarget);
         // Wait damages done
         while (self.Damages.Count > 0)
         {

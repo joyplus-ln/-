@@ -16,6 +16,7 @@
     {
         SelfAttributes.hp += 1000;
         SelfAttributes.mAtk += 200;
+        selfOnly.Custombody.CustomText("攻击力增加 血量增加");
         selfOnly.Custombody.DeductBlood(-1000,DmgType.Heal);
         
     }

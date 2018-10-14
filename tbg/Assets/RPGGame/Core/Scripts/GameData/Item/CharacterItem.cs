@@ -10,6 +10,10 @@ public class CharacterItem : BaseActorItem
     public string region;
     public string quality;
     public string customSkill;
+    /// <summary>
+    /// 阵营
+    /// </summary>
+    public int alliance;
 
     private List<CustomSkill> customSkills { get; set; }
 

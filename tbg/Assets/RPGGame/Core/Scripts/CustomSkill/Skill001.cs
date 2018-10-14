@@ -25,7 +25,7 @@ public class Skill001 : CustomSkill
         selfOnly.Manager.SpawnCombatCustomText(selfOnly, skillName);
         yield return MoveToTarget();
         var attackDamage = new SkillAttackDamage();
-        selfOnly.Attack(selfOnly.ActionTarget, null, attackDamage.GetPAtkDamageRate(), attackDamage.GetMAtkDamageRate(), attackDamage.hitCount, (int)attackDamage.GetFixDamage());
+        selfOnly.Attack(selfOnly.ActionTarget, attackDamage.GetPAtkDamageRate(), attackDamage.GetMAtkDamageRate(), attackDamage.hitCount, (int)attackDamage.GetFixDamage());
         yield return ApplyBuffLogic();
         yield return MoveToSelfPos();
         yield return null;

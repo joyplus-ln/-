@@ -136,9 +136,9 @@ public class CharacterEntity : BaseCharacterEntity
         customBody = new CustomBody(this);
     }
     #region Damage/Dead/Revive/Turn/Buff
-    public void Attack(CharacterEntity target, float pAtkRate = 1f, float mAtkRate = 1f, int hitCount = 1, int fixDamage = 0)
+    public AttackInfo Attack(CharacterEntity target, float pAtkRate = 1f, float mAtkRate = 1f, int hitCount = 1, int fixDamage = 0)
     {
-        customBody.Attack(target, pAtkRate, mAtkRate, hitCount, fixDamage);
+        return customBody.Attack(target, pAtkRate, mAtkRate, hitCount, fixDamage);
     }
 
     public AttackInfo ReceiveDamage(int pAtk, int mAtk, int acc, float critChance, float critDamageRate,
@@ -146,22 +146,6 @@ public class CharacterEntity : BaseCharacterEntity
     {
         return customBody.ReceiveDamage(pAtk, mAtk, acc, critChance, critDamageRate, hitCount, fixDamage);
     }
-
-
-    public void Attack(CharacterEntity target, Damage damagePrefab, float pAtkRate = 1f, float mAtkRate = 1f, int hitCount = 1, int fixDamage = 0)
-    {
-        if (damagePrefab == null)
-        {
-            Attack(target, pAtkRate, mAtkRate, hitCount, fixDamage);
-        }
-        else
-        {
-            var damage = Instantiate(damagePrefab, damageContainer.position, damageContainer.rotation);
-            damage.transform.SetParent(transform, false);
-            damage.Setup(this, target, pAtkRate, mAtkRate, hitCount, fixDamage);
-        }
-    }
-
 
 
     public override void Dead()
@@ -402,7 +386,7 @@ public class CharacterEntity : BaseCharacterEntity
         yield return MoveTo(ActionTarget, Manager.doActionMoveSpeed);
         // Play attack animation
         // Apply damage
-        Attack(ActionTarget, null);
+        Attack(ActionTarget);
         // Wait damages done
         while (Damages.Count > 0)
         {

@@ -46,6 +46,12 @@ public abstract class BaseGamePlayManager : MonoBehaviour
     {
         SpawnCombatText(combatHealPrefab, amount, character, custr);
     }
+
+    public void SpawnCustomText(string custr, int amount = 0, BaseCharacterEntity character = null)
+    {
+        SpawnCombatText(combatHealPrefab, amount, character, custr);
+    }
+
     //毒
     public void SpawnPoisonText(int amount, BaseCharacterEntity character)
     {

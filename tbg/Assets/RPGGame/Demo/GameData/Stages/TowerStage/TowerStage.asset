@@ -35,4 +35,12 @@ MonoBehaviour:
   - foes:
     - characterId: 1001
       level: 0
+    - characterId: 1001
+      level: 0
+    - characterId: 1001
+      level: 0
+    - characterId: 1001
+      level: 0
+    - characterId: 1001
+      level: 0
     randomWeight: 100

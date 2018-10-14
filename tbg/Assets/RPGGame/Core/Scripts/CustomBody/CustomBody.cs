@@ -12,10 +12,10 @@ public class CustomBody
         this.self = self;
     }
 
-    public void Attack(CharacterEntity target, float pAtkRate = 1f, float mAtkRate = 1f, int hitCount = 1, int fixDamage = 0)
+    public AttackInfo Attack(CharacterEntity target, float pAtkRate = 1f, float mAtkRate = 1f, int hitCount = 1, int fixDamage = 0)
     {
         if (target == null)
-            return;
+            return null;
         self.ApplySkillAndBuff(CustomSkill.TriggerType.fight);
         var attributes = self.GetTotalAttributes();
         AttackInfo info = target.ReceiveDamage(
@@ -30,6 +30,7 @@ public class CustomBody
         if (info.gedang) self.ApplySkillAndBuff(CustomSkill.TriggerType.beigedang);
         if (info.baoji) self.ApplySkillAndBuff(CustomSkill.TriggerType.beibaoji);
         if (info.shanbi) self.ApplySkillAndBuff(CustomSkill.TriggerType.beimiss);
+        return info;
     }
 
     public AttackInfo ReceiveDamage(int pAtk, int mAtk, int acc, float critChance, float critDamageRate, int hitCount = 1, int fixDamage = 0)
@@ -116,6 +117,27 @@ public class CustomBody
                 break;
         }
         self.Hp -= totalDmg;
+    }
+
+    #region 战斗相关，自身状态变化，不是来自buff内叠加的那种
+
+    /// <summary>
+    /// 增加气血
+    /// </summary>
+    /// <param name="flood"></param>
+    public void AddFlood(int flood)
+    {
+        DeductBlood(-flood, DmgType.Heal);
+    }
+
+    #endregion
+
+    /// <summary>
+    /// 自定义字体
+    /// </summary>
+    public void CustomText(string customText)
+    {
+        self.Manager.SpawnCustomText(customText, 0, self);
     }
 }
 

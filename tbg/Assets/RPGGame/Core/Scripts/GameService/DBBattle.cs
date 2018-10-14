@@ -22,11 +22,11 @@ public class DBBattle
             if (oldFormations.Read())
             {
                 oldFormation = new PlayerFormation();
-                oldFormation.characterGuid = oldFormations.GetString(0);
                 oldFormation.PlayerId = oldFormations.GetString(1);
                 oldFormation.formationId = oldFormations.GetString(2);
                 oldFormation.Position = oldFormations.GetInt32(3);
                 oldFormation.ItemId = oldFormations.GetString(4);
+                oldFormation.characterGuid = oldFormations.GetString(5);
             }
             if (oldFormation != null)
             {
@@ -44,11 +44,11 @@ public class DBBattle
         if (targetFormations.Read())
         {
             formation = new PlayerFormation();
-            formation.characterGuid = targetFormations.GetString(0);
             formation.PlayerId = targetFormations.GetString(1);
             formation.formationId = targetFormations.GetString(2);
             formation.Position = targetFormations.GetInt32(3);
             formation.ItemId = targetFormations.GetString(4);
+            formation.characterGuid = targetFormations.GetString(5);
         }
         if (formation == null)
         {
@@ -189,11 +189,11 @@ public class DBBattle
             while (reader.Read())
             {
                 var entry = new PlayerFormation();
-                entry.characterGuid = reader.GetString(0);
                 entry.PlayerId = reader.GetString(1);
                 entry.formationId = reader.GetString(2);
                 entry.Position = reader.GetInt32(3);
                 entry.ItemId = reader.GetString(4);
+                entry.characterGuid = reader.GetString(5);
                 list.Add(entry);
             }
             result.list = list;
@@ -555,11 +555,11 @@ public class DBBattle
             while (reader.Read())
             {
                 var entry = new PlayerFormation();
-                entry.characterGuid = reader.GetString(0);
                 entry.PlayerId = reader.GetString(1);
                 entry.formationId = reader.GetString(2);
                 entry.Position = reader.GetInt32(3);
                 entry.ItemId = reader.GetString(4);
+                entry.characterGuid = reader.GetString(5);
                 list.Add(entry);
             }
             result.list = list;

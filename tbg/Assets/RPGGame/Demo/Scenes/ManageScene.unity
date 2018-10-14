@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9196,7 +9196,7 @@ Prefab:
     - target: {fileID: 114663484532259274, guid: d14dcc6f9ccaffb449a1043604885053,
         type: 2}
       propertyPath: m_Value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224582914067388680, guid: d14dcc6f9ccaffb449a1043604885053,
         type: 2}
@@ -10751,7 +10751,7 @@ Prefab:
     - target: {fileID: 224945962184571596, guid: da421e45d7384c643bdfaa877b0d0d2e,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.9999999
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224544658970069948, guid: da421e45d7384c643bdfaa877b0d0d2e,
         type: 2}
@@ -12561,7 +12561,7 @@ Prefab:
     - target: {fileID: 224340930622028898, guid: da421e45d7384c643bdfaa877b0d0d2e,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000018966388
+      value: 0.000014906106
       objectReference: {fileID: 0}
     - target: {fileID: 114755678080338780, guid: da421e45d7384c643bdfaa877b0d0d2e,
         type: 2}
@@ -12571,7 +12571,7 @@ Prefab:
     - target: {fileID: 114020865137420670, guid: da421e45d7384c643bdfaa877b0d0d2e,
         type: 2}
       propertyPath: m_Value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114298310436112912, guid: da421e45d7384c643bdfaa877b0d0d2e, type: 2}
@@ -13067,7 +13067,7 @@ Prefab:
     - target: {fileID: 224344644129448738, guid: 7da0ad9e715167f4686e786651e7c5ce,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.9999999
+      value: 0.99999946
       objectReference: {fileID: 0}
     - target: {fileID: 224914599483148908, guid: 7da0ad9e715167f4686e786651e7c5ce,
         type: 2}
@@ -13077,7 +13077,7 @@ Prefab:
     - target: {fileID: 224914599483148908, guid: 7da0ad9e715167f4686e786651e7c5ce,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00003954197
+      value: 0.000103753955
       objectReference: {fileID: 0}
     - target: {fileID: 224344644129448738, guid: 7da0ad9e715167f4686e786651e7c5ce,
         type: 2}
@@ -14629,7 +14629,7 @@ CanvasGroup:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 714145495}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0

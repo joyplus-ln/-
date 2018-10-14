@@ -67,6 +67,7 @@ public class DBMapItem
             item.attributes.acc.growth = reader.GetInt32(30);
 
             item.customSkill = reader.GetString(31);
+            item.alliance = reader.GetInt32(33);
             list.Add(item.itemid, item);
         }
         return list;
