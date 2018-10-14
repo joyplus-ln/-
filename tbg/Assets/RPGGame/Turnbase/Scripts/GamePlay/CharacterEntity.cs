@@ -54,7 +54,7 @@ public class CharacterEntity : BaseCharacterEntity
     private Coroutine movingCoroutine;
     public bool isReachedTargetCharacter;
 
-    private CustomSkillActionLogic customSkillActionLogic;
+    public CustomSkillActionLogic customSkillActionLogic;
     private CustomBody customBody;
 
     public CustomBody Custombody
@@ -79,6 +79,8 @@ public class CharacterEntity : BaseCharacterEntity
     protected override void Awake()
     {
         base.Awake();
+        customSkillActionLogic = new CustomSkillActionLogic(this);
+        customBody = new CustomBody(this);
         //CacheCapsuleCollider.isTrigger = true;
     }
 
@@ -114,11 +116,6 @@ public class CharacterEntity : BaseCharacterEntity
         }
     }
 
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (targetCharacter != null && targetCharacter == other.GetComponent<CharacterEntity>())
-    //        isReachedTargetCharacter = true;
-    //}
 
     private void OnDestroy()
     {
@@ -132,8 +129,7 @@ public class CharacterEntity : BaseCharacterEntity
 
     private void Start()
     {
-        customSkillActionLogic = new CustomSkillActionLogic(this);
-        customBody = new CustomBody(this);
+
     }
     #region Damage/Dead/Revive/Turn/Buff
     public AttackInfo Attack(CharacterEntity target, float pAtkRate = 1f, float mAtkRate = 1f, int hitCount = 1, int fixDamage = 0)

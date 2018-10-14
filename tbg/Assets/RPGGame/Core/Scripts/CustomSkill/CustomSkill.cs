@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 public enum SkillType
@@ -12,11 +13,21 @@ public enum SkillType
 public class CustomSkill
 {
 
+
+    #region 怪物技能情况
+
+    public int enemyCd = 3;
+
+    public int enemyCurrentCd = 0;
+
+
+    #endregion
+
     #region 面板中显示的
     public string skillName = "技能名称";
     public string des = "这里是自定义技能的描述!";
-    //冷却 技能CD
-    public int CoolDownTurns = 10;
+    //技能消耗的能量
+    public int spengPower = 10;
     #endregion
     protected List<BaseCharacterEntity> selfs, enemys;
     protected CharacterEntity selfOnly;
@@ -33,8 +44,6 @@ public class CustomSkill
     #region 一堆方法
     public virtual void Init()
     {
-        //初始可用
-        TurnsCount = CoolDownTurns;
     }
     /// <summary>
     /// 部分增加属性的被动技能使用
@@ -122,6 +131,43 @@ public class CustomSkill
 
     }
 
+    /// <summary>
+    /// 是否可以使用技能
+    /// </summary>
+    /// <returns></returns>
+    public virtual bool CanUse()
+    {
+        if (selfOnly.IsPlayerCharacter)
+        {
+            if (GamePlayManager.Singleton.uiUseSkillManager.sikllPower.GetCurrentPower() < spengPower) return false;
+            return true;
+        }
+        else
+        {
+            //怪物
+            if (enemyCurrentCd >= enemyCd)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 新的一轮 
+    /// </summary>
+    public virtual void IncreaseTurnsCount()
+    {
+        if (selfOnly.IsPlayerCharacter)
+        {
+
+        }
+        else
+        {
+            enemyCurrentCd++;
+        }
+    }
+
     public virtual void Trigger(TriggerType type)
     {
         switch (type)
@@ -165,38 +211,29 @@ public class CustomSkill
 
     #endregion
 
-
-
-    public int TurnsCount;
-
-    public bool IsReady()
-    {
-        return TurnsCount >= CoolDownTurns;
-    }
+    /// <summary>
+    /// 使用技能，技能内部逻辑
+    /// </summary>
     public void OnUseSkill()
     {
-        TurnsCount = 0;
+        if (selfOnly.IsPlayerCharacter)
+        {
+            GamePlayManager.Singleton.uiUseSkillManager.sikllPower.UsePower(spengPower);
+        }
+        else
+        {
+            enemyCurrentCd = 0;
+        }
+
     }
+
 
     /// <summary>
-    /// 获取还有几回合冷却
+    /// 初始化技能，开局和每次使用技能都初始化
     /// </summary>
-    /// <returns></returns>
-    public string GetCoolDownDuration()
-    {
-        return CoolDownTurns - TurnsCount > 0 ? (CoolDownTurns - TurnsCount) + "回合" : "可用";
-    }
-
-    /// <summary>
-    /// 获取回合冷却百分比
-    /// </summary>
-    /// <returns></returns>
-    public float GetCDFloat()
-    {
-        return (float)TurnsCount / CoolDownTurns;
-    }
-
-
+    /// <param name="selfOnly"></param>
+    /// <param name="selfs"></param>
+    /// <param name="enemys"></param>
     public void SetNewEntitys(CharacterEntity selfOnly, List<BaseCharacterEntity> selfs, List<BaseCharacterEntity> enemys)
     {
         this.selfOnly = selfOnly;
@@ -204,11 +241,6 @@ public class CustomSkill
         this.enemys = enemys;
     }
 
-    //增加回合
-    public void IncreaseTurnsCount()
-    {
-        TurnsCount++;
-    }
 
 
     public virtual IEnumerator ApplyBuffLogic()

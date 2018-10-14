@@ -3352,7 +3352,6 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   uiSkill: {fileID: 436256569}
   textRemainsTurns: {fileID: 1965585171}
-  imageRemainsTurnsGage: {fileID: 612462895}
   skillIndex: 0
 --- !u!224 &436256568
 RectTransform:
@@ -5415,7 +5414,7 @@ MonoBehaviour:
   - {fileID: 446444401}
   - {fileID: 610709638}
   foeFormation: {fileID: 0}
-  isPlayerFormation: 0
+  isPlayerFormation: 1
   SelfPosition1Transforms:
   - {fileID: 1348796846}
   - {fileID: 1281998787}
@@ -6142,7 +6141,6 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   uiSkill: {fileID: 955006336}
   textRemainsTurns: {fileID: 1588108846}
-  imageRemainsTurnsGage: {fileID: 947752725}
   skillIndex: 0
 --- !u!224 &955006335
 RectTransform:
@@ -6791,7 +6789,6 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   uiSkill: {fileID: 1016730827}
   textRemainsTurns: {fileID: 330490872}
-  imageRemainsTurnsGage: {fileID: 876379021}
   skillIndex: 0
 --- !u!224 &1016730826
 RectTransform:
@@ -7228,7 +7225,6 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   uiSkill: {fileID: 1060715879}
   textRemainsTurns: {fileID: 399318390}
-  imageRemainsTurnsGage: {fileID: 1821620770}
   skillIndex: 0
 --- !u!224 &1060715878
 RectTransform:
@@ -9507,7 +9503,6 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   uiSkill: {fileID: 1282656381}
   textRemainsTurns: {fileID: 1136217911}
-  imageRemainsTurnsGage: {fileID: 1708585508}
   skillIndex: 0
 --- !u!114 &1282656380
 MonoBehaviour:
@@ -11829,6 +11824,42 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114349710009949980, guid: b409394a6b69beb47b0db23bd5daedb6,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 42adb6165a87fac45947c86f13ad15d5,
+        type: 3}
+    - target: {fileID: 114349710009949980, guid: b409394a6b69beb47b0db23bd5daedb6,
+        type: 2}
+      propertyPath: m_Type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114349710009949980, guid: b409394a6b69beb47b0db23bd5daedb6,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.8018868
+      objectReference: {fileID: 0}
+    - target: {fileID: 114349710009949980, guid: b409394a6b69beb47b0db23bd5daedb6,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.09232012
+      objectReference: {fileID: 0}
+    - target: {fileID: 114349710009949980, guid: b409394a6b69beb47b0db23bd5daedb6,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0.06430225
+      objectReference: {fileID: 0}
+    - target: {fileID: 114983038089847702, guid: b409394a6b69beb47b0db23bd5daedb6,
+        type: 2}
+      propertyPath: sikllPower
+      value: 
+      objectReference: {fileID: 1519813043}
+    - target: {fileID: 114349710009949980, guid: b409394a6b69beb47b0db23bd5daedb6,
+        type: 2}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b409394a6b69beb47b0db23bd5daedb6, type: 2}
   m_IsPrefabAsset: 0
@@ -11843,6 +11874,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4019260786775726, guid: b409394a6b69beb47b0db23bd5daedb6,
     type: 2}
   m_PrefabInternal: {fileID: 1519813040}
+--- !u!114 &1519813043 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114980840374441092, guid: b409394a6b69beb47b0db23bd5daedb6,
+    type: 2}
+  m_PrefabInternal: {fileID: 1519813040}
+  m_Script: {fileID: 11500000, guid: 24bcb370e2f56b74b867197a92a2e068, type: 3}
 --- !u!1 &1522467091
 GameObject:
   m_ObjectHideFlags: 0

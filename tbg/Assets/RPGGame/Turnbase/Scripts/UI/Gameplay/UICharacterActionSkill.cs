@@ -7,7 +7,7 @@ public class UICharacterActionSkill : UICharacterAction
 {
     public UISkill uiSkill;
     public Text textRemainsTurns;
-    public Image imageRemainsTurnsGage;
+    //public Image imageRemainsTurnsGage;
     public int skillIndex;
     public CustomSkill cskill;
 
@@ -26,10 +26,10 @@ public class UICharacterActionSkill : UICharacterAction
             uiSkill.cskill = cskill;
 
         if (textRemainsTurns != null)
-            textRemainsTurns.text = cskill.GetCoolDownDuration();
+            textRemainsTurns.text = cskill.CanUse() == true ? "可用" : ("不可用:能量" + cskill.spengPower);
 
-        if (imageRemainsTurnsGage != null)
-            imageRemainsTurnsGage.fillAmount = cskill.GetCDFloat();
+        //if (imageRemainsTurnsGage != null)
+        //    imageRemainsTurnsGage.fillAmount = cskill.GetCDFloat();
 
     }
 

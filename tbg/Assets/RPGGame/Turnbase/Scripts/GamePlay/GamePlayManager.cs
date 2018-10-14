@@ -53,17 +53,23 @@ public class GamePlayManager : BaseGamePlayManager
         uiCharacterActionManager.Hide();
         uiUseSkillManager.Hide();
         // Setup player formation
-        playerFormation.isPlayerFormation = true;
         playerFormation.foeFormation = foeFormation;
         // Setup foe formation
         foeFormation.ClearCharacters();
-        foeFormation.isPlayerFormation = false;
         foeFormation.foeFormation = playerFormation;
 
         //SetupEnvironment();
     }
 
     private void Start()
+    {
+        StartBattle();
+    }
+
+    /// <summary>
+    /// 战斗开始，所有角色初始化好后调用
+    /// </summary>
+    public void StartBattle()
     {
         CurrentWave = 0;
         StartCoroutine(StartGame());
@@ -120,7 +126,16 @@ public class GamePlayManager : BaseGamePlayManager
         //environmentManager.isPause = true;
         NextWave();
         yield return foeFormation.MoveCharactersToFormation(false);
-        NewTurn();
+        InitCustoms();
+        FirstTurn();
+    }
+
+    /// <summary>
+    /// 初始化一些需要开局初始化的东西
+    /// </summary>
+    public void InitCustoms()
+    {
+
     }
 
     public void NextWave()
@@ -139,7 +154,7 @@ public class GamePlayManager : BaseGamePlayManager
             var foe = foes[i];
             if (foe != null && !string.IsNullOrEmpty(foe.characterId))
             {
-                var character = PlayerItem.CreateActorItemWithLevel(GameInstance.Singleton.gameDatabase.characters[foe.characterId], foe.level, GetRandomFoesType(),false);
+                var character = PlayerItem.CreateActorItemWithLevel(GameInstance.Singleton.gameDatabase.characters[foe.characterId], foe.level, GetRandomFoesType(), false);
                 characters[i] = character;
             }
         }
@@ -164,6 +179,66 @@ public class GamePlayManager : BaseGamePlayManager
         NextWave();
         yield return foeFormation.MoveCharactersToFormation(false);
         NewTurn();
+    }
+
+    public void FirstTurn()
+    {
+        if (ActiveCharacter != null)
+            ActiveCharacter.currentTimeCount = 0;
+
+        CharacterEntity activatingCharacter = null;
+        var maxTime = int.MinValue;
+        List<BaseCharacterEntity> characters = new List<BaseCharacterEntity>();
+        characters.AddRange(playerFormation.Characters.Values);
+        characters.AddRange(foeFormation.Characters.Values);
+        for (int i = 0; i < characters.Count; ++i)
+        {
+            CharacterEntity character = characters[i] as CharacterEntity;
+            if (character != null)
+            {
+                if (character.Hp > 0)
+                {
+                    int spd = (int)character.GetTotalAttributes().spd;
+                    if (spd <= 0)
+                        spd = 1;
+                    character.currentTimeCount += spd;
+                    if (character.currentTimeCount > maxTime)
+                    {
+                        maxTime = character.currentTimeCount;
+                        activatingCharacter = character;
+                    }
+                }
+                else
+                    character.currentTimeCount = 0;
+            }
+        }
+        ActiveCharacter = activatingCharacter;
+        bool isStun = activatingCharacter.IsStun();
+        ActiveCharacter.ApplySkillAndBuff(CustomSkill.TriggerType.beforeFight);
+        ActiveCharacter.DecreaseBuffsTurn();
+        //ActiveCharacter.DecreaseSkillsTurn();
+        ActiveCharacter.ResetStates();
+        if (ActiveCharacter.Hp > 0 && !isStun)
+        {
+            if (ActiveCharacter.IsPlayerCharacter)
+            {
+                if (IsAutoPlay)
+                    ActiveCharacter.RandomAction();
+                else
+                {
+                    uiCharacterActionManager.Show();
+                    uiUseSkillManager.SetData(ActiveCharacter);
+                }
+            }
+            else
+            {
+                ActiveCharacter.RandomAction();
+            }
+
+
+        }
+        else
+            ActiveCharacter.NotifyEndAction();
     }
 
     public void NewTurn()

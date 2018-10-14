@@ -15,6 +15,7 @@ public class GamePlayFormation : BaseGamePlayFormation
 
     private void Start()
     {
+        Debug.Log(gameObject.name);
         if (isPlayerFormation)
             SetFormationCharacters();
     }
@@ -161,11 +162,11 @@ public class GamePlayFormation : BaseGamePlayFormation
 
     public Vector3 GetTarget1Position(int pos)
     {
-            return SelfPosition1Transforms[pos].position;
+        return SelfPosition1Transforms[pos].position;
     }
 
     public Vector3 GetTarget2Position(int pos)
     {
-            return SelfPosition2Transforms[pos].position;
+        return SelfPosition2Transforms[pos].position;
     }
 }

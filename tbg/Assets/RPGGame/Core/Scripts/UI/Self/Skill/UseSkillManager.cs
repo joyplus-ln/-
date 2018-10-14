@@ -7,6 +7,8 @@ public class UseSkillManager : MonoBehaviour
     public List<UseSKillItem> useSKillItems = new List<UseSKillItem>();
     public Transform SelectedTransform;
 
+    public SkillPower sikllPower;
+
     public CharacterEntity ActiveCharacter { set; get; }
     // Use this for initialization
     void Start()

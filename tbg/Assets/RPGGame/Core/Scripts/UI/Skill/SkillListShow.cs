@@ -26,7 +26,7 @@ public class SkillListShow : MonoBehaviour
             textBuilder.Remove(0, textBuilder.Length);
             for (int i = 0; i < entity.CustomSkills.Count; i++)
             {
-                textBuilder.Append(entity.CustomSkills[i].GetCoolDownDuration());
+                textBuilder.Append("0cd");
             }
             SkillText.text = textBuilder.ToString();
         }

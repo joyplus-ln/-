@@ -20,18 +20,19 @@ public class SkillPower : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        Init();
     }
 
     public void Init()
     {
-
+        currentPower = MaxPower;
+        RefreshPower();
     }
 
     public void RefreshPower()
     {
-        powerText.text = String.Format("{0}/{1}", MaxPower, currentPower);
-        powerproImage.fillAmount = (float)currentPower / MaxPower;
+        powerText.text = String.Format("{0}/{1}", currentPower, MaxPower);
+        powerproImage.fillAmount = ((float)currentPower / (float)MaxPower);
     }
     public void UsePower(int power = 9)
     {

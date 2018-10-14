@@ -17,7 +17,7 @@ public class CustomSkillActionLogic
     {
 
 
-        if (self.SelectedCustomSkill == null || !self.SelectedCustomSkill.IsReady())
+        if (self.SelectedCustomSkill == null || !self.SelectedCustomSkill.CanUse())
             return false;
         switch (self.SelectedCustomSkill.usageScope)
         {
@@ -57,7 +57,7 @@ public class CustomSkillActionLogic
         for (var i = 0; i < self.CustomSkills.Count; ++i)
         {
             var skill = self.CustomSkills[i];
-            if (skill == null || !skill.IsReady())
+            if (skill == null || !skill.CanUse())
                 continue;
             actions.Add(i, 5);
         }
@@ -121,7 +121,7 @@ public class CustomSkillActionLogic
             yield return 0;
         }
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.2f);
         self.ClearActionState();
         yield return self.MoveTo(self.Container.position, self.Manager.actionDoneMoveSpeed);
         self.NotifyEndAction();
@@ -145,9 +145,6 @@ public class CustomSkillActionLogic
     }
     IEnumerator SkillAttackRoutine()
     {
-        var selfEnsmys = self.Manager.GetAllies(self);
-        var enemyfoes = self.Manager.GetFoes(self);
-        self.SelectedCustomSkill.SetNewEntitys(self, selfEnsmys, enemyfoes);
         //var isAlreadyReachedTarget = false;
         yield return self.SelectedCustomSkill.DoSkillLogic();
 
@@ -165,6 +162,24 @@ public class CustomSkillActionLogic
             yield return 0;
         }
 
+    }
+
+    /// <summary>
+    /// 初始化一些局内战斗属性，在局内调用
+    /// </summary>
+    public void InitBattleCustomSkill()
+    {
+        if (self.Manager == null)
+        {
+            Debug.Log("不在局内  不需要初始化技能");
+            return;
+        }
+        var selfEnsmys = self.Manager.GetAllies(self);
+        var enemyfoes = self.Manager.GetFoes(self);
+        for (int i = 0; i < self.CustomSkills.Count; i++)
+        {
+            self.CustomSkills[i].SetNewEntitys(self, selfEnsmys, enemyfoes);
+        }
     }
     //buff放到技能里边放
     ////custom buff

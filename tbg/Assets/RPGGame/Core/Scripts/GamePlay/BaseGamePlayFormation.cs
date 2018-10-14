@@ -7,6 +7,7 @@ public class BaseGamePlayFormation : MonoBehaviour
     public Transform[] containers;
     public readonly Dictionary<int, BaseCharacterEntity> Characters = new Dictionary<int, BaseCharacterEntity>();
 
+
     public virtual void SetFormationCharacters()
     {
         var formationName = Player.CurrentPlayer.SelectedFormation;
@@ -49,8 +50,9 @@ public class BaseGamePlayFormation : MonoBehaviour
         character.SetFormation(this, position);
         character.Item = item;
         Characters[position] = character;
-        character.transform.rotation = Quaternion.Euler(0,0,0);
-        character.transform.localRotation = Quaternion.Euler(0,0,0);
+        character.transform.rotation = Quaternion.Euler(0, 0, 0);
+        character.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        (character as CharacterEntity).customSkillActionLogic.InitBattleCustomSkill();
         return character;
     }
 
