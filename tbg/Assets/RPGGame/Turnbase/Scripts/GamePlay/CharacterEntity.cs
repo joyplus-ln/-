@@ -335,6 +335,10 @@ public class CharacterEntity : BaseCharacterEntity
         {
             custombuff.Trigger(type);
         }
+        foreach (var customskill in CustomSkills)
+        {
+            customskill.Trigger(type);
+        }
     }
 
 

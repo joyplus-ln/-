@@ -41,7 +41,13 @@ public class CustomSkill
     //被动技能的属性加成
     public CalculationAttributes SelfAttributes = new CalculationAttributes();
 
+
+    private bool inited = false;
+
     #region 一堆方法
+    /// <summary>
+    /// 开场触发的效果也在init里面执行
+    /// </summary>
     public virtual void Init()
     {
     }
@@ -173,6 +179,11 @@ public class CustomSkill
         switch (type)
         {
             case TriggerType.beforeFight:
+                if (inited == false)
+                {
+                    BattleStart();
+                    inited = true;
+                }
                 BeforeFight();
                 break;
             case TriggerType.fight:

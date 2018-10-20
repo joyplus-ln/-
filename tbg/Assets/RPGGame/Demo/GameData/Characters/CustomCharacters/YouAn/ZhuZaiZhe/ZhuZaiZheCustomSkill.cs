@@ -42,3 +42,33 @@ public class HaoHanHongXi : CustomSkill
         yield return null;
     }
 }
+
+public class WangLingYiZhi : CustomSkill
+{
+    public WangLingYiZhi()
+    {
+        skilltype = SkillType.passive;
+        skillName = "亡灵意志";
+        des = "生命增加40%，命中增加20%";
+    }
+
+    public override IEnumerator ApplyBuffLogic()
+    {
+        CustomBuff buff001 = SkillUtils.MakeCustomBuff("WangLingYiZhiBuff");
+        buff001.SetGiver(selfOnly);
+        GetSelf().ApplyCustomBuff(buff001);
+        Debug.Log("添加buff 亡灵意志  触发");
+        yield return null;
+    }
+
+    public override void BattleStart()
+    {
+        Debug.Log("技能 亡灵意志  触发");
+        selfOnly.StartCoroutine(ApplyBuffLogic());
+    }
+
+    public override IEnumerator DoSkillLogic()
+    {
+        yield return null;
+    }
+}

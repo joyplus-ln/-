@@ -203,8 +203,14 @@ public class CalculationAttributes
     public float mDef;
     [Tooltip("C.Spd (C stands for Character) = C.Spd + this")]
     public float spd;
+    /// <summary>
+    /// 回避
+    /// </summary>
     [Tooltip("C.Eva (C stands for Character) = C.Eva + this")]
     public float eva;
+    /// <summary>
+    /// 命中
+    /// </summary>
     [Tooltip("C.Acc (C stands for Character) = C.Acc + this")]
     public float acc;
     [Header("Rate attributes")]
@@ -224,6 +230,9 @@ public class CalculationAttributes
     public float evaRate;
     [Tooltip("C.Acc (C stands for Character) = C.Acc + (this * C.Acc)")]
     public float accRate;
+    /// <summary>
+    /// 暴击 0-1
+    /// </summary>
     [Header("Critical attributes")]
     [Range(0f, 1f)]
     [Tooltip("Chance to critical attack")]
@@ -232,6 +241,7 @@ public class CalculationAttributes
     [Tooltip("Damage when critical attack = this * Damage")]
     public float critDamageRate;
     [Header("Block attributes")]
+    ///格挡
     [Range(0f, 1f)]
     [Tooltip("Chance to block")]
     public float blockChance;

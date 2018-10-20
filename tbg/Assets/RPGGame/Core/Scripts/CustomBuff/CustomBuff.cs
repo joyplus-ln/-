@@ -12,8 +12,16 @@ public class CustomBuff
     protected CharacterEntity giver;
     public CalculationAttributes SelfAttributes = new CalculationAttributes();
 
+
+    /// <summary>
+    /// buff剩余回合数，如果是-99 则代表永远带着的buff
+    /// </summary>
+    protected int turns = 0;
+
     public virtual void Init()
     {
+        des = "自定义技能 ID 001";
+        buffText = "A";
     }
 
     public virtual void SetSelf(CharacterEntity selfOnly)
@@ -24,6 +32,16 @@ public class CustomBuff
     public virtual void SetGiver(CharacterEntity giver)
     {
         this.giver = giver;
+    }
+
+    #region 各种方法
+
+    /// <summary>
+    /// 战斗之前的触发，每次战斗只触发一次
+    /// </summary>
+    public virtual void BattleStart()
+    {
+
     }
 
     public virtual void BeforeFight()
@@ -72,22 +90,47 @@ public class CustomBuff
 
     }
 
+    #endregion
+
+
     //是否是眩晕
-    public bool GetIsStun()
+    public virtual bool GetIsStun()
     {
         return false;
+    }
+
+    /// <summary>
+    /// 减少技能回合
+    /// </summary>
+    public virtual void ReduceTurnsCount()
+    {
+        if (turns == -99) return;
+        if (turns > 0)
+            turns--;
     }
 
     //增加回合
-    public void IncreaseTurnsCount()
+    public virtual void IncreaseTurnsCount()
     {
-
+        if (turns == -99) return;
+        if (turns > 0)
+            turns++;
     }
 
     //是否结束了
-    public bool IsEnd()
+    public virtual bool IsEnd()
     {
-        return false;
+        if (turns == -99) return false;
+        return turns <= 0;
+    }
+
+    /// <summary>
+    /// 是否在buff条目中显示出来
+    /// </summary>
+    /// <returns></returns>
+    public virtual bool ShowInGUI()
+    {
+        return true;
     }
 
     public void Trigger(CustomSkill.TriggerType type)

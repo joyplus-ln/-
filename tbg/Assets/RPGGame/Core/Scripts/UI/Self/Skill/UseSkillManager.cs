@@ -22,7 +22,7 @@ public class UseSkillManager : MonoBehaviour
         {
             if (i < ActiveCharacter.CustomSkills.Count)
             {
-                useSKillItems[i].SetData(this, i);
+                useSKillItems[i].SetData(this, i, ActiveCharacter.CustomSkills[i]);
                 useSKillItems[i].gameObject.SetActive(true);
             }
             else

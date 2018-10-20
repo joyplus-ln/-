@@ -81,7 +81,7 @@ public class UIGamePlayInfo : MonoBehaviour
             CirText.text = "暴击:" + SelfEntity.GetTotalAttributes().critChance;
 
         if (SpeedText != null)
-            SpeedText.text = "速度:" + SelfEntity.GetTotalAttributes().acc;
+            SpeedText.text = "速度:" + SelfEntity.GetTotalAttributes().spd;
 
         if (hp != null)
             hp.text = "血量:" + SelfEntity.Hp + "/" + SelfEntity.MaxHp;
@@ -90,7 +90,7 @@ public class UIGamePlayInfo : MonoBehaviour
             eva.text = "回避:" + SelfEntity.GetTotalAttributes().eva;
 
         if (cirtchance != null)
-            cirtchance.text = "暴击:" + SelfEntity.GetTotalAttributes().critChance;
+            cirtchance.text = "暴击:" + SelfEntity.GetTotalAttributes().acc;
 
         if (cirtdamage != null)
             cirtdamage.text = "爆伤:" + SelfEntity.GetTotalAttributes().critDamageRate;

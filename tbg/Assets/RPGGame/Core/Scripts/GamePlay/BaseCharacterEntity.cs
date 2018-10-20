@@ -169,14 +169,6 @@ public abstract class BaseCharacterEntity : MonoBehaviour
         result.spd += Mathf.CeilToInt(result.spdRate * result.spd);
         result.eva += Mathf.CeilToInt(result.evaRate * result.eva);
         result.acc += Mathf.CeilToInt(result.accRate * result.acc);
-        result.hpRate = 0;
-        result.pAtkRate = 0;
-        result.pDefRate = 0;
-        result.mAtkRate = 0;
-        result.mDefRate = 0;
-        result.spdRate = 0;
-        result.evaRate = 0;
-        result.accRate = 0;
 
         return result;
     }
@@ -197,8 +189,10 @@ public abstract class BaseCharacterEntity : MonoBehaviour
         buff.SetSelf(this as CharacterEntity);
         if (Buffs_custom.ContainsKey(buff.guid))
         {
+            Debug.Log("有这个buff" + buff.guid);
             return;
         }
         Buffs_custom.Add(buff.guid, buff);
+        buff.BattleStart();
     }
 }
