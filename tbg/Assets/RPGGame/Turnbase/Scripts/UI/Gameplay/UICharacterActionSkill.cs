@@ -26,7 +26,7 @@ public class UICharacterActionSkill : UICharacterAction
             uiSkill.cskill = cskill;
 
         if (textRemainsTurns != null)
-            textRemainsTurns.text = cskill.CanUse() == true ? "可用" : ("不可用:能量" + cskill.spengPower);
+            textRemainsTurns.text = cskill.CanUse() == true ? "可用" : ("不可用:能量" + cskill.spendPower);
 
         //if (imageRemainsTurnsGage != null)
         //    imageRemainsTurnsGage.fillAmount = cskill.GetCDFloat();

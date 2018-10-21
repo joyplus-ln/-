@@ -10,6 +10,13 @@ public enum SkillType
     active,
     passive
 }
+
+/// <summary>
+/// 123
+/// 复写 Init   
+/// 赋值 skillName   des   spendPower
+/// 复写 DoSkillLogic   ApplyBuffLogic
+/// </summary>
 public class CustomSkill
 {
 
@@ -27,7 +34,7 @@ public class CustomSkill
     public string skillName = "技能名称";
     public string des = "这里是自定义技能的描述!";
     //技能消耗的能量
-    public int spengPower = 10;
+    public int spendPower = 10;
     #endregion
     protected List<BaseCharacterEntity> selfs, enemys;
     protected CharacterEntity selfOnly;
@@ -145,7 +152,30 @@ public class CustomSkill
     {
         if (selfOnly.IsPlayerCharacter)
         {
-            if (GamePlayManager.Singleton.uiUseSkillManager.sikllPower.GetCurrentPower() < spengPower) return false;
+            if (GamePlayManager.Singleton.uiUseSkillManager.sikllPower.GetCurrentPower() < spendPower) return false;
+            return true;
+        }
+        else
+        {
+            //怪物
+            if (enemyCurrentCd >= enemyCd)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 能量是否充足
+    /// </summary>
+    /// <returns></returns>
+    public virtual bool PowerEnough()
+    {
+        if (selfOnly.IsPlayerCharacter)
+        {
+            if (skilltype == SkillType.passive) return true;
+            if (GamePlayManager.Singleton.uiUseSkillManager.sikllPower.GetCurrentPower() < spendPower) return false;
             return true;
         }
         else
@@ -225,11 +255,11 @@ public class CustomSkill
     /// <summary>
     /// 使用技能，技能内部逻辑
     /// </summary>
-    public void OnUseSkill()
+    public virtual void OnUseSkill()
     {
         if (selfOnly.IsPlayerCharacter)
         {
-            GamePlayManager.Singleton.uiUseSkillManager.sikllPower.UsePower(spengPower);
+            GamePlayManager.Singleton.uiUseSkillManager.sikllPower.UsePower(spendPower);
         }
         else
         {

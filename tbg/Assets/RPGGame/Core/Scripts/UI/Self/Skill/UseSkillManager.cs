@@ -30,11 +30,17 @@ public class UseSkillManager : MonoBehaviour
                 useSKillItems[i].gameObject.SetActive(false);
             }
         }
+        //刷新
+        useSKillItems[0].RestartAndSelected();
     }
+
 
     public void Hide()
     {
-
+        for (int i = 0; i < useSKillItems.Count; i++)
+        {
+            useSKillItems[i].gameObject.SetActive(false);
+        }
     }
 
 }

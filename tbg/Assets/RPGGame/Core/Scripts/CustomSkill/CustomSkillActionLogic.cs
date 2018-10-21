@@ -35,6 +35,7 @@ public class CustomSkillActionLogic
                 break;
         }
         self.ActionTarget = target;
+        GamePlayManager.Singleton.uiUseSkillManager.Hide();
         DoAction();
         return true;
     }

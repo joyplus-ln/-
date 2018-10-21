@@ -16,19 +16,29 @@ public class UseSKillItem : MonoBehaviour
 
     public Text SkillDesText;
     private CustomSkill skill;
+
+    public Text PowerText;
     public void SetData(UseSkillManager manager, int skillIndex, CustomSkill skill)
     {
         this.manager = manager;
         this.skillIndex = skillIndex;
         this.skill = skill;
         SkillText.text = skill.skilltype == SkillType.passive ? "被动" : "主动";
+        if (!skill.PowerEnough())
+        {
+            PowerText.text = "能量不足";
+        }
+        else
+        {
+            PowerText.text = "";
+        }
     }
     public void PointDown()
     {
         Debug.Log("point down");
         SkillDesText.gameObject.SetActive(true);
         SkillDesText.text = GetDesString();
-        if (skill.skilltype == SkillType.passive) return;
+        if (skill.skilltype == SkillType.passive || !skill.CanUse()) return;
         Selected();
     }
 
@@ -48,7 +58,16 @@ public class UseSKillItem : MonoBehaviour
         StringBuilder text = new StringBuilder();
         text.Append(skill.skillName + "\n");
         text.Append(skill.des + "\n");
-        text.Append(skill.spengPower + "\n");
+        text.Append(skill.spendPower + "\n");
         return text.ToString();
+    }
+
+    /// <summary>
+    /// 当前开始，并被选中的状态
+    /// </summary>
+    public void RestartAndSelected()
+    {
+        manager.ActiveCharacter.SetAction(skillIndex, Const.SkillType.Custom);
+        manager.SelectedTransform.SetParent(transform, false);
     }
 }
