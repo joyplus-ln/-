@@ -189,6 +189,7 @@ public abstract class BaseCharacterEntity : MonoBehaviour
         buff.SetSelf(this as CharacterEntity);
         if (Buffs_custom.ContainsKey(buff.guid))
         {
+            Buffs_custom[buff.guid] = buff;
             Debug.Log("有这个buff" + buff.guid);
             return;
         }

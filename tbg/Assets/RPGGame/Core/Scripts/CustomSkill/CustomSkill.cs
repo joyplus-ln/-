@@ -144,6 +144,12 @@ public class CustomSkill
 
     }
 
+    protected List<BaseCharacterEntity> GetSelfFriends()
+    {
+        List<BaseCharacterEntity> allFriends = GamePlayManager.Singleton.GetAllies(selfOnly);
+        return allFriends;
+    } 
+
     /// <summary>
     /// 是否可以使用技能
     /// </summary>
@@ -303,6 +309,10 @@ public class CustomSkill
         yield return selfOnly.MoveTo(selfOnly.Manager.MapCenterPosition, selfOnly.Manager.doActionMoveSpeed);
     }
 
+    protected IEnumerator MoveOut()
+    {
+        yield return selfOnly.MoveTo(selfOnly.Container.position + new Vector3(50,0,0), selfOnly.Manager.actionDoneMoveSpeed);
+    }
     protected IEnumerator MoveToSelfPos()
     {
         yield return selfOnly.MoveTo(selfOnly.Container.position, selfOnly.Manager.actionDoneMoveSpeed);

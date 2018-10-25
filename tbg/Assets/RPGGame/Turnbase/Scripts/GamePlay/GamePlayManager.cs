@@ -354,7 +354,7 @@ public class GamePlayManager : BaseGamePlayManager
     }
 
     /// <summary>
-    /// 获取所有友方英雄
+    /// 获取所有敌方英雄
     /// </summary>
     /// <param name="character"></param>
     /// <returns></returns>

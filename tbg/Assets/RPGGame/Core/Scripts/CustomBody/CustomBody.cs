@@ -130,6 +130,10 @@ public class CustomBody
         DeductBlood(-flood, DmgType.Heal);
     }
 
+    public int GetMaxHP()
+    {
+        return self.MaxHp;
+    }
     #endregion
 
     /// <summary>

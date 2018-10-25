@@ -5,6 +5,9 @@ using UnityEngine;
 public class CustomBuff
 {
     public string des;
+    /// <summary>
+    /// 如果buff是不可叠加的 需要制定guid
+    /// </summary>
     public string guid;
     public string buffText;
 
@@ -14,7 +17,7 @@ public class CustomBuff
 
 
     /// <summary>
-    /// buff剩余回合数，如果是-99 则代表永远带着的buff
+    /// buff剩余回合数，如果是-99 则代表永远带着的buff ,如果buff是不可叠加的 需要在init中赋值guid
     /// </summary>
     protected int turns = 0;
 
