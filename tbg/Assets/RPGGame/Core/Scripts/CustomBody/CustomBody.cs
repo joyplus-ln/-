@@ -36,6 +36,7 @@ public class CustomBody
     public AttackInfo ReceiveDamage(int pAtk, int mAtk, int acc, float critChance, float critDamageRate, int hitCount = 1, int fixDamage = 0)
     {
         AttackInfo attackInfo = new AttackInfo();
+        attackInfo.lastHP = self.Hp;
         if (hitCount <= 0)
             hitCount = 1;
         var attributes = self.GetTotalAttributes();
@@ -81,6 +82,8 @@ public class CustomBody
                 DeductBlood((int)totalDmg, DmgType.Normal);
         }
         attackInfo.totalDamage = (int)totalDmg;
+        if (self.Hp <= 0)
+            attackInfo.die = true;
         self.ApplySkillAndBuff(CustomSkill.TriggerType.receiveDamage);
         // Play hurt animation
         //CacheAnimator.ResetTrigger(ANIM_KEY_HURT);

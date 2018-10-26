@@ -406,5 +406,7 @@ public class AttackInfo
     public bool shanbi;
     public bool gedang;
     public int totalDamage;
+    public bool die;
+    public float lastHP;
 
 }

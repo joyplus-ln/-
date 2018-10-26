@@ -365,11 +365,11 @@ public class CustomSkill
         yield return null;
     }
 
-    public virtual void AttackTarget(SkillAttackDamage atkAttackDamage, CharacterEntity targetEntity = null)
+    public virtual AttackInfo AttackTarget(SkillAttackDamage atkAttackDamage, CharacterEntity targetEntity = null)
     {
         if (targetEntity == null)
             targetEntity = selfOnly.ActionTarget;
-        selfOnly.Attack(targetEntity, atkAttackDamage.GetPAtkDamageRate(), atkAttackDamage.GetMAtkDamageRate(), atkAttackDamage.hitCount, (int)atkAttackDamage.GetFixDamage());
+        return selfOnly.Attack(targetEntity, atkAttackDamage.GetPAtkDamageRate(), atkAttackDamage.GetMAtkDamageRate(), atkAttackDamage.hitCount, (int)atkAttackDamage.GetFixDamage());
     }
 
     public enum SkillUsageScope
