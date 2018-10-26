@@ -143,6 +143,22 @@ public class CustomBody
     {
         self.Manager.SpawnCustomText(customText, 0, self);
     }
+
+    /// <summary>
+    /// 是否可以使用技能
+    /// </summary>
+    /// <returns></returns>
+    public bool CanUseKill()
+    {
+        bool canuse = true;
+        foreach (var buff in self.Buffs_custom.Values)
+        {
+            if (!buff.CanDoAction())
+                canuse = false;
+        }
+        return canuse;
+
+    }
 }
 
 public enum DmgType

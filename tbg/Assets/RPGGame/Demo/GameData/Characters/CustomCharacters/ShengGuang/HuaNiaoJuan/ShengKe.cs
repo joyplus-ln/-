@@ -12,6 +12,11 @@ public class ShengMingXuYuan : CustomSkill
 {
     public ShengMingXuYuan()
     {
+        spendPower = 20;
+        des = "给全体增加自己生命8%的气血";
+        skillName = "生命之光";
+        usageScope = SkillUsageScope.Ally;
+
         //todo
     }
     public override IEnumerator DoSkillLogic()
@@ -20,9 +25,10 @@ public class ShengMingXuYuan : CustomSkill
         List<BaseCharacterEntity> list = GetSelfFriends();
         for (int i = 0; i < list.Count; i++)
         {
-            (list[i] as CharacterEntity).Custombody.AddFlood((int)(selfOnly.Custombody.GetMaxHP() * 0.8f));
+            (list[i] as CharacterEntity).Custombody.AddFlood((int)(selfOnly.Custombody.GetMaxHP() * 0.08f));
         }
         yield return ApplyBuffLogic();
+        yield return MoveToSelfPos();
     }//
 
     public override IEnumerator ApplyBuffLogic()
@@ -48,6 +54,6 @@ public class ShengMingXuYuanBuff : CustomBuff
 
     public override void BeforeFight()
     {
-        selfOnly.Custombody.AddFlood((int)(selfOnly.Custombody.GetMaxHP() * 0.8f));
+        selfOnly.Custombody.AddFlood((int)(selfOnly.Custombody.GetMaxHP() * 0.08f));
     }
 }

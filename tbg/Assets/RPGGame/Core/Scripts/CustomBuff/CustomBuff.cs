@@ -15,6 +15,16 @@ public class CustomBuff
     protected CharacterEntity giver;
     public CalculationAttributes SelfAttributes = new CalculationAttributes();
 
+    /// <summary>
+    /// 沉默状态
+    /// </summary>
+    protected int CMState = 0;
+
+    /// <summary>
+    /// 眩晕
+    /// </summary>
+    protected int XYState = 0;
+
 
     /// <summary>
     /// buff剩余回合数，如果是-99 则代表永远带着的buff ,如果buff是不可叠加的 需要在init中赋值guid
@@ -96,11 +106,6 @@ public class CustomBuff
     #endregion
 
 
-    //是否是眩晕
-    public virtual bool GetIsStun()
-    {
-        return false;
-    }
 
     /// <summary>
     /// 减少技能回合
@@ -110,6 +115,10 @@ public class CustomBuff
         if (turns == -99) return;
         if (turns > 0)
             turns--;
+        if (CMState > 0)
+            CMState--;
+        if (XYState > 0)
+            XYState--;
     }
 
     //增加回合
@@ -120,6 +129,31 @@ public class CustomBuff
             turns++;
     }
 
+    /// <summary>
+    /// 是否可以使用skill cm中
+    /// </summary>
+    /// <returns></returns>
+    public virtual bool CanUseSkill()
+    {
+        if (CMState > 0)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// 是否可以行动，xy中
+    /// </summary>
+    /// <returns></returns>
+    public virtual bool CanDoAction()
+    {
+        if (XYState > 0)
+        {
+            return false;
+        }
+        return true;
+    }
     //是否结束了
     public virtual bool IsEnd()
     {

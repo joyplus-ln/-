@@ -160,7 +160,7 @@ public class CharacterEntity : BaseCharacterEntity
                 continue;
 
             var buff = Buffs_custom[key];
-            if (buff.GetIsStun())
+            if (buff.CanDoAction())
                 return true;
         }
         return false;
@@ -175,7 +175,7 @@ public class CharacterEntity : BaseCharacterEntity
                 continue;
 
             var buff = Buffs_custom[key];
-            buff.IncreaseTurnsCount();
+            buff.ReduceTurnsCount();
             if (buff.IsEnd())
             {
                 buff.BuffRemove();

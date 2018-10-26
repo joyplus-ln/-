@@ -15,7 +15,11 @@ public class CustomSkillActionLogic
 
     public bool DoAction(CharacterEntity target)
     {
-
+        if (!self.Custombody.CanUseKill())
+        {
+            // cmstate 只能使用 normal attack
+            self.Action = 0;
+        }
 
         if (self.SelectedCustomSkill == null || !self.SelectedCustomSkill.CanUse())
             return false;

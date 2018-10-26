@@ -311,7 +311,7 @@ public class CustomSkill
 
     protected IEnumerator MoveOut()
     {
-        yield return selfOnly.MoveTo(selfOnly.Container.position + new Vector3(50,0,0), selfOnly.Manager.actionDoneMoveSpeed);
+        yield return selfOnly.MoveTo(selfOnly.Container.position + new Vector3(5,0,0), selfOnly.Manager.actionDoneMoveSpeed);
     }
     protected IEnumerator MoveToSelfPos()
     {
