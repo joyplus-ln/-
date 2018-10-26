@@ -144,6 +144,10 @@ public class CustomSkill
 
     }
 
+    /// <summary>
+    /// 获取己方队员
+    /// </summary>
+    /// <returns></returns>
     protected List<BaseCharacterEntity> GetSelfFriends()
     {
         List<BaseCharacterEntity> allFriends = GamePlayManager.Singleton.GetAllies(selfOnly);
@@ -295,6 +299,9 @@ public class CustomSkill
         yield return null;
     }
 
+    /// <summary>
+    /// 非协程方法的执行buff
+    /// </summary>
     public virtual void ApplyBuffLogicM()
     {
     }
