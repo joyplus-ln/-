@@ -148,7 +148,7 @@ public class CustomSkill
     {
         List<BaseCharacterEntity> allFriends = GamePlayManager.Singleton.GetAllies(selfOnly);
         return allFriends;
-    } 
+    }
 
     /// <summary>
     /// 是否可以使用技能
@@ -294,6 +294,10 @@ public class CustomSkill
     {
         yield return null;
     }
+
+    public virtual void ApplyBuffLogicM()
+    {
+    }
     public virtual IEnumerator DoSkillLogic()
     {
         yield return null;
@@ -311,11 +315,18 @@ public class CustomSkill
 
     protected IEnumerator MoveOut()
     {
-        yield return selfOnly.MoveTo(selfOnly.Container.position + new Vector3(5,0,0), selfOnly.Manager.actionDoneMoveSpeed);
+        yield return selfOnly.MoveTo(selfOnly.Container.position + new Vector3(5, 0, 0), selfOnly.Manager.actionDoneMoveSpeed);
     }
     protected IEnumerator MoveToSelfPos()
     {
         yield return selfOnly.MoveTo(selfOnly.Container.position, selfOnly.Manager.actionDoneMoveSpeed);
+    }
+
+    protected IEnumerator MoveSkillOB(Action logic)
+    {
+        yield return selfOnly.MoveTo(selfOnly.Container.position + new Vector3(5, 0, 0), selfOnly.Manager.actionDoneMoveSpeed);
+        if (logic != null) logic.Invoke();
+        yield return selfOnly.MoveTo(selfOnly.Container.position - new Vector3(5, 0, 0), selfOnly.Manager.actionDoneMoveSpeed);
     }
 
     /// <summary>
@@ -345,6 +356,13 @@ public class CustomSkill
             targetEntity = selfOnly.ActionTarget;
         selfOnly.Attack(targetEntity, atkAttackDamage.GetPAtkDamageRate(), atkAttackDamage.GetMAtkDamageRate(), atkAttackDamage.hitCount, (int)atkAttackDamage.GetFixDamage());
         yield return null;
+    }
+
+    public virtual void AttackTarget(SkillAttackDamage atkAttackDamage, CharacterEntity targetEntity = null)
+    {
+        if (targetEntity == null)
+            targetEntity = selfOnly.ActionTarget;
+        selfOnly.Attack(targetEntity, atkAttackDamage.GetPAtkDamageRate(), atkAttackDamage.GetMAtkDamageRate(), atkAttackDamage.hitCount, (int)atkAttackDamage.GetFixDamage());
     }
 
     public enum SkillUsageScope
