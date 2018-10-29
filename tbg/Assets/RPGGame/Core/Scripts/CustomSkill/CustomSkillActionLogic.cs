@@ -98,6 +98,8 @@ public class CustomSkillActionLogic
 
     private void DoAction()
     {
+        HandleSkill();
+
         if (self.IsDoingAction)
             return;
 
@@ -107,6 +109,30 @@ public class CustomSkillActionLogic
         {
             self.SelectedCustomSkill.OnUseSkill();
             self.StartCoroutine(DoSkillActionRoutine());
+        }
+    }
+
+    /// <summary>
+    /// 处理嘲讽，沉默，等
+    /// </summary>
+    void HandleSkill()
+    {
+        bool canUseSkill = true;
+        CharacterEntity mustTarget = null;
+        foreach (var buff in self.Buffs_custom.Values)
+        {
+            if (!buff.CanUseSkill())
+                canUseSkill = false;
+            if (buff.MustTargetCharacterEntity() != null)
+                mustTarget = buff.MustTargetCharacterEntity();
+        }
+        if (!canUseSkill)
+        {
+            self.Action = 0;
+        }
+        if (mustTarget != null)
+        {
+            self.ActionTarget = mustTarget;
         }
     }
 

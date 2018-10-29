@@ -31,6 +31,8 @@ public class CustomBuff
     /// </summary>
     protected int turns = 0;
 
+    protected CharacterEntity MustCharacterEntity = null;
+
     public virtual void Init()
     {
         des = "自定义技能 ID 001";
@@ -153,6 +155,15 @@ public class CustomBuff
             return false;
         }
         return true;
+    }
+
+    /// <summary>
+    /// 强制目标
+    /// </summary>
+    /// <returns></returns>
+    public virtual CharacterEntity MustTargetCharacterEntity()
+    {
+        return MustCharacterEntity;
     }
     //是否结束了
     public virtual bool IsEnd()
