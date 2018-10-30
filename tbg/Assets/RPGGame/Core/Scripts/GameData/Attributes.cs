@@ -241,13 +241,25 @@ public class CalculationAttributes
     [Tooltip("Damage when critical attack = this * Damage")]
     public float critDamageRate;
     [Header("Block attributes")]
-    ///格挡
+    //格挡    
     [Range(0f, 1f)]
     [Tooltip("Chance to block")]
     public float blockChance;
     [Range(1f, 100f)]
     [Tooltip("Damage when block = this / Damage")]
     public float blockDamageRate;
+
+
+    public float _hpRate;
+    public float _pAtkRate;
+    public float _pDefRate;
+    public float _mAtkRate;
+    public float _mDefRate;
+    public float _spdRate;
+    public float _evaRate;
+    public float _accRate;
+    public float _critDamageRate;
+    public float _blockDamageRate;
 
     public CalculationAttributes Clone()
     {

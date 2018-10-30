@@ -137,10 +137,10 @@ public class CharacterEntity : BaseCharacterEntity
         return customBody.Attack(target, pAtkRate, mAtkRate, hitCount, fixDamage);
     }
 
-    public AttackInfo ReceiveDamage(int pAtk, int mAtk, int acc, float critChance, float critDamageRate,
+    public AttackInfo ReceiveDamage(CharacterEntity attacker,int pAtk, int mAtk, int acc, float critChance, float critDamageRate,
         int hitCount = 1, int fixDamage = 0)
     {
-        return customBody.ReceiveDamage(pAtk, mAtk, acc, critChance, critDamageRate, hitCount, fixDamage);
+        return customBody.ReceiveDamage(attacker, pAtk, mAtk, acc, critChance, critDamageRate, hitCount, fixDamage);
     }
 
 

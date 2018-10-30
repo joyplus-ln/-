@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CustomBody
 {
-
+    public CharacterEntity lastAttacker = null;
     private CharacterEntity self;
     public CustomBody(CharacterEntity self)
     {
@@ -18,7 +18,7 @@ public class CustomBody
             return null;
         self.ApplySkillAndBuff(CustomSkill.TriggerType.fight);
         var attributes = self.GetTotalAttributes();
-        AttackInfo info = target.ReceiveDamage(
+        AttackInfo info = target.ReceiveDamage(self,
              Mathf.CeilToInt(attributes.pAtk * pAtkRate),
              Mathf.CeilToInt(attributes.mAtk * mAtkRate),
              (int)attributes.acc,
@@ -33,8 +33,9 @@ public class CustomBody
         return info;
     }
 
-    public AttackInfo ReceiveDamage(int pAtk, int mAtk, int acc, float critChance, float critDamageRate, int hitCount = 1, int fixDamage = 0)
+    public AttackInfo ReceiveDamage(CharacterEntity attacker, int pAtk, int mAtk, int acc, float critChance, float critDamageRate, int hitCount = 1, int fixDamage = 0)
     {
+        lastAttacker = attacker;
         AttackInfo attackInfo = new AttackInfo();
         attackInfo.lastHP = self.Hp;
         if (hitCount <= 0)
