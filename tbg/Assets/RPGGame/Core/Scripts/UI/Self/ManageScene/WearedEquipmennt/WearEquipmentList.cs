@@ -47,11 +47,11 @@ public class WearEquipmentList : MonoBehaviour {
         Debug.LogError(characterListUI.GetSelectedPlayerItem() == null);
         Debug.LogError(clickitem == null);
         //xuanze 
-        GameInstance.dbBattle.DoEquipItem(characterListUI.GetSelectedPlayerItem().GUID, clickitem.GUID, currentName, OnSetEquipmentSuccess);
+        GameInstance.dbBattle.DoEquipItem(characterListUI.GetSelectedPlayerItem().GUID, clickitem.GUID, currentName, GameInstance.Singleton.OnGameServiceItemResult);
 
     }
-    private void OnSetEquipmentSuccess(ItemResult result)
-    {
-        GameInstance.Singleton.OnGameServiceItemResult(result);
-    }
+    //private void OnSetEquipmentSuccess(ItemResult result)
+    //{
+    //    GameInstance.Singleton.OnGameServiceItemResult(result);
+    //}
 }

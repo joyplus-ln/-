@@ -57,4 +57,9 @@ public class TestUtils
     {
         GameObject.Find("HomePrefab").GetComponent<CanvasGroup>().alpha = 1;
     }
+    [MenuItem("Test/DialogTest")]
+    public static void DialogTest()
+    {
+        DialogController.instance.ShowDialog(new DialogData() { dialog = DialogController.instance.ShopHeroDialog }, DialogController.DialogType.wait);
+    }
 }

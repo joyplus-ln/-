@@ -134,6 +134,10 @@ public class GameInstance : MonoBehaviour
         LoadLoginScene();
     }
 
+    /// <summary>
+    /// 装备穿戴的回调
+    /// </summary>
+    /// <param name="result"></param>
     public void OnGameServiceItemResult(ItemResult result)
     {
         if (!result.Success)
@@ -144,6 +148,10 @@ public class GameInstance : MonoBehaviour
         PlayerItem.RemoveDataRange(result.deleteItemIds);
     }
 
+    /// <summary>
+    /// 关卡开始的回调
+    /// </summary>
+    /// <param name="result"></param>
     public void OnGameServiceStartStageResult(StartStageResult result)
     {
         if (!result.Success)
@@ -152,6 +160,10 @@ public class GameInstance : MonoBehaviour
         PlayerStamina.SetData(result.stamina);
     }
 
+    /// <summary>
+    /// 游戏胜利的数据库回调
+    /// </summary>
+    /// <param name="result"></param>
     public void OnGameServiceFinishStageResult(FinishStageResult result)
     {
         if (!result.Success)
@@ -165,6 +177,10 @@ public class GameInstance : MonoBehaviour
         PlayerClearStage.SetData(result.clearStage);
     }
 
+    /// <summary>
+    /// 创建角色的回调
+    /// </summary>
+    /// <param name="result"></param>
     public void OnGameServiceSetProfileNameResult(PlayerResult result)
     {
         if (!result.Success)
@@ -175,6 +191,10 @@ public class GameInstance : MonoBehaviour
             currentPlayer.ProfileName = result.player.ProfileName;
     }
 
+    /// <summary>
+    /// 登录的回调
+    /// </summary>
+    /// <param name="result"></param>
     public void OnGameServiceAuthListResult(AuthListResult result)
     {
         if (!result.Success)
@@ -183,6 +203,10 @@ public class GameInstance : MonoBehaviour
         PlayerAuth.SetDataRange(result.list);
     }
 
+    /// <summary>
+    /// 获取货币的回调
+    /// </summary>
+    /// <param name="result"></param>
     public void OnGameServiceCurrencyListResult(CurrencyListResult result)
     {
         if (!result.Success)
@@ -191,6 +215,10 @@ public class GameInstance : MonoBehaviour
         PlayerCurrency.SetDataRange(result.list);
     }
 
+    /// <summary>
+    /// 队伍设置的回调
+    /// </summary>
+    /// <param name="result"></param>
     public void OnGameServiceFormationListResult(FormationListResult result)
     {
         if (!result.Success)
@@ -199,6 +227,10 @@ public class GameInstance : MonoBehaviour
         PlayerFormation.SetDataRange(result.list);
     }
 
+    /// <summary>
+    /// 开局加载所有item的回调
+    /// </summary>
+    /// <param name="result"></param>
     public void OnGameServiceItemListResult(ItemListResult result)
     {
         if (!result.Success)
@@ -207,6 +239,7 @@ public class GameInstance : MonoBehaviour
         PlayerItem.SetDataRange(result.characterlist);
         PlayerItem.SetDataRange(result.equipmentlist);
     }
+
 
     public void OnGameServiceOtherItemListResult(OtherItemListResult result)
     {

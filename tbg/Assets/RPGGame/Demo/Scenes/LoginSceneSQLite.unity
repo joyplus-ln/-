@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -604,6 +604,35 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224616357057892282, guid: ca6aabeda3b63e24f97cc11d71e7fd4a,
     type: 2}
   m_PrefabInternal: {fileID: 1355132466}
+--- !u!1 &525076442
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 525076443}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &525076443
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 525076442}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -302.77917, y: -185.88527, z: 13.170231}
+  m_LocalScale: {x: 1.4819446, y: 1.4819446, z: 1.4819446}
+  m_Children:
+  - {fileID: 968038823}
+  m_Father: {fileID: 1116362999}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &566652068
 Prefab:
   m_ObjectHideFlags: 0
@@ -761,11 +790,53 @@ Prefab:
     - target: {fileID: 225328049977869644, guid: ce8396daf8c054a45b4ab54afc47b28a,
         type: 2}
       propertyPath: m_Alpha
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce8396daf8c054a45b4ab54afc47b28a, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &968038822
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 968038823}
+  - component: {fileID: 968038824}
+  m_Layer: 0
+  m_Name: DialogController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &968038823
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 968038822}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 525076443}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &968038824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 968038822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 952cd80dc5f0b9646ac75d3a31ee8ab5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShopHeroDialog: {fileID: 114329915840560566, guid: e0e9bad4c1d94c1428e5379fa9d98e6f,
+    type: 2}
 --- !u!114 &973617391 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114189683546874308, guid: a374a158d788d5c4095315c3cb50e224,
@@ -988,6 +1059,7 @@ RectTransform:
   - {fileID: 439239426}
   - {fileID: 1651604939}
   - {fileID: 1778298264}
+  - {fileID: 525076443}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1720,17 +1792,17 @@ Prefab:
     - target: {fileID: 224825897564630352, guid: 6a9fd3e6dc40b30479a711d14d8796ef,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224825897564630352, guid: 6a9fd3e6dc40b30479a711d14d8796ef,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224020205445978524, guid: 6a9fd3e6dc40b30479a711d14d8796ef,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 224825897564630352, guid: 6a9fd3e6dc40b30479a711d14d8796ef,
         type: 2}
