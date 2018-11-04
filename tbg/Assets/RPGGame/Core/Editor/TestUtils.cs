@@ -62,4 +62,10 @@ public class TestUtils
     {
         DialogController.instance.ShowDialog(new DialogData() { dialog = DialogController.instance.ShopHeroDialog }, DialogController.DialogType.wait);
     }
+
+    [MenuItem("Test/DialogTest2")]
+    public static void DialogTest2()
+    {
+        DialogController.instance.ShowDialog(new DialogData() { dialog = DialogController.instance.ShopHeroDialog }, DialogController.DialogType.stack);
+    }
 }

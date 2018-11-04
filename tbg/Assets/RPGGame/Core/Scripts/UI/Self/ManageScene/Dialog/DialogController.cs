@@ -13,15 +13,16 @@ public class DialogController : MonoBehaviour
     #region dialogs
 
     public ShopHeroDialog ShopHeroDialog;
-#endregion
+    #endregion
     public enum DialogType
     {
         replace,
         dontShow,
-        wait
+        wait,
+        stack
     }
-    private Dialog currentDialog = null;
-    private Queue<DialogData> dialogQueue = new Queue<DialogData>();
+    private DialogData currentDialog = null;
+    private Stack<DialogData> dialogQueue = new Stack<DialogData>();
     public void ShowDialog(DialogData dialog, DialogType type)
     {
         switch (type)
@@ -33,6 +34,9 @@ public class DialogController : MonoBehaviour
             case DialogType.wait:
                 Wait(dialog);
                 break;
+            case DialogType.stack:
+                Stack(dialog);
+                break;
         }
     }
 
@@ -40,7 +44,7 @@ public class DialogController : MonoBehaviour
     {
         if (currentDialog != null)
         {
-            currentDialog.Close();
+            currentDialog.dialog.Close();
             currentDialog = CreatDialog(dialog);
         }
     }
@@ -57,7 +61,7 @@ public class DialogController : MonoBehaviour
     {
         if (currentDialog != null)
         {
-            dialogQueue.Enqueue(dialog);
+            dialogQueue.Push(dialog);
         }
         else
         {
@@ -65,11 +69,36 @@ public class DialogController : MonoBehaviour
         }
     }
 
-    Dialog CreatDialog(DialogData dialog)
+    void Stack(DialogData dialog)
     {
-        Dialog insDialog = Instantiate(dialog.dialog);
+        if (currentDialog != null)
+        {
+            currentDialog.CreaatedGameObject.SetActive(false);
+            dialogQueue.Push(currentDialog);
+            currentDialog = CreatDialog(dialog);
+        }
+        else
+        {
+            currentDialog = CreatDialog(dialog);
+        }
+    }
+
+    DialogData CreatDialog(DialogData dialog)
+    {
+        Dialog insDialog = null;
+        if (dialog.CreaatedGameObject != null)
+        {
+            insDialog = dialog.CreaatedGameObject.GetComponent<Dialog>();
+        }
+        else
+        {
+            insDialog = Instantiate(dialog.dialog);
+            insDialog.name += dialogQueue.Count;
+            dialog.CreaatedGameObject = insDialog.gameObject;
+        }
+
         insDialog.close += Close;
-        return insDialog;
+        return dialog;
     }
 
     /// <summary>
@@ -81,10 +110,18 @@ public class DialogController : MonoBehaviour
         {
             currentDialog = null;
         }
-        DialogData dialog = dialogQueue.Dequeue();
+        DialogData dialog = dialogQueue.Pop();
         if (dialog != null)
         {
-            ShowDialog(dialog, DialogType.wait);
+            if (dialog.CreaatedGameObject != null)
+            {
+                currentDialog = dialog;
+                dialog.CreaatedGameObject.SetActive(true);
+            }
+            else
+            {
+                ShowDialog(dialog, DialogType.wait);
+            }
         }
 
     }
@@ -92,6 +129,7 @@ public class DialogController : MonoBehaviour
 
 public class DialogData
 {
+    public GameObject CreaatedGameObject = null;
     public Dialog dialog = null;
     public object obj = null;
 }
