@@ -94,6 +94,7 @@ public class DialogController : MonoBehaviour
         {
             insDialog = Instantiate(dialog.dialog);
             insDialog.name += dialogQueue.Count;
+            insDialog.Init(dialog);
             dialog.CreaatedGameObject = insDialog.gameObject;
         }
 
