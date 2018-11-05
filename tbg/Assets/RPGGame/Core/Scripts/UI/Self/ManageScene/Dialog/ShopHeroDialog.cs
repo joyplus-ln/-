@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShopHeroDialog : Dialog
 {
 
-    public AttributeShow AttributeShow;
+    public UIAttributeShow AttributeShow;
 	// Use this for initialization
 	void Start () {
 		
@@ -15,7 +15,6 @@ public class ShopHeroDialog : Dialog
     {
         base.Init(data);
         ShopItemData shopItemData = (ShopItemData)data.obj;
-        //GameInstance.GameDatabase.characters[shopItemData.heroid].;
-        //AttributeShow.SetupInfo();
+        AttributeShow.SetupInfo(GameInstance.GameDatabase.characters[shopItemData.heroid].GetTotalAttributes());
     }
 }

@@ -80,3 +80,59 @@ public class XianJiShengMing : CustomSkill
 }
 
 #endregion
+
+
+#region damage
+
+public class SuiJiDaJi : CustomSkill
+{
+
+    public SuiJiDaJi()
+    {
+        des = "";
+        skillName = "";
+        spendPower = 0;
+        enemyCd = 2;
+    }
+
+    public override IEnumerator DoSkillLogic()
+    {
+        yield return MoveSkillOB(() =>
+        {
+            int random = Random.Range(1, 6);
+            List<BaseCharacterEntity> randomHint = GetRandomEnemy(random);
+            for (int i = 0; i < randomHint.Count; i++)
+            {
+                AttackTarget(new SkillAttackDamage(10, 0.5f, 0), randomHint[i] as CharacterEntity);
+            }
+        });
+
+    }
+}
+
+public class ZhiMingYiJi : CustomSkill
+{
+
+    public ZhiMingYiJi()
+    {
+        des = "";
+        skillName = "";
+        spendPower = 0;
+        enemyCd = 2;
+    }
+
+    public override IEnumerator DoSkillLogic()
+    {
+        yield return MoveSkillOB(() =>
+        {
+            List<BaseCharacterEntity> randomHint = GetRandomEnemy(1);
+            for (int i = 0; i < randomHint.Count; i++)
+            {
+                AttackTarget(new SkillAttackDamage(10, 1.2f, 0), randomHint[i] as CharacterEntity);
+            }
+        });
+
+    }
+}
+
+#endregion
