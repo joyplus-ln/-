@@ -13,6 +13,7 @@ public class DialogController : MonoBehaviour
     #region dialogs
 
     public ShopHeroDialog ShopHeroDialog;
+    public ShopEquipDialog ShopEquipDialog;
     #endregion
     public enum DialogType
     {

@@ -6,14 +6,23 @@ public class ShopManager : MonoBehaviour
 {
 
     public Transform content;
+    /// <summary>
+    /// hero
+    /// </summary>
     [SerializeField]
     private GameObject shopItem;
+
+    /// <summary>
+    /// equipment
+    /// </summary>
+    [SerializeField]
+    private GameObject eshopItem;
 
     private int currentIndex;
     // Use this for initialization
     void Start()
     {
-
+        ButtonClick(1);
     }
 
     public void ButtonClick(int id)
@@ -58,7 +67,8 @@ public class ShopManager : MonoBehaviour
         GameObject itemClone = null;
         foreach (var item in GameInstance.GameDatabase.equipments.Values)
         {
-            itemClone = Instantiate(shopItem);
+            itemClone = Instantiate(eshopItem);
+            itemClone.GetComponent<EShopItem>().SetItemData(item);
             itemClone.transform.SetParent(content, false);
         }
     }

@@ -29620,6 +29620,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   content: {fileID: 1442202543}
   shopItem: {fileID: 1732611459388224, guid: 8b9b59742379ff24bb476fd2090a94f6, type: 2}
+  eshopItem: {fileID: 1732611459388224, guid: c7b57d18c50572940a1074a18aac5dad, type: 2}
 --- !u!114 &1977128157
 MonoBehaviour:
   m_ObjectHideFlags: 0

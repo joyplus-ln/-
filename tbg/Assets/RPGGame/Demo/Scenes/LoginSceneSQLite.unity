@@ -841,6 +841,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShopHeroDialog: {fileID: 114329915840560566, guid: e0e9bad4c1d94c1428e5379fa9d98e6f,
     type: 2}
+  ShopEquipDialog: {fileID: 114513282410196766, guid: c6273086dc9f3ca4b9440cf3e0fa5aef,
+    type: 2}
 --- !u!114 &973617391 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114189683546874308, guid: a374a158d788d5c4095315c3cb50e224,
