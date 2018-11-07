@@ -25966,6 +25966,7 @@ MonoBehaviour:
   - {fileID: 1601676394}
   - {fileID: 1289221223}
   - {fileID: 1429627413}
+  - {fileID: 1977128157}
 --- !u!1001 &1660169803
 Prefab:
   m_ObjectHideFlags: 0
@@ -26171,12 +26172,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1977128157}
-        m_MethodName: Show
-        m_Mode: 1
+      - m_Target: {fileID: 1657272168}
+        m_MethodName: OpenUI
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1977128157}
+          m_ObjectArgumentAssemblyTypeName: BaseUI, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

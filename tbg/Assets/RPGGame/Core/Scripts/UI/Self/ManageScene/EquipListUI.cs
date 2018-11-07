@@ -15,8 +15,15 @@ public class EquipListUI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        
+    }
+
+    private void OnEnable()
+    {
+        content.RemoveAllChildren();
         StartCoroutine(CreatItem());
     }
+
 
     IEnumerator CreatItem()
     {

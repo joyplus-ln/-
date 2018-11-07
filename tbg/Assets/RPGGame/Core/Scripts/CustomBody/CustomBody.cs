@@ -30,6 +30,7 @@ public class CustomBody
         if (info.gedang) self.ApplySkillAndBuff(CustomSkill.TriggerType.beigedang);
         if (info.baoji) self.ApplySkillAndBuff(CustomSkill.TriggerType.beibaoji);
         if (info.shanbi) self.ApplySkillAndBuff(CustomSkill.TriggerType.beimiss);
+        FriensAttack();
         return info;
     }
 
@@ -90,7 +91,40 @@ public class CustomBody
         //CacheAnimator.ResetTrigger(ANIM_KEY_HURT);
         //CacheAnimator.SetTrigger(ANIM_KEY_HURT);
         AnimReceiveDamage();
+        FriensReceiveDamage();
         return attackInfo;
+    }
+
+    void FriensReceiveDamage()
+    {
+        List<BaseCharacterEntity> charList = GamePlayManager.Singleton.GetAllies(self);
+        for (int i = 0; i < charList.Count; i++)
+        {
+            for (int j = 0; j < charList[i].CustomSkills.Count; j++)
+            {
+                charList[i].CustomSkills[j].Trigger(CustomSkill.TriggerType.friendsReceiveDamage);
+            }
+            foreach (var buff in charList[i].Buffs_custom.Values)
+            {
+                buff.Trigger(CustomSkill.TriggerType.friendsReceiveDamage);
+            }
+        }
+    }
+
+    void FriensAttack()
+    {
+        List<BaseCharacterEntity> charList = GamePlayManager.Singleton.GetAllies(self);
+        for (int i = 0; i < charList.Count; i++)
+        {
+            for (int j = 0; j < charList[i].CustomSkills.Count; j++)
+            {
+                charList[i].CustomSkills[j].Trigger(CustomSkill.TriggerType.friendsAttack);
+            }
+            foreach (var buff in charList[i].Buffs_custom.Values)
+            {
+                buff.Trigger(CustomSkill.TriggerType.friendsAttack);
+            }
+        }
     }
 
     //播放动画 receiveDamage

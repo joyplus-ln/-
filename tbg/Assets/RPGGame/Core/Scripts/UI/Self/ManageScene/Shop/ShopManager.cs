@@ -31,6 +31,10 @@ public class ShopManager : MonoBehaviour
         {
             DeleteAll();
         }
+        else
+        {
+            return;
+        }
         switch (id)
         {
             case 1:

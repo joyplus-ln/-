@@ -172,7 +172,7 @@ public abstract class BaseItem
 
     public virtual string ToJson()
     {
-        return "{\"SqliteId\":\""  + "\"," +
+        return "{\"SqliteId\":\"" + "\"," +
                "\"itemid\":\"" + itemid + "\"," +
             "\"category\":\"" + category + "\"," +
             "\"type\":\"" + Type + "\"," +
@@ -202,7 +202,7 @@ public abstract class BaseActorItem : BaseItem
     public CalculationAttributes GetTotalAttributes()
     {
         var result = new CalculationAttributes();
-        result += attributes.CreateCalculationAttributes(1,50);
+        result += attributes.CreateCalculationAttributes(1, Const.MaxLevel);
 
         // If this is character item, applies rate attributes
         result.hp += Mathf.CeilToInt(result.hpRate * result.hp);

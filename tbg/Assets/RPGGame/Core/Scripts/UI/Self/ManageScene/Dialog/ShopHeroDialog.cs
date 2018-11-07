@@ -6,15 +6,22 @@ public class ShopHeroDialog : Dialog
 {
 
     public UIAttributeShow AttributeShow;
-	// Use this for initialization
-	void Start () {
-		
-	}
+    private ShopItemData shopItemData;
+    // Use this for initialization
+    void Start()
+    {
+
+    }
 
     public override void Init(DialogData data)
     {
         base.Init(data);
-        ShopItemData shopItemData = (ShopItemData)data.obj;
+        shopItemData = (ShopItemData)data.obj;
         AttributeShow.SetupInfo(GameInstance.GameDatabase.characters[shopItemData.heroid].GetTotalAttributes());
+    }
+
+    public void BuyItem()
+    {
+        GameInstance.dbPlayerData.InsertCharacter(shopItemData.heroid);
     }
 }

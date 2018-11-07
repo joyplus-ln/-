@@ -105,6 +105,15 @@ public class CustomBuff
 
     }
 
+    public virtual void FriendsReceiveDamage()
+    {
+
+    }
+
+    public virtual void FriendsAttack()
+    {
+
+    }
     #endregion
 
 
@@ -214,6 +223,12 @@ public class CustomBuff
                 break;
             case CustomSkill.TriggerType.gomiss:
                 Gomiss();
+                break;
+            case CustomSkill.TriggerType.friendsReceiveDamage:
+                FriendsReceiveDamage();
+                break;
+            case CustomSkill.TriggerType.friendsAttack:
+                FriendsAttack();
                 break;
             default:
                 break;

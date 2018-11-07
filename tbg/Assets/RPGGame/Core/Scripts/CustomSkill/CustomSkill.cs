@@ -105,6 +105,18 @@ public class CustomSkill
     {
     }
 
+    /// <summary>
+    /// 队友收到伤害，包含自己
+    /// </summary>
+    public virtual void FriendsReceiveDamage()
+    {
+
+    }
+
+    public virtual void FriendsAttacker()
+    {
+
+    }
 
 
     /// <summary>
@@ -254,6 +266,12 @@ public class CustomSkill
                 break;
             case TriggerType.gomiss:
                 Gomiss();
+                break;
+            case TriggerType.friendsReceiveDamage:
+                FriendsReceiveDamage();
+                break;
+            case TriggerType.friendsAttack:
+                FriendsAttacker();
                 break;
             default:
                 break;
@@ -427,6 +445,8 @@ public class CustomSkill
         gobaoji,
         gogedang,
         gomiss,
+        friendsReceiveDamage,
+        friendsAttack
 
     }
 
