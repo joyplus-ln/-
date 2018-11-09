@@ -27,8 +27,9 @@ public class SelfHeroSelectDialog : Dialog
 
     }
 
-    public void ClickEquip()
+    public void ClickEquip(string pos)
     {
+
     }
 
 

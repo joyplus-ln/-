@@ -14,6 +14,8 @@ public class DialogController : MonoBehaviour
 
     public ShopHeroDialog ShopHeroDialog;
     public ShopEquipDialog ShopEquipDialog;
+    public SelfHeroSelectDialog SelfHeroSelectDialog;
+    public SelfHeroEquipSelectDialog SelfHeroEquipSelectDialog;
     #endregion
     public enum DialogType
     {

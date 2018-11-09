@@ -849,9 +849,9 @@ GameObject:
   - component: {fileID: 223165509231564250}
   - component: {fileID: 114485909697997502}
   - component: {fileID: 114361370870484686}
-  - component: {fileID: 114634641811018690}
+  - component: {fileID: 114855110821981626}
   m_Layer: 5
-  m_Name: SelfHeroSelectDialog
+  m_Name: SelfHeroEquipSelectDialog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3103,18 +3103,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dataKey: TEXT_TITLE_ATTRIBUTE_PDEF_RATE
   defaultText: P.Def Rate
---- !u!114 &114634641811018690
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1710055075822202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c388b2c2c4d021458b3a55262e8ab6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AttributeShow: {fileID: 114916051387560812}
 --- !u!114 &114637048932450376
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3672,6 +3660,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Eva Rate
+--- !u!114 &114855110821981626
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1710055075822202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c82b78b32bd850a4484f520fbbb445f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttributeShow: {fileID: 114916051387560812}
 --- !u!114 &114861957665540068
 MonoBehaviour:
   m_ObjectHideFlags: 1
