@@ -883,6 +883,10 @@ MonoBehaviour:
     type: 2}
   ShopEquipDialog: {fileID: 114513282410196766, guid: c6273086dc9f3ca4b9440cf3e0fa5aef,
     type: 2}
+  SelfHeroSelectDialog: {fileID: 114634641811018690, guid: 52a6734a56bbfa447b9ed682ff13b598,
+    type: 2}
+  SelfHeroEquipSelectDialog: {fileID: 114855110821981626, guid: a56c444499067104d8d3272959688793,
+    type: 2}
 --- !u!114 &973617391 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114189683546874308, guid: a374a158d788d5c4095315c3cb50e224,

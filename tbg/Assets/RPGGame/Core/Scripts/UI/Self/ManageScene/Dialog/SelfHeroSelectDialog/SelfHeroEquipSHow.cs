@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SelfHeroEquipSHow : MonoBehaviour
 {
-    public string EquipGuid;
-    public string HeroGuid;
+    [HideInInspector] public string EquipGuid;
+    [HideInInspector] public string HeroGuid;
 
     // Use this for initialization
     void Start()
@@ -25,11 +25,13 @@ public class SelfHeroEquipSHow : MonoBehaviour
 
     public void ClickShowInfo()
     {
+        if (EquipGuid.Length == 0 || HeroGuid.Length == 0) return;
         DialogData data = new DialogData();
         data.dialog = DialogController.instance.SelfHeroEquipSelectDialog;
         SelfHeroEquipSelectData dialogdata = new SelfHeroEquipSelectData();
         dialogdata.equipGuid = this.EquipGuid;
         dialogdata.heroGuid = this.HeroGuid;
+        data.obj = dialogdata;
         DialogController.instance.ShowDialog(data, DialogController.DialogType.stack);
     }
 }

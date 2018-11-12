@@ -35,12 +35,16 @@ public class CharacterListItem : MonoBehaviour
         listui.SelectedGameObject.GetComponent<RectTransform>().anchorMax = Vector2.one;
         listui.SelectedItem(this, characterItem);
         Debug.LogError("equipment:" + characterItem.EquippedItems.Count);
+        ShowSelectHeroDialog();
     }
 
     public void ShowSelectHeroDialog()
     {
         DialogData data = new DialogData();
         data.dialog = DialogController.instance.SelfHeroSelectDialog;
+        SelfHeroSelectData selfHeroSelectData = new SelfHeroSelectData();
+        selfHeroSelectData.heroGuid = characterItem.GUID;
+        data.obj = selfHeroSelectData;
         DialogController.instance.ShowDialog(data, DialogController.DialogType.wait);
     }
 }
