@@ -14,7 +14,13 @@ public class DialogController : MonoBehaviour
 
     public ShopHeroDialog ShopHeroDialog;
     public ShopEquipDialog ShopEquipDialog;
+    /// <summary>
+    /// 队伍中选择自己拥有的英雄
+    /// </summary>
     public SelfHeroSelectDialog SelfHeroSelectDialog;
+    /// <summary>
+    /// 队伍中选择后点击equip
+    /// </summary>
     public SelfHeroEquipSelectDialog SelfHeroEquipSelectDialog;
     #endregion
     public enum DialogType

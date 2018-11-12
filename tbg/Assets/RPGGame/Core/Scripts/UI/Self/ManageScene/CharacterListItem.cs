@@ -9,17 +9,18 @@ public class CharacterListItem : MonoBehaviour
     public PlayerItem characterItem;
 
     public Text lvName;
+
     // Use this for initialization
     void Start()
     {
-
     }
 
     public void Init(CharacterListUI listui, PlayerItem characterItem)
     {
         this.listui = listui;
         this.characterItem = characterItem;
-        lvName.text = characterItem.CharacterData.quality + "-LV" + characterItem.Level + "-" + characterItem.CharacterData.title;
+        lvName.text = characterItem.CharacterData.quality + "-LV" + characterItem.Level + "-" +
+                      characterItem.CharacterData.title;
     }
 
     public void PointDown()
@@ -34,5 +35,12 @@ public class CharacterListItem : MonoBehaviour
         listui.SelectedGameObject.GetComponent<RectTransform>().anchorMax = Vector2.one;
         listui.SelectedItem(this, characterItem);
         Debug.LogError("equipment:" + characterItem.EquippedItems.Count);
+    }
+
+    public void ShowSelectHeroDialog()
+    {
+        DialogData data = new DialogData();
+        data.dialog = DialogController.instance.SelfHeroSelectDialog;
+        DialogController.instance.ShowDialog(data, DialogController.DialogType.wait);
     }
 }
