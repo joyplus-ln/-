@@ -27,15 +27,20 @@ public class SelfHeroEquipSelectDialog : Dialog
 
     }
 
-    public void ClickEquip(string pos)
+    public void ClickChangeEquip(string pos)
     {
 
     }
 
     public void UnEquip()
     {
-        
+        GameInstance.dbBattle.DoUnEquipItem(shopItemData.equipGuid, (result) =>
+        {
+            PlayerItem.SetDataRange(result.updateItems);
+        });
     }
+
+
 }
 
 public class SelfHeroEquipSelectData

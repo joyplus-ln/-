@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.PlayerLoop;
 
 public class ShopHeroDialog : Dialog
 {
@@ -24,4 +25,6 @@ public class ShopHeroDialog : Dialog
     {
         GameInstance.dbPlayerData.InsertCharacter(shopItemData.heroid);
     }
+
+
 }

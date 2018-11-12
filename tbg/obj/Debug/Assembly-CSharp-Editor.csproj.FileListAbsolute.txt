@@ -329,3 +329,4 @@ G:/github/tbg/tbg/obj/Debug/Assembly-CSharp-Editor.csprojResolveAssemblyReferenc
 /Users/fotoable/tbg/tbg/obj/Debug/Assembly-CSharp-Editor.csproj.CoreCompileInputs.cache
 /Users/fotoable/tbg/tbg/obj/Debug/Assembly-CSharp-Editor.dll
 /Users/fotoable/tbg/tbg/obj/Debug/Assembly-CSharp-Editor.pdb
+G:\tbg2\tbg\obj\Debug\Assembly-CSharp-Editor.csprojResolveAssemblyReference.cache
