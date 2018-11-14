@@ -165,6 +165,15 @@ public class DBBattle
         onFinish(result);
     }
 
+    /// <summary>
+    /// itemguid   heroGuid  
+    /// characterid   heroItemid
+    /// </summary>
+    /// <param name="itemguid"></param>
+    /// <param name="characterId"></param>
+    /// <param name="formationName"></param>
+    /// <param name="position"></param>
+    /// <param name="onFinish"></param>
     public void DoSetFormation(string itemguid,string characterId, string formationName, int position, UnityAction<FormationListResult> onFinish)
     {
         Debug.LogError("111:" + itemguid);

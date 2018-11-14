@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEditor;
 
 public class TestUtils
@@ -10,8 +11,10 @@ public class TestUtils
 
         //PlayerSQLPrefs.yzTowerLevel = 10;
         //PlayerSQLPrefs.yzTowerABSLevel = 10;
-        Debug.Log(Player.CurrentPlayerId);
-        PlayerOtherItem.AddOneItem(GameInstance.GameDatabase.otherItem[0].Id, 10);
+        //Debug.Log(Player.CurrentPlayerId);
+        //PlayerOtherItem.AddOneItem(GameInstance.GameDatabase.otherItem[0].Id, 10);
+        Stack<int> id = new Stack<int>();
+       int ids = id.Pop();
     }
 
     [MenuItem("Test/Option2")]

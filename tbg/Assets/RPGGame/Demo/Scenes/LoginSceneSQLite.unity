@@ -887,6 +887,8 @@ MonoBehaviour:
     type: 2}
   SelfHeroEquipSelectDialog: {fileID: 114855110821981626, guid: a56c444499067104d8d3272959688793,
     type: 2}
+  heroFormationDialog: {fileID: 114704393813850400, guid: b1f953b3e5dcc88429a013a4d0bedcb6,
+    type: 2}
 --- !u!114 &973617391 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114189683546874308, guid: a374a158d788d5c4095315c3cb50e224,

@@ -22,6 +22,11 @@ public class DialogController : MonoBehaviour
     /// 队伍中选择后点击equip
     /// </summary>
     public SelfHeroEquipSelectDialog SelfHeroEquipSelectDialog;
+
+    /// <summary>
+    /// 更换队伍的dialog
+    /// </summary>
+    public HeroFormationDialog heroFormationDialog;
     #endregion
     public enum DialogType
     {
@@ -120,19 +125,23 @@ public class DialogController : MonoBehaviour
         {
             currentDialog = null;
         }
-        DialogData dialog = dialogQueue.Pop();
-        if (dialog != null)
+        if (dialogQueue.Count != 0)
         {
-            if (dialog.CreaatedGameObject != null)
+            DialogData dialog = dialogQueue.Pop();
+            if (dialog != null)
             {
-                currentDialog = dialog;
-                dialog.CreaatedGameObject.SetActive(true);
-            }
-            else
-            {
-                ShowDialog(dialog, DialogType.wait);
+                if (dialog.CreaatedGameObject != null)
+                {
+                    currentDialog = dialog;
+                    dialog.CreaatedGameObject.SetActive(true);
+                }
+                else
+                {
+                    ShowDialog(dialog, DialogType.wait);
+                }
             }
         }
+
 
     }
 }
