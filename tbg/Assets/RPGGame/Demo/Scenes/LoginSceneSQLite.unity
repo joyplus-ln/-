@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -830,7 +830,7 @@ Prefab:
     - target: {fileID: 225328049977869644, guid: ce8396daf8c054a45b4ab54afc47b28a,
         type: 2}
       propertyPath: m_Alpha
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1266225675926918, guid: ce8396daf8c054a45b4ab54afc47b28a, type: 2}
       propertyPath: m_IsActive
@@ -886,6 +886,8 @@ MonoBehaviour:
   SelfHeroSelectDialog: {fileID: 114634641811018690, guid: 52a6734a56bbfa447b9ed682ff13b598,
     type: 2}
   SelfHeroEquipSelectDialog: {fileID: 114855110821981626, guid: a56c444499067104d8d3272959688793,
+    type: 2}
+  selfHeroSelectChangeEquipDialog: {fileID: 114284278412301550, guid: 3d9ff280776169a45844f3654a4c875c,
     type: 2}
   heroFormationDialog: {fileID: 114704393813850400, guid: b1f953b3e5dcc88429a013a4d0bedcb6,
     type: 2}
@@ -1085,8 +1087,8 @@ Canvas:
   m_GameObject: {fileID: 1116362994}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 1436930792}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -1864,12 +1866,17 @@ Prefab:
     - target: {fileID: 224020205445978524, guid: 6a9fd3e6dc40b30479a711d14d8796ef,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000078172896
+      value: -0.000015913787
       objectReference: {fileID: 0}
     - target: {fileID: 114985991285502912, guid: 6a9fd3e6dc40b30479a711d14d8796ef,
         type: 2}
       propertyPath: m_Value
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224370467758355976, guid: 6a9fd3e6dc40b30479a711d14d8796ef,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a9fd3e6dc40b30479a711d14d8796ef, type: 2}

@@ -24,6 +24,11 @@ public class DialogController : MonoBehaviour
     public SelfHeroEquipSelectDialog SelfHeroEquipSelectDialog;
 
     /// <summary>
+    /// 选择穿戴的装备的dialog
+    /// </summary>
+    public SelfHeroSelectChangeEquipDialog selfHeroSelectChangeEquipDialog;
+
+    /// <summary>
     /// 更换队伍的dialog
     /// </summary>
     public HeroFormationDialog heroFormationDialog;

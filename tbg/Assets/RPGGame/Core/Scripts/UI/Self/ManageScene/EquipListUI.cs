@@ -10,6 +10,7 @@ public class EquipListUI : MonoBehaviour
     public GameObject item;
     public Transform content;
     public GameObject SelectedGameObject;
+    public Transform SelectedGameObjectParent;
     private EquipListItem currentSelectedItem;
     public AttributeShow AttributeShowScript;
     // Use this for initialization
@@ -20,6 +21,7 @@ public class EquipListUI : MonoBehaviour
 
     private void OnEnable()
     {
+        SelectedGameObject.transform.SetParent(SelectedGameObjectParent,false);
         content.RemoveAllChildren();
         StartCoroutine(CreatItem());
     }

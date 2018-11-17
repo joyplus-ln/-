@@ -11,6 +11,9 @@ public class SelfHeroEquipSelectDialog : Dialog
     public UIAttributeShow AttributeShow;
     private SelfHeroEquipSelectData shopItemData;
 
+    public GameObject equipOn;
+    public GameObject equipOff;
+
 
     // Use this for initialization
     void Start()
@@ -22,13 +25,36 @@ public class SelfHeroEquipSelectDialog : Dialog
     {
         base.Init(data);
         shopItemData = (SelfHeroEquipSelectData)data.obj;
-
-        AttributeShow.SetupInfo(PlayerItem.equipDataMap[shopItemData.equipGuid].GetItemAttributes());
+        RefreshUi();
 
     }
 
-    public void ClickChangeEquip(string pos)
+    void RefreshUi()
     {
+        if (shopItemData.equipGuid.Length > 0)
+        {
+            equipOn.SetActive(false);
+            equipOff.SetActive(true);
+            AttributeShow.gameObject.SetActive(true);
+            AttributeShow.SetupInfo(PlayerItem.equipDataMap[shopItemData.equipGuid].GetItemAttributes());
+        }
+        else
+        {
+            equipOn.SetActive(true);
+            equipOff.SetActive(false);
+            AttributeShow.gameObject.SetActive(false);
+        }
+    }
+
+    public void ClickChangeEquip()
+    {
+        DialogData openDialogData = new DialogData();
+        openDialogData.dialog = DialogController.instance.selfHeroSelectChangeEquipDialog;
+        SelfHeroSelectChangeEquipData selfHeroSelectChangeEquipData = new SelfHeroSelectChangeEquipData();
+        selfHeroSelectChangeEquipData.heroGuid = shopItemData.heroGuid;
+        openDialogData.obj = selfHeroSelectChangeEquipData;
+        selfHeroSelectChangeEquipData.callBack = RefreshUi;
+        DialogController.instance.ShowDialog(openDialogData, DialogController.DialogType.stack);
 
     }
 

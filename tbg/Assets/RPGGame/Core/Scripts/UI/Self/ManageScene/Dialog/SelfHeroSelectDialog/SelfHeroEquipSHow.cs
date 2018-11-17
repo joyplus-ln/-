@@ -1,11 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SelfHeroEquipSHow : MonoBehaviour
 {
-    [HideInInspector] public string EquipGuid;
-    [HideInInspector] public string HeroGuid;
+    [HideInInspector]
+    public string EquipGuid;
+    [HideInInspector]
+    public string HeroGuid;
+
+    public Text EquipmentNameText;
 
     // Use this for initialization
     void Start()
@@ -16,16 +21,14 @@ public class SelfHeroEquipSHow : MonoBehaviour
     {
         this.EquipGuid = EquipGuid;
         this.HeroGuid = HeroGuid;
+        EquipmentNameText.text = PlayerItem.equipDataMap[EquipGuid].EquipmentData.title;
     }
 
-    void ShowEquipMentInfo()
-    {
-        EquipmentItem thisItem = GameInstance.GameDatabase.equipments[EquipGuid];
-    }
-
+    /// <summary>
+    /// 点击显示内容
+    /// </summary>
     public void ClickShowInfo()
     {
-        if (EquipGuid.Length == 0 || HeroGuid.Length == 0) return;
         DialogData data = new DialogData();
         data.dialog = DialogController.instance.SelfHeroEquipSelectDialog;
         SelfHeroEquipSelectData dialogdata = new SelfHeroEquipSelectData();

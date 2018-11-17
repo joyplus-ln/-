@@ -27,9 +27,16 @@ public class SelfHeroSelectDialog : Dialog
             .FindAll(x => x.EquipItemGuid == shopItemData.heroGuid);
         for (int i = 0; i < equipments.Count; i++)
         {
-            if (equipments[i].equipPosition == "Weapon")
+            if (equipments[i].equipPosition == "weapon")
             {
                 equip1.SetEquipInfo(equipments[i].GUID,shopItemData.heroGuid);
+            }else if(equipments[i].equipPosition == "cloth")
+            {
+                equip2.SetEquipInfo(equipments[i].GUID, shopItemData.heroGuid);
+            }
+            else if (equipments[i].equipPosition == "shoot")
+            {
+                equip3.SetEquipInfo(equipments[i].GUID, shopItemData.heroGuid);
             }
         }
     }

@@ -35,7 +35,10 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
     public int Amount { get { return amount; } set { amount = value; } }
     public int exp;
     public int Exp { get { return exp; } set { exp = value; } }
-    public string equipItemguid;
+    private string equipItemguid;
+    /// <summary>
+    /// 装备了这件装备的item
+    /// </summary>
     public string EquipItemGuid { get { return equipItemguid; } set { equipItemguid = value; } }
     public string equipPosition;
     public string EquipPosition { get { return equipPosition; } set { equipPosition = value; } }

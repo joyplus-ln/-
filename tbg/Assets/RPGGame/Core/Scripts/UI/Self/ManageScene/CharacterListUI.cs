@@ -8,6 +8,7 @@ public class CharacterListUI : MonoBehaviour
     public GameObject item;
     public Transform content;
     public GameObject SelectedGameObject;
+    public Transform SelectedGameObjectParent;
     private CharacterListItem currentSelectedItem;
     public AttributeShow AttributeShowScript;
     public SkillListUI skillListUi;
@@ -20,6 +21,7 @@ public class CharacterListUI : MonoBehaviour
 
     private void OnEnable()
     {
+        SelectedGameObject.transform.SetParent(SelectedGameObjectParent, false);
         content.RemoveAllChildren();
         StartCoroutine(CreatItem());
     }
@@ -50,4 +52,5 @@ public class CharacterListUI : MonoBehaviour
     {
         return currentSelectedItem.characterItem;
     }
+
 }
