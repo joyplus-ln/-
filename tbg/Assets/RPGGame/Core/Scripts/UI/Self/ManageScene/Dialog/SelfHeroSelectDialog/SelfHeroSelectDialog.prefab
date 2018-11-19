@@ -1979,6 +1979,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipGuid: 
   HeroGuid: 
+  equipType: 1
   EquipmentNameText: {fileID: 114795110022301932}
 --- !u!114 &114234231916921172
 MonoBehaviour:
@@ -3716,6 +3717,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipGuid: 
   HeroGuid: 
+  equipType: 0
   EquipmentNameText: {fileID: 114703736075205914}
 --- !u!114 &114844810364206512
 MonoBehaviour:
@@ -3730,6 +3732,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipGuid: 
   HeroGuid: 
+  equipType: 2
   EquipmentNameText: {fileID: 114989385444499462}
 --- !u!114 &114854449602020636
 MonoBehaviour:

@@ -8,25 +8,12 @@ public class EquipmentItem : BaseActorItem
     public string quality;
     [Header("Equipment Data")]
     public CalculationAttributes extraAttributes;
-    public List<string> equippablePositions;
+    public string equippablePosition;
 
 
     public override string ToJson()
     {
-        var jsonEquippablePositions = "";
-        foreach (var entry in equippablePositions)
-        {
-            if (!string.IsNullOrEmpty(jsonEquippablePositions))
-                jsonEquippablePositions += ",";
-            jsonEquippablePositions += "\"" + entry + "\"";
-        }
-        jsonEquippablePositions = "[" + jsonEquippablePositions + "]";
-        return "{\"SqliteId\":\""  + "\"," +
-            "\"category\":\"" + category + "\"," +
-               "\"itemid\":\"" + itemid + "\"," +
-            "\"type\":\"" + Type + "\"," +
-            "\"maxStack\":" + MaxStack + "," +
-            "\"equippablePositions\":" + jsonEquippablePositions + "}";
+        return null;
     }
 }
 

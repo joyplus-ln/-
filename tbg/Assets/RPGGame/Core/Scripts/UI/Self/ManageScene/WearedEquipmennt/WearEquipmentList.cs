@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WearEquipmentList : MonoBehaviour {
+public class WearEquipmentList : MonoBehaviour
+{
 
     public GameObject item;
     public Transform content;
     public CharacterListUI characterListUI;
     private string currentName;
-	
+
     void Start()
     {
-        
+
     }
 
     IEnumerator CreatItem(string name)
@@ -21,7 +22,7 @@ public class WearEquipmentList : MonoBehaviour {
         foreach (var key in PlayerItem.equipDataMap.Keys)
         {
             //Debug.LogError(PlayerItem.equipDataMap[key].EquipmentData.equippablePositions.ToArray());
-            if (!PlayerItem.equipDataMap[key].EquipmentData.equippablePositions.Contains(name))
+            if (PlayerItem.equipDataMap[key].EquipmentData.equippablePosition != name)
                 continue;
 
             yield return items = Instantiate(item);
@@ -33,7 +34,7 @@ public class WearEquipmentList : MonoBehaviour {
 
     public void ShowAll(string name)
     {
-        foreach(Transform child in content)
+        foreach (Transform child in content)
         {
             Destroy(child.gameObject);
         }

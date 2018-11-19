@@ -21,23 +21,38 @@ public class SelfHeroSelectDialog : Dialog
     public override void Init(DialogData data)
     {
         base.Init(data);
-        shopItemData = (SelfHeroSelectData) data.obj;
+        shopItemData = (SelfHeroSelectData)data.obj;
         AttributeShow.SetupInfo(PlayerItem.characterDataMap[shopItemData.heroGuid].GetItemAttributes());
         List<PlayerItem> equipments = PlayerItem.equipDataMap.Values.ToList()
             .FindAll(x => x.EquipItemGuid == shopItemData.heroGuid);
-        for (int i = 0; i < equipments.Count; i++)
+        List<PlayerItem> equipments_weapon = equipments.FindAll(x => x.EquipPosition == "weapon");
+        if (equipments_weapon.Count > 0)
         {
-            if (equipments[i].equipPosition == "weapon")
-            {
-                equip1.SetEquipInfo(equipments[i].GUID,shopItemData.heroGuid);
-            }else if(equipments[i].equipPosition == "cloth")
-            {
-                equip2.SetEquipInfo(equipments[i].GUID, shopItemData.heroGuid);
-            }
-            else if (equipments[i].equipPosition == "shoot")
-            {
-                equip3.SetEquipInfo(equipments[i].GUID, shopItemData.heroGuid);
-            }
+            equip1.SetEquipInfo(equipments_weapon[0].GUID, shopItemData.heroGuid);
+        }
+        else
+        {
+            equip1.SetEquipInfo("", shopItemData.heroGuid);
+        }
+
+        List<PlayerItem> equipments_cloth = equipments.FindAll(x => x.EquipPosition == "cloth");
+        if (equipments_cloth.Count > 0)
+        {
+            equip2.SetEquipInfo(equipments_cloth[0].GUID, shopItemData.heroGuid);
+        }
+        else
+        {
+            equip2.SetEquipInfo("", shopItemData.heroGuid);
+        }
+
+        List<PlayerItem> equipments_shoot = equipments.FindAll(x => x.EquipPosition == "shoot");
+        if (equipments_shoot.Count > 0)
+        {
+            equip3.SetEquipInfo(equipments_shoot[0].GUID, shopItemData.heroGuid);
+        }
+        else
+        {
+            equip3.SetEquipInfo("", shopItemData.heroGuid);
         }
     }
 

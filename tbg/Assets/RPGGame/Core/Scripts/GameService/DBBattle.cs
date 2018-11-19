@@ -485,7 +485,7 @@ public class DBBattle
             result.error = GameServiceErrorCode.INVALID_PLAYER_ITEM_DATA;
         else if (characterData == null || equipmentData == null)
             result.error = GameServiceErrorCode.INVALID_ITEM_DATA;
-        else if (!equipmentData.equippablePositions.Contains(equipPosition))
+        else if (equipmentData.equippablePosition != equipPosition)
             result.error = GameServiceErrorCode.INVALID_EQUIP_POSITION;
         else
         {

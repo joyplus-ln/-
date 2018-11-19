@@ -52,6 +52,7 @@ public class SelfHeroEquipSelectDialog : Dialog
         openDialogData.dialog = DialogController.instance.selfHeroSelectChangeEquipDialog;
         SelfHeroSelectChangeEquipData selfHeroSelectChangeEquipData = new SelfHeroSelectChangeEquipData();
         selfHeroSelectChangeEquipData.heroGuid = shopItemData.heroGuid;
+        selfHeroSelectChangeEquipData.equipType = shopItemData.equipType;
         openDialogData.obj = selfHeroSelectChangeEquipData;
         selfHeroSelectChangeEquipData.callBack = RefreshUi;
         DialogController.instance.ShowDialog(openDialogData, DialogController.DialogType.stack);
@@ -73,4 +74,5 @@ public class SelfHeroEquipSelectData
 {
     public string heroGuid;
     public string equipGuid;
+    public Const.EquipPosition equipType;
 }

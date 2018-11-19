@@ -10,6 +10,8 @@ public class SelfHeroEquipSHow : MonoBehaviour
     [HideInInspector]
     public string HeroGuid;
 
+    public Const.EquipPosition equipType;
+
     public Text EquipmentNameText;
 
     // Use this for initialization
@@ -21,7 +23,8 @@ public class SelfHeroEquipSHow : MonoBehaviour
     {
         this.EquipGuid = EquipGuid;
         this.HeroGuid = HeroGuid;
-        EquipmentNameText.text = PlayerItem.equipDataMap[EquipGuid].EquipmentData.title;
+        if (EquipGuid.Length > 0)
+            EquipmentNameText.text = PlayerItem.equipDataMap[EquipGuid].EquipmentData.title;
     }
 
     /// <summary>
@@ -34,6 +37,7 @@ public class SelfHeroEquipSHow : MonoBehaviour
         SelfHeroEquipSelectData dialogdata = new SelfHeroEquipSelectData();
         dialogdata.equipGuid = this.EquipGuid;
         dialogdata.heroGuid = this.HeroGuid;
+        dialogdata.equipType = this.equipType;
         data.obj = dialogdata;
         DialogController.instance.ShowDialog(data, DialogController.DialogType.stack);
     }

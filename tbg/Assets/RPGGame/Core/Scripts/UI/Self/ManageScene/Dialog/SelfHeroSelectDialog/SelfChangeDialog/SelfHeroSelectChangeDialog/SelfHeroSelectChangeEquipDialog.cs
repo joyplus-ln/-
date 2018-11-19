@@ -16,7 +16,6 @@ public class SelfHeroSelectChangeEquipDialog : Dialog
 
     private string characterGuid;
 
-    private string equipPosition;
 
     private SelfHeroSelectChangeEquipData selfHeroSelectChangeEquipData;
 
@@ -44,9 +43,12 @@ public class SelfHeroSelectChangeEquipDialog : Dialog
         GameObject instItem = null;
         foreach (var key in PlayerItem.equipDataMap.Keys)
         {
-            instItem = Instantiate(item);
-            instItem.GetComponent<SelfHeroSelectChangeItem>().SetInfo(key, characterGuid, equipPosition, selectedImage, CallBack);
-            instItem.transform.SetParent(content, false);
+            if (PlayerItem.equipDataMap[key].EquipmentData.equippablePosition == selfHeroSelectChangeEquipData.equipType.ToString())
+            {
+                instItem = Instantiate(item);
+                instItem.GetComponent<SelfHeroSelectChangeItem>().SetInfo(key, characterGuid, selfHeroSelectChangeEquipData.equipType.ToString(), selectedImage, CallBack);
+                instItem.transform.SetParent(content, false);
+            }
         }
     }
 
@@ -74,7 +76,7 @@ public class SelfHeroSelectChangeEquipDialog : Dialog
     {
         if (selectedEquipGuid.Length > 0 && PlayerItem.equipDataMap.ContainsKey(selectedEquipGuid))
         {
-            GameInstance.dbBattle.DoEquipItem(characterGuid, selectedEquipGuid, equipPosition, (result) =>
+            GameInstance.dbBattle.DoEquipItem(characterGuid, selectedEquipGuid, selfHeroSelectChangeEquipData.equipType.ToString(), (result) =>
             {
                 PlayerItem.SetDataRange(result.updateItems);
                 Close();
@@ -86,5 +88,6 @@ public class SelfHeroSelectChangeEquipDialog : Dialog
 public class SelfHeroSelectChangeEquipData
 {
     public string heroGuid;
+    public Const.EquipPosition equipType;
     public Action callBack;
 }

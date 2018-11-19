@@ -122,7 +122,7 @@ public class DBMapItem
 
             item.extraAttributes = new CalculationAttributes();
 
-            item.equippablePositions = reader.GetString(31).Split(',').ToList();
+            item.equippablePosition = reader.GetString(31);
             item.extraAttributes.hp = reader.GetFloat(32);
             item.extraAttributes.pAtk = reader.GetFloat(33);
             item.extraAttributes.pDef = reader.GetFloat(34);

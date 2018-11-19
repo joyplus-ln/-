@@ -24,4 +24,11 @@ public class Const
         Attack,
         Custom
     }
+
+    public enum EquipPosition
+    {
+        weapon,
+        cloth,
+        shoot
+    }
 }
