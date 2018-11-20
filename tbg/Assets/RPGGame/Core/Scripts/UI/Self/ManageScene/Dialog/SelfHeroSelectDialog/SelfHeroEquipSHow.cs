@@ -24,7 +24,13 @@ public class SelfHeroEquipSHow : MonoBehaviour
         this.EquipGuid = EquipGuid;
         this.HeroGuid = HeroGuid;
         if (EquipGuid.Length > 0)
+        {
             EquipmentNameText.text = PlayerItem.equipDataMap[EquipGuid].EquipmentData.title;
+        }
+        else
+        {
+            EquipmentNameText.text = "无";
+        }
     }
 
     /// <summary>

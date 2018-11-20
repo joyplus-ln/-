@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -54,9 +55,15 @@ public class SelfHeroEquipSelectDialog : Dialog
         selfHeroSelectChangeEquipData.heroGuid = shopItemData.heroGuid;
         selfHeroSelectChangeEquipData.equipType = shopItemData.equipType;
         openDialogData.obj = selfHeroSelectChangeEquipData;
-        selfHeroSelectChangeEquipData.callBack = RefreshUi;
+        selfHeroSelectChangeEquipData.callBack = CallBack;
         DialogController.instance.ShowDialog(openDialogData, DialogController.DialogType.stack);
 
+    }
+
+    void CallBack(string selectedGuid)
+    {
+        shopItemData.equipGuid = selectedGuid;
+        RefreshUi();
     }
 
     public void UnEquip()
@@ -64,6 +71,11 @@ public class SelfHeroEquipSelectDialog : Dialog
         GameInstance.dbBattle.DoUnEquipItem(shopItemData.equipGuid, (result) =>
         {
             PlayerItem.SetDataRange(result.updateItems);
+            Close();
+            if (shopItemData.callback != null)
+            {
+                shopItemData.callback.Invoke();
+            }
         });
     }
 
@@ -75,4 +87,5 @@ public class SelfHeroEquipSelectData
     public string heroGuid;
     public string equipGuid;
     public Const.EquipPosition equipType;
+    public Action callback;
 }

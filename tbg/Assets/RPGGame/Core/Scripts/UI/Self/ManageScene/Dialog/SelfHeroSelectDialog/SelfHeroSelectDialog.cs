@@ -18,10 +18,22 @@ public class SelfHeroSelectDialog : Dialog
     {
     }
 
+    private void OnEnable()
+    {
+        if (shopItemData != null)
+            RefreshUI();
+    }
+
+
     public override void Init(DialogData data)
     {
         base.Init(data);
         shopItemData = (SelfHeroSelectData)data.obj;
+        RefreshUI();
+    }
+
+    void RefreshUI()
+    {
         AttributeShow.SetupInfo(PlayerItem.characterDataMap[shopItemData.heroGuid].GetItemAttributes());
         List<PlayerItem> equipments = PlayerItem.equipDataMap.Values.ToList()
             .FindAll(x => x.EquipItemGuid == shopItemData.heroGuid);

@@ -57,7 +57,7 @@ public class SelfHeroSelectChangeEquipDialog : Dialog
         base.Close();
         if (selfHeroSelectChangeEquipData.callBack != null)
         {
-            selfHeroSelectChangeEquipData.callBack.Invoke();
+            selfHeroSelectChangeEquipData.callBack.Invoke(selectedEquipGuid);
         }
     }
 
@@ -89,5 +89,5 @@ public class SelfHeroSelectChangeEquipData
 {
     public string heroGuid;
     public Const.EquipPosition equipType;
-    public Action callBack;
+    public Action<string> callBack;
 }
