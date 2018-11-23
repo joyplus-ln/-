@@ -1,0 +1,29 @@
+ManifestFileVersion: 0
+CRC: 2884977942
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 7645d230673452365ff543888368d110
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 90f205221f7e86be572eb95a26930ad3
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 64
+  Script: {instanceID: 0}
+Assets:
+- Assets/FastFrameWork/AssetBundleManager/AssetBundle/Prefabs/Plane.prefab
+Dependencies:
+- G:/tbg2/tbg/Assets/StreamingAssets/AssetBundles/4f6d57701fc55fde26f6f4be7a7f96448f061287.ab

@@ -1,0 +1,33 @@
+ManifestFileVersion: 0
+CRC: 1260618445
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 648d8343ffc96d9a70d7e14b918355b0
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: d2f83933776a623f0443ab1ee139fc88
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4040bd638571b5142a66dcf3416a444c, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+Assets:
+- Assets/FastFrameWork/AssetBundleManager/AssetBundle/Prefabs/Cube.prefab
+Dependencies:
+- G:/tbg2/tbg/Assets/StreamingAssets/AssetBundles/2df72eed81aea25e5e9be3f2a37b3411b1771e2c.ab

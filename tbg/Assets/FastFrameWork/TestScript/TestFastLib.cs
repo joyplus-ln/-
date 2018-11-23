@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestFastLib : MonoBehaviour {
+public class TestFastLib : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
-		FastLib.instance.Open();
+    // Use this for initialization
+    void Start()
+    {
+        FastLib.instance.Open();
     }
-	
-	
+
+
 }
