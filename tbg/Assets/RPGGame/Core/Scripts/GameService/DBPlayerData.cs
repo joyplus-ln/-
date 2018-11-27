@@ -282,17 +282,18 @@ public class DBPlayerData
     /// </summary>
     /// <param name="playerId"></param>
     /// <param name="loginToken"></param>
-    /// <param name="itemId"></param>
+    /// <param name="itemGuid"></param>
     /// <param name="materials"></param>
+    /// <param name="ExIncreasingExp"> 额外加的经验</param>
     /// <param name="onFinish"></param>
-    public void DoCharacterLevelUpItem(string itemId, Dictionary<string, int> materials, UnityAction<ItemResult> onFinish)
+    public void DoCharacterLevelUpItem(string itemGuid, Dictionary<string, int> materials, int ExIncreasingExp, UnityAction<ItemResult> onFinish)
     {
         var player = Player.CurrentPlayer;
         var playerId = player.Id;
         var loginToken = player.LoginToken;
         var result = new ItemResult();
         var foundPlayer = GameInstance.dbLogin.GetPlayerByLoginToken(playerId, loginToken);
-        var foundItem = GetPlayerCharacterItemById(itemId);
+        var foundItem = GetPlayerCharacterItemById(itemGuid);
         if (foundPlayer == null)
             result.error = GameServiceErrorCode.INVALID_LOGIN_TOKEN;
         else if (foundItem == null || foundItem.PlayerId != playerId)
@@ -338,7 +339,7 @@ public class DBPlayerData
                     new SqliteParameter("@amount", softCurrency.Amount),
                     new SqliteParameter("@id", softCurrency.Id));
 
-                foundItem = foundItem.CreateLevelUpItem(increasingExp);
+                foundItem = foundItem.CreateLevelUpItem(increasingExp + ExIncreasingExp);
                 updateItems.Add(foundItem);
                 foreach (var updateItem in updateItems)
                 {

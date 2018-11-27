@@ -10,9 +10,6 @@ public class CharacterListUI : MonoBehaviour
     public GameObject SelectedGameObject;
     public Transform SelectedGameObjectParent;
     private CharacterListItem currentSelectedItem;
-    public AttributeShow AttributeShowScript;
-    public SkillListUI skillListUi;
-    public WearEquipment wearEquipment;
     // Use this for initialization
     void Start()
     {
@@ -43,9 +40,6 @@ public class CharacterListUI : MonoBehaviour
     public void SelectedItem(CharacterListItem currentSelectedItem, PlayerItem selectedItem)
     {
         this.currentSelectedItem = currentSelectedItem;
-        AttributeShowScript.SetupInfo(selectedItem.GetItemAttributes());
-        skillListUi.SetData(selectedItem.CharacterData.GetCustomSkills());
-        wearEquipment.SetData(selectedItem);
     }
 
     public PlayerItem GetSelectedPlayerItem()

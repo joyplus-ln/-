@@ -1,12 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SkillListUI : MonoBehaviour
 {
     public Transform content;
     private List<CustomSkill> skills;
     public UiSkillListItem skillitem;
+
+    public GameObject SkillDesPanel;
+
+    public Text SkillDesText;
     // Use this for initialization
     void Start()
     {
@@ -28,8 +33,14 @@ public class SkillListUI : MonoBehaviour
         {
             item = Instantiate(skillitem.gameObject);
             item.transform.SetParent(content, false);
-            item.GetComponent<UiSkillListItem>().SetData(skill);
+            item.GetComponent<UiSkillListItem>().SetData(skill, SkillDes);
         }
+    }
+
+    public void SkillDes(string skilldes)
+    {
+        SkillDesText.text = skilldes;
+        SkillDesPanel.SetActive(true);
     }
 
     void DeleteChild()

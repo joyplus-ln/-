@@ -8,6 +8,8 @@ public class SelfHeroSelectDialog : Dialog
     public UIAttributeShow AttributeShow;
     private SelfHeroSelectData shopItemData;
 
+    public SkillListUI skillList;
+
     public SelfHeroEquipSHow equip1;
     public SelfHeroEquipSHow equip2;
 
@@ -30,6 +32,11 @@ public class SelfHeroSelectDialog : Dialog
         base.Init(data);
         shopItemData = (SelfHeroSelectData)data.obj;
         RefreshUI();
+    }
+
+    void ShowSkill()
+    {
+        skillList.SetData(PlayerItem.characterDataMap[shopItemData.heroGuid].CharacterData.GetCustomSkills());
     }
 
     void RefreshUI()
@@ -66,10 +73,23 @@ public class SelfHeroSelectDialog : Dialog
         {
             equip3.SetEquipInfo("", shopItemData.heroGuid);
         }
+        ShowSkill();
     }
 
     public void ClickEquip(string pos)
     {
+    }
+
+    public void IncreasLevel()
+    {
+        if (shopItemData.heroGuid.Length > 0)
+            GameInstance.dbPlayerData.DoCharacterLevelUpItem(shopItemData.heroGuid, new Dictionary<string, int>(),200, (result) =>
+             {
+                 PlayerItem.SetDataRange(result.updateItems);
+                 //PlayerItem.SetDataRange(result.deleteItemIds);
+                 PlayerItem.SetDataRange(result.updateItems);
+                 RefreshUI();
+             });
     }
 }
 
