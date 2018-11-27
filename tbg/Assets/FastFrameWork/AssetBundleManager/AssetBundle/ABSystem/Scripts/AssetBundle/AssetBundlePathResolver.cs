@@ -51,7 +51,6 @@ namespace Tangzx.ABSystem
             }
         }
 
-#if UNITY_EDITOR
         /// <summary>
         /// AB 保存的路径
         /// </summary>
@@ -59,7 +58,6 @@ namespace Tangzx.ABSystem
         /// <summary>
         /// AB打包的原文件HashCode要保存到的路径，下次可供增量打包
         /// </summary>
-        public virtual string HashCacheSaveFile { get { return "Assets/AssetBundles/cache.txt"; } }
         /// <summary>
         /// 在编辑器模型下将 abName 转为 Assets/... 路径
         /// 这样就可以不用打包直接用了
@@ -78,7 +76,6 @@ namespace Tangzx.ABSystem
             string path = string.Format("{0}.{1}", abName.Substring(0, last), abName.Substring(last + 1));
             return path;
         }
-#endif
 
         /// <summary>
         /// 获取 AB 源文件路径（打包进安装包的）
@@ -110,10 +107,6 @@ namespace Tangzx.ABSystem
             return filePath;
         }
 
-        /// <summary>
-        /// AB 依赖信息文件名
-        /// </summary>
-        public virtual string DependFileName { get { return "dep.all"; } }
 
         DirectoryInfo cacheDir;
 

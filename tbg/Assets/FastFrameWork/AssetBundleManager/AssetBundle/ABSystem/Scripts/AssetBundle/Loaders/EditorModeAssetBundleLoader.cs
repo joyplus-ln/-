@@ -1,6 +1,6 @@
 ﻿#if UNITY_EDITOR
 
-#if AB_MODE
+#if _AB_MODE_
 using System.Collections;
 
 namespace Tangzx.ABSystem

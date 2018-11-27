@@ -24,8 +24,6 @@ namespace Tangzx.ABSystem
 
             AssetBundleBuilder5x builder = new AssetBundleBuilder5x(new AssetBundlePathResolver());
 
-            builder.SetDataWriter(config.depInfoFileFormat == AssetBundleBuildConfig.Format.Text ? new AssetBundleDataWriter() : new AssetBundleDataBinaryWriter());
-
             builder.Begin();
 
             for (int i = 0; i < config.filters.Count; i++)

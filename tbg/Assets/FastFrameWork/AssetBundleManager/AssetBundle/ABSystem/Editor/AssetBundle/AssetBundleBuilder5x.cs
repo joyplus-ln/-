@@ -48,7 +48,6 @@ namespace Tangzx.ABSystem
                     target.bundleCrc = hash.ToString();
                 }
             }
-            this.SaveDepAll(all);
             ab.Unload(true);
             this.RemoveUnused(all);
 

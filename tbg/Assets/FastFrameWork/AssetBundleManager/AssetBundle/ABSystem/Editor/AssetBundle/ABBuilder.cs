@@ -7,7 +7,6 @@ namespace Tangzx.ABSystem
 {
     public class ABBuilder
     {
-        protected AssetBundleDataWriter dataWriter = new AssetBundleDataBinaryWriter();
         protected AssetBundlePathResolver pathResolver;
 
         public ABBuilder() : this(new AssetBundlePathResolver())
@@ -25,7 +24,6 @@ namespace Tangzx.ABSystem
         void InitDirs()
         {
             new DirectoryInfo(pathResolver.BundleSavePath).Create();
-            new FileInfo(pathResolver.HashCacheSaveFile).Directory.Create();
         }
 
         public void Begin()
@@ -36,7 +34,6 @@ namespace Tangzx.ABSystem
 
         public void End()
         {
-            AssetBundleUtils.SaveCache();
             AssetBundleUtils.ClearCache();
             EditorUtility.ClearProgressBar();
         }
@@ -82,28 +79,6 @@ namespace Tangzx.ABSystem
             }
         }
 
-        protected void SaveDepAll(List<AssetTarget> all)
-        {
-            string path = Path.Combine(pathResolver.BundleSavePath, pathResolver.DependFileName);
-
-            if (File.Exists(path))
-                File.Delete(path);
-
-            List<AssetTarget> exportList = new List<AssetTarget>();
-            for (int i = 0; i < all.Count; i++)
-            {
-                AssetTarget target = all[i];
-                if (target.needSelfExport)
-                    exportList.Add(target);
-            }
-            AssetBundleDataWriter writer = dataWriter;
-            writer.Save(path, exportList.ToArray());
-        }
-
-        public void SetDataWriter(AssetBundleDataWriter w)
-        {
-            this.dataWriter = w;
-        }
 
         /// <summary>
         /// 删除未使用的AB，可能是上次打包出来的，而这一次没生成的

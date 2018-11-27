@@ -78,7 +78,10 @@ namespace Tangzx.ABSystem
 
         public AssetBundlePathResolver pathResolver;
 
-        private AssetBundleDataReader _depInfoReader;
+        /// <summary>
+        /// 当前总体bundle的mainfest文件
+        /// </summary>
+        private AssetBundleManifest Main_Manifest;
 
         private Action _initCallback;
 
@@ -88,7 +91,6 @@ namespace Tangzx.ABSystem
             pathResolver = new AssetBundlePathResolver();
         }
 
-        public AssetBundleDataReader depInfoReader { get { return _depInfoReader; } }
 
         protected void Awake()
         {
@@ -120,20 +122,20 @@ namespace Tangzx.ABSystem
 
         public void Init(Stream depStream, Action callback)
         {
-            if (depStream.Length > 4)
-            {
-                BinaryReader br = new BinaryReader(depStream);
-                if (br.ReadChar() == 'A' && br.ReadChar() == 'B' && br.ReadChar() == 'D')
-                {
-                    if (br.ReadChar() == 'T')
-                        _depInfoReader = new AssetBundleDataReader();
-                    else
-                        _depInfoReader = new AssetBundleDataBinaryReader();
+            //if (depStream.Length > 4)
+            //{
+            //    BinaryReader br = new BinaryReader(depStream);
+            //    if (br.ReadChar() == 'A' && br.ReadChar() == 'B' && br.ReadChar() == 'D')
+            //    {
+            //        if (br.ReadChar() == 'T')
+            //            _depInfoReader = new AssetBundleDataReader();
+            //        else
+            //            _depInfoReader = new AssetBundleDataBinaryReader();
 
-                    depStream.Position = 0;
-                    _depInfoReader.Read(depStream);
-                }
-            }
+            //        depStream.Position = 0;
+            //        _depInfoReader.Read(depStream);
+            //    }
+            //}
 
             depStream.Close();
 
@@ -150,35 +152,12 @@ namespace Tangzx.ABSystem
 
         IEnumerator LoadDepInfo()
         {
-            string depFile = string.Format("{0}/{1}", pathResolver.BundleCacheDir, pathResolver.DependFileName);
-            //编辑器模式下测试AB_MODE，直接读取
-#if UNITY_EDITOR
-            depFile = pathResolver.GetBundleSourceFile(pathResolver.DependFileName, false);
-#endif
+            AssetBundle ab = AssetBundle.LoadFromFile(pathResolver.BundleSavePath + pathResolver.BundleName);
 
-            if (File.Exists(depFile))
-            {
-                FileStream fs = new FileStream(depFile, FileMode.Open, FileAccess.Read);
-                Init(fs, null);
-                fs.Close();
-            }
-            else
-            {
-                string srcURL = pathResolver.GetBundleSourceFile(pathResolver.DependFileName);
-                WWW w = new WWW(srcURL);
-                yield return w;
+            Main_Manifest = ab.LoadAsset("AssetBundleManifest") as AssetBundleManifest;
 
-                if (w.error == null)
-                {
-                    Init(new MemoryStream(w.bytes), null);
-                    File.WriteAllBytes(depFile, w.bytes);
-                }
-                else
-                {
-                    Debug.LogError(string.Format("{0} not exist!", depFile));
-                }
-            }
             this.InitComplete();
+            yield return null;
         }
 
         void OnDestroy()
@@ -186,15 +165,6 @@ namespace Tangzx.ABSystem
             this.RemoveAll();
         }
 
-        /// <summary>
-        /// 通过ShortName获取FullName
-        /// </summary>
-        /// <param name="shortFileName"></param>
-        /// <returns></returns>
-        public string GetAssetBundleFullName(string shortFileName)
-        {
-            return _depInfoReader.GetFullName(shortFileName);
-        }
 
         /// <summary>
         /// 用默认优先级为0的值加载
@@ -217,7 +187,7 @@ namespace Tangzx.ABSystem
         public AssetBundleLoader Load(string path, int prority, LoadAssetCompleteHandler handler = null)
         {
 #if _AB_MODE_
-            AssetBundleLoader loader = this.CreateLoader(HashUtil.Get(path.ToLower()) + FastContent.BundleSuffix, path);
+            AssetBundleLoader loader = this.CreateLoader(path + FastContent.BundleSuffix, path);
 #else
             AssetBundleLoader loader = this.CreateLoader(path);
 #endif
@@ -242,22 +212,11 @@ namespace Tangzx.ABSystem
             else
             {
 #if _AB_MODE_
-                AssetBundleData data = _depInfoReader.GetAssetBundleInfo(abFileName);
-                if (data == null && oriName != null)
-                {
-                    data = _depInfoReader.GetAssetBundleInfoByShortName(oriName.ToLower());
-                }
-                if (data == null)
-                {
-                    MissAssetBundleLoader missLoader = new MissAssetBundleLoader();
-                    missLoader.bundleManager = this;
-                    return missLoader;
-                }
 
                 loader = this.CreateLoader();
                 loader.bundleManager = this;
-                loader.bundleData = data;
-                loader.bundleName = data.fullName;
+                loader.Main_Manifest = this.Main_Manifest;
+                loader.bundleName = abFileName;
 #else
                 loader = this.CreateLoader();
                 loader.bundleManager = this;
@@ -411,7 +370,7 @@ namespace Tangzx.ABSystem
                 abi = new AssetBundleInfo();
             abi.bundleName = loader.bundleName.ToLower();
             abi.bundle = assetBundle;
-            abi.data = loader.bundleData;
+            //abi.data = loader.bundleData;
 
             _loadedAssetBundle[abi.bundleName] = abi;
             return abi;

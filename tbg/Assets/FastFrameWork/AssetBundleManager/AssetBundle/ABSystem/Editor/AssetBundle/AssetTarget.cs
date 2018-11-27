@@ -63,8 +63,7 @@ namespace Tangzx.ABSystem
         private bool _isDepTreeChanged = false;
         //上次打包的信息（用于增量打包）
         private AssetCacheInfo _cacheInfo;
-        //.meta 文件的Hash
-        private string _metaHash;
+
         //上次打好的AB的CRC值（用于增量打包）
         private string _bundleCrc;
         //是否是新打包的
@@ -88,40 +87,8 @@ namespace Tangzx.ABSystem
             this.bundleSavePath = Path.Combine(AssetBundleUtils.pathResolver.BundleSavePath, bundleName);
 
             _isFileChanged = true;
-            _metaHash = "0";
         }
 
-        /// <summary>
-        /// Texture
-        /// AudioClip
-        /// Mesh
-        /// Model
-        /// Shader
-        /// 这些类型的Asset的一配置是放在.meta中的，所以要监视它们的变化
-        /// 而在5x中系统会自己处理的，不用管啦
-        /// </summary>
-        void LoadMetaHashIfNecessary()
-        {
-            bool needLoad = false;
-            if (typeof(Texture).IsInstanceOfType(asset) ||
-                typeof(AudioClip).IsInstanceOfType(asset) ||
-                typeof(Mesh).IsInstanceOfType(asset) ||
-                typeof(Shader).IsInstanceOfType(asset) )
-            {
-                needLoad = true;
-            }
-
-            if (!needLoad)
-            {
-                AssetImporter importer = AssetImporter.GetAtPath(assetPath);
-                needLoad = typeof(ModelImporter).IsInstanceOfType(importer);
-            }
-
-            if (needLoad)
-            {
-                _metaHash = AssetBundleUtils.GetFileHash(assetPath + ".meta");
-            }
-        }
 
         /// <summary>
         /// 分析引用关系
@@ -131,11 +98,8 @@ namespace Tangzx.ABSystem
             if (_isAnalyzed) return;
             _isAnalyzed = true;
 
-#if !UNITY_5
-            LoadMetaHashIfNecessary();
-#endif
             _cacheInfo = AssetBundleUtils.GetCacheInfo(assetPath);
-            _isFileChanged = _cacheInfo == null || !_cacheInfo.fileHash.Equals(GetHash()) || !_cacheInfo.metaHash.Equals(_metaHash);
+            _isFileChanged = _cacheInfo == null || !_cacheInfo.fileHash.Equals(GetHash());
             if (_cacheInfo != null)
             {
                 _bundleCrc = _cacheInfo.bundleCrc;
@@ -240,35 +204,6 @@ namespace Tangzx.ABSystem
             }
         }
 
-        /// <summary>
-        /// 判断是否依赖树变化了
-        /// 如果现在的依赖和之前的依赖不一样了则改变了，需要重新打包
-        /// </summary>
-        public void AnalyzeIfDepTreeChanged()
-        {
-            _isDepTreeChanged = false;
-            if (_cacheInfo != null)
-            {
-                HashSet<AssetTarget> deps = new HashSet<AssetTarget>();
-                GetDependencies(deps);
-
-                if (deps.Count != _cacheInfo.depNames.Length)
-                {
-                    _isDepTreeChanged = true;
-                }
-                else
-                {
-                    foreach (AssetTarget dep in deps)
-                    {
-                        if (!ArrayUtility.Contains<string>(_cacheInfo.depNames, dep.assetPath))
-                        {
-                            _isDepTreeChanged = true;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
 
         public void UpdateLevel(int level, List<AssetTarget> lvList)
         {
@@ -523,7 +458,6 @@ namespace Tangzx.ABSystem
         {
             sw.WriteLine(this.assetPath);
             sw.WriteLine(GetHash());
-            sw.WriteLine(_metaHash);
             sw.WriteLine(this._bundleCrc);
             HashSet<AssetTarget> deps = new HashSet<AssetTarget>();
             this.GetDependencies(deps);

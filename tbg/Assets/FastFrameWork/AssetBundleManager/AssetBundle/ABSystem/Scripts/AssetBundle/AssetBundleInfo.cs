@@ -14,7 +14,6 @@ namespace Tangzx.ABSystem
         internal AssetBundle bundle;
 
         public string bundleName;
-        public AssetBundleData data;
 
         /// <summary>
         /// 如果没有其它东西引用的情况下，此AB最小生存时间（单位秒）
@@ -268,15 +267,13 @@ namespace Tangzx.ABSystem
             {
                 if (_mainObject == null && _isReady)
                 {
-#if UNITY_5 || UNITY_2017_1_OR_NEWER
+
                     string[] names = bundle.GetAllAssetNames();
                     _mainObject = bundle.LoadAsset(names[0]);
-#else
-                _mainObject = bundle.mainAsset;
-#endif
+
                     //优化：如果是根，则可以 unload(false) 以节省内存
-                    if (data.compositeType == AssetBundleExportType.Root)
-                        UnloadBundle();
+                    //if (data.compositeType == AssetBundleExportType.Root)
+                       // UnloadBundle();
                 }
                 return _mainObject;
             }
@@ -286,8 +283,8 @@ namespace Tangzx.ABSystem
         {
             if (bundle != null)
             {
-                if (AssetBundleManager.enableLog)
-                    Debug.Log("Unload : " + data.compositeType + " >> " + data.debugName);
+                //if (AssetBundleManager.enableLog)
+                //    Debug.Log("Unload : " + data.compositeType + " >> " + data.debugName);
 
                 bundle.Unload(false);
             }

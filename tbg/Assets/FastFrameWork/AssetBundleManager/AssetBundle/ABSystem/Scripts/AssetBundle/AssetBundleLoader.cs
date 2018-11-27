@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -15,7 +16,6 @@ namespace Tangzx.ABSystem
 
         public AssetBundleManager.LoadAssetCompleteHandler onComplete;
         public string bundleName;
-        public AssetBundleData bundleData;
         public AssetBundleInfo bundleInfo;
         public AssetBundleManager bundleManager;
         public LoadState state = LoadState.State_None;
@@ -24,11 +24,16 @@ namespace Tangzx.ABSystem
 
         private int _prority;
 
+        /// <summary>
+        /// 当前总体bundle的mainfest文件
+        /// </summary>
+        public AssetBundleManifest Main_Manifest;
+
         public AssetBundleLoader()
         {
             id = idCounter++;
         }
-        
+
         public virtual void Start()
         {
             id = idCounter++;
@@ -122,9 +127,9 @@ namespace Tangzx.ABSystem
         protected string _assetBundleCachedFile;
         protected string _assetBundleSourceFile;
 
-        /// <summary>
-        /// 开始加载
-        /// </summary>
+        ///// <summary>
+        ///// 开始加载
+        ///// </summary>
         override public void Start()
         {
             if (_hasError)
@@ -153,10 +158,11 @@ namespace Tangzx.ABSystem
         {
             if (depLoaders == null)
             {
-                depLoaders = new AssetBundleLoader[bundleData.dependencies.Length];
-                for (int i = 0; i < bundleData.dependencies.Length; i++)
+                string[] dependencies = GetDepensdList();
+                depLoaders = new AssetBundleLoader[dependencies.Length];
+                for (int i = 0; i < dependencies.Length; i++)
                 {
-                    depLoaders[i] = bundleManager.CreateLoader(bundleData.dependencies[i]);
+                    depLoaders[i] = bundleManager.CreateLoader(dependencies[i]);
                 }
                 RefreshPrority();
             }
@@ -294,5 +300,15 @@ namespace Tangzx.ABSystem
             this.bundleInfo = null;
             base.Error();
         }
+
+        /// <summary>
+        /// 获取当前文件的所有依赖项
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetDepensdList()
+        {
+            return Main_Manifest.GetAllDependencies(bundleName);
+        }
     }
+
 }

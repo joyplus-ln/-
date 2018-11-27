@@ -47,7 +47,6 @@ namespace Tangzx.ABSystem
             _assetPath2target = new Dictionary<string, AssetTarget>();
             _fileHashCache = new Dictionary<string, string>();
             _fileHashOld = new Dictionary<string, AssetCacheInfo>();
-            LoadCache();
         }
 
         public static void ClearCache()
@@ -58,62 +57,6 @@ namespace Tangzx.ABSystem
             _fileHashOld = null;
         }
 
-        public static void LoadCache()
-        {
-            string cacheTxtFilePath = pathResolver.HashCacheSaveFile;
-            if (File.Exists(cacheTxtFilePath))
-            {
-                string value = File.ReadAllText(cacheTxtFilePath);
-                StringReader sr = new StringReader(value);
-
-                //版本比较
-                string vString = sr.ReadLine();
-                bool wrongVer = false;
-                try
-                {
-                    Version ver = new Version(vString);
-                    wrongVer = ver.Minor < AssetBundleManager.version.Minor || ver.Major < AssetBundleManager.version.Major;
-                }
-                catch (Exception) { wrongVer = true; }
-
-                if (wrongVer)
-                    return;
-
-                //读取缓存的信息
-                while (true)
-                {
-                    string path = sr.ReadLine();
-                    if (path == null)
-                        break;
-
-                    AssetCacheInfo cache = new AssetCacheInfo();
-                    cache.fileHash = sr.ReadLine();
-                    cache.metaHash = sr.ReadLine();
-                    cache.bundleCrc = sr.ReadLine();
-                    int depsCount = Convert.ToInt32(sr.ReadLine());
-                    cache.depNames = new string[depsCount];
-                    for (int i = 0; i < depsCount; i++)
-                    {
-                        cache.depNames[i] = sr.ReadLine();
-                    }
-
-                    _fileHashOld[path] = cache;
-                }
-            }
-        }
-
-        public static void SaveCache()
-        {
-            StreamWriter sw = new StreamWriter(pathResolver.HashCacheSaveFile);
-            sw.WriteLine(AssetBundleManager.version.ToString());
-            foreach (AssetTarget target in _object2target.Values)
-            {
-                target.WriteCache(sw);
-            }
-
-            sw.Flush();
-            sw.Close();
-        }
 
         public static List<AssetTarget> GetAll()
         {
