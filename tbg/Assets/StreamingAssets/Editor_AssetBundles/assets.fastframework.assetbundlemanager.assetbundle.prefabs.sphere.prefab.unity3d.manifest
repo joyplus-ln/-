@@ -1,0 +1,33 @@
+ManifestFileVersion: 0
+CRC: 2578100610
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 6ae709d9e82291b2e134d3a0278e7712
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 8b5ba539ecb91c4590c71810ffd66d75
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4040bd638571b5142a66dcf3416a444c, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 135
+  Script: {instanceID: 0}
+Assets:
+- Assets/FastFrameWork/AssetBundleManager/AssetBundle/Prefabs/Sphere.prefab
+Dependencies:
+- G:/tbg2/tbg/Assets/StreamingAssets/Editor_AssetBundles/assets.fastframework.assetbundlemanager.assetbundle.prefabs.cube.mat.unity3d

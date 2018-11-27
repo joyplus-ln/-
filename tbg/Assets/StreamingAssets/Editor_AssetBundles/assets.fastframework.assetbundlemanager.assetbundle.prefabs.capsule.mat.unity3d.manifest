@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 1838096148
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 5ce689d7a7b9c5992ffcb372c468ae3b
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: fe397485c3cec1106b49e9ff95e8f8a2
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+Assets:
+- Assets/FastFrameWork/AssetBundleManager/AssetBundle/Prefabs/Capsule.mat
+Dependencies:
+- G:/tbg2/tbg/Assets/StreamingAssets/Editor_AssetBundles/assets.fastframework.assetbundlemanager.assetbundle.prefabs.s_it000001.png.unity3d

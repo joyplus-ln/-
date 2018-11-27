@@ -1,0 +1,29 @@
+ManifestFileVersion: 0
+CRC: 1389285071
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 66f2ba6488191c8cdfdac9a84e09095c
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 90f205221f7e86be572eb95a26930ad3
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 64
+  Script: {instanceID: 0}
+Assets:
+- Assets/FastFrameWork/AssetBundleManager/AssetBundle/Prefabs/Plane.prefab
+Dependencies:
+- G:/tbg2/tbg/Assets/StreamingAssets/Editor_AssetBundles/assets.fastframework.assetbundlemanager.assetbundle.prefabs.capsule.mat.unity3d

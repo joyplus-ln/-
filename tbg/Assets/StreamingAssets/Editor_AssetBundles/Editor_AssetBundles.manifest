@@ -1,0 +1,31 @@
+ManifestFileVersion: 0
+CRC: 3993629024
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: assets.fastframework.assetbundlemanager.assetbundle.prefabs.capsule.prefab.unity3d
+      Dependencies:
+        Dependency_0: assets.fastframework.assetbundlemanager.assetbundle.prefabs.capsule.mat.unity3d
+    Info_1:
+      Name: assets.fastframework.assetbundlemanager.assetbundle.prefabs.cube.prefab.unity3d
+      Dependencies:
+        Dependency_0: assets.fastframework.assetbundlemanager.assetbundle.prefabs.cube.mat.unity3d
+    Info_2:
+      Name: assets.fastframework.assetbundlemanager.assetbundle.prefabs.plane.prefab.unity3d
+      Dependencies:
+        Dependency_0: assets.fastframework.assetbundlemanager.assetbundle.prefabs.capsule.mat.unity3d
+    Info_3:
+      Name: assets.fastframework.assetbundlemanager.assetbundle.prefabs.sphere.prefab.unity3d
+      Dependencies:
+        Dependency_0: assets.fastframework.assetbundlemanager.assetbundle.prefabs.cube.mat.unity3d
+    Info_4:
+      Name: assets.fastframework.assetbundlemanager.assetbundle.prefabs.s_it000001.png.unity3d
+      Dependencies: {}
+    Info_5:
+      Name: assets.fastframework.assetbundlemanager.assetbundle.prefabs.capsule.mat.unity3d
+      Dependencies:
+        Dependency_0: assets.fastframework.assetbundlemanager.assetbundle.prefabs.s_it000001.png.unity3d
+    Info_6:
+      Name: assets.fastframework.assetbundlemanager.assetbundle.prefabs.cube.mat.unity3d
+      Dependencies:
+        Dependency_0: assets.fastframework.assetbundlemanager.assetbundle.prefabs.s_it000001.png.unity3d

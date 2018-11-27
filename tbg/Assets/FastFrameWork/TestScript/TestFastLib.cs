@@ -8,7 +8,7 @@ public class TestFastLib : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        FastLib.instance.Open();
+        //FastLib.instance.Open();
     }
 
 
