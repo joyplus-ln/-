@@ -22,7 +22,7 @@ namespace Tangzx.ABSystem
                 return;
 
 
-			ABBuilder builder = new AssetBundleBuilder5x(new AssetBundlePathResolver());
+            AssetBundleBuilder5x builder = new AssetBundleBuilder5x(new AssetBundlePathResolver());
 
             builder.SetDataWriter(config.depInfoFileFormat == AssetBundleBuildConfig.Format.Text ? new AssetBundleDataWriter() : new AssetBundleDataBinaryWriter());
 
@@ -41,11 +41,7 @@ namespace Tangzx.ABSystem
 
 		static T LoadAssetAtPath<T>(string path) where T:Object
 		{
-#if UNITY_5 || UNITY_2017_1_OR_NEWER
 			return AssetDatabase.LoadAssetAtPath<T>(path);
-#else
-			return (T)AssetDatabase.LoadAssetAtPath(path, typeof(T));
-#endif
 		}
 
         const string savePath = "Assets/FastFrameWork/AssetBundleManager/AssetBundleconfig.asset";

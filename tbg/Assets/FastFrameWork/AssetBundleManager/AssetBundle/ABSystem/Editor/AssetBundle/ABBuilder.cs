@@ -120,7 +120,7 @@ namespace Tangzx.ABSystem
             }
 
             DirectoryInfo di = new DirectoryInfo(pathResolver.BundleSavePath);
-            FileInfo[] abFiles = di.GetFiles("*.ab");
+            FileInfo[] abFiles = di.GetFiles("*" + FastContent.BundleSuffix);
             for (int i = 0; i < abFiles.Length; i++)
             {
                 FileInfo fi = abFiles[i];

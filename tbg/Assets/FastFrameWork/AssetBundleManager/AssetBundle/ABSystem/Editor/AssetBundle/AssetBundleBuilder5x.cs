@@ -35,11 +35,8 @@ namespace Tangzx.ABSystem
             //开始打包
             BuildPipeline.BuildAssetBundles(pathResolver.BundleSavePath, list.ToArray(), BuildAssetBundleOptions.ChunkBasedCompression, EditorUserBuildSettings.activeBuildTarget);
 
-#if UNITY_5_1 || UNITY_5_2
-            AssetBundle ab = AssetBundle.CreateFromFile(pathResolver.BundleSavePath + pathResolver.BundleName);
-#else
             AssetBundle ab = AssetBundle.LoadFromFile(pathResolver.BundleSavePath + pathResolver.BundleName);
-#endif
+
             AssetBundleManifest manifest = ab.LoadAsset("AssetBundleManifest") as AssetBundleManifest;
             //hash
             for (int i = 0; i < all.Count; i++)
