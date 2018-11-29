@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Tangzx.ABSystem
-{
+
     /// <summary>
-    /// 注意：未经测试，不要用
+    /// 在IOS下的加载
+    /// 注意：
+    /// IOS下加载可以进行优化：直接在raw目录里进行File读取
     /// </summary>
-    class AndroidAssetBundleLoader : MobileAssetBundleLoader
-    {
+    public class FastIOSAssetBundleLoader : FastAssetBundleLoader
+{
         protected override IEnumerator LoadFromPackage()
         {
             //兼容低版本API
@@ -15,13 +16,11 @@ namespace Tangzx.ABSystem
             _bundle = AssetBundle.CreateFromFile(_assetBundleSourceFile);
             yield return null;
 #else
-            //直接用 LoadFromFile
             _assetBundleSourceFile = bundleManager.pathResolver.GetBundleSourceFile(bundleName, false);
             AssetBundleCreateRequest req = AssetBundle.LoadFromFileAsync(_assetBundleSourceFile);
             yield return req;
             _bundle = req.assetBundle;
 #endif
-            Complete();
+            this.Complete();
         }
     }
-}

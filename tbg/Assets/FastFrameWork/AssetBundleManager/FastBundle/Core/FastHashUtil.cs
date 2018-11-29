@@ -2,9 +2,8 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Tangzx.ABSystem
-{
-    public class HashUtil
+
+    public class FastHashUtil
     {
         public static string Get(Stream fs)
         {
@@ -42,4 +41,3 @@ namespace Tangzx.ABSystem
             return hexString;
         }
     }
-}

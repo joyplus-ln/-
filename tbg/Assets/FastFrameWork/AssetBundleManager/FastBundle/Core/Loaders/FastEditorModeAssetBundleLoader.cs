@@ -3,32 +3,30 @@
 #if _AB_MODE_
 using System.Collections;
 
-namespace Tangzx.ABSystem
-{
+
     /// <summary>
     /// 编辑器模式并启用AB_MODE下用的加载器
     /// 与iOS的相同，直接加载StreamAssets里的AB
     /// </summary>
-    public class EditorModeAssetBundleLoader : IOSAssetBundleLoader
+    public class FastEditorModeAssetBundleLoader : FastIOSAssetBundleLoader
     {
         protected override IEnumerator LoadFromPackage()
         {
-            _assetBundleSourceFile = AssetBundlePathResolver.instance.GetBundleSourceFile(bundleName, false);
+            _assetBundleSourceFile = FastAssetBundlePathResolver.instance.GetBundleSourceFile(bundleName, false);
             return base.LoadFromPackage();
         }
     }
-}
 #else
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
 
-namespace Tangzx.ABSystem
+
 {
     /// <summary>
     /// 编辑器模式下用的加载器
     /// </summary>
-    public class EditorModeAssetBundleLoader : AssetBundleLoader
+    public class FastEditorModeAssetBundleLoader : FastAssetBundleLoader
     {
         class ABInfo : AssetBundleInfo
         {

@@ -3,8 +3,8 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace Tangzx.ABSystem
-{
+
+
     public class AssetBundleBuildPanel : EditorWindow
     {
         [MenuItem("ABSystem/Builder Panel")]
@@ -22,7 +22,7 @@ namespace Tangzx.ABSystem
                 return;
 
 
-            AssetBundleBuilder5x builder = new AssetBundleBuilder5x(new AssetBundlePathResolver());
+            AssetBundleBuilder5x builder = new AssetBundleBuilder5x(new FastAssetBundlePathResolver());
 
             builder.Begin();
 
@@ -208,7 +208,7 @@ namespace Tangzx.ABSystem
 
         void Save()
         {
-            AssetBundlePathResolver.instance = new AssetBundlePathResolver();
+        FastAssetBundlePathResolver.instance = new FastAssetBundlePathResolver();
 
             if (LoadAssetAtPath<AssetBundleBuildConfig>(savePath) == null)
             {
@@ -220,4 +220,3 @@ namespace Tangzx.ABSystem
             }
         }
     }
-}

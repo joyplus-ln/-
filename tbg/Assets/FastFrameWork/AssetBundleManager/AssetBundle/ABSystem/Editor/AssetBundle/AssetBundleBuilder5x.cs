@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace Tangzx.ABSystem
-{
+
     public class AssetBundleBuilder5x : ABBuilder
     {
-        public AssetBundleBuilder5x(AssetBundlePathResolver resolver)
+        public AssetBundleBuilder5x(FastAssetBundlePathResolver resolver)
             : base(resolver)
         {
 
@@ -19,10 +18,10 @@ namespace Tangzx.ABSystem
 
             List<AssetBundleBuild> list = new List<AssetBundleBuild>();
             //标记所有 asset bundle name
-            var all = AssetBundleUtils.GetAll();
+            var all = FastAssetBundleUtils.GetAll();
             for (int i = 0; i < all.Count; i++)
             {
-                AssetTarget target = all[i];
+            FastAssetTarget target = all[i];
                 if (target.needSelfExport)
                 {
                     AssetBundleBuild build = new AssetBundleBuild();
@@ -41,7 +40,7 @@ namespace Tangzx.ABSystem
             //hash
             for (int i = 0; i < all.Count; i++)
             {
-                AssetTarget target = all[i];
+            FastAssetTarget target = all[i];
                 if (target.needSelfExport)
                 {
                     Hash128 hash = manifest.GetAssetBundleHash(target.bundleName);
@@ -55,5 +54,4 @@ namespace Tangzx.ABSystem
             AssetDatabase.Refresh();
         }
     }
-}
 #endif

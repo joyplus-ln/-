@@ -3,22 +3,22 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace Tangzx.ABSystem
-{
+
+
     public class ABBuilder
     {
-        protected AssetBundlePathResolver pathResolver;
+        protected FastAssetBundlePathResolver pathResolver;
 
-        public ABBuilder() : this(new AssetBundlePathResolver())
+        public ABBuilder() : this(new FastAssetBundlePathResolver())
         {
 
         }
 
-        public ABBuilder(AssetBundlePathResolver resolver)
+        public ABBuilder(FastAssetBundlePathResolver resolver)
         {
             this.pathResolver = resolver;
             this.InitDirs();
-            AssetBundleUtils.pathResolver = pathResolver;
+        FastAssetBundleUtils.pathResolver = pathResolver;
         }
 
         void InitDirs()
@@ -29,29 +29,29 @@ namespace Tangzx.ABSystem
         public void Begin()
         {
             EditorUtility.DisplayProgressBar("Loading", "Loading...", 0.1f);
-            AssetBundleUtils.Init();
+        FastAssetBundleUtils.Init();
         }
 
         public void End()
         {
-            AssetBundleUtils.ClearCache();
+        FastAssetBundleUtils.ClearCache();
             EditorUtility.ClearProgressBar();
         }
 
         public virtual void Analyze()
         {
-            var all = AssetBundleUtils.GetAll();
-            foreach (AssetTarget target in all)
+            var all = FastAssetBundleUtils.GetAll();
+            foreach (FastAssetTarget target in all)
             {
                 target.Analyze();
             }
-            all = AssetBundleUtils.GetAll();
-            foreach (AssetTarget target in all)
+            all = FastAssetBundleUtils.GetAll();
+            foreach (FastAssetTarget target in all)
             {
                 target.Merge();
             }
-            all = AssetBundleUtils.GetAll();
-            foreach (AssetTarget target in all)
+            all = FastAssetBundleUtils.GetAll();
+            foreach (FastAssetTarget target in all)
             {
                 target.BeforeExport();
             }
@@ -73,8 +73,8 @@ namespace Tangzx.ABSystem
                 {
                     if (file.Extension.Contains("meta"))
                         continue;
-                    AssetTarget target = AssetBundleUtils.Load(file);
-                    target.exportType = AssetBundleExportType.Root;
+                FastAssetTarget target = FastAssetBundleUtils.Load(file);
+                    target.exportType = FastAssetBundleExportType.Root;
                 }
             }
         }
@@ -84,12 +84,12 @@ namespace Tangzx.ABSystem
         /// 删除未使用的AB，可能是上次打包出来的，而这一次没生成的
         /// </summary>
         /// <param name="all"></param>
-        protected void RemoveUnused(List<AssetTarget> all)
+        protected void RemoveUnused(List<FastAssetTarget> all)
         {
             HashSet<string> usedSet = new HashSet<string>();
             for (int i = 0; i < all.Count; i++)
             {
-                AssetTarget target = all[i];
+            FastAssetTarget target = all[i];
                 if (target.needSelfExport)
                     usedSet.Add(target.bundleName);
             }
@@ -110,4 +110,4 @@ namespace Tangzx.ABSystem
             }
         }
     }
-}
+

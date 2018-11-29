@@ -1,14 +1,14 @@
 ﻿using System.IO;
 using UnityEngine;
 
-namespace Tangzx.ABSystem
-{
+
+
     /// <summary>
     /// AB 打包及运行时路径解决器
     /// </summary>
-    public class AssetBundlePathResolver
+    public class FastAssetBundlePathResolver
     {
-        public static AssetBundlePathResolver instance;
+        public static FastAssetBundlePathResolver instance;
 
         /// <summary>
         /// bundle文件的名字
@@ -28,7 +28,7 @@ namespace Tangzx.ABSystem
             }
         }
 
-        public AssetBundlePathResolver()
+        public FastAssetBundlePathResolver()
         {
             instance = this;
         }
@@ -132,4 +132,3 @@ namespace Tangzx.ABSystem
             }
         }
     }
-}

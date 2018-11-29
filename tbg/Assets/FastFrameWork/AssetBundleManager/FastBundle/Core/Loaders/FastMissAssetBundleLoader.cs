@@ -1,10 +1,8 @@
-﻿namespace Tangzx.ABSystem
-{
-    class MissAssetBundleLoader : AssetBundleLoader
+﻿
+    class FastMissAssetBundleLoader : FastAssetBundleLoader
     {
         public override void Start()
         {
             Error();
         }
     }
-}

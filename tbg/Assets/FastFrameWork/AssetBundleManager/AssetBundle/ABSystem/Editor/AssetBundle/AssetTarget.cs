@@ -5,15 +5,14 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Tangzx.ABSystem
+
+    public enum FastAssetType
 {
-    public enum AssetType
-    {
         Asset,
         Builtin
     }
 
-    public class AssetTarget : System.IComparable<AssetTarget>
+    public class FastAssetTarget : System.IComparable<FastAssetTarget>
     {
         /// <summary>
         /// 目标Object
@@ -34,11 +33,11 @@ namespace Tangzx.ABSystem
         /// <summary>
         /// 素材类型
         /// </summary>
-        public AssetType type = AssetType.Asset;
+        public FastAssetType type = FastAssetType.Asset;
         /// <summary>
         /// 导出类型
         /// </summary>
-        public AssetBundleExportType exportType = AssetBundleExportType.Asset;
+        public FastAssetBundleExportType exportType = FastAssetBundleExportType.Asset;
         /// <summary>
         /// 保存地址
         /// </summary>
@@ -53,7 +52,7 @@ namespace Tangzx.ABSystem
         public string bundleShortName;
 
         public int level = -1;
-        public List<AssetTarget> levelList;
+        public List<FastAssetTarget> levelList;
 
         //目标文件是否已改变
         private bool _isFileChanged = false;
@@ -71,20 +70,20 @@ namespace Tangzx.ABSystem
         /// <summary>
         /// 我要依赖的项
         /// </summary>
-        private HashSet<AssetTarget> _dependParentSet = new HashSet<AssetTarget>();
+        private HashSet<FastAssetTarget> _dependParentSet = new HashSet<FastAssetTarget>();
         /// <summary>
         /// 依赖我的项
         /// </summary>
-        private HashSet<AssetTarget> _dependChildrenSet = new HashSet<AssetTarget>();
+        private HashSet<FastAssetTarget> _dependChildrenSet = new HashSet<FastAssetTarget>();
 
-        public AssetTarget(Object o, FileInfo file, string assetPath)
+        public FastAssetTarget(Object o, FileInfo file, string assetPath)
         {
             this.asset = o;
             this.file = file;
             this.assetPath = assetPath;
             this.bundleShortName = file.Name.ToLower();
-            this.bundleName = AssetBundleUtils.ConvertToABName(assetPath) + FastContent.BundleSuffix;
-            this.bundleSavePath = Path.Combine(AssetBundleUtils.pathResolver.BundleSavePath, bundleName);
+            this.bundleName = FastAssetBundleUtils.ConvertToABName(assetPath) + FastContent.BundleSuffix;
+            this.bundleSavePath = Path.Combine(FastAssetBundleUtils.pathResolver.BundleSavePath, bundleName);
 
             _isFileChanged = true;
         }
@@ -98,7 +97,7 @@ namespace Tangzx.ABSystem
             if (_isAnalyzed) return;
             _isAnalyzed = true;
 
-            _cacheInfo = AssetBundleUtils.GetCacheInfo(assetPath);
+            _cacheInfo = FastAssetBundleUtils.GetCacheInfo(assetPath);
             _isFileChanged = _cacheInfo == null || !_cacheInfo.fileHash.Equals(GetHash());
             if (_cacheInfo != null)
             {
@@ -140,7 +139,7 @@ namespace Tangzx.ABSystem
                     continue;
                 }
                 FileInfo fi = new FileInfo(paths[i]);
-                AssetTarget target = AssetBundleUtils.Load(fi);
+            FastAssetTarget target = FastAssetBundleUtils.Load(fi);
                 if (target == null)
                     continue;
 
@@ -154,25 +153,25 @@ namespace Tangzx.ABSystem
         {
             if (this.NeedExportStandalone())
             {
-                var children = new List<AssetTarget>(_dependChildrenSet);
+                var children = new List<FastAssetTarget>(_dependChildrenSet);
                 this.RemoveDependChildren();
-                foreach (AssetTarget child in children)
+                foreach (FastAssetTarget child in children)
                 {
                     child.AddDependParent(this);
                 }
             }
         }
 
-        private void GetRoot(HashSet<AssetTarget> rootSet)
+        private void GetRoot(HashSet<FastAssetTarget> rootSet)
         {
             switch (this.exportType)
             {
-                case AssetBundleExportType.Standalone:
-                case AssetBundleExportType.Root:
+                case FastAssetBundleExportType.Standalone:
+                case FastAssetBundleExportType.Root:
                     rootSet.Add(this);
                     break;
                 default:
-                    foreach (AssetTarget item in _dependChildrenSet)
+                    foreach (FastAssetTarget item in _dependChildrenSet)
                     {
                         item.GetRoot(rootSet);
                     }
@@ -190,22 +189,22 @@ namespace Tangzx.ABSystem
             if (beforeExportProcess) return;
             beforeExportProcess = true;
 
-            foreach (AssetTarget item in _dependChildrenSet)
+            foreach (FastAssetTarget item in _dependChildrenSet)
             {
                 item.BeforeExport();
             }
 
-            if (this.exportType == AssetBundleExportType.Asset)
+            if (this.exportType == FastAssetBundleExportType.Asset)
             {
-                HashSet<AssetTarget> rootSet = new HashSet<AssetTarget>();
+                HashSet<FastAssetTarget> rootSet = new HashSet<FastAssetTarget>();
                 this.GetRoot(rootSet);
                 if (rootSet.Count > 1)
-                    this.exportType = AssetBundleExportType.Standalone;
+                    this.exportType = FastAssetBundleExportType.Standalone;
             }
         }
 
 
-        public void UpdateLevel(int level, List<AssetTarget> lvList)
+        public void UpdateLevel(int level, List<FastAssetTarget> lvList)
         {
             this.level = level;
             if (level == -1 && levelList != null)
@@ -217,12 +216,12 @@ namespace Tangzx.ABSystem
         /// 获取所有依赖项
         /// </summary>
         /// <param name="list"></param>
-        public void GetDependencies(HashSet<AssetTarget> list)
+        public void GetDependencies(HashSet<FastAssetTarget> list)
         {
             var ie = _dependParentSet.GetEnumerator();
             while (ie.MoveNext())
             {
-                AssetTarget target = ie.Current;
+            FastAssetTarget target = ie.Current;
                 if (target.needSelfExport)
                 {
                     list.Add(target);
@@ -234,18 +233,18 @@ namespace Tangzx.ABSystem
             }
         }
 
-        public List<AssetTarget> dependencies
+        public List<FastAssetTarget> dependencies
         {
-            get { return new List<AssetTarget>(_dependParentSet); }
+            get { return new List<FastAssetTarget>(_dependParentSet); }
         }
 
-        public AssetBundleExportType compositeType
+        public FastAssetBundleExportType compositeType
         {
             get
             {
-                AssetBundleExportType type = exportType;
-                if (type == AssetBundleExportType.Root && _dependChildrenSet.Count > 0)
-                    type |= AssetBundleExportType.Asset;
+            FastAssetBundleExportType type = exportType;
+                if (type == FastAssetBundleExportType.Root && _dependChildrenSet.Count > 0)
+                    type |= FastAssetBundleExportType.Asset;
                 return type;
             }
         }
@@ -279,7 +278,7 @@ namespace Tangzx.ABSystem
                 if (_isFileChanged || _isDepTreeChanged)
                     return true;
 
-                foreach (AssetTarget child in _dependChildrenSet)
+                foreach (FastAssetTarget child in _dependChildrenSet)
                 {
                     if (child.needRebuild)
                         return true;
@@ -309,10 +308,10 @@ namespace Tangzx.ABSystem
         {
             get
             {
-                if (type == AssetType.Builtin)
+                if (type == FastAssetType.Builtin)
                     return false;
 
-                bool v = exportType == AssetBundleExportType.Root || exportType == AssetBundleExportType.Standalone;
+                bool v = exportType == FastAssetBundleExportType.Root || exportType == FastAssetBundleExportType.Standalone;
 
                 return v;
             }
@@ -347,7 +346,7 @@ namespace Tangzx.ABSystem
         /// 增加依赖项
         /// </summary>
         /// <param name="target"></param>
-        private void AddDependParent(AssetTarget target)
+        private void AddDependParent(FastAssetTarget target)
         {
             if (target == this || this.ContainsDepend(target))
                 return;
@@ -363,7 +362,7 @@ namespace Tangzx.ABSystem
         /// <param name="target"></param>
         /// <param name="recursive"></param>
         /// <returns></returns>
-        private bool ContainsDepend(AssetTarget target, bool recursive = true)
+        private bool ContainsDepend(FastAssetTarget target, bool recursive = true)
         {
             if (_dependParentSet.Contains(target))
                 return true;
@@ -381,7 +380,7 @@ namespace Tangzx.ABSystem
             return false;
         }
 
-        private void AddDependChild(AssetTarget parent)
+        private void AddDependChild(FastAssetTarget parent)
         {
             _dependChildrenSet.Add(parent);
         }
@@ -389,16 +388,16 @@ namespace Tangzx.ABSystem
         /// <summary>
         /// 我依赖了这个项，那么依赖我的项不需要直接依赖这个项了
         /// </summary>
-        private void ClearParentDepend(AssetTarget target = null)
+        private void ClearParentDepend(FastAssetTarget target = null)
         {
-            IEnumerable<AssetTarget> cols = _dependParentSet;
-            if (target != null) cols = new AssetTarget[] { target };
-            foreach (AssetTarget at in cols)
+            IEnumerable<FastAssetTarget> cols = _dependParentSet;
+            if (target != null) cols = new FastAssetTarget[] { target };
+            foreach (FastAssetTarget at in cols)
             {
                 var e = _dependChildrenSet.GetEnumerator();
                 while (e.MoveNext())
                 {
-                    AssetTarget dc = e.Current;
+                FastAssetTarget dc = e.Current;
                     dc.RemoveDependParent(at);
                 }
             }
@@ -409,26 +408,26 @@ namespace Tangzx.ABSystem
         /// </summary>
         /// <param name="target"></param>
         /// <param name="recursive"></param>
-        private void RemoveDependParent(AssetTarget target, bool recursive = true)
+        private void RemoveDependParent(FastAssetTarget target, bool recursive = true)
         {
             _dependParentSet.Remove(target);
             target._dependChildrenSet.Remove(this);
 
             //recursive
-			var dcc = new HashSet<AssetTarget>(_dependChildrenSet);
+			var dcc = new HashSet<FastAssetTarget>(_dependChildrenSet);
             var e = dcc.GetEnumerator();
             while (e.MoveNext())
             {
-                AssetTarget dc = e.Current;
+            FastAssetTarget dc = e.Current;
                 dc.RemoveDependParent(target);
             }
         }
 
         private void RemoveDependChildren()
         {
-            var all = new List<AssetTarget>(_dependChildrenSet);
+            var all = new List<FastAssetTarget>(_dependChildrenSet);
             _dependChildrenSet.Clear();
-            foreach (AssetTarget child in all)
+            foreach (FastAssetTarget child in all)
             {
                 child._dependParentSet.Remove(this);
             }
@@ -437,35 +436,34 @@ namespace Tangzx.ABSystem
         /// <summary>
         /// 依赖我的项
         /// </summary>
-        public List<AssetTarget> dependsChildren
+        public List<FastAssetTarget> dependsChildren
         {
-            get { return new List<AssetTarget>(_dependChildrenSet); }
+            get { return new List<FastAssetTarget>(_dependChildrenSet); }
         }
 
-        int System.IComparable<AssetTarget>.CompareTo(AssetTarget other)
+        int System.IComparable<FastAssetTarget>.CompareTo(FastAssetTarget other)
         {
             return other._dependChildrenSet.Count.CompareTo(_dependChildrenSet.Count);
         }
 
         public string GetHash()
         {
-            if (type == AssetType.Builtin)
+            if (type == FastAssetType.Builtin)
                 return "0000000000";
             else
-                return AssetBundleUtils.GetFileHash(file.FullName);
+                return FastAssetBundleUtils.GetFileHash(file.FullName);
         }
         public void WriteCache(StreamWriter sw)
         {
             sw.WriteLine(this.assetPath);
             sw.WriteLine(GetHash());
             sw.WriteLine(this._bundleCrc);
-            HashSet<AssetTarget> deps = new HashSet<AssetTarget>();
+            HashSet<FastAssetTarget> deps = new HashSet<FastAssetTarget>();
             this.GetDependencies(deps);
             sw.WriteLine(deps.Count.ToString());
-            foreach (AssetTarget at in deps)
+            foreach (FastAssetTarget at in deps)
             {
                 sw.WriteLine(at.assetPath);
             }
         }
     }
-}

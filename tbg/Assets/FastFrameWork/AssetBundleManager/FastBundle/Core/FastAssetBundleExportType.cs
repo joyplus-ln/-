@@ -1,6 +1,5 @@
-﻿namespace Tangzx.ABSystem
-{
-    public enum AssetBundleExportType
+﻿
+    public enum FastAssetBundleExportType
     {
         /// <summary>
         /// 普通素材，被根素材依赖的
@@ -19,4 +18,3 @@
         /// </summary>
         RootAsset = Asset | Root
     }
-}

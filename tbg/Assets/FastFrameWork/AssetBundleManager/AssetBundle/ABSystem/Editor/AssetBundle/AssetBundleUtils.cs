@@ -5,8 +5,8 @@ using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Tangzx.ABSystem
-{
+
+
     class AssetCacheInfo
     {
         /// <summary>
@@ -28,23 +28,23 @@ namespace Tangzx.ABSystem
         public string[] depNames;
     }
 
-    class AssetBundleUtils
-    {
-        public static AssetBundlePathResolver pathResolver;
+    class FastAssetBundleUtils
+{
+        public static FastAssetBundlePathResolver pathResolver;
         public static DirectoryInfo AssetDir = new DirectoryInfo(Application.dataPath);
         public static string AssetPath = AssetDir.FullName;
         public static DirectoryInfo ProjectDir = AssetDir.Parent;
         public static string ProjectPath = ProjectDir.FullName;
 
-        static Dictionary<int, AssetTarget> _object2target;
-        static Dictionary<string, AssetTarget> _assetPath2target;
+        static Dictionary<int, FastAssetTarget> _object2target;
+        static Dictionary<string, FastAssetTarget> _assetPath2target;
         static Dictionary<string, string> _fileHashCache;
         static Dictionary<string, AssetCacheInfo> _fileHashOld;
 
         public static void Init()
         {
-            _object2target = new Dictionary<int, AssetTarget>();
-            _assetPath2target = new Dictionary<string, AssetTarget>();
+            _object2target = new Dictionary<int, FastAssetTarget>();
+            _assetPath2target = new Dictionary<string, FastAssetTarget>();
             _fileHashCache = new Dictionary<string, string>();
             _fileHashOld = new Dictionary<string, AssetCacheInfo>();
         }
@@ -58,55 +58,15 @@ namespace Tangzx.ABSystem
         }
 
 
-        public static List<AssetTarget> GetAll()
+        public static List<FastAssetTarget> GetAll()
         {
-            return new List<AssetTarget>(_object2target.Values);
+            return new List<FastAssetTarget>(_object2target.Values);
         }
 
-        public static AssetTarget Load(Object o)
+
+        public static FastAssetTarget Load(FileInfo file, System.Type t)
         {
-            AssetTarget target = null;
-            if (o != null)
-            {
-                int instanceId = o.GetInstanceID();
-
-                if (_object2target.ContainsKey(instanceId))
-                {
-                    target = _object2target[instanceId];
-                }
-                else
-                {
-                    string assetPath = AssetDatabase.GetAssetPath(o);
-                    string key = assetPath;
-                    //Builtin，内置素材，path为空
-                    if (string.IsNullOrEmpty(assetPath))
-                        key = string.Format("Builtin______{0}", o.name);
-                    else
-                        key = string.Format("{0}/{1}", assetPath, instanceId);
-
-                    if (_assetPath2target.ContainsKey(key))
-                    {
-                        target = _assetPath2target[key];
-                    }
-                    else
-                    {
-                        if (assetPath.StartsWith("Resources"))
-                        {
-                            assetPath = string.Format("{0}/{1}.{2}", assetPath, o.name, o.GetType().Name);
-                        }
-                        FileInfo file = new FileInfo(Path.Combine(ProjectPath, assetPath));
-                        target = new AssetTarget(o, file, assetPath);
-                        _object2target[instanceId] = target;
-                        _assetPath2target[key] = target;
-                    }
-                }
-            }
-            return target;
-        }
-
-        public static AssetTarget Load(FileInfo file, System.Type t)
-        {
-            AssetTarget target = null;
+        FastAssetTarget target = null;
             string fullPath = file.FullName;
             int index = fullPath.IndexOf("Assets");
             if (index != -1)
@@ -134,7 +94,7 @@ namespace Tangzx.ABSystem
                         }
                         else
                         {
-                            target = new AssetTarget(o, file, assetPath);
+                            target = new FastAssetTarget(o, file, assetPath);
                             string key = string.Format("{0}/{1}", assetPath, instanceId);
                             _assetPath2target[key] = target;
                             _object2target[instanceId] = target;
@@ -146,7 +106,7 @@ namespace Tangzx.ABSystem
             return target;
         }
 
-        public static AssetTarget Load(FileInfo file)
+        public static FastAssetTarget Load(FileInfo file)
         {
             return Load(file, null);
         }
@@ -180,7 +140,7 @@ namespace Tangzx.ABSystem
                     FileAccess.Read,
                     FileShare.Read);
 
-                _hexStr = HashUtil.Get(fs);
+                _hexStr = FastHashUtil.Get(fs);
                 _fileHashCache[path] = _hexStr;
                 fs.Close();
             }
@@ -195,4 +155,4 @@ namespace Tangzx.ABSystem
             return null;
         }
     }
-}
+
