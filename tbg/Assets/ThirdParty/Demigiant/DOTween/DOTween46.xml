@@ -6,7 +6,7 @@
     <members>
         <member name="T:DG.Tweening.DOTweenUtils46">
             <summary>
-            Various utils that require Unity 4.6 or later
+            Various utils that reqRpguire Unity 4.6 or later
             </summary>
         </member>
         <member name="M:DG.Tweening.DOTweenUtils46.SwitchToRectTransform(UnityEngine.RectTransform,UnityEngine.RectTransform)">
@@ -18,7 +18,7 @@
         <member name="T:DG.Tweening.ShortcutExtensions46">
             <summary>
             Methods that extend known Unity objects and allow to directly create and control tweens from their instances.
-            These, as all DOTween46 methods, require Unity 4.6 or later.
+            These, as all DOTween46 methods, reqRpguire Unity 4.6 or later.
             </summary>
         </member>
         <member name="M:DG.Tweening.ShortcutExtensions46.DOFade(UnityEngine.CanvasGroup,System.Single,System.Single)">
