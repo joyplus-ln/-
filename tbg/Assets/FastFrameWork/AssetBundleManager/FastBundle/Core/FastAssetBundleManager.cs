@@ -153,7 +153,7 @@ public class FastAssetBundleManager : MonoBehaviour
 #elif UNITY_ANDROID
             return new FastMobileAssetBundleLoader();
 #else
-            return new FastMobileAssetBundleLoader();
+            return null;
 #endif
     }
     #endregion

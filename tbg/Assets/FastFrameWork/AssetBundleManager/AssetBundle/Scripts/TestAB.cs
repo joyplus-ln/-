@@ -30,7 +30,7 @@ public class TestAB : MonoBehaviour
                     Debug.LogError(it.GetAllAssetNames()[i]);
                 }
             }
-            a.bundle.Unload(true);
+            //a.bundle.Unload(true);
             IEnumerable list2 = AssetBundle.GetAllLoadedAssetBundles();
             foreach (AssetBundle it in list2)
             {
