@@ -11,7 +11,7 @@ public class GamePlayFormation : BaseGamePlayFormation
     public Transform[] SelfPosition1Transforms;
     public Transform[] SelfPosition2Transforms;
     public GamePlayManager Manager { get { return GamePlayManager.Singleton; } }
-    public readonly Dictionary<int, UICharacterStats> UIStats = new Dictionary<int, UICharacterStats>();
+    public readonly Dictionary<int, RpguiCharacterStats> UIStats = new Dictionary<int, RpguiCharacterStats>();
 
     private void Start()
     {
@@ -27,21 +27,21 @@ public class GamePlayFormation : BaseGamePlayFormation
         if (character == null)
             return null;
 
-        UICharacterStats uiStats;
-        if (UIStats.TryGetValue(position, out uiStats))
+        RpguiCharacterStats rpguiStats;
+        if (UIStats.TryGetValue(position, out rpguiStats))
         {
-            Destroy(uiStats.gameObject);
+            Destroy(rpguiStats.gameObject);
             UIStats.Remove(position);
         }
 
         if (Manager != null)
         {
-            //uiStats = Instantiate(Manager.uiCharacterStatsPrefab, Manager.uiCharacterStatsContainer);
-            uiStats = Instantiate(Manager.uiCharacterStatsPrefab, character.transform);
-            uiStats.transform.localScale = Vector3.one;
-            uiStats.transform.localPosition = new Vector3(0, 0, 0);
-            uiStats.character = character;
-            character.uiCharacterStats = uiStats;
+            //rpguiStats = Instantiate(Manager.RpguiCharacterStatsPrefab, Manager.uiCharacterStatsContainer);
+            rpguiStats = Instantiate(Manager.RpguiCharacterStatsPrefab, character.transform);
+            rpguiStats.transform.localScale = Vector3.one;
+            rpguiStats.transform.localPosition = new Vector3(0, 0, 0);
+            rpguiStats.character = character;
+            character.RpguiCharacterStats = rpguiStats;
 
         }
 

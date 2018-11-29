@@ -42,7 +42,7 @@ public class AudioSourceSetter : AudioComponent
             clip = cacheAudioSource.clip;
         }
 
-        var volume = AudioManager.Singleton.GetVolumeLevel(SettingId);
+        var volume = RPGAudioManager.Singleton.GetVolumeLevel(SettingId);
         switch (playMode)
         {
             case PlayMode.PlayClipAtAudioSource:
@@ -59,7 +59,7 @@ public class AudioSourceSetter : AudioComponent
     private void Update()
     {
         if (playMode == PlayMode.PlayClipAtAudioSource)
-            cacheAudioSource.volume = AudioManager.Singleton.GetVolumeLevel(SettingId);
+            cacheAudioSource.volume = RPGAudioManager.Singleton.GetVolumeLevel(SettingId);
     }
 
 #if UNITY_EDITOR

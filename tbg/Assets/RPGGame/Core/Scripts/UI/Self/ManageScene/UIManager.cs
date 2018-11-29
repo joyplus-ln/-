@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+public class RPGUIManager : MonoBehaviour
 {
     public List<BaseUI> uilist;
     private BaseUI currentUI;

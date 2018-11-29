@@ -58,9 +58,9 @@ public class MobileSwipeArea : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         value = value.normalized;
 
         if (useAxisX)
-            InputManager.SetAxis(axisXName, value.x);
+            RPGInputManager.SetAxis(axisXName, value.x);
 
         if (useAxisY)
-            InputManager.SetAxis(axisYName, value.y);
+            RPGInputManager.SetAxis(axisYName, value.y);
     }
 }

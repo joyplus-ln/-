@@ -13,9 +13,9 @@ public class GameInstance : MonoBehaviour
         GoToBattleScene,
     }
     public GameDatabase gameDatabase;
-    public UIMessageDialog messageDialog;
-    public UIInputDialog inputDialog;
-    public UIItemList rewardItemsDialog;
+    public RpguiMessageDialog messageDialog;
+    public RpguiInputDialog inputDialog;
+    public RpguiItemList rewardItemsDialog;
     public GameObject loadingObject;
     public string loginScene;
     public string manageScene;
@@ -25,7 +25,7 @@ public class GameInstance : MonoBehaviour
     public static GameDatabase GameDatabase { get; private set; }
     public static readonly List<string> AvailableLootBoxes = new List<string>();
 
-    private readonly Queue<UIMessageDialog.Data> messageDialogData = new Queue<UIMessageDialog.Data>();
+    private readonly Queue<RpguiMessageDialog.Data> messageDialogData = new Queue<RpguiMessageDialog.Data>();
     private LoadAllPlayerDataState loadAllPlayerDataState;
     private static bool isPlayerAuthListLoaded;
     private static bool isPlayerCurrencyListLoaded;
@@ -95,8 +95,8 @@ public class GameInstance : MonoBehaviour
     public void OnGameServiceError(string error, UnityAction errorAction)
     {
         Debug.LogError("OnGameServiceError: " + error);
-        var errorText = string.IsNullOrEmpty(error) || !LanguageManager.Texts.ContainsKey(error) ? "" : LanguageManager.Texts[error];
-        messageDialogData.Enqueue(new UIMessageDialog.Data(LanguageManager.Texts[GameText.TITLE_ERROR_DIALOG], errorText, errorAction));
+        var errorText = string.IsNullOrEmpty(error) || !RPGLanguageManager.Texts.ContainsKey(error) ? "" : RPGLanguageManager.Texts[error];
+        messageDialogData.Enqueue(new RpguiMessageDialog.Data(RPGLanguageManager.Texts[GameText.TITLE_ERROR_DIALOG], errorText, errorAction));
         ShowError();
     }
 
@@ -539,14 +539,14 @@ public class GameInstance : MonoBehaviour
             Debug.LogWarning("`Input Dialog` has not been set");
             return;
         }
-        ShowInputDialog(LanguageManager.Texts[GameText.TITLE_PROFILE_NAME_DIALOG],
-            LanguageManager.Texts[GameText.CONTENT_PROFILE_NAME_DIALOG],
+        ShowInputDialog(RPGLanguageManager.Texts[GameText.TITLE_PROFILE_NAME_DIALOG],
+            RPGLanguageManager.Texts[GameText.CONTENT_PROFILE_NAME_DIALOG],
             () =>
             {
                 var input = inputDialog.InputContent;
                 GameInstance.dbLogin.DoSetProfileName(input, onSuccess);
             });
-        inputDialog.InputPlaceHolder = LanguageManager.Texts[GameText.PLACE_HOLDER_PROFILE_NAME];
+        inputDialog.InputPlaceHolder = RPGLanguageManager.Texts[GameText.PLACE_HOLDER_PROFILE_NAME];
     }
 
     public void ShowInputDialog(string title,

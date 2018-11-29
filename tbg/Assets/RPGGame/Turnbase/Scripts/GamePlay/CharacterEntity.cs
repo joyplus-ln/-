@@ -23,7 +23,7 @@ public class CharacterEntity : BaseCharacterEntity
     [HideInInspector]
     public bool selectable;
     [HideInInspector]
-    public UICharacterStats uiCharacterStats;
+    public RpguiCharacterStats RpguiCharacterStats;
 
     public GamePlayFormation CastedFormation { get { return Formation as GamePlayFormation; } }
     public TowerGamePlayFormation TowerCastedFormation { get { return Formation as TowerGamePlayFormation; } }
@@ -101,26 +101,26 @@ public class CharacterEntity : BaseCharacterEntity
             if (forcePlayMoving)
                 moveSpeed = 1;
             //CacheAnimator.SetFloat(ANIM_KEY_SPEED, moveSpeed);
-            if (uiCharacterStats != null)
+            if (RpguiCharacterStats != null)
             {
                 if (forceHideCharacterStats)
-                    uiCharacterStats.Hide();
+                    RpguiCharacterStats.Hide();
                 else
-                    uiCharacterStats.Show();
+                    RpguiCharacterStats.Show();
             }
         }
         else
         {
-            if (uiCharacterStats != null)
-                uiCharacterStats.Hide();
+            if (RpguiCharacterStats != null)
+                RpguiCharacterStats.Hide();
         }
     }
 
 
     private void OnDestroy()
     {
-        if (uiCharacterStats != null)
-            Destroy(uiCharacterStats.gameObject);
+        if (RpguiCharacterStats != null)
+            Destroy(RpguiCharacterStats.gameObject);
     }
     #endregion
 

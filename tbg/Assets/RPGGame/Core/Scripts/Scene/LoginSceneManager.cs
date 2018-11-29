@@ -5,8 +5,8 @@ using UnityEngine;
 public class LoginSceneManager : MonoBehaviour
 {
     public static LoginSceneManager Singleton { get; private set; }
-    public UIAuthentication loginDialog;
-    public UIAuthentication registerDialog;
+    public RpguiAuthentication loginDialog;
+    public RpguiAuthentication registerDialog;
     public GameObject clickStartObject;
     private void Awake()
     {

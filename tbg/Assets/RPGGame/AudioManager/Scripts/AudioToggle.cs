@@ -16,11 +16,11 @@ public class AudioToggle : AudioComponent
 
     private void OnValueChanged(bool isOn)
     {
-        AudioManager.Singleton.SetVolumeIsOn(SettingId, isOn);
+        RPGAudioManager.Singleton.SetVolumeIsOn(SettingId, isOn);
     }
 
     private void OnEnable()
     {
-        toggle.isOn = AudioManager.Singleton.GetVolumeIsOn(SettingId);
+        toggle.isOn = RPGAudioManager.Singleton.GetVolumeIsOn(SettingId);
     }
 }

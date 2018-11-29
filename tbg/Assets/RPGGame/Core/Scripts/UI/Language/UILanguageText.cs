@@ -11,18 +11,18 @@ public class UILanguageText : MonoBehaviour
     private string languageKey;
     private void Update()
     {
-        if (languageKey != LanguageManager.CurrentLanguageKey)
+        if (languageKey != RPGLanguageManager.CurrentLanguageKey)
         {
             var textComponent = GetComponent<Text>();
             if (textComponent != null)
             {
                 var text = "";
-                if (LanguageManager.Texts.TryGetValue(dataKey, out text))
+                if (RPGLanguageManager.Texts.TryGetValue(dataKey, out text))
                     textComponent.text = text;
                 else
                     textComponent.text = defaultText;
             }
-            languageKey = LanguageManager.CurrentLanguageKey;
+            languageKey = RPGLanguageManager.CurrentLanguageKey;
         }
     }
 

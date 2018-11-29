@@ -54,7 +54,7 @@ public class UIDraggable : MonoBehaviour, IPointerClickHandler, IDragHandler, IB
             return;
 
         var oldPosition = transform.position;
-        // Keeping ui in screen
+        // Keeping Rpgui in screen
         var screenSize = new Vector3(Screen.width, Screen.height);
         Rect transformRect = rectTransform.rect;
         var worldSpaceRectMin = rectTransform.TransformPoint(transformRect.min);

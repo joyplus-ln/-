@@ -8,11 +8,11 @@ public class MobileInputButton : MonoBehaviour, IPointerDownHandler, IPointerUpH
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        InputManager.SetButtonDown(keyName);
+        RPGInputManager.SetButtonDown(keyName);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        InputManager.SetButtonUp(keyName);
+        RPGInputManager.SetButtonUp(keyName);
     }
 }

@@ -16,9 +16,9 @@ public abstract class BaseGamePlayManager : MonoBehaviour
     public UICombatText combatPoisonPrefab;
     public UICombatText combatMissPrefab;
     [Header("Gameplay UI")]
-    public UIWin uiWin;
-    public UILose uiLose;
-    public UIPauseGame uiPauseGame;
+    public RpguiWin RpguiWin;
+    public RpguiLose RpguiLose;
+    public RpguiPauseGame RpguiPauseGame;
     public float winGameDelay = 2f;
     public float loseGameDelay = 2f;
 
@@ -64,7 +64,7 @@ public abstract class BaseGamePlayManager : MonoBehaviour
         combatText.transform.localScale = Vector3.one;
         combatText.TempObjectFollower.targetObject = character.bodyEffectContainer;
         combatText.Amount = 0;
-        combatText.TempText.text = LanguageManager.Texts[GameText.COMBAT_MISS];
+        combatText.TempText.text = RPGLanguageManager.Texts[GameText.COMBAT_MISS];
     }
 
     //战斗
@@ -101,8 +101,8 @@ public abstract class BaseGamePlayManager : MonoBehaviour
              isEnding = true;
              Time.timeScale = 1;
              GameInstance.Singleton.OnGameServiceFinishStageResult(result);
-             uiWin.SetData(result);
-             uiWin.Show();
+             RpguiWin.SetData(result);
+             RpguiWin.Show();
          });
     }
 
@@ -110,7 +110,7 @@ public abstract class BaseGamePlayManager : MonoBehaviour
     {
         isEnding = true;
         yield return new WaitForSeconds(loseGameDelay);
-        uiLose.Show();
+        RpguiLose.Show();
     }
 
 

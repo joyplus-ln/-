@@ -22,8 +22,8 @@ public class TowerGamePlayManager : BaseGamePlayManager
     public float moveToNextWaveDelay = 1f;
     [Header("UI")]
     public Transform uiCharacterStatsContainer;
-    public UICharacterStats uiCharacterStatsPrefab;
-    public UICharacterActionManager uiCharacterActionManager;
+    public RpguiCharacterStats RpguiCharacterStatsPrefab;
+    public RpguiCharacterActionManager RpguiCharacterActionManager;
     public CharacterEntity ActiveCharacter { get; private set; }
     public int CurrentWave { get; private set; }
     public TowerStage CastedStage { get { return PlayingStage as TowerStage; } }
@@ -45,7 +45,7 @@ public class TowerGamePlayManager : BaseGamePlayManager
         if (inputCamera == null)
             inputCamera = Camera.main;
         // Setup uis
-        uiCharacterActionManager.Hide();
+        RpguiCharacterActionManager.Hide();
         // Setup player formation
         playerFormation.isPlayerFormation = true;
         playerFormation.foeFormation = foeFormation;
@@ -65,7 +65,7 @@ public class TowerGamePlayManager : BaseGamePlayManager
 
     private void Update()
     {
-        if (uiPauseGame.IsVisible())
+        if (RpguiPauseGame.IsVisible())
         {
             Time.timeScale = 0;
             return;
@@ -75,7 +75,7 @@ public class TowerGamePlayManager : BaseGamePlayManager
         {
             if (IsAutoPlay)
             {
-                uiCharacterActionManager.Hide();
+                RpguiCharacterActionManager.Hide();
                 if (ActiveCharacter != null)
                     ActiveCharacter.RandomAction();
             }
@@ -86,7 +86,7 @@ public class TowerGamePlayManager : BaseGamePlayManager
 
         if (Input.GetMouseButtonDown(0) && ActiveCharacter != null && ActiveCharacter.IsPlayerCharacter)
         {
-            Ray ray = inputCamera.ScreenPointToRay(InputManager.MousePosition());
+            Ray ray = inputCamera.ScreenPointToRay(RPGInputManager.MousePosition());
             RaycastHit hitInfo;
             if (!Physics.Raycast(ray, out hitInfo))
                 return;
@@ -199,7 +199,7 @@ public class TowerGamePlayManager : BaseGamePlayManager
                 if (IsAutoPlay)
                     ActiveCharacter.RandomAction();
                 else
-                    uiCharacterActionManager.Show();
+                    RpguiCharacterActionManager.Show();
             }
             else
             {

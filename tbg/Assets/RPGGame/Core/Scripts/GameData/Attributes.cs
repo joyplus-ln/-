@@ -385,102 +385,102 @@ public class CalculationAttributes
 
         if (hp != 0 || bonusAttributes.hp != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_HP, hp, bonusAttributes.hp);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_HP, hp, bonusAttributes.hp);
             result += "\n";
         }
         if (pAtk != 0 || bonusAttributes.pAtk != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_PATK, pAtk, bonusAttributes.pAtk);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_PATK, pAtk, bonusAttributes.pAtk);
             result += "\n";
         }
         if (pDef != 0 || bonusAttributes.pDef != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_PDEF, pDef, bonusAttributes.pDef);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_PDEF, pDef, bonusAttributes.pDef);
             result += "\n";
         }
         if (mAtk != 0 || bonusAttributes.mAtk != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_MATK, mAtk, bonusAttributes.mAtk);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_MATK, mAtk, bonusAttributes.mAtk);
             result += "\n";
         }
         if (mDef != 0 || bonusAttributes.mDef != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_MDEF, mDef, bonusAttributes.mDef);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_MDEF, mDef, bonusAttributes.mDef);
             result += "\n";
         }
         if (spd != 0 || bonusAttributes.spd != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_SPD, spd, bonusAttributes.spd);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_SPD, spd, bonusAttributes.spd);
             result += "\n";
         }
         if (eva != 0 || bonusAttributes.eva != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_EVA, eva, bonusAttributes.eva);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_EVA, eva, bonusAttributes.eva);
             result += "\n";
         }
         if (acc != 0 || bonusAttributes.acc != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_ACC, acc, bonusAttributes.acc);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_ACC, acc, bonusAttributes.acc);
             result += "\n";
         }
         if (hpRate != 0 || bonusAttributes.hpRate != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_HP_RATE, hpRate, bonusAttributes.hpRate, true);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_HP_RATE, hpRate, bonusAttributes.hpRate, true);
             result += "\n";
         }
         if (pAtkRate != 0 || bonusAttributes.pAtkRate != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_PATK_RATE, pAtkRate, bonusAttributes.pAtkRate, true);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_PATK_RATE, pAtkRate, bonusAttributes.pAtkRate, true);
             result += "\n";
         }
         if (pDefRate != 0 || bonusAttributes.pDefRate != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_PDEF_RATE, pDefRate, bonusAttributes.pDefRate, true);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_PDEF_RATE, pDefRate, bonusAttributes.pDefRate, true);
             result += "\n";
         }
         if (mAtkRate != 0 || bonusAttributes.mAtkRate != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_MATK_RATE, mAtkRate, bonusAttributes.mAtkRate, true);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_MATK_RATE, mAtkRate, bonusAttributes.mAtkRate, true);
             result += "\n";
         }
         if (mDefRate != 0 || bonusAttributes.mDefRate != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_MDEF_RATE, mDefRate, bonusAttributes.mDefRate, true);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_MDEF_RATE, mDefRate, bonusAttributes.mDefRate, true);
             result += "\n";
         }
         if (spdRate != 0 || bonusAttributes.spdRate != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_SPD_RATE, spdRate, bonusAttributes.spdRate, true);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_SPD_RATE, spdRate, bonusAttributes.spdRate, true);
             result += "\n";
         }
         if (evaRate != 0 || bonusAttributes.evaRate != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_EVA_RATE, evaRate, bonusAttributes.evaRate, true);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_EVA_RATE, evaRate, bonusAttributes.evaRate, true);
             result += "\n";
         }
         if (accRate != 0 || bonusAttributes.accRate != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_ACC_RATE, accRate, bonusAttributes.accRate, true);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_ACC_RATE, accRate, bonusAttributes.accRate, true);
             result += "\n";
         }
         if (critChance != 0 || bonusAttributes.critChance != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_CRIT_CHANCE, critChance, bonusAttributes.critChance, true);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_CRIT_CHANCE, critChance, bonusAttributes.critChance, true);
             result += "\n";
         }
         if (critDamageRate != 0 || bonusAttributes.critDamageRate != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_CRIT_DAMAGE_RATE, critDamageRate, bonusAttributes.critDamageRate, true);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_CRIT_DAMAGE_RATE, critDamageRate, bonusAttributes.critDamageRate, true);
             result += "\n";
         }
         if (blockChance != 0 || bonusAttributes.blockChance != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_BLOCK_CHANCE, blockChance, bonusAttributes.blockChance, true);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_BLOCK_CHANCE, blockChance, bonusAttributes.blockChance, true);
             result += "\n";
         }
         if (blockDamageRate != 0 || bonusAttributes.blockDamageRate != 0)
         {
-            result += LanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_BLOCK_DAMAGE_RATE, blockDamageRate, bonusAttributes.blockDamageRate, true);
+            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_BLOCK_DAMAGE_RATE, blockDamageRate, bonusAttributes.blockDamageRate, true);
         }
         return result;
     }

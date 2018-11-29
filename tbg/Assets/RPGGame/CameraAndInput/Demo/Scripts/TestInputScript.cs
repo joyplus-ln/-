@@ -6,22 +6,22 @@ public class TestInputScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        InputManager.useMobileInputOnNonMobile = true;
+        RPGInputManager.useMobileInputOnNonMobile = true;
 
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if (InputManager.GetButtonDown("Jump"))
+        if (RPGInputManager.GetButtonDown("Jump"))
             Debug.Log("Press Jump");
-        if (InputManager.GetButtonUp("Jump"))
+        if (RPGInputManager.GetButtonUp("Jump"))
             Debug.Log("Release Jump");
-        if (InputManager.GetButton("Jump"))
+        if (RPGInputManager.GetButton("Jump"))
             Debug.Log("Hold Jump");
 
-        float hAxis = InputManager.GetAxis("Horizontal", false);
-        float vAxis = InputManager.GetAxis("Vertical", false);
+        float hAxis = RPGInputManager.GetAxis("Horizontal", false);
+        float vAxis = RPGInputManager.GetAxis("Vertical", false);
         if (hAxis != 0)
             Debug.Log("hAxis " + hAxis);
         if (vAxis != 0)

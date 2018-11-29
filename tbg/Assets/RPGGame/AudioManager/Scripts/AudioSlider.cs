@@ -18,11 +18,11 @@ public class AudioSlider : AudioComponent
 
     private void OnValueChanged(float level)
     {
-        AudioManager.Singleton.SetVolumeLevel(SettingId, level);
+        RPGAudioManager.Singleton.SetVolumeLevel(SettingId, level);
     }
 
     private void OnEnable()
     {
-        slider.value = AudioManager.Singleton.GetVolumeLevel(SettingId);
+        slider.value = RPGAudioManager.Singleton.GetVolumeLevel(SettingId);
     }
 }

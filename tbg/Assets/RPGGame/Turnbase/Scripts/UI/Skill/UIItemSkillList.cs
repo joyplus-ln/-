@@ -4,45 +4,45 @@ using UnityEngine;
 
 public class UIItemSkillList : MonoBehaviour
 {
-    public UIItem uiItem;
-    public UISkillList uiSkillList;
+    public RpguiItem RpguiItem;
+    public RpguiSkillList RpguiSkillList;
 
     private void Awake()
     {
-        uiItem.eventUpdate.RemoveListener(OnItemDataUpdate);
-        uiItem.eventUpdate.AddListener(OnItemDataUpdate);
+        RpguiItem.eventUpdate.RemoveListener(OnItemDataUpdate);
+        RpguiItem.eventUpdate.AddListener(OnItemDataUpdate);
     }
 
     private void Start()
     {
-        if (uiSkillList == null)
+        if (RpguiSkillList == null)
             return;
 
-        if (uiItem == null)
+        if (RpguiItem == null)
         {
-            uiSkillList.Hide();
+            RpguiSkillList.Hide();
             return;
         }
     }
 
     private void OnDestroy()
     {
-        uiItem.eventUpdate.RemoveListener(OnItemDataUpdate);
+        RpguiItem.eventUpdate.RemoveListener(OnItemDataUpdate);
     }
 
-    private void OnItemDataUpdate(UIDataItem ui)
+    private void OnItemDataUpdate(RpguiDataItem Rpgui)
     {
-        var uiItem = ui as UIItem;
+        var uiItem = Rpgui as RpguiItem;
         var data = uiItem.data;
         if (data.CharacterData != null)
         {
             List<CustomSkill> skills = new List<CustomSkill>();
             if (data.CharacterData.GetCustomSkills() != null)
                 skills.AddRange(data.CharacterData.GetCustomSkills());
-            uiSkillList.SetListItems(skills);
-            uiSkillList.Show();
+            RpguiSkillList.SetListItems(skills);
+            RpguiSkillList.Show();
         }
         else
-            uiSkillList.Hide();
+            RpguiSkillList.Hide();
     }
 }

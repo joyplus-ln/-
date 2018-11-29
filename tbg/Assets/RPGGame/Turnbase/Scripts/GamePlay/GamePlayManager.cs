@@ -24,8 +24,8 @@ public class GamePlayManager : BaseGamePlayManager
     public float moveToNextWaveDelay = 1f;
     [Header("UI")]
     public Transform uiCharacterStatsContainer;
-    public UICharacterStats uiCharacterStatsPrefab;
-    public UICharacterActionManager uiCharacterActionManager;
+    public RpguiCharacterStats RpguiCharacterStatsPrefab;
+    public RpguiCharacterActionManager RpguiCharacterActionManager;
     public UseSkillManager uiUseSkillManager;
     public CharacterEntity ActiveCharacter { get; private set; }
     public int CurrentWave { get; private set; }
@@ -50,7 +50,7 @@ public class GamePlayManager : BaseGamePlayManager
         if (inputCamera == null)
             inputCamera = Camera.main;
         // Setup uis
-        uiCharacterActionManager.Hide();
+        RpguiCharacterActionManager.Hide();
         uiUseSkillManager.Hide();
         // Setup player formation
         playerFormation.foeFormation = foeFormation;
@@ -77,7 +77,7 @@ public class GamePlayManager : BaseGamePlayManager
 
     private void Update()
     {
-        if (uiPauseGame.IsVisible())
+        if (RpguiPauseGame.IsVisible())
         {
             Time.timeScale = 0;
             return;
@@ -87,7 +87,7 @@ public class GamePlayManager : BaseGamePlayManager
         {
             if (IsAutoPlay)
             {
-                uiCharacterActionManager.Hide();
+                RpguiCharacterActionManager.Hide();
                 uiUseSkillManager.Hide();
                 if (ActiveCharacter != null)
                     ActiveCharacter.RandomAction();
@@ -99,7 +99,7 @@ public class GamePlayManager : BaseGamePlayManager
 
         if (Input.GetMouseButtonDown(0) && ActiveCharacter != null && ActiveCharacter.IsPlayerCharacter)
         {
-            //Ray ray = inputCamera.ScreenPointToRay(InputManager.MousePosition());
+            //Ray ray = inputCamera.ScreenPointToRay(RPGInputManager.MousePosition());
             //Debug.DrawRay(ray.origin, ray.direction, Color.red);
             //RaycastHit hitInfo;
             //if (!Physics.Raycast(ray, out hitInfo))
@@ -226,7 +226,7 @@ public class GamePlayManager : BaseGamePlayManager
                     ActiveCharacter.RandomAction();
                 else
                 {
-                    uiCharacterActionManager.Show();
+                    RpguiCharacterActionManager.Show();
                     uiUseSkillManager.SetData(ActiveCharacter);
                 }
             }
@@ -286,7 +286,7 @@ public class GamePlayManager : BaseGamePlayManager
                     ActiveCharacter.RandomAction();
                 else
                 {
-                    uiCharacterActionManager.Show();
+                    RpguiCharacterActionManager.Show();
                     uiUseSkillManager.SetData(ActiveCharacter);
                 }
             }

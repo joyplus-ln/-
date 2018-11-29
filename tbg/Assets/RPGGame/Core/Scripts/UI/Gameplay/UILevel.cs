@@ -39,21 +39,21 @@ public class UILevel : MonoBehaviour, ILevel
 
         if (textLevel != null)
         {
-            textLevel.text = useFormatForInfo ? LanguageManager.FormatInfo(GameText.TITLE_LEVEL, Level) : Level.ToString("N0");
+            textLevel.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_LEVEL, Level) : Level.ToString("N0");
             if (showMaxLevelInTextLevel)
                 textLevel.text += "/" + MaxLevel.ToString("N0");
         }
 
         if (textCollectExp != null)
         {
-            textCollectExp.text = useFormatForInfo ? LanguageManager.FormatInfo(GameText.TITLE_COLLECT_EXP, CollectExp) : CollectExp.ToString("N0");
+            textCollectExp.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_COLLECT_EXP, CollectExp) : CollectExp.ToString("N0");
             if (isReachMaxLevel)
                 textCollectExp.text = "0";
         }
 
         if (textNextExp != null)
         {
-            textNextExp.text = useFormatForInfo ? LanguageManager.FormatInfo(GameText.TITLE_NEXT_EXP, NextExp) : NextExp.ToString("N0");
+            textNextExp.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_NEXT_EXP, NextExp) : NextExp.ToString("N0");
             if (isReachMaxLevel)
                 textNextExp.text = "0";
         }
@@ -62,12 +62,12 @@ public class UILevel : MonoBehaviour, ILevel
         {
             textCollectPerNextExp.text = CollectExp.ToString("N0") + "/" + NextExp.ToString("N0");
             if (isReachMaxLevel)
-                textCollectPerNextExp.text = LanguageManager.GetText(GameText.TITLE_EXP_MAX);
+                textCollectPerNextExp.text = RPGLanguageManager.GetText(GameText.TITLE_EXP_MAX);
         }
 
         if (textRequireExp != null)
         {
-            textRequireExp.text = useFormatForInfo ? LanguageManager.FormatInfo(GameText.TITLE_REQUIRE_EXP, this.RequireExp()) : this.RequireExp().ToString("N0");
+            textRequireExp.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_REQUIRE_EXP, this.RequireExp()) : this.RequireExp().ToString("N0");
             if (isReachMaxLevel)
                 textRequireExp.text = "0";
         }

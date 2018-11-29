@@ -7,7 +7,7 @@ public class StageCreater : MonoBehaviour
     private List<GameObject> uistageList = new List<GameObject>();
 
     [SerializeField]
-    private UIStage stageScript;
+    private RpguiStage stageScript;
     // Use this for initialization
     List<GameObject> childs = new List<GameObject>();
     void Start()
@@ -30,7 +30,7 @@ public class StageCreater : MonoBehaviour
         {
             obj = Instantiate(stageScript.gameObject);
             obj.transform.SetParent(transform, false);
-            obj.GetComponent<UIStage>().data = GameInstance.GameDatabase.Stages[key] as NormalStage;
+            obj.GetComponent<RpguiStage>().data = GameInstance.GameDatabase.Stages[key] as NormalStage;
             obj.SetActive(true);
             childs.Add(obj);
             uistageList.Add(obj);

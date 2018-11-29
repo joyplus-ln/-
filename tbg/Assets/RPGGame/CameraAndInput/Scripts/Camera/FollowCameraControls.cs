@@ -65,8 +65,8 @@ public class FollowCameraControls : MonoBehaviour
 
         if (updateRotation)
         {
-            var mX = InputManager.GetAxis("Mouse X", false);
-            var mY = InputManager.GetAxis("Mouse Y", false);
+            var mX = RPGInputManager.GetAxis("Mouse X", false);
+            var mY = RPGInputManager.GetAxis("Mouse Y", false);
             TargetFollowCamera.xRotation -= mY * rotationSpeed;
             if (limitXRotation)
                 TargetFollowCamera.xRotation = Mathf.Clamp(TargetFollowCamera.xRotation, minXRotation, maxXRotation);
@@ -77,7 +77,7 @@ public class FollowCameraControls : MonoBehaviour
 
         if (updateZoom)
         {
-            var mZ = InputManager.GetAxis("Mouse ScrollWheel", false);
+            var mZ = RPGInputManager.GetAxis("Mouse ScrollWheel", false);
             TargetFollowCamera.zoomDistance += mZ * zoomSpeed;
             if (limitZoomDistance)
                 TargetFollowCamera.zoomDistance = Mathf.Clamp(TargetFollowCamera.zoomDistance, minZoomDistance, maxZoomDistance);

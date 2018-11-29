@@ -8,7 +8,7 @@ public class TowerGamePlayFormation : BaseGamePlayFormation
     public TowerGamePlayFormation foeFormation;
     public bool isPlayerFormation;
     public TowerGamePlayManager Manager { get { return TowerGamePlayManager.Singleton; } }
-    public readonly Dictionary<int, UICharacterStats> UIStats = new Dictionary<int, UICharacterStats>();
+    public readonly Dictionary<int, RpguiCharacterStats> UIStats = new Dictionary<int, RpguiCharacterStats>();
 
     private void Start()
     {
@@ -23,20 +23,20 @@ public class TowerGamePlayFormation : BaseGamePlayFormation
         if (character == null)
             return null;
 
-        UICharacterStats uiStats;
-        if (UIStats.TryGetValue(position, out uiStats))
+        RpguiCharacterStats rpguiStats;
+        if (UIStats.TryGetValue(position, out rpguiStats))
         {
-            Destroy(uiStats.gameObject);
+            Destroy(rpguiStats.gameObject);
             UIStats.Remove(position);
         }
 
         if (Manager != null)
         {
-            uiStats = Instantiate(Manager.uiCharacterStatsPrefab, Manager.uiCharacterStatsContainer);
-            uiStats.transform.localScale = Vector3.one;
-            uiStats.transform.localPosition = new Vector3(200, 0, 0);
-            uiStats.character = character;
-            character.uiCharacterStats = uiStats;
+            rpguiStats = Instantiate(Manager.RpguiCharacterStatsPrefab, Manager.uiCharacterStatsContainer);
+            rpguiStats.transform.localScale = Vector3.one;
+            rpguiStats.transform.localPosition = new Vector3(200, 0, 0);
+            rpguiStats.character = character;
+            character.RpguiCharacterStats = rpguiStats;
             character.transform.rotation = Quaternion.AngleAxis(0,Vector3.zero);
         }
 

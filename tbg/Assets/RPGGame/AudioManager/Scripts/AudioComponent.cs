@@ -23,13 +23,13 @@ public class AudioComponent : MonoBehaviour
             switch (type)
             {
                 case AudioComponentSettingType.MASTER:
-                    return AudioManager.Singleton.masterVolumeSetting.id;
+                    return RPGAudioManager.Singleton.masterVolumeSetting.id;
                 case AudioComponentSettingType.BGM:
-                    return AudioManager.Singleton.bgmVolumeSetting.id;
+                    return RPGAudioManager.Singleton.bgmVolumeSetting.id;
                 case AudioComponentSettingType.SFX:
-                    return AudioManager.Singleton.sfxVolumeSetting.id;
+                    return RPGAudioManager.Singleton.sfxVolumeSetting.id;
                 case AudioComponentSettingType.AMBIENT:
-                    return AudioManager.Singleton.ambientVolumeSetting.id;
+                    return RPGAudioManager.Singleton.ambientVolumeSetting.id;
             }
             return otherSettingId;
         }

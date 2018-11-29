@@ -52,10 +52,10 @@ public class MobileMovementJoystick : MonoBehaviour, IPointerDownHandler, IPoint
             movementBackground.position = backgroundOffset + movementController.position;
 
         if (useAxisX)
-            InputManager.SetAxis(axisXName, 0);
+            RPGInputManager.SetAxis(axisXName, 0);
 
         if (useAxisY)
-            InputManager.SetAxis(axisYName, 0);
+            RPGInputManager.SetAxis(axisYName, 0);
     }
 
 
@@ -88,9 +88,9 @@ public class MobileMovementJoystick : MonoBehaviour, IPointerDownHandler, IPoint
         delta.y = -delta.y;
         delta /= movementRange;
         if (useAxisX)
-            InputManager.SetAxis(axisXName, -delta.x);
+            RPGInputManager.SetAxis(axisXName, -delta.x);
 
         if (useAxisY)
-            InputManager.SetAxis(axisYName, delta.y);
+            RPGInputManager.SetAxis(axisYName, delta.y);
     }
 }
