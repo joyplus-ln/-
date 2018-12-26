@@ -22,19 +22,19 @@ using UnityEditor;
 using UnityEngine;
 
 
-{
+
     /// <summary>
     /// 编辑器模式下用的加载器
     /// </summary>
     public class FastEditorModeAssetBundleLoader : FastAssetBundleLoader
     {
-        class ABInfo : AssetBundleInfo
+        class ABInfo : FastAssetBundleInfo
         {
             public override Object mainObject
             {
                 get
                 {
-                    string newPath = AssetBundlePathResolver.instance.GetEditorModePath(bundleName);
+                    string newPath = FastAssetBundlePathResolver.instance.GetEditorModePath(bundleName);
                     Object mainObject = AssetDatabase.LoadMainAssetAtPath(newPath);
                     return mainObject;
                 }
@@ -46,23 +46,23 @@ using UnityEngine;
             bundleManager.StartCoroutine(this.LoadResource());
         }
 
-        private void OnBundleUnload(AssetBundleInfo abi)
+        private void OnBundleUnload(FastAssetBundleInfo abi)
         {
             this.bundleInfo = null;
-            this.state = LoadState.State_None;
+            this.state = FastLoadState.State_None;
         }
 
         IEnumerator LoadResource()
         {
             yield return new WaitForEndOfFrame();
 
-            string newPath = AssetBundlePathResolver.instance.GetEditorModePath(bundleName);
+            string newPath = FastAssetBundlePathResolver.instance.GetEditorModePath(bundleName);
             Object mainObject = AssetDatabase.LoadMainAssetAtPath(newPath);
             if (mainObject)
             {
                 if (bundleInfo == null)
                 {
-                    state = LoadState.State_Complete;
+                    state = FastLoadState.State_Complete;
                     bundleInfo = bundleManager.CreateBundleInfo(this, new ABInfo());
                     bundleInfo.isReady = true;
                     bundleInfo.onUnloaded = OnBundleUnload;
@@ -72,12 +72,12 @@ using UnityEngine;
             }
             else
             {
-                state = LoadState.State_Error;
+                state = FastLoadState.State_Error;
                 Error();
             }
         }
     }
-}
+
 #endif
 
 #endif
