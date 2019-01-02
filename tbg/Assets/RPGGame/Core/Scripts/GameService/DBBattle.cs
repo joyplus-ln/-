@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Mono.Data.Sqlite;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -69,13 +68,7 @@ public class DBBattle
         }
         else
         {
-            //if (oldFormation != null)
-            //{
-            //    oldFormation.ItemId = formation.ItemId;
-            //    GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerFormation SET itemId=@itemId WHERE itemguid=@itemguid",
-            //        new SqliteParameter("@itemId", oldFormation.ItemId),
-            //        new SqliteParameter("@itemguid", oldFormation.characterGuid));
-            //}
+
             Debug.LogError("find this item" + formation.characterGuid);
             formation.Position = position;
             GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerFormation SET position=@position WHERE itemguid=@itemguid",

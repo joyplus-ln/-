@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using Mono.Data.Sqlite;
 using UnityEngine;
 using UnityEngine.Events;
 public class DbRowsReader
@@ -13,18 +12,18 @@ public class DbRowsReader
     public int RowCount { get { return data.Count; } }
     public bool HasRows { get { return RowCount > 0; } }
 
-    public void Init(SqliteDataReader sqliteDataReader)
-    {
-        FieldCount = sqliteDataReader.FieldCount;
-        VisibleFieldCount = sqliteDataReader.VisibleFieldCount;
-        while (sqliteDataReader.Read())
-        {
-            var buffer = new object[sqliteDataReader.FieldCount];
-            sqliteDataReader.GetValues(buffer);
-            data.Add(new List<object>(buffer));
-        }
-        ResetReader();
-    }
+    //public void Init(SqliteDataReader sqliteDataReader)
+    //{
+    //    FieldCount = sqliteDataReader.FieldCount;
+    //    VisibleFieldCount = sqliteDataReader.VisibleFieldCount;
+    //    while (sqliteDataReader.Read())
+    //    {
+    //        var buffer = new object[sqliteDataReader.FieldCount];
+    //        sqliteDataReader.GetValues(buffer);
+    //        data.Add(new List<object>(buffer));
+    //    }
+    //    ResetReader();
+    //}
 
     public bool Read()
     {
@@ -93,7 +92,7 @@ public class DBTableUtils
 {
     public string dbPath = "./table.sqlite3";
 
-    public static SqliteConnection connection;
+   // public static SqliteConnection connection;
 
     public void Init()
     {
@@ -106,56 +105,28 @@ public class DBTableUtils
             dbPath = Application.persistentDataPath + dbPath;
         }
         // open connection
-        connection = new SqliteConnection("URI=file:" + dbPath);
+        //connection = new SqliteConnection("URI=file:" + dbPath);
     }
 
     #region 数据库操作
 
-    public void ExecuteNonQuery(string sql, params SqliteParameter[] args)
-    {
-        connection.Open();
-        using (var cmd = new SqliteCommand(sql, connection))
-        {
-            foreach (var arg in args)
-            {
-                cmd.Parameters.Add(arg);
-            }
-            cmd.ExecuteNonQuery();
-        }
-        connection.Close();
-    }
+   
 
-    public object ExecuteScalar(string sql, params SqliteParameter[] args)
-    {
-        object result;
-        connection.Open();
-        using (var cmd = new SqliteCommand(sql, connection))
-        {
-            foreach (var arg in args)
-            {
-                cmd.Parameters.Add(arg);
-            }
-            result = cmd.ExecuteScalar();
-        }
-        connection.Close();
-        return result;
-    }
-
-    public DbRowsReader ExecuteReader(string sql, params SqliteParameter[] args)
-    {
-        DbRowsReader result = new DbRowsReader();
-        connection.Open();
-        using (var cmd = new SqliteCommand(sql, connection))
-        {
-            foreach (var arg in args)
-            {
-                cmd.Parameters.Add(arg);
-            }
-            result.Init(cmd.ExecuteReader());
-        }
-        connection.Close();
-        return result;
-    }
+//    public DbRowsReader ExecuteReader(string sql, params SqliteParameter[] args)
+//    {
+//        DbRowsReader result = new DbRowsReader();
+////        connection.Open();
+////        using (var cmd = new SqliteCommand(sql, connection))
+////        {
+////            foreach (var arg in args)
+////            {
+////                cmd.Parameters.Add(arg);
+////            }
+////            result.Init(cmd.ExecuteReader());
+////        }
+////        connection.Close();
+////        return result;
+//    }
 
     #endregion
 

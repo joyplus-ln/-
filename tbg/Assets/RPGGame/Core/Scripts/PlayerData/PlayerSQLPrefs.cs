@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
-using Mono.Data.Sqlite;
 using UnityEngine.Events;
 
 public class PlayerSQLPrefs

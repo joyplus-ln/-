@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Mono.Data.Sqlite;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -21,7 +20,7 @@ public class DBMapItem
 
     public Dictionary<string, CharacterItem> GetSqliteCharacters()
     {
-        var reader = GameInstance.dbTableUtils.ExecuteReader(@"SELECT * FROM Character");
+        DbRowsReader reader = null;// GameInstance.dbTableUtils.ExecuteReader(@"SELECT * FROM Character");
         var list = new Dictionary<string, CharacterItem>();
         CharacterItem item = null;
         while (reader.Read())
@@ -75,7 +74,7 @@ public class DBMapItem
 
     public Dictionary<string, EquipmentItem> GetSqliteEquipments()
     {
-        var reader = GameInstance.dbTableUtils.ExecuteReader(@"SELECT * FROM Equipment");
+        DbRowsReader reader = null;//GameInstance.dbTableUtils.ExecuteReader(@"SELECT * FROM Equipment");
         var list = new Dictionary<string, EquipmentItem>();
         EquipmentItem item = null;
         while (reader.Read())
