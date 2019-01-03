@@ -20,6 +20,6 @@ public class FormationItemShow : MonoBehaviour
             nameText.text = "";
             return;
         }
-        nameText.text = item.Position + ":" + PlayerItem.characterDataMap[item.characterGuid].CharacterData.title;
+        //nameText.text = item.Position + ":" + PlayerItem.characterDataMap[item.characterGuid].CharacterData.title;
     }
 }

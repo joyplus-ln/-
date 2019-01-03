@@ -67,7 +67,7 @@ namespace SQLite3TableDataTmp
         exp_blockDamageRate,
     }
 
-    public class IEquipment : SyncBase
+    public partial class IEquipment : SyncBase
     {
         [SQLite3Constraint(SQLite3Constraint.Unique | SQLite3Constraint.NotNull )]
         [Sync((int)IEquipmentEnum.id)]

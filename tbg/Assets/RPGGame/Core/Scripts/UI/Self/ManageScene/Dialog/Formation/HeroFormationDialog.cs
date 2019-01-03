@@ -21,15 +21,15 @@ public class HeroFormationDialog : Dialog
 
     public void SetFormation(int index)
     {
-        GameInstance.dbBattle.DoSetFormation(heroFormationData.HeroGuid, PlayerItem.characterDataMap[heroFormationData.HeroGuid].ItemID, "STAGE_FORMATION_A", index,
-            (formationListResult) =>
-            {
-                PlayerFormation.SetDataRange(formationListResult.list);
-                if (heroFormationData.callback != null)
-                {
-                    heroFormationData.callback.Invoke();
-                }
-            });
+        //GameInstance.dbBattle.DoSetFormation(heroFormationData.HeroGuid, PlayerItem.characterDataMap[heroFormationData.HeroGuid].ItemID, "STAGE_FORMATION_A", index,
+            //(formationListResult) =>
+            //{
+            //    PlayerFormation.SetDataRange(formationListResult.list);
+            //    if (heroFormationData.callback != null)
+            //    {
+            //        heroFormationData.callback.Invoke();
+            //    }
+            //});
         Close();
     }
 }

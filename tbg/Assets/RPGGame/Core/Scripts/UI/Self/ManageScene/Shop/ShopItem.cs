@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,10 +16,10 @@ public class ShopItem : MonoBehaviour
 
     }
 
-    public void SetItemData(CharacterItem item)
+    public void SetItemData(ICharacter item)
     {
         NameText.text = item.title;
-        heruid = item.itemid;
+        heruid = item.guid;
     }
 
     public void Click()

@@ -133,7 +133,7 @@ public abstract class RpguiDataItemList<TUIDataItem, TUIDataItemType> : RpguiLis
         var uiItem = Rpgui as RpguiItem;
         var item = uiItem.data;
         if (!multipleSelection)
-            DeselectedItems(item.GUID);
+            DeselectedItems(item.guid);
         eventSelect.Invoke(uiItem);
     }
 

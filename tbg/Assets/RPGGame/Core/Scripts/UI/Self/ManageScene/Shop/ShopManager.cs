@@ -58,7 +58,7 @@ public class ShopManager : MonoBehaviour
     void CreatHero()
     {
         GameObject itemClone = null;
-        foreach (var item in GameInstance.GameDatabase.characters.Values)
+        foreach (var item in DBManager.instance.GetConfigCharacters().Values)
         {
             itemClone = Instantiate(shopItem);
             itemClone.GetComponent<ShopItem>().SetItemData(item);

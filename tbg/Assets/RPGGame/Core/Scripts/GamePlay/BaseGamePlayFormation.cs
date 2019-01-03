@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 public class BaseGamePlayFormation : MonoBehaviour
@@ -18,9 +19,9 @@ public class BaseGamePlayFormation : MonoBehaviour
             if (PlayerFormation.TryGetData(formationName, i, out playerFormation))
             {
                 var characterGuid = playerFormation.characterGuid;
-                PlayerItem item = null;
-                if (!string.IsNullOrEmpty(characterGuid) && PlayerItem.characterDataMap.TryGetValue(characterGuid, out item))
-                    SetCharacter(i, item);
+                ICharacter item = null;
+                if (!string.IsNullOrEmpty(characterGuid) && DBManager.instance.GetConfigCharacters().TryGetValue(characterGuid, out item))
+                    SetCharacter(i, item.GetPlayerItem());
             }
         }
     }

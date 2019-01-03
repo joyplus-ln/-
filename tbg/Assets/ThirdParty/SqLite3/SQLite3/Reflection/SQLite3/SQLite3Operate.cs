@@ -1136,6 +1136,49 @@ namespace Framework.Reflection.SQLite3Helper
             else return null;
         }
 
+        public Dictionary<string, T> SelectDictT_ST<T>(string InSqlStatement = "") where T : SyncBase, new()
+        {
+            SyncProperty property = SyncFactory.GetSyncProperty(typeof(T));
+
+            if (0 != (sbLength = stringBuilder.Length)) stringBuilder.Remove(0, sbLength);
+            stringBuilder.Append("SELECT * FROM ")
+                .Append(property.ClassName);
+            if (!string.IsNullOrEmpty(InSqlStatement))
+                stringBuilder.Append(" WHERE ")
+                    .Append(InSqlStatement);
+
+            SQLite3Statement stmt;
+            if (ExecuteQuery(stringBuilder.ToString(), out stmt))
+            {
+                Dictionary<string, T> resultDict = new Dictionary<string, T>();
+                int count = SQLite3.ColumnCount(stmt);
+                string id = "";
+                SQLite3Result result;
+                while (true)
+                {
+                    result = SQLite3.Step(stmt);
+                    if (SQLite3Result.Row == result)
+                    {
+                        T t = GetT(new T(), property.Infos, stmt, count);
+                        id = (string)property.Infos[1].GetValue(t, null);
+                        if (!resultDict.ContainsKey(id)) resultDict.Add(id, t);
+                    }
+                    else if (SQLite3Result.Done == result) break;
+                    else
+                    {
+                        if (!TableExists(property.ClassName)) Debug.LogError("No such table : " + property.ClassName);
+                        else Debug.LogError(SQLite3.GetErrmsg(stmt));
+                        break;
+                    }
+                }
+
+                SQLite3.Finalize(stmt);
+
+                return resultDict;
+            }
+            else return null;
+        }
+
         /// <summary>
         /// Query the array by property indexes and expected value and return the dictionary.
         /// </summary>

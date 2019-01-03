@@ -22,7 +22,7 @@ namespace SQLite3TableDataTmp
         equipPosition,
     }
 
-    public class IPlayerHasEquips : SyncBase
+    public partial class IPlayerHasEquips : SyncBase
     {
         [SQLite3Constraint(SQLite3Constraint.Unique | SQLite3Constraint.NotNull )]
         [Sync((int)IPlayerHasEquipsEnum.id)]

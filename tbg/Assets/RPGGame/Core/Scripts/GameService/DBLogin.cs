@@ -36,7 +36,7 @@ public class DBLogin
         PlayerAuth.ClearData();
         PlayerCurrency.ClearData();
         PlayerFormation.ClearData();
-        PlayerItem.ClearData();
+        //PlayerItem.ClearData();
         PlayerOtherItem.ClearData();
         PlayerStamina.ClearData();
         PlayerUnlockItem.ClearData();
@@ -50,6 +50,7 @@ public class DBLogin
         var playerId = cplayer.Id;
         var loginToken = cplayer.LoginToken;
         var result = new AuthListResult();
+        
         var player = GameInstance.dbDataUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
             new SqliteParameter("@playerId", playerId),
             new SqliteParameter("@loginToken", loginToken));

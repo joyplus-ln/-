@@ -41,9 +41,10 @@ public class SelfHeroSelectChangeEquipDialog : Dialog
     void ShowItems()
     {
         GameObject instItem = null;
-        foreach (var key in PlayerItem.equipDataMap.Keys)
+        foreach (var key in DBManager.instance.GetHasEquipses().Keys)
         {
-            if (PlayerItem.equipDataMap[key].EquipmentData.equippablePosition == selfHeroSelectChangeEquipData.equipType.ToString())
+            //todo
+            if (DBManager.instance.GetHasEquipses()[key].equipPosition == selfHeroSelectChangeEquipData.equipType.ToString())
             {
                 instItem = Instantiate(item);
                 instItem.GetComponent<SelfHeroSelectChangeItem>().SetInfo(key, characterGuid, selfHeroSelectChangeEquipData.equipType.ToString(), selectedImage, CallBack);
@@ -68,21 +69,21 @@ public class SelfHeroSelectChangeEquipDialog : Dialog
     void CallBack(string equipGuid)
     {
         this.selectedEquipGuid = equipGuid;
-        UiAttributeShow.SetupInfo(PlayerItem.equipDataMap[equipGuid].GetItemAttributes());
+        //UiAttributeShow.SetupInfo(PlayerItem.equipDataMap[equipGuid].GetItemAttributes());
     }
 
 
-    public void EquipThisItem()
-    {
-        if (selectedEquipGuid.Length > 0 && PlayerItem.equipDataMap.ContainsKey(selectedEquipGuid))
-        {
-            GameInstance.dbBattle.DoEquipItem(characterGuid, selectedEquipGuid, selfHeroSelectChangeEquipData.equipType.ToString(), (result) =>
-            {
-                PlayerItem.SetDataRange(result.updateItems);
-                Close();
-            });
-        }
-    }
+    //public void EquipThisItem()
+    //{
+    //    if (selectedEquipGuid.Length > 0 && PlayerItem.equipDataMap.ContainsKey(selectedEquipGuid))
+    //    {
+    //        GameInstance.dbBattle.DoEquipItem(characterGuid, selectedEquipGuid, selfHeroSelectChangeEquipData.equipType.ToString(), (result) =>
+    //        {
+    //            PlayerItem.SetDataRange(result.updateItems);
+    //            Close();
+    //        });
+    //    }
+    //}
 }
 
 public class SelfHeroSelectChangeEquipData

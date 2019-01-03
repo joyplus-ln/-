@@ -30,13 +30,13 @@ public class EquipListUI : MonoBehaviour
     IEnumerator CreatItem()
     {
         yield return null;
-        GameObject items = null;
-        foreach (var key in PlayerItem.equipDataMap.Keys)
-        {
-            yield return items = Instantiate(item);
-            items.GetComponent<EquipListItem>().Init(this, PlayerItem.equipDataMap[key]);
-            items.transform.SetParent(content, false);
-        }
+        //GameObject items = null;
+        //foreach (var key in PlayerItem.equipDataMap.Keys)
+        //{
+        //    yield return items = Instantiate(item);
+        //    items.GetComponent<EquipListItem>().Init(this, PlayerItem.equipDataMap[key]);
+        //    items.transform.SetParent(content, false);
+        //}
 
     }
 

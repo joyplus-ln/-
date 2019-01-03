@@ -1,15 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class RpguiItemList : RpguiDataItemList<RpguiItem, PlayerItem>
+public class RpguiItemList : RpguiDataItemList<RpguiItem, ICharacter>
 {
     // Private
     private readonly Dictionary<string, int> selectedItemIdAmountPair = new Dictionary<string, int>();
 
-    public void SetListItems(List<PlayerItem> list, UnityAction<RpguiItem> onSetListItem = null)
+    public void SetListItems(List<ICharacter> list, UnityAction<RpguiItem> onSetListItem = null)
     {
         ClearListItems();
         Debug.Log("item list " + list.Count);
@@ -21,12 +22,13 @@ public class RpguiItemList : RpguiDataItemList<RpguiItem, PlayerItem>
         }
     }
 
-    public RpguiItem SetListItem(PlayerItem data)
+    public RpguiItem SetListItem(ICharacter data)
     {
-        if (data == null || string.IsNullOrEmpty(data.GUID))
+        //todo
+        if (data == null || string.IsNullOrEmpty(data.guid))
             return null;
-        var item = SetListItem(data.GUID);
-        item.SetData(data);
+        var item = SetListItem(data.guid);
+        //item.SetData(data);
         return item;
     }
 
@@ -44,22 +46,22 @@ public class RpguiItemList : RpguiDataItemList<RpguiItem, PlayerItem>
 
     public List<RpguiItem> GetSelectedUIList(string dataId)
     {
-        var valueList = GetSelectedUIList();
-        var list = valueList.Where(entry =>
-            entry != null &&
-            entry.data != null &&
-            entry.data.ItemData != null &&
-            entry.data.GUID.Equals(dataId)).ToList();
-        return list;
+        //var valueList = GetSelectedUIList();
+        //var list = valueList.Where(entry =>
+        //    entry != null &&
+        //    entry.data != null //&&
+        //    //entry.data.ItemData != null &&
+        //    //entry.data.GUID.Equals(dataId)).ToList();
+        //return list;
+        return null;
     }
 
-    public List<PlayerItem> GetSelectedDataList(string dataId)
+    public List<ICharacter> GetSelectedDataList(string dataId)
     {
         var valueList = GetSelectedDataList();
         var list = valueList.Where(entry =>
             entry != null &&
-            entry.ItemData != null &&
-            entry.GUID.Equals(dataId)).ToList();
+            entry.guid.Equals(dataId)).ToList();
         return list;
     }
 
@@ -75,7 +77,7 @@ public class RpguiItemList : RpguiDataItemList<RpguiItem, PlayerItem>
         var list = GetSelectedDataList();
         foreach (var entry in list)
         {
-            if (entry.GUID == dataId)
+            if (entry.guid == dataId)
                 return true;
         }
         return false;

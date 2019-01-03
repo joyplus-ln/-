@@ -25,7 +25,7 @@ public class SelfHeroEquipSHow : MonoBehaviour
         this.HeroGuid = HeroGuid;
         if (EquipGuid.Length > 0)
         {
-            EquipmentNameText.text = PlayerItem.equipDataMap[EquipGuid].EquipmentData.title;
+            EquipmentNameText.text = DBManager.instance.GetConfigEquipments()[EquipGuid].title;
         }
         else
         {

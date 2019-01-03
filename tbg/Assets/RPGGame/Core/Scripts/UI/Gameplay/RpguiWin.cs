@@ -93,7 +93,7 @@ public class RpguiWin : RpguiDataItem<FinishStageResult>
         {
             RpguiRewardItems.selectable = false;
             RpguiRewardItems.multipleSelection = false;
-            RpguiRewardItems.SetListItems(data.rewardItems);
+            //RpguiRewardItems.SetListItems(data.rewardItems);
         }
 
         if (RpguiRewardCurrency != null)

@@ -63,7 +63,7 @@ public class GameDatabase : ScriptableObject
     //public readonly Dictionary<string, BaseItem> Items = new Dictionary<string, BaseItem>();
 
     //角色
-    public Dictionary<string, CharacterItem> characters = new Dictionary<string, CharacterItem>();
+    //public Dictionary<string, CharacterItem> characters = new Dictionary<string, CharacterItem>();
     public Dictionary<string, EquipmentItem> equipments = new Dictionary<string, EquipmentItem>();
     //装备
     public readonly Dictionary<string, Currency> Currencies = new Dictionary<string, Currency>();

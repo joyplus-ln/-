@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 [System.Serializable]
 public class UIItemEvent : UnityEvent<RpguiItem> { }
 
-public class RpguiItem : RpguiDataItem<PlayerItem>
+public class RpguiItem : RpguiDataItem<ICharacter>
 {
     public enum DisplayStats
     {
@@ -84,8 +85,9 @@ public class RpguiItem : RpguiDataItem<PlayerItem>
         get { return selectedAmount; }
         set
         {
-            var maxAmount = data == null ? 0 : data.Amount;
-            selectedAmount = value > maxAmount ? maxAmount : value;
+            //todo
+            //var maxAmount = data == null ? 0 : data.amount;
+            //selectedAmount = value > maxAmount ? maxAmount : value;
             SetupSelectedAmount();
         }
     }
@@ -105,11 +107,11 @@ public class RpguiItem : RpguiDataItem<PlayerItem>
     {
         get { return SelectedAmount > 0; }
         set
-        {
-            if (value)
-                SelectedAmount = data.Amount;
-            else
-                SelectedAmount = 0;
+        {//todo
+            //if (value)
+            //    SelectedAmount = data.amount;
+            //else
+            //    SelectedAmount = 0;
         }
     }
 
@@ -132,10 +134,11 @@ public class RpguiItem : RpguiDataItem<PlayerItem>
         {
             if (!notShowInTeamStatus)
             {
-                var isInAnyTeam = data.InTeamFormations.Count > 0;
-                if (inTeamObject != null)
-                    inTeamObject.SetActive(isInAnyTeam);
-        
+                //todo
+                //var isInAnyTeam = data.InTeamFormations.Count > 0;
+                //if (inTeamObject != null)
+                //    inTeamObject.SetActive(isInAnyTeam);
+
             }
             else
             {
@@ -147,9 +150,10 @@ public class RpguiItem : RpguiDataItem<PlayerItem>
 
             if (!notShowEquippedStatus)
             {
-                var isEquipped = data.EquippedByItem != null;
-                if (equippedObject != null)
-                    equippedObject.SetActive(isEquipped);
+                //todo
+                //var isEquipped = data.equipItemId != null;
+                //if (equippedObject != null)
+                    //equippedObject.SetActive(isEquipped);
             }
             else
             {
@@ -179,19 +183,18 @@ public class RpguiItem : RpguiDataItem<PlayerItem>
             return;
         }
 
-        var attributes = data.Attributes;
-        var itemData = data.ItemData;
+        var attributes = data.GetPlayerItem().Attributes;
 
         switch (displayStats)
         {
             case DisplayStats.Level:
-                textDisplayStats.text = RPGLanguageManager.FormatInfo(GameText.TITLE_LEVEL, data.Level);
+                textDisplayStats.text = RPGLanguageManager.FormatInfo(GameText.TITLE_LEVEL, 99999);//data.Level);
                 return;
             case DisplayStats.SellPrice:
-                textDisplayStats.text = data.SellPrice.ToString("N0");
+                textDisplayStats.text = "unknown";//data.SellPrice.ToString("N0");
                 return;
             case DisplayStats.RewardExp:
-                textDisplayStats.text = data.RewardExp.ToString("N0");
+                textDisplayStats.text = "unknown"; //data.RewardExp.ToString("N0");
                 return;
             case DisplayStats.SelectedAmount:
                 textDisplayStats.text = SelectedAmount.ToString("N0");
@@ -264,7 +267,7 @@ public class RpguiItem : RpguiDataItem<PlayerItem>
 
     public override void UpdateData()
     {
-        SetupInfo(data);
+        SetupInfo(data.GetPlayerItem());
         SetupSelectedAmount();
     }
 
@@ -282,7 +285,7 @@ public class RpguiItem : RpguiDataItem<PlayerItem>
             return;
 
         var attributes = data.Attributes;
-        var itemData = data.ItemData;
+        var itemData = data.GetICharacter();
 
         if (textTitle != null)
             textTitle.text = itemData == null ? "" : itemData.title;
@@ -305,10 +308,11 @@ public class RpguiItem : RpguiDataItem<PlayerItem>
         // Attributes
         if (RpguiAttributes != null)
         {
-            if (data.ActorItemData != null)
-                RpguiAttributes.Show();
-            else
-                RpguiAttributes.Hide();
+            //todo
+            //if (data.ActorItemData != null)
+            //    RpguiAttributes.Show();
+            //else
+            //    RpguiAttributes.Hide();
 
             if (excludeEquipmentAttributes)
                 RpguiAttributes.SetData(attributes);
@@ -319,7 +323,7 @@ public class RpguiItem : RpguiDataItem<PlayerItem>
         // Stats
         if (uiLevel != null)
         {
-            uiLevel.gameObject.SetActive(data.ActorItemData != null);
+            uiLevel.gameObject.SetActive(true);//(data.ActorItemData != null);
             uiLevel.level = data.Level;
             uiLevel.maxLevel = data.MaxLevel;
             uiLevel.collectExp = data.CollectExp;
@@ -388,6 +392,6 @@ public class RpguiItem : RpguiDataItem<PlayerItem>
 
     public override bool IsEmpty()
     {
-        return data == null || string.IsNullOrEmpty(data.GUID);
+        return data == null || string.IsNullOrEmpty(data.guid);
     }
 }

@@ -17,7 +17,7 @@ public class ShopHeroDialog : Dialog
     {
         base.Init(data);
         shopItemData = (ShopItemData)data.obj;
-        AttributeShow.SetupInfo(GameInstance.GameDatabase.characters[shopItemData.heroid].GetTotalAttributes());
+        AttributeShow.SetupInfo(DBManager.instance.GetConfigCharacters()[shopItemData.heroid].GetTotalAttributes());
     }
 
     public void BuyItem()

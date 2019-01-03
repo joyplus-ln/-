@@ -48,14 +48,14 @@ namespace SQLite3TableDataTmp
         passiveskill,
     }
 
-    public class ICharacter : SyncBase
+    public partial class ICharacter : SyncBase
     {
         [SQLite3Constraint(SQLite3Constraint.Unique | SQLite3Constraint.NotNull )]
         [Sync((int)ICharacterEnum.id)]
         public int id { get; private set; }  //des
 
         [Sync((int)ICharacterEnum.guid)]
-        public int guid { get; set; }  //des
+        public string guid { get; set; }  //des
 
         [Sync((int)ICharacterEnum.title)]
         public string title { get; set; }  //des
@@ -154,7 +154,7 @@ namespace SQLite3TableDataTmp
         {
         }
 
-        public ICharacter(int Inid, int Inguid, string Intitle, string Indescription, string Inregion, string Inquality, int Incategory, int Inminhp, int Inmaxhp, float Inhpgrowth, int InminpAtk, int InmaxpAtk, int InpAtkgrouth, int InminpDef, int InmaxpDef, int InpDefgrouth, int InminmAtk, int InmaxmAtk, int InmAtkgrouth, int InminmDef, int InmaxmDef, int InmDefgrouth, int Inminspd, int Inmaxspd, int Inspdgrouth, int Inmineva, int Inmaxeva, int Inevagrouth, int Inminacc, int Inmaxacc, int Inaccgrouth, string IncustomSkill, string Inpassiveskill)
+        public ICharacter(int Inid, string Inguid, string Intitle, string Indescription, string Inregion, string Inquality, int Incategory, int Inminhp, int Inmaxhp, float Inhpgrowth, int InminpAtk, int InmaxpAtk, int InpAtkgrouth, int InminpDef, int InmaxpDef, int InpDefgrouth, int InminmAtk, int InmaxmAtk, int InmAtkgrouth, int InminmDef, int InmaxmDef, int InmDefgrouth, int Inminspd, int Inmaxspd, int Inspdgrouth, int Inmineva, int Inmaxeva, int Inevagrouth, int Inminacc, int Inmaxacc, int Inaccgrouth, string IncustomSkill, string Inpassiveskill)
         {
             id = Inid;
             guid = Inguid;

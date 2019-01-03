@@ -33,16 +33,17 @@ public class UIItemSkillList : MonoBehaviour
     private void OnItemDataUpdate(RpguiDataItem Rpgui)
     {
         var uiItem = Rpgui as RpguiItem;
-        var data = uiItem.data;
-        if (data.CharacterData != null)
-        {
-            List<CustomSkill> skills = new List<CustomSkill>();
-            if (data.CharacterData.GetCustomSkills() != null)
-                skills.AddRange(data.CharacterData.GetCustomSkills());
-            RpguiSkillList.SetListItems(skills);
-            RpguiSkillList.Show();
-        }
-        else
-            RpguiSkillList.Hide();
+        //todo
+        //var data = uiItem.data;
+        ////if (data.CharacterData != null)
+        //{
+        //    List<CustomSkill> skills = new List<CustomSkill>();
+        //    //if (data.CharacterData.GetCustomSkills() != null)
+        //        //skills.AddRange(data.GetPlayerItem().GetCustomSkills());
+        //    RpguiSkillList.SetListItems(skills);
+        //    RpguiSkillList.Show();
+        //}
+        ////else
+        //    RpguiSkillList.Hide();
     }
 }

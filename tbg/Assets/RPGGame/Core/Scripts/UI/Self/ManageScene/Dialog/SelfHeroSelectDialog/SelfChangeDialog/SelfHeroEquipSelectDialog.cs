@@ -37,7 +37,7 @@ public class SelfHeroEquipSelectDialog : Dialog
             equipOn.SetActive(false);
             equipOff.SetActive(true);
             AttributeShow.gameObject.SetActive(true);
-            AttributeShow.SetupInfo(PlayerItem.equipDataMap[shopItemData.equipGuid].GetItemAttributes());
+            //AttributeShow.SetupInfo(DBManager.instance.GetConfigEquipments()[shopItemData.equipGuid].GetItemAttributes());
         }
         else
         {
@@ -70,7 +70,7 @@ public class SelfHeroEquipSelectDialog : Dialog
     {
         GameInstance.dbBattle.DoUnEquipItem(shopItemData.equipGuid, (result) =>
         {
-            PlayerItem.SetDataRange(result.updateItems);
+            //PlayerItem.SetDataRange(result.updateItems);
             Close();
             if (shopItemData.callback != null)
             {

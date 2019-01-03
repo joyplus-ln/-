@@ -50,7 +50,7 @@ public class RpguiCharacterStatsGeneric : RPGUIBase
         if (!notFollowCharacter)
             TempObjectFollower.targetObject = character.uiContainer;
 
-        var itemData = character.Item.ItemData;
+        //var itemData = character.Item.ItemData;
         var rate = (float)character.Hp / (float)character.MaxHp;
 
         if (textHpPerMaxHp != null)
@@ -69,8 +69,8 @@ public class RpguiCharacterStatsGeneric : RPGUIBase
         if (imageHpGage != null)
             imageHpGage.fillAmount = rate;
 
-        if (textTitle != null)
-            textTitle.text = itemData.title;
+        //if (textTitle != null)
+        //    textTitle.text = itemData.title;
 
         //if (imageIcon != null)
         //    imageIcon.sprite = itemData.icon;

@@ -198,9 +198,9 @@ public class DBPlayerData
     {
         for (var i = 0; i < GameInstance.Singleton.gameDatabase.startCharacterItems.Count; ++i)
         {
-            if (!GameInstance.Singleton.gameDatabase.characters.ContainsKey(GameInstance.Singleton.gameDatabase.startCharacterItems[i]))
+            if (!DBManager.instance.GetConfigCharacters().ContainsKey(GameInstance.Singleton.gameDatabase.startCharacterItems[i]))
                 continue;
-            var startItem = GameInstance.Singleton.gameDatabase.characters[GameInstance.Singleton.gameDatabase.startCharacterItems[i]];
+            var startItem = DBManager.instance.GetConfigCharacters()[GameInstance.Singleton.gameDatabase.startCharacterItems[i]];
 
             if (true)
             {
@@ -225,7 +225,7 @@ public class DBPlayerData
     public void InsertCharacter(string itemid)
     {
         {
-            if (!GameInstance.Singleton.gameDatabase.characters.ContainsKey(itemid)) return;
+            if (!DBManager.instance.GetConfigCharacters().ContainsKey(itemid)) return;
 
             {
                 PlayerItem currentItem = new PlayerItem(PlayerItem.ItemType.character);
@@ -241,7 +241,7 @@ public class DBPlayerData
                 var result = new ItemResult();
                 result.createItems = new List<PlayerItem>();
                 result.createItems.Add(currentItem);
-                PlayerItem.SetDataRange(result.createItems);
+                //PlayerItem.SetDataRange(result.createItems);
                 //HelperUnlockItem(player.characterGuid, startItem.guid);
 
             }

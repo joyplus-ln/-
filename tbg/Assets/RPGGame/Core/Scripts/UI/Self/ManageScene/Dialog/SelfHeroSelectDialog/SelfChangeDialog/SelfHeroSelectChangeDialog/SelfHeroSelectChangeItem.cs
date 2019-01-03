@@ -43,12 +43,12 @@ public class SelfHeroSelectChangeItem : MonoBehaviour
 
     void ShowItem()
     {
-        equipItem = PlayerItem.equipDataMap[equipGuid];
+        //equipItem = PlayerItem.equipDataMap[equipGuid];
         equipName.text = equipItem.EquipmentData.title;
         equipInfo.text = equipItem.EquipmentData.quality;
         if (equipItem.EquipItemGuid.Length > 0)
         {
-            equipedName.text = PlayerItem.characterDataMap[equipItem.EquipItemGuid].CharacterData.title;
+            //equipedName.text = PlayerItem.characterDataMap[equipItem.EquipItemGuid].CharacterData.title;
         }
     }
 

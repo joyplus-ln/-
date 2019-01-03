@@ -468,10 +468,11 @@ public class DBBattle
         var foundEquipment = GameInstance.dbPlayerData.GetPlayerEquipmentItemById(equipmentId);
         CharacterItem characterData = null;
         EquipmentItem equipmentData = null;
-        if (foundCharacter != null)
-            characterData = foundCharacter.CharacterData;
-        if (foundEquipment != null)
-            equipmentData = foundEquipment.EquipmentData;
+        //todo
+        //if (foundCharacter != null)
+        //    characterData = foundCharacter.CharacterData;
+        //if (foundEquipment != null)
+        //    equipmentData = foundEquipment.EquipmentData;
         if (foundPlayer == null)
             result.error = GameServiceErrorCode.INVALID_LOGIN_TOKEN;
         else if (foundCharacter == null || foundCharacter.PlayerId != playerId || foundEquipment == null || foundEquipment.PlayerId != playerId)

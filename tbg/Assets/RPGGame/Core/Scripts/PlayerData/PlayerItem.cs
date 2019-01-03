@@ -2,15 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 [System.Serializable]
 public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
 {
     //public static readonly Dictionary<string, PlayerItem> DataMap = new Dictionary<string, PlayerItem>();
-    //玩家拥有的
-    public static readonly Dictionary<string, PlayerItem> characterDataMap = new Dictionary<string, PlayerItem>();
-    public static readonly Dictionary<string, PlayerItem> equipDataMap = new Dictionary<string, PlayerItem>();
     //在角色拥有表中唯一
     private string itemid;
     public string ItemID { get { return itemid; } set { itemid = value; } }
@@ -88,6 +86,11 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
 
     }
 
+    public ICharacter GetICharacter()
+    {
+        return DBManager.instance.GetConfigCharacters()[Guid];
+    }
+
     public PlayerItem CreateLevelUpItem(int increaseExp)
     {
         PlayerItem result = Clone();
@@ -96,39 +99,16 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
     }
 
     #region Non Serialize Fields
-    public BaseItem ItemData
+
+
+    public ICharacter CharacterData
     {
-        get
-        {
-            switch (itemType)
-            {
-                case ItemType.character:
-                    if (GameDatabase != null && GameDatabase.characters.ContainsKey(ItemID))
-                        return GameDatabase.characters[ItemID];
-                    break;
-                case ItemType.equip:
-                    if (GameDatabase != null && GameDatabase.equipments.ContainsKey(ItemID))
-                        return GameDatabase.equipments[ItemID];
-                    break;
-            }
-            Debug.LogError("不存在这个id 肯定是哪里出错了:" + GUID + ":" + itemType + ":" + ItemID);
-            return null;
-        }
+        get { return DBManager.instance.GetConfigCharacters()[Guid]; }
     }
 
-    public BaseActorItem ActorItemData
+    public IEquipment EquipmentData
     {
-        get { return ItemData == null ? null : ItemData as BaseActorItem; }
-    }
-
-    public CharacterItem CharacterData
-    {
-        get { return ActorItemData == null ? null : ActorItemData as CharacterItem; }
-    }
-
-    public EquipmentItem EquipmentData
-    {
-        get { return ActorItemData == null ? null : ActorItemData as EquipmentItem; }
+        get { return DBManager.instance.GetConfigEquipments()[Guid]; }
     }
 
     /// <summary>
@@ -136,10 +116,6 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
     /// </summary>
     public CalculationAttributes ExtrAttributesData { get; set; }
 
-    public OtherItem OtherItemData
-    {
-        get { return ActorItemData == null ? null : ActorItemData as OtherItem; }
-    }
 
 
     //public Sprite Icon
@@ -220,7 +196,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         if (CharacterData != null)
         {
             var result = new CalculationAttributes();
-            result += CharacterData.attributes.CreateCalculationAttributes(Level, MaxLevel);
+            result += CharacterData.CreateCalculationAttributes(Level, MaxLevel);
             if (GameDatabase != null)
                 result += GameDatabase.characterBaseAttributes;
             if (ExtrAttributesData != null)
@@ -231,8 +207,8 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         if (EquipmentData != null)
         {
             var result = new CalculationAttributes();
-            result += EquipmentData.attributes.CreateCalculationAttributes(Level, MaxLevel);
-            result += EquipmentData.extraAttributes;
+            result += EquipmentData.CreateCalculationAttributes(Level, MaxLevel);
+            result += EquipmentData.CreateExtraCalculationAttributes();
             return result;
         }
         Debug.LogError("属性 null 不属于 char or equip");
@@ -258,7 +234,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
             if (CharacterData != null)
             {
                 var result = new CalculationAttributes();
-                result += CharacterData.attributes.CreateCalculationAttributes(Level, MaxLevel);
+                result += CharacterData.CreateCalculationAttributes(Level, MaxLevel);
                 if (GameDatabase != null)
                     result += GameDatabase.characterBaseAttributes;
                 if (ExtrAttributesData != null)
@@ -268,8 +244,8 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
             if (EquipmentData != null)
             {
                 var result = new CalculationAttributes();
-                result += EquipmentData.attributes.CreateCalculationAttributes(Level, MaxLevel);
-                result += EquipmentData.extraAttributes;
+                result += EquipmentData.CreateCalculationAttributes(Level, MaxLevel);
+                result += EquipmentData.CreateExtraCalculationAttributes();
                 return result;
             }
             return null;
@@ -294,9 +270,9 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
     {
         get
         {
-            PlayerItem equippedByItem;
-            if (EquipmentData != null && !string.IsNullOrEmpty(EquipItemGuid) && equipDataMap.TryGetValue(EquipItemGuid, out equippedByItem))
-                return equippedByItem;
+            IPlayerHasEquips equippedByItem;
+            if (EquipmentData != null && !string.IsNullOrEmpty(EquipItemGuid) && DBManager.instance.GetHasEquipses().TryGetValue(EquipItemGuid, out equippedByItem))
+                return equippedByItem.GetPlayerItem();
             return null;
         }
     }
@@ -310,17 +286,16 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
             if (CharacterData == null)
                 return result;
 
-            var valueList = equipDataMap.Values;
+            var valueList = DBManager.instance.GetHasEquipses().Values;
             var list = valueList.Where(entry =>
-                entry.PlayerId == PlayerId &&
-                entry.EquipmentData != null &&
-                entry.EquipItemGuid == GUID &&
-                !string.IsNullOrEmpty(entry.EquipPosition) &&
-                entry.Amount > 0).ToList();
+                entry.playerId == PlayerId &&
+                entry.Guid == GUID &&
+                !string.IsNullOrEmpty(entry.equipPosition) &&
+                entry.amount > 0).ToList();
 
             foreach (var entry in list)
             {
-                result.Add(entry.EquipPosition, entry);
+                result.Add(entry.equipPosition, entry.GetPlayerItem());
             }
 
             return result;
@@ -386,86 +361,10 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         }
     }
 
-    public static void SetData(PlayerItem data, ItemType type)
-    {
-        if (data == null || string.IsNullOrEmpty(data.GUID))
-            return;
-        switch (type)
-        {
-            case ItemType.character:
-                data.itemType = ItemType.character;
-                characterDataMap[data.GUID] = data;
-                break;
-            case ItemType.equip:
-                data.itemType = ItemType.equip;
-                equipDataMap[data.GUID] = data;
-                break;
-            case ItemType.other:
-                break;
-        }
-    }
 
-    public static bool RemoveData(string id, ItemType type)
-    {
-        switch (type)
-        {
-            case ItemType.character:
-                return characterDataMap.Remove(id);
-                break;
-            case ItemType.equip:
-                return equipDataMap.Remove(id);
-                break;
-            case ItemType.other:
-                break;
-        }
-        return false;
-    }
 
-    public static void ClearData()
-    {
-        characterDataMap.Clear();
-        equipDataMap.Clear();
-    }
 
-    public static void SetDataRange(IEnumerable<PlayerItem> list)
-    {
-        foreach (var data in list)
-        {
-            SetData(data, data.GetItemType());
-        }
-    }
-
-    public static void RemoveDataRange(Dictionary<string, ItemType> ids)
-    {
-        foreach (var id in ids.Keys)
-        {
-            RemoveData(id, ids[id]);
-        }
-    }
-
-    public static void RemoveDataRange(string playerId)
-    {
-        var values = characterDataMap.Values;
-        foreach (var value in values)
-        {
-            if (value.PlayerId == playerId)
-                RemoveData(value.ItemID, ItemType.character);
-        }
-
-        var evalues = equipDataMap.Values;
-        foreach (var value in evalues)
-        {
-            if (value.PlayerId == playerId)
-                RemoveData(value.ItemID, ItemType.equip);
-        }
-    }
-
-    public static void RemoveDataRange()
-    {
-        RemoveDataRange(Player.CurrentPlayerId);
-    }
-
-    public static PlayerItem CreateActorItemWithLevel(BaseActorItem itemData, int level, Const.StageType type, bool isplayer)
+    public static PlayerItem CreateActorItemWithLevel(ICharacter itemData, int level, Const.StageType type, bool isplayer)
     {
         if (level <= 0)
             level = 1;
@@ -478,7 +377,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
             //sumExp += itemTier.expTable.Calculate(i + 1, itemTier.maxLevel);
             sumExp += Const.NextEXP;
         }
-        result.ItemID = itemData.itemid;
+        result.ItemID = itemData.guid;
         //if(!isplayer)
         //result.GUID = itemData.;
         result.Exp = sumExp;

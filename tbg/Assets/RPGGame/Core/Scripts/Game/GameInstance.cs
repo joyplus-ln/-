@@ -60,6 +60,8 @@ public class GameInstance : MonoBehaviour
             Debug.LogError("`Game Database` has not been set");
         else
             GameDatabase.Setup();
+
+        DBManager.instance.Init();
         dbTableUtils = new DBTableUtils();
         dbTableUtils.Init();
         dbDataUtils = new DBDataUtils();
@@ -134,19 +136,7 @@ public class GameInstance : MonoBehaviour
         LoadLoginScene();
     }
 
-    /// <summary>
-    /// 装备穿戴的回调
-    /// </summary>
-    /// <param name="result"></param>
-    public void OnGameServiceItemResult(ItemResult result)
-    {
-        if (!result.Success)
-            return;
 
-        PlayerItem.SetDataRange(result.createItems);
-        PlayerItem.SetDataRange(result.updateItems);
-        PlayerItem.RemoveDataRange(result.deleteItemIds);
-    }
 
     /// <summary>
     /// 关卡开始的回调
@@ -171,9 +161,6 @@ public class GameInstance : MonoBehaviour
 
         Player.SetData(result.player);
         PlayerCurrency.SetDataRange(result.updateCurrencies);
-        PlayerItem.SetDataRange(result.createItems);
-        PlayerItem.SetDataRange(result.updateItems);
-        PlayerItem.RemoveDataRange(result.deleteItemIds);
         PlayerClearStage.SetData(result.clearStage);
     }
 
@@ -235,9 +222,6 @@ public class GameInstance : MonoBehaviour
     {
         if (!result.Success)
             return;
-
-        PlayerItem.SetDataRange(result.characterlist);
-        PlayerItem.SetDataRange(result.equipmentlist);
     }
 
 
@@ -582,16 +566,6 @@ public class GameInstance : MonoBehaviour
         inputDialog.Hide();
     }
 
-    public void ShowRewardItemsDialog(List<PlayerItem> items)
-    {
-        if (rewardItemsDialog == null)
-        {
-            Debug.LogWarning("Reward Items Dialog` has not been set");
-            return;
-        }
-        rewardItemsDialog.SetListItems(items);
-        rewardItemsDialog.Show();
-    }
 
     public void HideRewardItemsDialog()
     {

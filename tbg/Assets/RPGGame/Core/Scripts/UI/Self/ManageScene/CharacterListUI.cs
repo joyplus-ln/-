@@ -27,13 +27,14 @@ public class CharacterListUI : MonoBehaviour
     IEnumerator CreatItem()
     {
         yield return null;
-        GameObject items = null;
-        foreach (var key in PlayerItem.characterDataMap.Keys)
-        {
-            yield return items = Instantiate(item);
-            items.GetComponent<CharacterListItem>().Init(this, PlayerItem.characterDataMap[key]);
-            items.transform.SetParent(content, false);
-        }
+        //todo
+        //GameObject items = null;
+        //foreach (var key in PlayerItem.characterDataMap.Keys)
+        //{
+        //    yield return items = Instantiate(item);
+        //    items.GetComponent<CharacterListItem>().Init(this, PlayerItem.characterDataMap[key]);
+        //    items.transform.SetParent(content, false);
+        //}
 
     }
 

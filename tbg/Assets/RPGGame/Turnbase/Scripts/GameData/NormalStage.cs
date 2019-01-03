@@ -50,9 +50,9 @@ public class NormalStage : BaseStage
                 if (!string.IsNullOrEmpty(foe.characterId))
                 {
 
-                    var newEntry = PlayerItem.CreateActorItemWithLevel(GameInstance.Singleton.gameDatabase.characters[foe.characterId], foe.level, Const.StageType.Normal, false);
-                    newEntry.GUID = GameInstance.Singleton.gameDatabase.characters[foe.characterId].itemid + "_" + foe.level;
-                    dict[GameInstance.Singleton.gameDatabase.characters[foe.characterId].itemid + "_" + foe.level] = newEntry;
+                    var newEntry = PlayerItem.CreateActorItemWithLevel(DBManager.instance.GetConfigCharacters()[foe.characterId], foe.level, Const.StageType.Normal, false);
+                    newEntry.GUID = DBManager.instance.GetConfigCharacters()[foe.characterId].guid + "_" + foe.level;
+                    dict[DBManager.instance.GetConfigCharacters()[foe.characterId].guid + "_" + foe.level] = newEntry;
                 }
             }
         }
@@ -64,12 +64,12 @@ public class NormalStage : BaseStage
             var foes = wave.foes;
             foreach (var foe in foes)
             {
-                var item = GameInstance.Singleton.gameDatabase.characters[foe.characterId];
+                var item = DBManager.instance.GetConfigCharacters()[foe.characterId];
                 if (item != null)
                 {
                     var newEntry = PlayerItem.CreateActorItemWithLevel(item, foe.level, Const.StageType.Normal, false);
-                    newEntry.GUID = GameInstance.Singleton.gameDatabase.characters[foe.characterId].itemid + "_" + foe.level;
-                    dict[GameInstance.Singleton.gameDatabase.characters[foe.characterId].itemid + "_" + foe.level] = newEntry;
+                    newEntry.GUID = DBManager.instance.GetConfigCharacters()[foe.characterId].guid + "_" + foe.level;
+                    dict[DBManager.instance.GetConfigCharacters()[foe.characterId].guid + "_" + foe.level] = newEntry;
                 }
             }
         }

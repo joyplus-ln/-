@@ -68,14 +68,14 @@ public abstract class BaseRpguiStage<TPreparation, TStage> : RpguiDataItem<TStag
         if (RpguiRewardsItemList != null)
         {
             var list = data.GetRewardItems();
-            RpguiRewardsItemList.SetListItems(list, (ui) => ui.displayStats = RpguiItem.DisplayStats.Hidden);
+            //RpguiRewardsItemList.SetListItems(list, (ui) => ui.displayStats = RpguiItem.DisplayStats.Hidden);
         }
 
         if (RpguiEnemyItemList != null)
         {
             var list = data.GetCharacters();
             list.SortLevel();
-            RpguiEnemyItemList.SetListItems(list, (ui) => ui.displayStats = RpguiItem.DisplayStats.Level);
+            //RpguiEnemyItemList.SetListItems(list, (ui) => ui.displayStats = RpguiItem.DisplayStats.Level);
         }
 
         UpdateElementsWhenUnlocked();

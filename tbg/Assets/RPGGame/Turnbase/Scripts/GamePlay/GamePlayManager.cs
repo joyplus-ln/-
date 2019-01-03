@@ -154,7 +154,7 @@ public class GamePlayManager : BaseGamePlayManager
             var foe = foes[i];
             if (foe != null && !string.IsNullOrEmpty(foe.characterId))
             {
-                var character = PlayerItem.CreateActorItemWithLevel(GameInstance.Singleton.gameDatabase.characters[foe.characterId], foe.level, GetRandomFoesType(), false);
+                var character = PlayerItem.CreateActorItemWithLevel(DBManager.instance.GetConfigCharacters()[foe.characterId], foe.level, GetRandomFoesType(), false);
                 characters[i] = character;
             }
         }
