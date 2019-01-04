@@ -6,12 +6,24 @@ namespace SQLite3TableDataTmp
 {
     public partial class IPlayerHasCharacters
     {
+        public static Dictionary<string, IPlayerHasCharacters> DataMap = new Dictionary<string, IPlayerHasCharacters>();
 
+        public static void Init()
+        {
+            DataMap = DBManager.instance.LocalSQLite3Operate.SelectDictT_ST<IPlayerHasCharacters>();
+        }
+        public static void UpdataDataMap()
+        {
+            foreach (var dataMapValue in DataMap.Values)
+            {
+                DBManager.instance.LocalSQLite3Operate.UpdateOrInsert(dataMapValue);
+            }
+        }
         public static CalculationAttributes GetTowerExtraAttributes(bool IsBos)
         {
 
             CalculationAttributes extraAttributes = new CalculationAttributes();
-            int playerlevel = Player.CurrentPlayer.Level;
+            int playerlevel = IPlayer.CurrentPlayer.Level;
             int towerLevel = PlayerSQLPrefs.yzTowerCurrentLevel;
             int totalWeight = (playerlevel * 10 + towerLevel * 15 + 5) * 50;
             extraAttributes.SetExtraAtt(totalWeight);

@@ -7,7 +7,19 @@ namespace SQLite3TableDataTmp
 
     public partial class IEquipment
     {
+        public static Dictionary<string, IEquipment> DataMap = new Dictionary<string, IEquipment>();
 
+        public static void Init()
+        {
+            DataMap = DBManager.instance.ConfigSQLite3Operate.SelectDictT_ST<IEquipment>();
+        }
+        public static void UpdataDataMap()
+        {
+            foreach (var dataMapValue in DataMap.Values)
+            {
+                DBManager.instance.LocalSQLite3Operate.UpdateOrInsert(dataMapValue);
+            }
+        }
         public int Calculate(int maxValue, int minValue, float growth, int currentLevel, int maxLevel)
         {
             if (currentLevel <= 0)

@@ -21,7 +21,7 @@ namespace SQLite3TableDataTmp
         password,
     }
 
-    public class IPlayerAuth : SyncBase
+    public partial class IPlayerAuth : SyncBase
     {
         [SQLite3Constraint(SQLite3Constraint.Unique | SQLite3Constraint.NotNull )]
         [Sync((int)IPlayerAuthEnum.id)]

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,7 +26,7 @@ public class SelfHeroEquipSHow : MonoBehaviour
         this.HeroGuid = HeroGuid;
         if (EquipGuid.Length > 0)
         {
-            EquipmentNameText.text = DBManager.instance.GetConfigEquipments()[EquipGuid].title;
+            EquipmentNameText.text = IEquipment.DataMap[EquipGuid].title;
         }
         else
         {

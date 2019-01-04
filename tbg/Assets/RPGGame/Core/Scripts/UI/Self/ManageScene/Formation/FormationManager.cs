@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using SQLite3TableDataTmp;
 
 public class FormationManager : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class FormationManager : MonoBehaviour
     void ShowFormation()
     {
         Clear();
-        List<PlayerFormation> list = PlayerFormation.DataMap.Values.Where(a => a.playerId == Player.CurrentPlayerId).ToList();
+        List<PlayerFormation> list = PlayerFormation.DataMap.Values.Where(a => a.playerId == IPlayer.CurrentPlayerId).ToList();
         for (int i = 0; i < list.Count; i++)
         {
             formations[list[i].Position].Show(list[i]);

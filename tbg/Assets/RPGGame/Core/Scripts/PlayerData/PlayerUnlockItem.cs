@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerUnlockItem : BasePlayerData, IPlayerUnlockItem
+public class PlayerUnlockItem : BasePlayerData, IIPlayerUnlockItem
 {
     public static readonly Dictionary<string, PlayerUnlockItem> DataMap = new Dictionary<string, PlayerUnlockItem>();
     public string Id { get { return GetId(PlayerId, DataId); } set { } }
@@ -21,7 +22,7 @@ public class PlayerUnlockItem : BasePlayerData, IPlayerUnlockItem
         return result;
     }
 
-    public static void CloneTo(IPlayerUnlockItem from, IPlayerUnlockItem to)
+    public static void CloneTo(PlayerUnlockItem from, PlayerUnlockItem to)
     {
         to.Id = from.Id;
         to.PlayerId = from.PlayerId;
@@ -48,7 +49,7 @@ public class PlayerUnlockItem : BasePlayerData, IPlayerUnlockItem
 
     public static bool TryGetData(string dataId, out PlayerUnlockItem data)
     {
-        return TryGetData(Player.CurrentPlayerId, dataId, out data);
+        return TryGetData(IPlayer.CurrentPlayerId, dataId, out data);
     }
 
     public static bool RemoveData(string id)
@@ -89,7 +90,7 @@ public class PlayerUnlockItem : BasePlayerData, IPlayerUnlockItem
 
     public static void RemoveDataRange()
     {
-        RemoveDataRange(Player.CurrentPlayerId);
+        RemoveDataRange(IPlayer.CurrentPlayerId);
     }
 
     public static bool IsUnlock(string playerId, BaseItem itemData)
@@ -102,6 +103,6 @@ public class PlayerUnlockItem : BasePlayerData, IPlayerUnlockItem
 
     public static bool IsUnlock(BaseItem itemData)
     {
-        return IsUnlock(Player.CurrentPlayerId, itemData);
+        return IsUnlock(IPlayer.CurrentPlayerId, itemData);
     }
 }

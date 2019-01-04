@@ -1,4 +1,4 @@
-﻿public interface IPlayerBattle
+﻿public interface IIPlayerBattle
 {
     string Id { get; set; }
     string PlayerId { get; set; }

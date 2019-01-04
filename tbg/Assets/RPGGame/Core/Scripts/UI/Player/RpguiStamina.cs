@@ -25,8 +25,6 @@ public class RpguiStamina : RpguiDataItem<PlayerStamina>
 
         var staminaData = data.StaminaData;
 
-        if (imageIcon != null)
-            imageIcon.sprite = staminaData == null ? null : staminaData.icon;
 
         if (textAmount != null)
             textAmount.text = data.Amount.ToString("N0");

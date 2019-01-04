@@ -24,22 +24,25 @@ public class DBManager
     public SQLite3Operate ConfigSQLite3Operate { get; private set; }
     public SQLite3Operate LocalSQLite3Operate { get; private set; }
 
-    private Dictionary<string, ICharacter> characters = new Dictionary<string, ICharacter>();
-    private Dictionary<string, IEquipment> equipments = new Dictionary<string, IEquipment>();
-    private Dictionary<string, IPlayerHasCharacters> hasCharacterses = new Dictionary<string, IPlayerHasCharacters>();
-    private Dictionary<string, IPlayerHasEquips> hasEquipses = new Dictionary<string, IPlayerHasEquips>();
-
     public void Init()
     {
         ConfigSQLite3Operate = SQLite3Factory.OpenToRead("Database.db");
         LocalSQLite3Operate = SQLite3Factory.OpenToWrite("Dynamic.db");
         CheckTable();
-        characters = ConfigSQLite3Operate.SelectDictT_ST<ICharacter>();
-        equipments = ConfigSQLite3Operate.SelectDictT_ST<IEquipment>();
-        hasCharacterses = LocalSQLite3Operate.SelectDictT_ST<IPlayerHasCharacters>();
-        hasEquipses = LocalSQLite3Operate.SelectDictT_ST<IPlayerHasEquips>();
-        Debug.LogError("characters" + characters.Count);
-        Debug.LogError("equipments" + equipments.Count);
+        IPlayer.Init();
+        IPlayerAuth.Init();
+        IPlayerBattle.Init();
+        ICharacter.Init();
+        IEquipment.Init();
+        IPlayerBattle.Init();
+        IPlayerClearStage.Init();
+        IPlayerCurrency.Init();
+        IPlayerFormation.Init();
+        IPlayerHasCharacters.Init();
+        IPlayerHasEquips.Init();
+        IPlayerOtherItem.Init();
+        IPlayerStamina.Init();
+        IPlayerUnlockItem.Init();
     }
 
     void CheckTable()
@@ -52,27 +55,54 @@ public class DBManager
         {
             LocalSQLite3Operate.CreateTable<IPlayerHasEquips>();
         }
+        if (!LocalSQLite3Operate.TableExists("IPlayer"))
+        {
+            LocalSQLite3Operate.CreateTable<IPlayer>();
+        }
+
+        if (!LocalSQLite3Operate.TableExists("IPlayerAuth"))
+        {
+            LocalSQLite3Operate.CreateTable<IPlayerAuth>();
+        }
+        if (!LocalSQLite3Operate.TableExists("IPlayerBattle"))
+        {
+            LocalSQLite3Operate.CreateTable<IPlayerBattle>();
+        }
+        if (!LocalSQLite3Operate.TableExists("IPlayerClearStage"))
+        {
+            LocalSQLite3Operate.CreateTable<IPlayerClearStage>();
+        }
+        if (!LocalSQLite3Operate.TableExists("IPlayerCurrency"))
+        {
+            LocalSQLite3Operate.CreateTable<IPlayerCurrency>();
+        }
+
+        if (!LocalSQLite3Operate.TableExists("IPlayerFormation"))
+        {
+            LocalSQLite3Operate.CreateTable<IPlayerFormation>();
+        }
+        if (!LocalSQLite3Operate.TableExists("IPlayerHasCharacters"))
+        {
+            LocalSQLite3Operate.CreateTable<IPlayerHasCharacters>();
+        }
+        if (!LocalSQLite3Operate.TableExists("IPlayerHasEquips"))
+        {
+            LocalSQLite3Operate.CreateTable<IPlayerHasEquips>();
+        }
+        if (!LocalSQLite3Operate.TableExists("IPlayerOtherItem"))
+        {
+            LocalSQLite3Operate.CreateTable<IPlayerOtherItem>();
+        }
+        if (!LocalSQLite3Operate.TableExists("IPlayerStamina"))
+        {
+            LocalSQLite3Operate.CreateTable<IPlayerStamina>();
+        }
+        if (!LocalSQLite3Operate.TableExists("IPlayerUnlockItem"))
+        {
+            LocalSQLite3Operate.CreateTable<IPlayerUnlockItem>();
+        }
     }
 
-    public Dictionary<string, ICharacter> GetConfigCharacters()
-    {
-        return characters;
-    }
-
-    public Dictionary<string, IEquipment> GetConfigEquipments()
-    {
-        return equipments;
-    }
-
-    public Dictionary<string, IPlayerHasCharacters> GetHasCharacterses()
-    {
-        return hasCharacterses;
-    }
-
-    public Dictionary<string, IPlayerHasEquips> GetHasEquipses()
-    {
-        return hasEquipses;
-    }
 
     /// <summary>
     /// 更新

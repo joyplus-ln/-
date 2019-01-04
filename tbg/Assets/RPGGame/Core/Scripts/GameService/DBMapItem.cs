@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -167,7 +168,7 @@ public class DBMapItem
     {
         GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerOtherItem (id,playerId,Guid,amount) VALUES (@id,@playerId,@Guid,@amount)",
             new SqliteParameter("@id", id),
-            new SqliteParameter("@playerId", Player.CurrentPlayerId),
+            new SqliteParameter("@playerId", IPlayer.CurrentPlayerId),
             new SqliteParameter("@Guid", "otherItem" + System.Guid.NewGuid()),
             new SqliteParameter("@amount", amount));
 
@@ -177,7 +178,7 @@ public class DBMapItem
     {
         GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerOtherItem SET amount=@amount WHERE id=@id AND playerId=@playerId",
             new SqliteParameter("@amount", amount),
-            new SqliteParameter("@playerId", Player.CurrentPlayerId),
+            new SqliteParameter("@playerId", IPlayer.CurrentPlayerId),
             new SqliteParameter("@id", id));
     }
 
@@ -185,7 +186,7 @@ public class DBMapItem
     {
         GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerOtherItem WHERE id=@id",
             new SqliteParameter("@id", id),
-            new SqliteParameter("@playerId", Player.CurrentPlayerId));
+            new SqliteParameter("@playerId", IPlayer.CurrentPlayerId));
     }
 
     #endregion
@@ -202,9 +203,9 @@ public class DBMapItem
     /// <param name="onFinish"></param>
     public void DoEquipmentLevelUpItem(string itemId, Dictionary<string, int> materials, UnityAction<ItemResult> onFinish)
     {
-        var player = Player.CurrentPlayer;
-        var playerId = player.Id;
-        var loginToken = player.LoginToken;
+        var player = IPlayer.CurrentPlayer;
+        var playerId = player.guid;
+        var loginToken = player.loginToken;
         var result = new ItemResult();
         var foundPlayer = GameInstance.dbLogin.GetPlayerByLoginToken(playerId, loginToken);
         var foundItem = GameInstance.dbPlayerData.GetPlayerEquipmentItemById(itemId);
@@ -244,14 +245,14 @@ public class DBMapItem
                 else
                     deleteItemIds.Add(materialItem.GUID, PlayerItem.ItemType.equip);
             }
-            if (requireCurrency > softCurrency.Amount)
+            if (requireCurrency > softCurrency.amount)
                 result.error = GameServiceErrorCode.NOT_ENOUGH_SOFT_CURRENCY;
             else
             {
-                softCurrency.Amount -= requireCurrency;
+                softCurrency.amount -= requireCurrency;
                 GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
-                    new SqliteParameter("@amount", softCurrency.Amount),
-                    new SqliteParameter("@id", softCurrency.Id));
+                    new SqliteParameter("@amount", softCurrency.amount),
+                    new SqliteParameter("@id", softCurrency.id));
 
                 foundItem = foundItem.CreateLevelUpItem(increasingExp);
                 updateItems.Add(foundItem);
@@ -280,9 +281,9 @@ public class DBMapItem
 
     public void DoSellCharacterItems(Dictionary<string, int> items, UnityAction<ItemResult> onFinish)
     {
-        var cplayer = Player.CurrentPlayer;
-        var playerId = cplayer.Id;
-        var loginToken = cplayer.LoginToken;
+        var cplayer = IPlayer.CurrentPlayer;
+        var playerId = cplayer.guid;
+        var loginToken = cplayer.loginToken;
         var result = new ItemResult();
         var player = GameInstance.dbLogin.GetPlayerByLoginToken(playerId, loginToken);
         if (player == null)
@@ -316,10 +317,10 @@ public class DBMapItem
                 else
                     deleteItemIds.Add(sellingItem.GUID, PlayerItem.ItemType.character);
             }
-            softCurrency.Amount += returnCurrency;
+            softCurrency.amount += returnCurrency;
             GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
-                new SqliteParameter("@amount", softCurrency.Amount),
-                new SqliteParameter("@id", softCurrency.Id));
+                new SqliteParameter("@amount", softCurrency.amount),
+                new SqliteParameter("@id", softCurrency.id));
             foreach (var updateItem in updateItems)
             {
                 GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasCharacters SET playerId=@playerId, itemid=@itemid, amount=@amount, exp=@exp WHERE Guid=@Guid",
@@ -375,10 +376,10 @@ public class DBMapItem
                 else
                     deleteItemIds.Add(sellingItem.GUID, PlayerItem.ItemType.character);
             }
-            softCurrency.Amount += returnCurrency;
+            softCurrency.amount += returnCurrency;
             GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
-                new SqliteParameter("@amount", softCurrency.Amount),
-                new SqliteParameter("@id", softCurrency.Id));
+                new SqliteParameter("@amount", softCurrency.amount),
+                new SqliteParameter("@id", softCurrency.id));
             foreach (var updateItem in updateItems)
             {
                 GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasEquips SET playerId=@playerId, itemid=@itemid, amount=@amount, exp=@exp, equipItemGuid=@equipItemGuid, equipPosition=@equipPosition WHERE Guid=@Guid",
@@ -409,9 +410,9 @@ public class DBMapItem
     /// <param name="onFinish"></param>
     public void DoGetItemList(UnityAction<ItemListResult> onFinish)
     {
-        var cplayer = Player.CurrentPlayer;
-        var playerId = cplayer.Id;
-        var loginToken = cplayer.LoginToken;
+        var cplayer = IPlayer.CurrentPlayer;
+        var playerId = cplayer.guid;
+        var loginToken = cplayer.loginToken;
         var result = new ItemListResult();
         var player = GameInstance.dbDataUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
             new SqliteParameter("@playerId", playerId),
@@ -469,7 +470,7 @@ public class DBMapItem
     {
         updateItem = new List<PlayerItem>();
         deleteItemIds = new List<string>();
-        if (!DBManager.instance.GetConfigCharacters().ContainsKey(dataId))
+        if (!ICharacter.DataMap.ContainsKey(dataId))
             return false;
         var materials = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerItem WHERE playerId=@playerId AND Guid=@Guid",
             new SqliteParameter("@playerId", playerId),
@@ -518,9 +519,9 @@ public class DBMapItem
 
     public void DoGetOtherItemList(UnityAction<OtherItemListResult> onFinish)
     {
-        var cplayer = Player.CurrentPlayer;
-        var playerId = cplayer.Id;
-        var loginToken = cplayer.LoginToken;
+        var cplayer = IPlayer.CurrentPlayer;
+        var playerId = cplayer.guid;
+        var loginToken = cplayer.loginToken;
         var result = new OtherItemListResult();
         var player = GameInstance.dbDataUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
             new SqliteParameter("@playerId", playerId),

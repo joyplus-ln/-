@@ -333,14 +333,14 @@ public class RpguiItem : RpguiDataItem<ICharacter>
         if (RpguiEvolvePrice != null)
         {
             var amount = Const.EnovePrice;
-            var currencyData = PlayerCurrency.SoftCurrency.Clone().SetAmount(amount, 0);
+            var currencyData = IPlayerCurrency.SoftCurrency.Clone().SetAmount(amount, 0);
             RpguiEvolvePrice.SetData(currencyData);
         }
 
         if (RpguiSellPrice != null)
         {
             var amount = Const.SellPrice;
-            var currencyData = PlayerCurrency.SoftCurrency.Clone().SetAmount(amount, 0);
+            var currencyData = IPlayerCurrency.SoftCurrency.Clone().SetAmount(amount, 0);
             RpguiSellPrice.SetData(currencyData);
         }
 

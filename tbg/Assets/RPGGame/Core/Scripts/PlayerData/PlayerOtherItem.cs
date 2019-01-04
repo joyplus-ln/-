@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
-public class PlayerOtherItem : BasePlayerData, IPlayerOtherItem
+public class PlayerOtherItem : BasePlayerData, IIPlayerOtherItem
 {
     public static readonly Dictionary<string, PlayerOtherItem> DataMap = new Dictionary<string, PlayerOtherItem>();
     public string itemid;
@@ -93,7 +94,7 @@ public class PlayerOtherItem : BasePlayerData, IPlayerOtherItem
 
     public static void RemoveDataRange()
     {
-        RemoveDataRange(Player.CurrentPlayerId);
+        RemoveDataRange(IPlayer.CurrentPlayerId);
     }
 
     public static void AddOneItem(string id, int num)

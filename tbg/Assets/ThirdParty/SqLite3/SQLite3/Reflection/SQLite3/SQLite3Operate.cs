@@ -737,6 +737,13 @@ namespace Framework.Reflection.SQLite3Helper
             if (ValueExists(InT, 0)) UpdateT(InT);
             else InsertT(InT);
         }
+
+        public void UpdateOrInsert<T>(T InT,bool up = false) where T : SyncBase
+        {
+            if (null == InT) throw new ArgumentNullException();
+
+            InsertT(InT);
+        }
         #endregion
 
         #region Select

@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RpguiPlayer : RpguiDataItem<Player>
+public class RpguiPlayer : RpguiDataItem<IPlayer>
 {
     public Text textProfileName;
     public UILevel uiLevel;
@@ -17,13 +18,13 @@ public class RpguiPlayer : RpguiDataItem<Player>
         SetupInfo(null);
     }
 
-    private void SetupInfo(Player data)
+    private void SetupInfo(IPlayer data)
     {
         if (data == null)
-            data = new Player();
+            data = new IPlayer();
 
         if (textProfileName != null)
-            textProfileName.text = data.ProfileName;
+            textProfileName.text = data.profileName;
 
         // Stats
         if (uiLevel != null)
@@ -37,6 +38,6 @@ public class RpguiPlayer : RpguiDataItem<Player>
 
     public override bool IsEmpty()
     {
-        return data == null || string.IsNullOrEmpty(data.Id);
+        return data == null || string.IsNullOrEmpty(data.guid);
     }
 }

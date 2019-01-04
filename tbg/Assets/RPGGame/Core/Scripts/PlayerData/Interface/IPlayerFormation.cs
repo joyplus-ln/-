@@ -1,4 +1,4 @@
-﻿public interface IPlayerFormation
+﻿public interface IIPlayerFormation
 {
     string characterGuid { get; set; }
     string PlayerId { get; set; }

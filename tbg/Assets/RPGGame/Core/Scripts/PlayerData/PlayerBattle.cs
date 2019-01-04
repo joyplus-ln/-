@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerBattle : BasePlayerData, IPlayerBattle
+public class PlayerBattle : BasePlayerData, IIPlayerBattle
 {
     public static readonly Dictionary<string, PlayerBattle> DataMap = new Dictionary<string, PlayerBattle>();
     public string id;
@@ -19,22 +20,7 @@ public class PlayerBattle : BasePlayerData, IPlayerBattle
     public int rating;
     public int Rating { get { return rating; } set { rating = value; } }
 
-    public PlayerBattle Clone()
-    {
-        var result = new PlayerBattle();
-        CloneTo(this, result);
-        return result;
-    }
-
-    public static void CloneTo(IPlayerBattle from, IPlayerBattle to)
-    {
-        to.Id = from.Id;
-        to.PlayerId = from.PlayerId;
-        to.DataId = from.DataId;
-        to.Session = from.Session;
-        to.BattleResult = from.BattleResult;
-        to.Rating = from.Rating;
-    }
+ 
 
     public static void SetData(PlayerBattle data)
     {
@@ -81,6 +67,6 @@ public class PlayerBattle : BasePlayerData, IPlayerBattle
 
     public static void RemoveDataRange()
     {
-        RemoveDataRange(Player.CurrentPlayerId);
+        RemoveDataRange(IPlayer.CurrentPlayerId);
     }
 }

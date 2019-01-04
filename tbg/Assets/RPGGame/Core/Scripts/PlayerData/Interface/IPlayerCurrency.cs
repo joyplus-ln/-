@@ -1,4 +1,4 @@
-﻿public interface IPlayerCurrency
+﻿public interface IIPlayerCurrency
 {
     string Id { get; set; }
     string PlayerId { get; set; }

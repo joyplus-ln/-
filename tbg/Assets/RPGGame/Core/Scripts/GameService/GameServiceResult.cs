@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 public class GameServiceErrorCode
@@ -46,12 +47,12 @@ public class GameServiceResult
 
 public class PlayerResult : GameServiceResult
 {
-    public Player player;
+    public IPlayer player;
 }
 
 public class StartStageResult : GameServiceResult
 {
-    public PlayerStamina stamina;
+    public IPlayerStamina stamina;
     public string session;
 }
 
@@ -62,7 +63,7 @@ public class FinishStageResult : PlayerResult
     public int rewardCharacterExp;
     public int rewardSoftCurrency;
     public List<PlayerItem> rewardItems = new List<PlayerItem>();
-    public List<PlayerCurrency> updateCurrencies = new List<PlayerCurrency>();
+    public List<IPlayerCurrency> updateCurrencies = new List<IPlayerCurrency>();
     public List<PlayerItem> createItems = new List<PlayerItem>();
     public List<PlayerItem> updateItems = new List<PlayerItem>();
     public Dictionary<string, PlayerItem.ItemType> deleteItemIds = new Dictionary<string, PlayerItem.ItemType>();
@@ -71,12 +72,12 @@ public class FinishStageResult : PlayerResult
 
 public class CurrencyResult : GameServiceResult
 {
-    public List<PlayerCurrency> updateCurrencies = new List<PlayerCurrency>();
+    public List<IPlayerCurrency> updateCurrencies = new List<IPlayerCurrency>();
 }
 
 public class ItemResult : GameServiceResult
 {
-    public List<PlayerCurrency> updateCurrencies = new List<PlayerCurrency>();
+    public List<IPlayerCurrency> updateCurrencies = new List<IPlayerCurrency>();
     public List<PlayerItem> createItems = new List<PlayerItem>();
     public List<PlayerItem> updateItems = new List<PlayerItem>();
     public Dictionary<string, PlayerItem.ItemType> deleteItemIds = new Dictionary<string, PlayerItem.ItemType>();
@@ -84,7 +85,7 @@ public class ItemResult : GameServiceResult
 
 public class AuthListResult : GameServiceResult
 {
-    public List<PlayerAuth> list = new List<PlayerAuth>();
+    public List<IPlayerAuth> list = new List<IPlayerAuth>();
 }
 
 public class ItemListResult : GameServiceResult
@@ -100,7 +101,7 @@ public class OtherItemListResult : GameServiceResult
 
 public class CurrencyListResult : GameServiceResult
 {
-    public List<PlayerCurrency> list = new List<PlayerCurrency>();
+    public List<IPlayerCurrency> list = new List<IPlayerCurrency>();
 }
 
 public class StaminaListResult : GameServiceResult

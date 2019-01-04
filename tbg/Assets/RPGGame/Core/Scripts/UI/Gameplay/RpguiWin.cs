@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -68,7 +69,7 @@ public class RpguiWin : RpguiDataItem<FinishStageResult>
 
         if (RpguiRewardCurrency != null)
         {
-            var currencyData = PlayerCurrency.SoftCurrency.Clone().SetAmount(0, 0);
+            var currencyData = IPlayerCurrency.SoftCurrency.Clone().SetAmount(0, 0);
             RpguiRewardCurrency.SetData(currencyData);
         }
     }
@@ -98,7 +99,7 @@ public class RpguiWin : RpguiDataItem<FinishStageResult>
 
         if (RpguiRewardCurrency != null)
         {
-            var currencyData = PlayerCurrency.SoftCurrency.Clone().SetAmount(data.rewardSoftCurrency, 0);
+            var currencyData = IPlayerCurrency.SoftCurrency.Clone().SetAmount(data.rewardSoftCurrency, 0);
             RpguiRewardCurrency.SetData(currencyData);
         }
     }

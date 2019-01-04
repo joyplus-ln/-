@@ -22,7 +22,7 @@ namespace SQLite3TableDataTmp
         prefs,
     }
 
-    public class IPlayer : SyncBase
+    public partial class IPlayer : SyncBase
     {
         [SQLite3Constraint(SQLite3Constraint.Unique | SQLite3Constraint.NotNull )]
         [Sync((int)IPlayerEnum.id)]

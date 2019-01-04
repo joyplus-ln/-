@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -110,13 +112,16 @@ public class GameInstance : MonoBehaviour
     public void OnGameServiceLogin(PlayerResult result)
     {
         if (!result.Success)
+        {
+            Debug.LogError("登陆失败");
             return;
+        }
 
         var player = result.player;
-        Player.CurrentPlayer = player;
-        dbLogin.SetPrefsLogin(player.Id, player.LoginToken);
+        IPlayer.CurrentPlayer = player;
+        dbLogin.SetPrefsLogin(player.guid, player.loginToken);
 
-        if (string.IsNullOrEmpty(player.ProfileName) || string.IsNullOrEmpty(player.ProfileName.Trim()))
+        if (string.IsNullOrEmpty(player.profileName) || string.IsNullOrEmpty(player.profileName.Trim()))
             SetProfileName();
         else
             GetAllPlayerData(LoadAllPlayerDataState.GoToManageScene);
@@ -147,7 +152,7 @@ public class GameInstance : MonoBehaviour
         if (!result.Success)
             return;
 
-        PlayerStamina.SetData(result.stamina);
+        IPlayerStamina.SetData(result.stamina);
     }
 
     /// <summary>
@@ -159,8 +164,8 @@ public class GameInstance : MonoBehaviour
         if (!result.Success)
             return;
 
-        Player.SetData(result.player);
-        PlayerCurrency.SetDataRange(result.updateCurrencies);
+        IPlayer.SetData(result.player);
+        IPlayerCurrency.SetDataRange(result.updateCurrencies);
         PlayerClearStage.SetData(result.clearStage);
     }
 
@@ -173,22 +178,12 @@ public class GameInstance : MonoBehaviour
         if (!result.Success)
             return;
 
-        var currentPlayer = Player.CurrentPlayer;
+        var currentPlayer = IPlayer.CurrentPlayer;
         if (currentPlayer != null)
-            currentPlayer.ProfileName = result.player.ProfileName;
+            currentPlayer.profileName = result.player.profileName;
     }
 
-    /// <summary>
-    /// 登录的回调
-    /// </summary>
-    /// <param name="result"></param>
-    public void OnGameServiceAuthListResult(AuthListResult result)
-    {
-        if (!result.Success)
-            return;
 
-        PlayerAuth.SetDataRange(result.list);
-    }
 
     /// <summary>
     /// 获取货币的回调
@@ -199,7 +194,7 @@ public class GameInstance : MonoBehaviour
         if (!result.Success)
             return;
 
-        PlayerCurrency.SetDataRange(result.list);
+        IPlayerCurrency.SetDataRange(result.list);
     }
 
     /// <summary>
@@ -304,15 +299,27 @@ public class GameInstance : MonoBehaviour
     private void GetAuthList()
     {
         isPlayerAuthListLoaded = false;
-        GameInstance.dbLogin.DoGetAuthList(OnGetAuthListSuccess);
-    }
-
-    private void OnGetAuthListSuccess(AuthListResult result)
-    {
-        OnGameServiceAuthListResult(result);
+        var cplayer = IPlayer.CurrentPlayer;
+        var playerId = cplayer.guid;
+        var loginToken = cplayer.loginToken;
+        IPlayer players = IPlayer.DataMap.Values.ToList().Find(x => x.guid == playerId && x.loginToken == loginToken);
+        if (players == null)
+        {
+            return;
+        }
+        else
+        {
+            IPlayerAuth playerauther = new IPlayerAuth();
+            playerauther.guid = players.guid;
+            playerauther.playerId = players.guid;
+            playerauther.type = "GUEST";
+            IPlayerAuth.SetData(playerauther);
+            IPlayerAuth.UpdataDataMap();
+        }
         isPlayerAuthListLoaded = true;
         ValidatePlayerData();
     }
+
 
     /// <summary>
     /// Get currency list for current player

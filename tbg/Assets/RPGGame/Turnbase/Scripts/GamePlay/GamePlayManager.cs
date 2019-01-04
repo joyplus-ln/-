@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -154,7 +155,7 @@ public class GamePlayManager : BaseGamePlayManager
             var foe = foes[i];
             if (foe != null && !string.IsNullOrEmpty(foe.characterId))
             {
-                var character = PlayerItem.CreateActorItemWithLevel(DBManager.instance.GetConfigCharacters()[foe.characterId], foe.level, GetRandomFoesType(), false);
+                var character = PlayerItem.CreateActorItemWithLevel(ICharacter.DataMap[foe.characterId], foe.level, GetRandomFoesType(), false);
                 characters[i] = character;
             }
         }

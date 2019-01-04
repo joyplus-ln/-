@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerClearStage : BasePlayerData, IPlayerClearStage
+public class PlayerClearStage : BasePlayerData, IIPlayerClearStage
 {
     public static readonly Dictionary<string, PlayerClearStage> DataMap = new Dictionary<string, PlayerClearStage>();
     public string Id { get { return GetId(PlayerId, DataId); } set { } }
@@ -14,20 +15,6 @@ public class PlayerClearStage : BasePlayerData, IPlayerClearStage
     public int bestRating;
     public int BestRating { get { return bestRating; } set { bestRating = value; } }
 
-    public PlayerClearStage Clone()
-    {
-        var result = new PlayerClearStage();
-        CloneTo(this, result);
-        return result;
-    }
-
-    public static void CloneTo(IPlayerClearStage from, IPlayerClearStage to)
-    {
-        to.Id = from.Id;
-        to.PlayerId = from.PlayerId;
-        to.DataId = from.DataId;
-        to.BestRating = from.BestRating;
-    }
 
     public static string GetId(string playerId, string dataId)
     {
@@ -48,7 +35,7 @@ public class PlayerClearStage : BasePlayerData, IPlayerClearStage
 
     public static bool TryGetData(string dataId, out PlayerClearStage data)
     {
-        return TryGetData(Player.CurrentPlayerId, dataId, out data);
+        return TryGetData(IPlayer.CurrentPlayerId, dataId, out data);
     }
 
     public static bool RemoveData(string id)
@@ -89,7 +76,7 @@ public class PlayerClearStage : BasePlayerData, IPlayerClearStage
 
     public static void RemoveDataRange()
     {
-        RemoveDataRange(Player.CurrentPlayerId);
+        RemoveDataRange(IPlayer.CurrentPlayerId);
     }
 
     public static bool IsUnlock(string playerId, BaseStage checkStage)
@@ -118,6 +105,6 @@ public class PlayerClearStage : BasePlayerData, IPlayerClearStage
 
     public static bool IsUnlock(BaseStage checkStage)
     {
-        return IsUnlock(Player.CurrentPlayerId, checkStage);
+        return IsUnlock(IPlayer.CurrentPlayerId, checkStage);
     }
 }

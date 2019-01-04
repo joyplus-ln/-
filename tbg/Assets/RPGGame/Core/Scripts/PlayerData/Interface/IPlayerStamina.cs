@@ -1,4 +1,4 @@
-﻿public interface IPlayerStamina
+﻿public interface IIPlayerStamina
 {
     string Id { get; set; }
     string PlayerId { get; set; }

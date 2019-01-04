@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 public class ShopManager : MonoBehaviour
@@ -58,7 +59,7 @@ public class ShopManager : MonoBehaviour
     void CreatHero()
     {
         GameObject itemClone = null;
-        foreach (var item in DBManager.instance.GetConfigCharacters().Values)
+        foreach (var item in ICharacter.DataMap.Values)
         {
             itemClone = Instantiate(shopItem);
             itemClone.GetComponent<ShopItem>().SetItemData(item);

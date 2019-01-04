@@ -11,7 +11,7 @@ public class BaseGamePlayFormation : MonoBehaviour
 
     public virtual void SetFormationCharacters()
     {
-        var formationName = Player.CurrentPlayer.SelectedFormation;
+        var formationName = IPlayer.CurrentPlayer.selectedFormation;
         ClearCharacters();
         for (var i = 0; i < containers.Length; ++i)
         {
@@ -20,7 +20,7 @@ public class BaseGamePlayFormation : MonoBehaviour
             {
                 var characterGuid = playerFormation.characterGuid;
                 ICharacter item = null;
-                if (!string.IsNullOrEmpty(characterGuid) && DBManager.instance.GetConfigCharacters().TryGetValue(characterGuid, out item))
+                if (!string.IsNullOrEmpty(characterGuid) && ICharacter.DataMap.TryGetValue(characterGuid, out item))
                     SetCharacter(i, item.GetPlayerItem());
             }
         }

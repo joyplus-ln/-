@@ -70,7 +70,7 @@ namespace Framework.Editor.SQLite3Creator
             //sb.Append("        Max\n");
             sb.Append("    }\n\n");
 
-            sb.Append("    public class ").Append(filename).Append(" : SyncBase").Append("\n")
+            sb.Append("    public partial class ").Append(filename).Append(" : SyncBase").Append("\n")
                 .Append("    {\n");
             
             for (int i = 0; i < length; i++)

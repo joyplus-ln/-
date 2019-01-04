@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerStamina : BasePlayerData, IPlayerStamina
+public class PlayerStamina : BasePlayerData, IIPlayerStamina
 {
     public static readonly Dictionary<string, PlayerStamina> DataMap = new Dictionary<string, PlayerStamina>();
     public static PlayerStamina StageStamina
@@ -33,7 +34,7 @@ public class PlayerStamina : BasePlayerData, IPlayerStamina
         return result;
     }
 
-    public static void CloneTo(IPlayerStamina from, IPlayerStamina to)
+    public static void CloneTo(PlayerStamina from, PlayerStamina to)
     {
         to.Id = from.Id;
         to.PlayerId = from.PlayerId;
@@ -94,7 +95,7 @@ public class PlayerStamina : BasePlayerData, IPlayerStamina
 
     public static bool TryGetData(string dataId, out PlayerStamina data)
     {
-        return TryGetData(Player.CurrentPlayerId, dataId, out data);
+        return TryGetData(IPlayer.CurrentPlayerId, dataId, out data);
     }
 
     public static bool RemoveData(string id)
@@ -135,6 +136,6 @@ public class PlayerStamina : BasePlayerData, IPlayerStamina
 
     public static void RemoveDataRange()
     {
-        RemoveDataRange(Player.CurrentPlayerId);
+        RemoveDataRange(IPlayer.CurrentPlayerId);
     }
 }

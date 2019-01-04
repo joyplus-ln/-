@@ -19,7 +19,7 @@ namespace SQLite3TableDataTmp
         amount,
     }
 
-    public class IPlayerOtherItem : SyncBase
+    public partial class IPlayerOtherItem : SyncBase
     {
         [SQLite3Constraint(SQLite3Constraint.Unique | SQLite3Constraint.NotNull )]
         [Sync((int)IPlayerOtherItemEnum.id)]

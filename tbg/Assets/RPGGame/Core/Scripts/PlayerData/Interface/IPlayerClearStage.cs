@@ -1,4 +1,4 @@
-﻿public interface IPlayerClearStage
+﻿public interface IIPlayerClearStage
 {
     string Id { get; set; }
     string PlayerId { get; set; }

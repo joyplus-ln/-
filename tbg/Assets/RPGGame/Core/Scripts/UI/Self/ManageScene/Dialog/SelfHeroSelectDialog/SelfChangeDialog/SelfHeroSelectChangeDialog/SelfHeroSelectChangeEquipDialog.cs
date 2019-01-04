@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 public class SelfHeroSelectChangeEquipDialog : Dialog
@@ -41,10 +42,10 @@ public class SelfHeroSelectChangeEquipDialog : Dialog
     void ShowItems()
     {
         GameObject instItem = null;
-        foreach (var key in DBManager.instance.GetHasEquipses().Keys)
+        foreach (var key in IPlayerHasCharacters.DataMap.Keys)
         {
             //todo
-            if (DBManager.instance.GetHasEquipses()[key].equipPosition == selfHeroSelectChangeEquipData.equipType.ToString())
+            if (IPlayerHasEquips.DataMap[key].equipPosition == selfHeroSelectChangeEquipData.equipType.ToString())
             {
                 instItem = Instantiate(item);
                 instItem.GetComponent<SelfHeroSelectChangeItem>().SetInfo(key, characterGuid, selfHeroSelectChangeEquipData.equipType.ToString(), selectedImage, CallBack);

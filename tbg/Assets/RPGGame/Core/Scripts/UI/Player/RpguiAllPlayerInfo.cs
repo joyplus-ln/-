@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 public class RpguiAllPlayerInfo : RPGUIBase
@@ -12,11 +13,11 @@ public class RpguiAllPlayerInfo : RPGUIBase
 	void Update ()
     {
         if (RpguiPlayer != null)
-            RpguiPlayer.SetData(Player.CurrentPlayer);
+            RpguiPlayer.SetData(IPlayer.CurrentPlayer);
         if (RpguiSoftCurrency != null)
-            RpguiSoftCurrency.SetData(PlayerCurrency.SoftCurrency);
+            RpguiSoftCurrency.SetData(IPlayerCurrency.SoftCurrency);
         if (RpguiHardCurrency != null)
-            RpguiHardCurrency.SetData(PlayerCurrency.HardCurrency);
+            RpguiHardCurrency.SetData(IPlayerCurrency.HardCurrency);
         if (RpguiStageStamina != null)
             RpguiStageStamina.SetData(PlayerStamina.StageStamina);
     }

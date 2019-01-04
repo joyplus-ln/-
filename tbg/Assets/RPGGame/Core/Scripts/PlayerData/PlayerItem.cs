@@ -88,7 +88,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
 
     public ICharacter GetICharacter()
     {
-        return DBManager.instance.GetConfigCharacters()[Guid];
+        return ICharacter.DataMap[Guid];
     }
 
     public PlayerItem CreateLevelUpItem(int increaseExp)
@@ -103,12 +103,12 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
 
     public ICharacter CharacterData
     {
-        get { return DBManager.instance.GetConfigCharacters()[Guid]; }
+        get { return ICharacter.DataMap[Guid]; }
     }
 
     public IEquipment EquipmentData
     {
-        get { return DBManager.instance.GetConfigEquipments()[Guid]; }
+        get { return IEquipment.DataMap[Guid]; }
     }
 
     /// <summary>
@@ -271,7 +271,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         get
         {
             IPlayerHasEquips equippedByItem;
-            if (EquipmentData != null && !string.IsNullOrEmpty(EquipItemGuid) && DBManager.instance.GetHasEquipses().TryGetValue(EquipItemGuid, out equippedByItem))
+            if (EquipmentData != null && !string.IsNullOrEmpty(EquipItemGuid) && IPlayerHasEquips.DataMap.TryGetValue(EquipItemGuid, out equippedByItem))
                 return equippedByItem.GetPlayerItem();
             return null;
         }
@@ -286,7 +286,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
             if (CharacterData == null)
                 return result;
 
-            var valueList = DBManager.instance.GetHasEquipses().Values;
+            var valueList = IPlayerHasEquips.DataMap.Values;
             var list = valueList.Where(entry =>
                 entry.playerId == PlayerId &&
                 entry.Guid == GUID &&

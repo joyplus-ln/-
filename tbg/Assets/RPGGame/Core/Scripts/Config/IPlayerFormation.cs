@@ -20,7 +20,7 @@ namespace SQLite3TableDataTmp
         itemId,
     }
 
-    public class IPlayerFormation : SyncBase
+    public partial class IPlayerFormation : SyncBase
     {
         [SQLite3Constraint(SQLite3Constraint.Unique | SQLite3Constraint.NotNull )]
         [Sync((int)IPlayerFormationEnum.id)]

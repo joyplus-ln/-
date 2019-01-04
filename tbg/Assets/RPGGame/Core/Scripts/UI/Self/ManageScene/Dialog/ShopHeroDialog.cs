@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 public class ShopHeroDialog : Dialog
@@ -17,7 +18,7 @@ public class ShopHeroDialog : Dialog
     {
         base.Init(data);
         shopItemData = (ShopItemData)data.obj;
-        AttributeShow.SetupInfo(DBManager.instance.GetConfigCharacters()[shopItemData.heroid].GetTotalAttributes());
+        AttributeShow.SetupInfo(ICharacter.DataMap[shopItemData.heroid].GetTotalAttributes());
     }
 
     public void BuyItem()

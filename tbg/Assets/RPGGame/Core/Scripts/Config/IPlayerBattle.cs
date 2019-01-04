@@ -21,7 +21,7 @@ namespace SQLite3TableDataTmp
         rating,
     }
 
-    public class IPlayerBattle : SyncBase
+    public partial class IPlayerBattle : SyncBase
     {
         [SQLite3Constraint(SQLite3Constraint.Unique | SQLite3Constraint.NotNull )]
         [Sync((int)IPlayerBattleEnum.id)]

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -137,9 +138,9 @@ public class DBBattle
     #region 战斗
     public void DoSelectFormation(string formationName, UnityAction<PlayerResult> onFinish)
     {
-        var cplayer = Player.CurrentPlayer;
-        var playerId = cplayer.Id;
-        var loginToken = cplayer.LoginToken;
+        var cplayer = IPlayer.CurrentPlayer;
+        var playerId = cplayer.guid;
+        var loginToken = cplayer.loginToken;
         var result = new PlayerResult();
         var gameDb = GameInstance.GameDatabase;
         var player = GameInstance.dbLogin.GetPlayerByLoginToken(playerId, loginToken);
@@ -149,10 +150,10 @@ public class DBBattle
             result.error = GameServiceErrorCode.INVALID_FORMATION_DATA;
         else
         {
-            player.SelectedFormation = formationName;
+            player.selectedFormation = formationName;
             GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE player SET selectedFormation=@selectedFormation WHERE id=@id",
-                new SqliteParameter("@selectedFormation", player.SelectedFormation),
-                new SqliteParameter("@id", player.Id));
+                new SqliteParameter("@selectedFormation", player.selectedFormation),
+                new SqliteParameter("@id", player.guid));
             result.player = player;
         }
         onFinish(result);
@@ -171,9 +172,9 @@ public class DBBattle
     {
         Debug.LogError("111:" + itemguid);
 
-        var cplayer = Player.CurrentPlayer;
-        var playerId = cplayer.Id;
-        var loginToken = cplayer.LoginToken;
+        var cplayer = IPlayer.CurrentPlayer;
+        var playerId = cplayer.guid;
+        var loginToken = cplayer.loginToken;
         var result = new FormationListResult();
         var player = GameInstance.dbLogin.GetPlayerByLoginToken(playerId, loginToken);
         PlayerItem character = null;
@@ -205,9 +206,9 @@ public class DBBattle
 
     public void DoStartStage(string stageDataId, UnityAction<StartStageResult> onFinish)
     {
-        var cplayer = Player.CurrentPlayer;
-        var playerId = cplayer.Id;
-        var loginToken = cplayer.LoginToken;
+        var cplayer = IPlayer.CurrentPlayer;
+        var playerId = cplayer.guid;
+        var loginToken = cplayer.loginToken;
         var result = new StartStageResult();
         var gameDb = GameInstance.GameDatabase;
 
@@ -243,7 +244,7 @@ public class DBBattle
                     new SqliteParameter("@battleResult", playerBattle.BattleResult),
                     new SqliteParameter("@rating", playerBattle.Rating));
 
-                var stamina = GameInstance.dbPlayerData.GetStamina(player.Id, stageStaminaTable.id);
+                var stamina = GameInstance.dbPlayerData.GetStamina(player.guid, stageStaminaTable.id);
                 result.stamina = stamina;
                 result.session = playerBattle.Session;
             }
@@ -253,9 +254,9 @@ public class DBBattle
 
     public void DoStartTowerStage(string stageDataId, UnityAction<StartStageResult> onFinish)
     {
-        var cplayer = Player.CurrentPlayer;
-        var playerId = cplayer.Id;
-        var loginToken = cplayer.LoginToken;
+        var cplayer = IPlayer.CurrentPlayer;
+        var playerId = cplayer.guid;
+        var loginToken = cplayer.loginToken;
         var result = new StartStageResult();
         var gameDb = GameInstance.GameDatabase;
 
@@ -285,7 +286,7 @@ public class DBBattle
                 new SqliteParameter("@battleResult", playerBattle.BattleResult),
                 new SqliteParameter("@rating", playerBattle.Rating));
 
-            var stamina = GameInstance.dbPlayerData.GetStamina(player.Id, stageStaminaTable.id);
+            var stamina = GameInstance.dbPlayerData.GetStamina(player.guid, stageStaminaTable.id);
             result.stamina = stamina;
             result.session = playerBattle.Session;
 
@@ -295,9 +296,9 @@ public class DBBattle
 
     public void DoFinishStage(Const.StageType stagetype, string session, ushort battleResult, int deadCharacters, UnityAction<FinishStageResult> onFinish)
     {
-        var cplayer = Player.CurrentPlayer;
-        var playerId = cplayer.Id;
-        var loginToken = cplayer.LoginToken;
+        var cplayer = IPlayer.CurrentPlayer;
+        var playerId = cplayer.guid;
+        var loginToken = cplayer.loginToken;
 
         var result = new FinishStageResult();
         var gameDb = GameInstance.GameDatabase;
@@ -339,15 +340,15 @@ public class DBBattle
                 var rewardPlayerExp = stage.rewardPlayerExp;
                 result.rewardPlayerExp = rewardPlayerExp;
                 // Player exp
-                player.Exp += rewardPlayerExp;
+                player.exp += rewardPlayerExp;
                 GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE player SET exp=@exp WHERE id=@playerId",
-                    new SqliteParameter("@exp", player.Exp),
+                    new SqliteParameter("@exp", player.exp),
                     new SqliteParameter("@playerId", playerId));
                 result.player = player;
                 // Character exp
                 var countFormation = GameInstance.dbDataUtils.ExecuteScalar(@"SELECT COUNT(*) FROM playerFormation WHERE playerId=@playerId AND Guid=@Guid",
                     new SqliteParameter("@playerId", playerId),
-                    new SqliteParameter("@Guid", player.SelectedFormation));
+                    new SqliteParameter("@Guid", player.selectedFormation));
                 if (countFormation != null && (long)countFormation > 0)
                 {
                     var devivedExp = (int)(stage.rewardCharacterExp / (long)countFormation);
@@ -355,7 +356,7 @@ public class DBBattle
 
                     var formations = GameInstance.dbDataUtils.ExecuteReader(@"SELECT itemId FROM playerFormation WHERE playerId=@playerId AND Guid=@Guid",
                         new SqliteParameter("@playerId", playerId),
-                        new SqliteParameter("@Guid", player.SelectedFormation));
+                        new SqliteParameter("@Guid", player.selectedFormation));
                     while (formations.Read())
                     {
                         var itemId = formations.GetString(0);
@@ -374,10 +375,10 @@ public class DBBattle
                 var softCurrency = GameInstance.dbPlayerData.GetCurrency(playerId, gameDb.softCurrency.id);
                 var rewardSoftCurrency = Random.Range(stage.randomSoftCurrencyMinAmount, stage.randomSoftCurrencyMaxAmount);
                 result.rewardSoftCurrency = rewardSoftCurrency;
-                softCurrency.Amount += rewardSoftCurrency;
+                softCurrency.amount += rewardSoftCurrency;
                 GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
-                    new SqliteParameter("@amount", softCurrency.Amount),
-                    new SqliteParameter("@id", softCurrency.Id));
+                    new SqliteParameter("@amount", softCurrency.amount),
+                    new SqliteParameter("@id", softCurrency.id));
                 result.updateCurrencies.Add(softCurrency);
                 // Items
                 for (var i = 0; i < stage.rewardItems.Length; ++i)
@@ -433,9 +434,9 @@ public class DBBattle
 
     public void DoUnEquipItem(string equipmentId, UnityAction<ItemResult> onFinish)
     {
-        var cplayer = Player.CurrentPlayer;
-        var playerId = cplayer.Id;
-        var loginToken = cplayer.LoginToken;
+        var cplayer = IPlayer.CurrentPlayer;
+        var playerId = cplayer.guid;
+        var loginToken = cplayer.loginToken;
         var result = new ItemResult();
         var player = GameInstance.dbLogin.GetPlayerByLoginToken(playerId, loginToken);
         var unEquipItem = GameInstance.dbPlayerData.GetPlayerEquipmentItemById(equipmentId);
@@ -459,9 +460,9 @@ public class DBBattle
 
     public void DoEquipItem(string characterId, string equipmentId, string equipPosition, UnityAction<ItemResult> onFinish)
     {
-        var player = Player.CurrentPlayer;
-        var playerId = player.Id;
-        var loginToken = player.LoginToken;
+        var player = IPlayer.CurrentPlayer;
+        var playerId = player.guid;
+        var loginToken = player.loginToken;
         var result = new ItemResult();
         var foundPlayer = GameInstance.dbLogin.GetPlayerByLoginToken(playerId, loginToken);
         var foundCharacter = GameInstance.dbPlayerData.GetPlayerCharacterItemById(characterId);
@@ -513,9 +514,9 @@ public class DBBattle
 
     public void DoGetClearStageList(UnityAction<ClearStageListResult> onFinish)
     {
-        var cplayer = Player.CurrentPlayer;
-        var playerId = cplayer.Id;
-        var loginToken = cplayer.LoginToken;
+        var cplayer = IPlayer.CurrentPlayer;
+        var playerId = cplayer.guid;
+        var loginToken = cplayer.loginToken;
         var result = new ClearStageListResult();
         var player = GameInstance.dbDataUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
             new SqliteParameter("@playerId", playerId),
@@ -542,9 +543,9 @@ public class DBBattle
 
     public void DoGetFormationList(UnityAction<FormationListResult> onFinish)
     {
-        var cplayer = Player.CurrentPlayer;
-        var playerId = cplayer.Id;
-        var loginToken = cplayer.LoginToken;
+        var cplayer = IPlayer.CurrentPlayer;
+        var playerId = cplayer.guid;
+        var loginToken = cplayer.loginToken;
         var result = new FormationListResult();
         var player = GameInstance.dbDataUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
             new SqliteParameter("@playerId", playerId),
@@ -572,9 +573,9 @@ public class DBBattle
 
     public void DoGetUnlockItemList(UnityAction<UnlockItemListResult> onFinish)
     {
-        var cplayer = Player.CurrentPlayer;
-        var playerId = cplayer.Id;
-        var loginToken = cplayer.LoginToken;
+        var cplayer = IPlayer.CurrentPlayer;
+        var playerId = cplayer.guid;
+        var loginToken = cplayer.loginToken;
         var result = new UnlockItemListResult();
         var player = GameInstance.dbDataUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
             new SqliteParameter("@playerId", playerId),

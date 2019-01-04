@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,9 +11,9 @@ public class DBPlayerData
 
     public void DoGetCurrencyList(UnityAction<CurrencyListResult> onFinish)
     {
-        var cplayer = Player.CurrentPlayer;
-        var playerId = cplayer.Id;
-        var loginToken = cplayer.LoginToken;
+        var cplayer = IPlayer.CurrentPlayer;
+        var playerId = cplayer.guid;
+        var loginToken = cplayer.loginToken;
         var result = new CurrencyListResult();
         var player = GameInstance.dbDataUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
             new SqliteParameter("@playerId", playerId),
@@ -21,28 +22,28 @@ public class DBPlayerData
             result.error = GameServiceErrorCode.INVALID_LOGIN_TOKEN;
         else
         {
-            var reader = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerCurrency WHERE playerId=@playerId", new SqliteParameter("@playerId", playerId));
-            var list = new List<PlayerCurrency>();
-            while (reader.Read())
-            {
-                var entry = new PlayerCurrency();
-                entry.Id = reader.GetString(0);
-                entry.PlayerId = reader.GetString(1);
-                entry.DataId = reader.GetString(2);
-                entry.Amount = reader.GetInt32(3);
-                entry.PurchasedAmount = reader.GetInt32(4);
-                list.Add(entry);
-            }
-            result.list = list;
+            //var reader = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerCurrency WHERE playerId=@playerId", new SqliteParameter("@playerId", playerId));
+            //var list = new List<PlayerCurrency>();
+            //while (reader.Read())
+            //{
+            //    var entry = new PlayerCurrency();
+            //    entry.Id = reader.GetString(0);
+            //    entry.PlayerId = reader.GetString(1);
+            //    entry.DataId = reader.GetString(2);
+            //    entry.Amount = reader.GetInt32(3);
+            //    entry.PurchasedAmount = reader.GetInt32(4);
+            //    list.Add(entry);
+            //}
+            //result.list = list;
         }
         onFinish(result);
     }
 
     public void DoGetStaminaList(UnityAction<StaminaListResult> onFinish)
     {
-        var cplayer = Player.CurrentPlayer;
-        var playerId = cplayer.Id;
-        var loginToken = cplayer.LoginToken;
+        var cplayer = IPlayer.CurrentPlayer;
+        var playerId = cplayer.guid;
+        var loginToken = cplayer.loginToken;
         var result = new StaminaListResult();
         var player = GameInstance.dbDataUtils.ExecuteScalar(@"SELECT COUNT(*) FROM player WHERE id=@playerId AND loginToken=@loginToken",
             new SqliteParameter("@playerId", playerId),
@@ -74,7 +75,7 @@ public class DBPlayerData
     /// </summary>
     public void GetPlayerLocalInfo()
     {
-        var reader = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM player WHERE id=@playerId", new SqliteParameter("@playerId", Player.CurrentPlayer.Id));
+        var reader = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM player WHERE id=@playerId", new SqliteParameter("@playerId", IPlayer.CurrentPlayer.guid));
         var list = new List<PlayerItem>();
         string localConfig = "";
         while (reader.Read())
@@ -91,37 +92,37 @@ public class DBPlayerData
     {
         GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE player SET prefs=@prefs WHERE id=@id",
             new SqliteParameter("@prefs", JsonConvert.SerializeObject(PlayerSQLPrefs.localConfig)),
-            new SqliteParameter("@id", Player.CurrentPlayerId));
+            new SqliteParameter("@id", IPlayer.CurrentPlayerId));
     }
 
 
 
 
-    public bool DecreasePlayerStamina(Player player, Stamina staminaTable, int decreaseAmount)
+    public bool DecreasePlayerStamina(IPlayer player, Stamina staminaTable, int decreaseAmount)
     {
-        var stamina = GetStamina(player.Id, staminaTable.id);
-        if (stamina.Amount >= decreaseAmount)
+        var stamina = GetStamina(player.guid, staminaTable.id);
+        if (stamina.amount >= decreaseAmount)
         {
-            stamina.Amount -= decreaseAmount;
+            stamina.amount -= decreaseAmount;
             GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerStamina SET amount=@amount WHERE id=@id",
-                new SqliteParameter("@amount", stamina.Amount),
-                new SqliteParameter("@id", stamina.Id));
+                new SqliteParameter("@amount", stamina.amount),
+                new SqliteParameter("@id", stamina.Guid));
             UpdatePlayerStamina(player, staminaTable);
             return true;
         }
         return false;
     }
 
-    private void UpdatePlayerStamina(Player player, Stamina staminaTable)
+    private void UpdatePlayerStamina(IPlayer player, Stamina staminaTable)
     {
         var gameDb = GameInstance.GameDatabase;
 
-        var stamina = GetStamina(player.Id, staminaTable.id);
+        var stamina = GetStamina(player.guid, staminaTable.id);
         var maxStamina = staminaTable.maxAmountTable.Calculate(player.Level, gameDb.playerMaxLevel);
-        if (stamina.Amount < maxStamina)
+        if (stamina.amount < maxStamina)
         {
             var currentTimeInMillisecond = System.DateTime.Now.Ticks / System.TimeSpan.TicksPerMillisecond;
-            var diffTimeInMillisecond = currentTimeInMillisecond - stamina.RecoveredTime;
+            var diffTimeInMillisecond = currentTimeInMillisecond - stamina.recoveredTime;
             var devideAmount = 1;
             switch (staminaTable.recoverUnit)
             {
@@ -139,18 +140,21 @@ public class DBPlayerData
                     break;
             }
             var recoveryAmount = (int)(diffTimeInMillisecond / devideAmount) / staminaTable.recoverDuration;
-            stamina.Amount += recoveryAmount;
-            if (stamina.Amount > maxStamina)
-                stamina.Amount = maxStamina;
-            stamina.RecoveredTime = currentTimeInMillisecond;
-            GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerStamina SET amount=@amount, recoveredTime=@recoveredTime WHERE id=@id",
-                new SqliteParameter("@amount", stamina.Amount),
-                new SqliteParameter("@recoveredTime", stamina.RecoveredTime),
-                new SqliteParameter("@id", stamina.Id));
+            stamina.amount += recoveryAmount;
+            if (stamina.amount > maxStamina)
+                stamina.amount = maxStamina;
+            stamina.recoveredTime = currentTimeInMillisecond;
+            IPlayerStamina.DataMap[IPlayerStamina.GetId(player.guid, staminaTable.id)].amount = stamina.amount;
+            IPlayerStamina.DataMap[IPlayerStamina.GetId(player.guid, staminaTable.id)].recoveredTime = stamina.recoveredTime;
+            IPlayerStamina.UpdataDataMap();
+            //GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerStamina SET amount=@amount, recoveredTime=@recoveredTime WHERE id=@id",
+            //    new SqliteParameter("@amount", stamina.Amount),
+            //    new SqliteParameter("@recoveredTime", stamina.RecoveredTime),
+            //    new SqliteParameter("@id", stamina.Id));
         }
     }
 
-    public void UpdatePlayerStamina(Player player)
+    public void UpdatePlayerStamina(IPlayer player)
     {
         var gameDb = GameInstance.GameDatabase;
         var stageStaminaTable = gameDb.stageStamina;
@@ -158,35 +162,56 @@ public class DBPlayerData
     }
 
 
-    public PlayerStamina GetStamina(string playerId, string dataId)
+    public IPlayerStamina GetStamina(string playerId, string dataId)
     {
-        var staminas = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerStamina WHERE playerId=@playerId AND Guid=@Guid LIMIT 1",
-            new SqliteParameter("@playerId", playerId),
-            new SqliteParameter("@Guid", dataId));
-        PlayerStamina stamina = null;
-        if (!staminas.Read())
+        IPlayerStamina stamina = null;
+        if (!IPlayerStamina.DataMap.ContainsKey(IPlayerStamina.GetId(playerId, dataId)))
         {
-            stamina = new PlayerStamina();
-            stamina.Id = PlayerStamina.GetId(playerId, dataId);
-            stamina.PlayerId = playerId;
-            stamina.DataId = dataId;
-            GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerStamina (id, playerId, Guid, amount, recoveredTime) VALUES (@id, @playerId, @Guid, @amount, @recoveredTime)",
-                new SqliteParameter("@id", stamina.Id),
-                new SqliteParameter("@playerId", stamina.PlayerId),
-                new SqliteParameter("@Guid", stamina.DataId),
-                new SqliteParameter("@amount", stamina.Amount),
-                new SqliteParameter("@recoveredTime", stamina.RecoveredTime));
+            stamina = new IPlayerStamina();
+            stamina.Guid = IPlayerStamina.GetId(playerId, dataId);
+            stamina.playerId = playerId;
+            stamina.Guid = IPlayerStamina.GetId(playerId, dataId);
+            stamina.dataId = dataId;
+            IPlayerStamina.DataMap.Add(IPlayerStamina.GetId(playerId,dataId), stamina);
+            return stamina;
+            //GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerStamina (id, playerId, Guid, amount, recoveredTime) VALUES (@id, @playerId, @Guid, @amount, @recoveredTime)",
+            //    new SqliteParameter("@id", stamina.Id),
+            //    new SqliteParameter("@playerId", stamina.PlayerId),
+            //    new SqliteParameter("@Guid", stamina.DataId),
+            //    new SqliteParameter("@amount", stamina.Amount),
+            //    new SqliteParameter("@recoveredTime", stamina.RecoveredTime));
         }
         else
         {
-            stamina = new PlayerStamina();
-            stamina.Id = staminas.GetString(0);
-            stamina.PlayerId = staminas.GetString(1);
-            stamina.DataId = staminas.GetString(2);
-            stamina.Amount = staminas.GetInt32(3);
-            stamina.RecoveredTime = staminas.GetInt64(4);
+            return IPlayerStamina.DataMap[PlayerStamina.GetId(playerId, dataId)];
         }
-        return stamina;
+        //var staminas = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerStamina WHERE playerId=@playerId AND Guid=@Guid LIMIT 1",
+        //    new SqliteParameter("@playerId", playerId),
+        //    new SqliteParameter("@Guid", dataId));
+
+        //if (!staminas.Read())
+        //{
+        //    stamina = new PlayerStamina();
+        //    stamina.Id = PlayerStamina.GetId(playerId, dataId);
+        //    stamina.PlayerId = playerId;
+        //    stamina.DataId = dataId;
+        //    GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerStamina (id, playerId, Guid, amount, recoveredTime) VALUES (@id, @playerId, @Guid, @amount, @recoveredTime)",
+        //        new SqliteParameter("@id", stamina.Id),
+        //        new SqliteParameter("@playerId", stamina.PlayerId),
+        //        new SqliteParameter("@Guid", stamina.DataId),
+        //        new SqliteParameter("@amount", stamina.Amount),
+        //        new SqliteParameter("@recoveredTime", stamina.RecoveredTime));
+        //}
+        //else
+        //{
+        //    stamina = new PlayerStamina();
+        //    stamina.Id = staminas.GetString(0);
+        //    stamina.PlayerId = staminas.GetString(1);
+        //    stamina.DataId = staminas.GetString(2);
+        //    stamina.Amount = staminas.GetInt32(3);
+        //    stamina.RecoveredTime = staminas.GetInt64(4);
+        //}
+        //return stamina;
     }
 
 
@@ -194,13 +219,13 @@ public class DBPlayerData
     /// <summary>
     /// 插入初始角色
     /// </summary>
-    public void InsertStartPlayerCharacter(Player player)
+    public void InsertStartPlayerCharacter(IPlayer player)
     {
         for (var i = 0; i < GameInstance.Singleton.gameDatabase.startCharacterItems.Count; ++i)
         {
-            if (!DBManager.instance.GetConfigCharacters().ContainsKey(GameInstance.Singleton.gameDatabase.startCharacterItems[i]))
+            if (!ICharacter.DataMap.ContainsKey(GameInstance.Singleton.gameDatabase.startCharacterItems[i]))
                 continue;
-            var startItem = DBManager.instance.GetConfigCharacters()[GameInstance.Singleton.gameDatabase.startCharacterItems[i]];
+            var startItem = ICharacter.DataMap[GameInstance.Singleton.gameDatabase.startCharacterItems[i]];
 
             if (true)
             {
@@ -208,7 +233,7 @@ public class DBPlayerData
                 currentItem.ItemID = GameInstance.Singleton.gameDatabase.startCharacterItems[i];//id,@id,
                 GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerHasCharacters (itemid,playerId, Guid, amount, exp) VALUES ( @itemid,@playerId, @Guid, @amount, @exp)",
                     new SqliteParameter("@itemid", currentItem.ItemID),
-                    new SqliteParameter("@playerId", player.Id),
+                    new SqliteParameter("@playerId", player.guid),
                     new SqliteParameter("@Guid", System.Guid.NewGuid().ToString()),
                     new SqliteParameter("@amount", currentItem.Amount),
                     new SqliteParameter("@exp", currentItem.Exp)
@@ -225,7 +250,7 @@ public class DBPlayerData
     public void InsertCharacter(string itemid)
     {
         {
-            if (!DBManager.instance.GetConfigCharacters().ContainsKey(itemid)) return;
+            if (!ICharacter.DataMap.ContainsKey(itemid)) return;
 
             {
                 PlayerItem currentItem = new PlayerItem(PlayerItem.ItemType.character);
@@ -233,7 +258,7 @@ public class DBPlayerData
                 currentItem.GUID = System.Guid.NewGuid().ToString();
                 GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerHasCharacters (itemid,playerId, Guid, amount, exp) VALUES ( @itemid,@playerId, @Guid, @amount, @exp)",
                     new SqliteParameter("@itemid", currentItem.ItemID),
-                    new SqliteParameter("@playerId", Player.CurrentPlayer.Id),
+                    new SqliteParameter("@playerId", IPlayer.CurrentPlayer.guid),
                     new SqliteParameter("@Guid", currentItem.GUID),
                     new SqliteParameter("@amount", currentItem.Amount),
                     new SqliteParameter("@exp", currentItem.Exp)
@@ -251,7 +276,7 @@ public class DBPlayerData
     /// <summary>
     /// 插入初始otheritem
     /// </summary>
-    public void InsertStartEquiptem(Player player)
+    public void InsertStartEquiptem(IPlayer player)
     {
         for (var i = 0; i < GameInstance.Singleton.gameDatabase.startEquipsItems.Count; ++i)
         {
@@ -265,7 +290,7 @@ public class DBPlayerData
                 currentItem.ItemID = GameInstance.Singleton.gameDatabase.startEquipsItems[i];//id,@id,
                 GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerHasEquips (itemid,playerId, Guid, amount, exp, equipItemGuid, equipPosition) VALUES ( @itemid,@playerId, @Guid, @amount, @exp, @equipItemGuid, @equipPosition)",
                     new SqliteParameter("@itemid", currentItem.ItemID),
-                    new SqliteParameter("@playerId", player.Id),
+                    new SqliteParameter("@playerId", player.guid),
                     new SqliteParameter("@Guid", System.Guid.NewGuid().ToString()),
                     new SqliteParameter("@amount", currentItem.Amount),
                     new SqliteParameter("@exp", currentItem.Exp),
@@ -287,9 +312,9 @@ public class DBPlayerData
     /// <param name="onFinish"></param>
     public void DoCharacterLevelUpItem(string itemGuid, Dictionary<string, int> materials, int ExIncreasingExp, UnityAction<ItemResult> onFinish)
     {
-        var player = Player.CurrentPlayer;
-        var playerId = player.Id;
-        var loginToken = player.LoginToken;
+        var player = IPlayer.CurrentPlayer;
+        var playerId = player.guid;
+        var loginToken = player.loginToken;
         var result = new ItemResult();
         var foundPlayer = GameInstance.dbLogin.GetPlayerByLoginToken(playerId, loginToken);
         var foundItem = GetPlayerCharacterItemById(itemGuid);
@@ -329,34 +354,34 @@ public class DBPlayerData
                 else
                     deleteItemIds.Add(materialItem.GUID, PlayerItem.ItemType.character);
             }
-            if (requireCurrency > softCurrency.Amount)
-                result.error = GameServiceErrorCode.NOT_ENOUGH_SOFT_CURRENCY;
-            else
-            {
-                softCurrency.Amount -= requireCurrency;
-                GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
-                    new SqliteParameter("@amount", softCurrency.Amount),
-                    new SqliteParameter("@id", softCurrency.Id));
+            //if (requireCurrency > softCurrency.Amount)
+            //    result.error = GameServiceErrorCode.NOT_ENOUGH_SOFT_CURRENCY;
+            //else
+            //{
+            //    softCurrency.Amount -= requireCurrency;
+            //    GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
+            //        new SqliteParameter("@amount", softCurrency.Amount),
+            //        new SqliteParameter("@id", softCurrency.Id));
 
-                foundItem = foundItem.CreateLevelUpItem(increasingExp + ExIncreasingExp);
-                updateItems.Add(foundItem);
-                foreach (var updateItem in updateItems)
-                {
-                    GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasCharacters SET playerId=@playerId, itemid=@itemid, amount=@amount, exp=@exp WHERE Guid=@Guid",
-                        new SqliteParameter("@playerId", updateItem.PlayerId),
-                        new SqliteParameter("@itemid", updateItem.ItemID),
-                        new SqliteParameter("@amount", updateItem.Amount),
-                        new SqliteParameter("@exp", updateItem.Exp),
-                        new SqliteParameter("@Guid", updateItem.GUID));
-                }
-                foreach (var deleteItemId in deleteItemIds)
-                {
-                    GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerHasCharacters WHERE Guid=@Guid", new SqliteParameter("@Guid", deleteItemId));
-                }
-                result.updateCurrencies.Add(softCurrency);
-                result.updateItems = updateItems;
-                result.deleteItemIds = deleteItemIds;
-            }
+            //    foundItem = foundItem.CreateLevelUpItem(increasingExp + ExIncreasingExp);
+            //    updateItems.Add(foundItem);
+            //    foreach (var updateItem in updateItems)
+            //    {
+            //        GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerHasCharacters SET playerId=@playerId, itemid=@itemid, amount=@amount, exp=@exp WHERE Guid=@Guid",
+            //            new SqliteParameter("@playerId", updateItem.PlayerId),
+            //            new SqliteParameter("@itemid", updateItem.ItemID),
+            //            new SqliteParameter("@amount", updateItem.Amount),
+            //            new SqliteParameter("@exp", updateItem.Exp),
+            //            new SqliteParameter("@Guid", updateItem.GUID));
+            //    }
+            //    foreach (var deleteItemId in deleteItemIds)
+            //    {
+            //        GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerHasCharacters WHERE Guid=@Guid", new SqliteParameter("@Guid", deleteItemId));
+            //    }
+            //    result.updateCurrencies.Add(softCurrency);
+            //    result.updateItems = updateItems;
+            //    result.deleteItemIds = deleteItemIds;
+            //}
         }
         onFinish(result);
     }
@@ -411,33 +436,32 @@ public class DBPlayerData
     /// <param name="playerId"></param>
     /// <param name="dataId"></param>
     /// <returns></returns>
-    public PlayerCurrency GetCurrency(string playerId, string dataId)
+    public IPlayerCurrency GetCurrency(string playerId, string dataId)
     {
         var currencies = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerCurrency WHERE playerId=@playerId AND Guid=@Guid LIMIT 1",
             new SqliteParameter("@playerId", playerId),
             new SqliteParameter("@Guid", dataId));
-        PlayerCurrency currency = null;
+        IPlayerCurrency currency = null;
         if (!currencies.Read())
         {
-            currency = new PlayerCurrency();
-            currency.Id = PlayerCurrency.GetId(playerId, dataId);
-            currency.PlayerId = playerId;
-            currency.DataId = dataId;
-            GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerCurrency (id, playerId, Guid, amount, purchasedAmount) VALUES (@id, @playerId, @Guid, @amount, @purchasedAmount)",
-                new SqliteParameter("@id", currency.Id),
-                new SqliteParameter("@playerId", currency.PlayerId),
-                new SqliteParameter("@Guid", currency.DataId),
-                new SqliteParameter("@amount", currency.Amount),
-                new SqliteParameter("@purchasedAmount", currency.PurchasedAmount));
+            currency = new IPlayerCurrency();
+            currency.guid = IPlayerCurrency.GetId(playerId, dataId);
+            currency.playerId = playerId;
+            //GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerCurrency (id, playerId, Guid, amount, purchasedAmount) VALUES (@id, @playerId, @Guid, @amount, @purchasedAmount)",
+            //    new SqliteParameter("@id", currency.Id),
+            //    new SqliteParameter("@playerId", currency.PlayerId),
+            //    new SqliteParameter("@Guid", currency.DataId),
+            //    new SqliteParameter("@amount", currency.Amount),
+            //    new SqliteParameter("@purchasedAmount", currency.PurchasedAmount));
         }
         else
         {
-            currency = new PlayerCurrency();
-            currency.Id = currencies.GetString(0);
-            currency.PlayerId = currencies.GetString(1);
-            currency.DataId = currencies.GetString(2);
-            currency.Amount = currencies.GetInt32(3);
-            currency.PurchasedAmount = currencies.GetInt32(4);
+            //currency = new IPlayerCurrency();
+            //currency.Id = currencies.GetString(0);
+            //currency.PlayerId = currencies.GetString(1);
+            //currency.DataId = currencies.GetString(2);
+            //currency.Amount = currencies.GetInt32(3);
+            //currency.PurchasedAmount = currencies.GetInt32(4);
         }
         return currency;
     }

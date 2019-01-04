@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 public class CharacterListUI : MonoBehaviour
@@ -28,13 +29,13 @@ public class CharacterListUI : MonoBehaviour
     {
         yield return null;
         //todo
-        //GameObject items = null;
-        //foreach (var key in PlayerItem.characterDataMap.Keys)
-        //{
-        //    yield return items = Instantiate(item);
-        //    items.GetComponent<CharacterListItem>().Init(this, PlayerItem.characterDataMap[key]);
-        //    items.transform.SetParent(content, false);
-        //}
+        GameObject items = null;
+        foreach (var key in IPlayerHasCharacters.DataMap.Keys)
+        {
+            yield return items = Instantiate(item);
+            items.GetComponent<CharacterListItem>().Init(this, IPlayerHasCharacters.DataMap[key].GetPlayerItem());
+            items.transform.SetParent(content, false);
+        }
 
     }
 

@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RpguiCurrency : RpguiDataItem<PlayerCurrency>
+public class RpguiCurrency : RpguiDataItem<IPlayerCurrency>
 {
     public Image imageIcon;
     public Text textAmount;
@@ -17,10 +18,10 @@ public class RpguiCurrency : RpguiDataItem<PlayerCurrency>
         SetupInfo(null);
     }
 
-    private void SetupInfo(PlayerCurrency data)
+    private void SetupInfo(IPlayerCurrency data)
     {
         if (data == null)
-            data = new PlayerCurrency();
+            data = new IPlayerCurrency();
 
         var currencyData = data.CurrencyData;
 
@@ -28,11 +29,11 @@ public class RpguiCurrency : RpguiDataItem<PlayerCurrency>
             imageIcon.sprite = currencyData == null ? null : currencyData.icon;
 
         if (textAmount != null)
-            textAmount.text = data.Amount.ToString("N0");
+            textAmount.text = data.amount.ToString("N0");
     }
 
     public override bool IsEmpty()
     {
-        return data == null || string.IsNullOrEmpty(data.DataId);
+        return data == null || string.IsNullOrEmpty(data.guid);
     }
 }

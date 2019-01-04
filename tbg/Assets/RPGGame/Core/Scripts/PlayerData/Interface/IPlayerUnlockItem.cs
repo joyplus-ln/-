@@ -1,4 +1,4 @@
-﻿public interface IPlayerUnlockItem
+﻿public interface IIPlayerUnlockItem
 {
     string Id { get; set; }
     string PlayerId { get; set; }

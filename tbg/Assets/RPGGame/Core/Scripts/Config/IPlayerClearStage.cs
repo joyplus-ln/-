@@ -19,7 +19,7 @@ namespace SQLite3TableDataTmp
         bestRating,
     }
 
-    public class IPlayerClearStage : SyncBase
+    public partial class IPlayerClearStage : SyncBase
     {
         [SQLite3Constraint(SQLite3Constraint.Unique | SQLite3Constraint.NotNull )]
         [Sync((int)IPlayerClearStageEnum.id)]

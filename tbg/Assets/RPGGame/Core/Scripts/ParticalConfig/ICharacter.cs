@@ -6,6 +6,20 @@ namespace SQLite3TableDataTmp
 {
     public partial class ICharacter
     {
+        public static Dictionary<string, ICharacter> DataMap = new Dictionary<string, ICharacter>();
+
+        public static void Init()
+        {
+            DataMap = DBManager.instance.ConfigSQLite3Operate.SelectDictT_ST<ICharacter>();
+        }
+        public static void UpdataDataMap()
+        {
+            foreach (var dataMapValue in DataMap.Values)
+            {
+                DBManager.instance.LocalSQLite3Operate.UpdateOrInsert(dataMapValue);
+            }
+        }
+
         public int Calculate(int maxValue, int minValue, float growth, int currentLevel, int maxLevel)
         {
             if (currentLevel <= 0)

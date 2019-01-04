@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerFormation : BasePlayerData, IPlayerFormation
+public class PlayerFormation : BasePlayerData, IIPlayerFormation
 {
     public static readonly Dictionary<string, PlayerFormation> DataMap = new Dictionary<string, PlayerFormation>();
     public string characterGuid { get; set; }
@@ -29,21 +30,6 @@ public class PlayerFormation : BasePlayerData, IPlayerFormation
     }
     #endregion
 
-    public PlayerFormation Clone()
-    {
-        var result = new PlayerFormation();
-        CloneTo(this, result);
-        return result;
-    }
-
-    public static void CloneTo(IPlayerFormation from, IPlayerFormation to)
-    {
-        to.characterGuid = from.characterGuid;
-        to.PlayerId = from.PlayerId;
-        to.formationId = from.formationId;
-        to.Position = from.Position;
-        to.ItemId = from.ItemId;
-    }
 
     public static string GetId(string playerId, string dataId, int position)
     {
@@ -79,7 +65,7 @@ public class PlayerFormation : BasePlayerData, IPlayerFormation
 
     public static bool TryGetData(string dataId, int position, out PlayerFormation data)
     {
-        return TryGetData(Player.CurrentPlayerId, dataId, position, out data);
+        return TryGetData(IPlayer.CurrentPlayerId, dataId, position, out data);
     }
 
     public static bool RemoveData(string id)
@@ -120,7 +106,7 @@ public class PlayerFormation : BasePlayerData, IPlayerFormation
 
     public static void RemoveDataRange()
     {
-        RemoveDataRange(Player.CurrentPlayerId);
+        RemoveDataRange(IPlayer.CurrentPlayerId);
     }
 
     public static bool ContainsDataWithItemId(string itemId)

@@ -20,7 +20,7 @@ namespace SQLite3TableDataTmp
         purchasedAmount,
     }
 
-    public class IPlayerCurrency : SyncBase
+    public partial class IPlayerCurrency : SyncBase
     {
         [SQLite3Constraint(SQLite3Constraint.Unique | SQLite3Constraint.NotNull )]
         [Sync((int)IPlayerCurrencyEnum.id)]

@@ -14,41 +14,46 @@ namespace SQLite3TableDataTmp
     public enum IPlayerStaminaEnum
     {
         id,
-        playerId,
         Guid,
+        playerId,
         amount,
         recoveredTime,
+        dataId,
     }
 
-    public class IPlayerStamina : SyncBase
+    public partial class IPlayerStamina : SyncBase
     {
         [SQLite3Constraint(SQLite3Constraint.Unique | SQLite3Constraint.NotNull )]
         [Sync((int)IPlayerStaminaEnum.id)]
         public int id { get; private set; }  //id
 
-        [Sync((int)IPlayerStaminaEnum.playerId)]
-        public string playerId { get; set; }  //playerId
-
         [Sync((int)IPlayerStaminaEnum.Guid)]
         public string Guid { get; set; }  //Guid
+
+        [Sync((int)IPlayerStaminaEnum.playerId)]
+        public string playerId { get; set; }  //playerId
 
         [Sync((int)IPlayerStaminaEnum.amount)]
         public int amount { get; set; }  //amount
 
         [Sync((int)IPlayerStaminaEnum.recoveredTime)]
-        public string recoveredTime { get; set; }  //recoveredTime
+        public float recoveredTime { get; set; }  //recoveredTime
+
+        [Sync((int)IPlayerStaminaEnum.dataId)]
+        public string dataId { get; set; }  //recoveredTime
 
         public IPlayerStamina()
         {
         }
 
-        public IPlayerStamina(int Inid, string InplayerId, string InGuid, int Inamount, string InrecoveredTime)
+        public IPlayerStamina(int Inid, string InGuid, string InplayerId, int Inamount, float InrecoveredTime, string IndataId)
         {
             id = Inid;
-            playerId = InplayerId;
             Guid = InGuid;
+            playerId = InplayerId;
             amount = Inamount;
             recoveredTime = InrecoveredTime;
+            dataId = IndataId;
         }
 
         //-------------------------------*Self Code Begin*-------------------------------
@@ -58,7 +63,7 @@ namespace SQLite3TableDataTmp
 
         public override string ToString()
         {
-            return "IPlayerStamina : id = " + id + ", playerId = " + playerId + ", Guid = " + Guid + ", amount = " + amount + ", recoveredTime = " + recoveredTime;
+            return "IPlayerStamina : id = " + id + ", Guid = " + Guid + ", playerId = " + playerId + ", amount = " + amount + ", recoveredTime = " + recoveredTime + ", dataId = " + dataId;
         }
 
     }

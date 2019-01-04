@@ -11,7 +11,7 @@
 
 
 }
-public interface IPlayerOtherItem
+public interface IIPlayerOtherItem
 {
     string ItemID { get; set; }
     string PlayerId { get; set; }

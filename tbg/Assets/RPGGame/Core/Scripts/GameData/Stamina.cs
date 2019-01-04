@@ -14,7 +14,6 @@ public enum StaminaUnit : short
 public class Stamina
 {
     public string id;
-    public Sprite icon;
     public Int32Attribute maxAmountTable;
     public StaminaUnit recoverUnit;
     [Tooltip("Recover Duration, maximum is 360 days")]

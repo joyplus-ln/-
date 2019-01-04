@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 
@@ -29,9 +30,9 @@ public class TowerStage : BaseStage
                 
                 if (!string.IsNullOrEmpty(foe.characterId))
                 {
-                    var newEntry = PlayerItem.CreateActorItemWithLevel(DBManager.instance.GetConfigCharacters()[foe.characterId], foe.level,Const.StageType.Tower,false);
-                    newEntry.GUID = DBManager.instance.GetConfigCharacters()[foe.characterId].guid + "_" + foe.level;
-                    dict[DBManager.instance.GetConfigCharacters()[foe.characterId].guid + "_" + foe.level] = newEntry;
+                    var newEntry = PlayerItem.CreateActorItemWithLevel(ICharacter.DataMap[foe.characterId], foe.level,Const.StageType.Tower,false);
+                    newEntry.GUID = ICharacter.DataMap[foe.characterId].guid + "_" + foe.level;
+                    dict[ICharacter.DataMap[foe.characterId].guid + "_" + foe.level] = newEntry;
                 }
             }
         }
@@ -43,12 +44,12 @@ public class TowerStage : BaseStage
             var foes = wave.foes;
             foreach (var foe in foes)
             {
-                var item = DBManager.instance.GetConfigCharacters()[foe.characterId];
+                var item = ICharacter.DataMap[foe.characterId];
                 if (item != null)
                 {
                     var newEntry = PlayerItem.CreateActorItemWithLevel(item, foe.level,Const.StageType.Tower,false);
-                    newEntry.GUID = DBManager.instance.GetConfigCharacters()[foe.characterId].guid + "_" + foe.level;
-                    dict[DBManager.instance.GetConfigCharacters()[foe.characterId].guid + "_" + foe.level] = newEntry;
+                    newEntry.GUID = ICharacter.DataMap[foe.characterId].guid + "_" + foe.level;
+                    dict[ICharacter.DataMap[foe.characterId].guid + "_" + foe.level] = newEntry;
                 }
             }
         }
