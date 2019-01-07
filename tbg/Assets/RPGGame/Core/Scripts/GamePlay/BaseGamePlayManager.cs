@@ -100,7 +100,7 @@ public abstract class BaseGamePlayManager : MonoBehaviour
          {
              isEnding = true;
              Time.timeScale = 1;
-             GameInstance.Singleton.OnGameServiceFinishStageResult(result);
+             RPGSceneManager.LoadScene(RPGSceneManager.ManagerScene);
              RpguiWin.SetData(result);
              RpguiWin.Show();
          });
@@ -121,7 +121,7 @@ public abstract class BaseGamePlayManager : MonoBehaviour
          {
              isEnding = true;
              Time.timeScale = 1;
-             GameInstance.Singleton.GetAllPlayerData(GameInstance.LoadAllPlayerDataState.GoToManageScene);
+             RPGSceneManager.LoadScene(RPGSceneManager.ManagerScene);
          });
     }
 
@@ -135,9 +135,8 @@ public abstract class BaseGamePlayManager : MonoBehaviour
         PlayingStage = data;
         GameInstance.dbBattle.DoStartStage(data.Id, (result) =>
         {
-            GameInstance.Singleton.OnGameServiceStartStageResult(result);
             BattleSession = result.session;
-            GameInstance.Singleton.LoadBattleScene();
+            RPGSceneManager.LoadScene(RPGSceneManager.ManagerScene);
         });
     }
 
@@ -146,9 +145,8 @@ public abstract class BaseGamePlayManager : MonoBehaviour
         PlayingStage = data;
         GameInstance.dbBattle.DoStartTowerStage(data.Id + "_" + level, (result) =>
         {
-            GameInstance.Singleton.OnGameServiceStartStageResult(result);
             BattleSession = result.session;
-            GameInstance.Singleton.LoadBattleScene();
+            RPGSceneManager.LoadScene(RPGSceneManager.ManagerScene);
         });
     }
 

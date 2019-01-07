@@ -26,7 +26,7 @@ public class SelfHeroEquipSHow : MonoBehaviour
         this.HeroGuid = HeroGuid;
         if (EquipGuid.Length > 0)
         {
-            EquipmentNameText.text = IEquipment.DataMap[EquipGuid].title;
+            EquipmentNameText.text = IPlayerHasEquips.DataMap[this.EquipGuid].IEquipment.title;
         }
         else
         {
@@ -39,13 +39,14 @@ public class SelfHeroEquipSHow : MonoBehaviour
     /// </summary>
     public void ClickShowInfo()
     {
-        DialogData data = new DialogData();
-        data.dialog = DialogController.instance.SelfHeroEquipSelectDialog;
-        SelfHeroEquipSelectData dialogdata = new SelfHeroEquipSelectData();
-        dialogdata.equipGuid = this.EquipGuid;
-        dialogdata.heroGuid = this.HeroGuid;
-        dialogdata.equipType = this.equipType;
-        data.obj = dialogdata;
-        DialogController.instance.ShowDialog(data, DialogController.DialogType.stack);
+        //DialogData data = new DialogData();
+        //data.dialog = DialogController.instance.SelfHeroEquipSelectDialog;
+        //SelfHeroEquipSelectData dialogdata = new SelfHeroEquipSelectData();
+        //dialogdata.equipGuid = this.EquipGuid;
+        //dialogdata.heroGuid = this.HeroGuid;
+        //dialogdata.equipType = this.equipType;
+        //data.obj = dialogdata;
+        Dialog data = DialogController.instance.ShowDialog(DialogController.instance.SelfHeroEquipSelectDialog, DialogController.DialogType.stack);
+        ((SelfHeroEquipSelectDialog)data).SetData(EquipGuid, HeroGuid, this.equipType);
     }
 }

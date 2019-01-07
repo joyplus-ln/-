@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 public class SelfHeroSelectDialog : Dialog
 {
     public UIAttributeShow AttributeShow;
-    private SelfHeroSelectData shopItemData;
 
     public SkillListUI skillList;
 
@@ -14,6 +14,7 @@ public class SelfHeroSelectDialog : Dialog
     public SelfHeroEquipSHow equip2;
 
     public SelfHeroEquipSHow equip3;
+    private string heroGuid;
 
     // Use this for initialization
     void Start()
@@ -22,16 +23,12 @@ public class SelfHeroSelectDialog : Dialog
 
     private void OnEnable()
     {
-        if (shopItemData != null)
-            RefreshUI();
     }
 
 
-    public override void Init(DialogData data)
+    public override void Init()
     {
-        base.Init(data);
-        shopItemData = (SelfHeroSelectData)data.obj;
-        RefreshUI();
+
     }
 
     void ShowSkill()
@@ -39,41 +36,48 @@ public class SelfHeroSelectDialog : Dialog
         //skillList.SetData(PlayerItem.characterDataMap[shopItemData.heroGuid].CharacterData.GetCustomSkills());
     }
 
+    public void SetData(string heroGuid)
+    {
+        this.heroGuid = heroGuid;
+        RefreshUI();
+    }
+
     void RefreshUI()
     {
-        //AttributeShow.SetupInfo(PlayerItem.characterDataMap[shopItemData.heroGuid].GetItemAttributes());
+        //shopItemData
+        AttributeShow.SetupInfo(IPlayerHasCharacters.DataMap[heroGuid].GetAttributes().GetCreateCalculationAttributes());
         //List<PlayerItem> equipments = PlayerItem.equipDataMap.Values.ToList()
         //    .FindAll(x => x.EquipItemGuid == shopItemData.heroGuid);
         //List<PlayerItem> equipments_weapon = equipments.FindAll(x => x.EquipPosition == "weapon");
         //if (equipments_weapon.Count > 0)
         //{
-        //    equip1.SetEquipInfo(equipments_weapon[0].GUID, shopItemData.heroGuid);
-        //}
-        //else
-        //{
-        //    equip1.SetEquipInfo("", shopItemData.heroGuid);
-        //}
 
-        //List<PlayerItem> equipments_cloth = equipments.FindAll(x => x.EquipPosition == "cloth");
-        //if (equipments_cloth.Count > 0)
-        //{
-        //    equip2.SetEquipInfo(equipments_cloth[0].GUID, shopItemData.heroGuid);
-        //}
-        //else
-        //{
-        //    equip2.SetEquipInfo("", shopItemData.heroGuid);
-        //}
-
-        //List<PlayerItem> equipments_shoot = equipments.FindAll(x => x.EquipPosition == "shoot");
-        //if (equipments_shoot.Count > 0)
-        //{
-        //    equip3.SetEquipInfo(equipments_shoot[0].GUID, shopItemData.heroGuid);
-        //}
-        //else
-        //{
-        //    equip3.SetEquipInfo("", shopItemData.heroGuid);
-        //}
-        //ShowSkill();
+        Dictionary<string, IPlayerHasEquips> hasEquips = IPlayerHasEquips.GetHeroEquipses(heroGuid);
+        if (hasEquips.ContainsKey("weapon"))
+        {
+            equip1.SetEquipInfo(hasEquips["weapon"].guid, heroGuid);
+        }
+        else
+        {
+            equip1.SetEquipInfo("", heroGuid);
+        }
+        if (hasEquips.ContainsKey("cloth"))
+        {
+            equip2.SetEquipInfo(hasEquips["cloth"].guid, heroGuid);
+        }
+        else
+        {
+            equip2.SetEquipInfo("", heroGuid);
+        }
+        if (hasEquips.ContainsKey("shoot"))
+        {
+            equip3.SetEquipInfo(hasEquips["shoot"].guid, heroGuid);
+        }
+        else
+        {
+            equip3.SetEquipInfo("", heroGuid);
+        }
+        ShowSkill();
     }
 
     public void ClickEquip(string pos)
@@ -82,18 +86,13 @@ public class SelfHeroSelectDialog : Dialog
 
     public void IncreasLevel()
     {
-        if (shopItemData.heroGuid.Length > 0)
-            GameInstance.dbPlayerData.DoCharacterLevelUpItem(shopItemData.heroGuid, new Dictionary<string, int>(),200, (result) =>
-             {
-                 //PlayerItem.SetDataRange(result.updateItems);
-                 //PlayerItem.SetDataRange(result.deleteItemIds);
-                 //PlayerItem.SetDataRange(result.updateItems);
-                 RefreshUI();
-             });
+        if (heroGuid.Length > 0)
+            GameInstance.dbPlayerData.DoCharacterLevelUpItem(heroGuid, new Dictionary<string, int>(), 200, (result) =>
+              {
+                  //PlayerItem.SetDataRange(result.updateItems);
+                  //PlayerItem.SetDataRange(result.deleteItemIds);
+                  //PlayerItem.SetDataRange(result.updateItems);
+                  RefreshUI();
+              });
     }
-}
-
-public class SelfHeroSelectData
-{
-    public string heroGuid;
 }

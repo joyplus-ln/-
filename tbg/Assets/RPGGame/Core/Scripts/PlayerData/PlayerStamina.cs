@@ -95,7 +95,7 @@ public class PlayerStamina : BasePlayerData, IIPlayerStamina
 
     public static bool TryGetData(string dataId, out PlayerStamina data)
     {
-        return TryGetData(IPlayer.CurrentPlayerId, dataId, out data);
+        return TryGetData(IPlayer.CurrentPlayer.guid, dataId, out data);
     }
 
     public static bool RemoveData(string id)
@@ -136,6 +136,6 @@ public class PlayerStamina : BasePlayerData, IIPlayerStamina
 
     public static void RemoveDataRange()
     {
-        RemoveDataRange(IPlayer.CurrentPlayerId);
+        RemoveDataRange(IPlayer.CurrentPlayer.guid);
     }
 }

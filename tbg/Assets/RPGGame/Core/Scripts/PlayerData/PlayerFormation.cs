@@ -65,7 +65,7 @@ public class PlayerFormation : BasePlayerData, IIPlayerFormation
 
     public static bool TryGetData(string dataId, int position, out PlayerFormation data)
     {
-        return TryGetData(IPlayer.CurrentPlayerId, dataId, position, out data);
+        return TryGetData(IPlayer.CurrentPlayer.guid, dataId, position, out data);
     }
 
     public static bool RemoveData(string id)
@@ -106,7 +106,7 @@ public class PlayerFormation : BasePlayerData, IIPlayerFormation
 
     public static void RemoveDataRange()
     {
-        RemoveDataRange(IPlayer.CurrentPlayerId);
+        RemoveDataRange(IPlayer.CurrentPlayer.guid);
     }
 
     public static bool ContainsDataWithItemId(string itemId)

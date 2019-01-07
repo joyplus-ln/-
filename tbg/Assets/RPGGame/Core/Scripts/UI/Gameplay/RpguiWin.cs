@@ -81,8 +81,8 @@ public class RpguiWin : RpguiDataItem<FinishStageResult>
 
     public override void UpdateData()
     {
-        if (RpguiPlayer != null)
-            RpguiPlayer.SetData(data.player);
+        //if (RpguiPlayer != null)
+        //    RpguiPlayer.SetData(data);
 
         if (textRewardPlayerExp != null)
             textRewardPlayerExp.text = data.rewardPlayerExp.ToString("N0");
@@ -111,7 +111,7 @@ public class RpguiWin : RpguiDataItem<FinishStageResult>
 
     public void OnClickGoToManageScene()
     {
-        GameInstance.Singleton.LoadManageScene();
+        RPGSceneManager.LoadScene(RPGSceneManager.ManagerScene);
     }
 
     public void OnClickGoToNextStage()

@@ -74,7 +74,7 @@ public abstract class BaseRpguiStage<TPreparation, TStage> : RpguiDataItem<TStag
         if (RpguiEnemyItemList != null)
         {
             var list = data.GetCharacters();
-            list.SortLevel();
+            //list.SortLevel();
             //RpguiEnemyItemList.SetListItems(list, (ui) => ui.displayStats = RpguiItem.DisplayStats.Level);
         }
 

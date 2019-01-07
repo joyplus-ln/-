@@ -49,7 +49,7 @@ public class PlayerUnlockItem : BasePlayerData, IIPlayerUnlockItem
 
     public static bool TryGetData(string dataId, out PlayerUnlockItem data)
     {
-        return TryGetData(IPlayer.CurrentPlayerId, dataId, out data);
+        return TryGetData(IPlayer.CurrentPlayer.guid, dataId, out data);
     }
 
     public static bool RemoveData(string id)
@@ -90,7 +90,7 @@ public class PlayerUnlockItem : BasePlayerData, IIPlayerUnlockItem
 
     public static void RemoveDataRange()
     {
-        RemoveDataRange(IPlayer.CurrentPlayerId);
+        RemoveDataRange(IPlayer.CurrentPlayer.guid);
     }
 
     public static bool IsUnlock(string playerId, BaseItem itemData)
@@ -103,6 +103,6 @@ public class PlayerUnlockItem : BasePlayerData, IIPlayerUnlockItem
 
     public static bool IsUnlock(BaseItem itemData)
     {
-        return IsUnlock(IPlayer.CurrentPlayerId, itemData);
+        return IsUnlock(IPlayer.CurrentPlayer.guid, itemData);
     }
 }

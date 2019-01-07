@@ -141,31 +141,31 @@ public class GamePlayManager : BaseGamePlayManager
 
     public void NextWave()
     {
-        PlayerItem[] characters;
-        StageFoe[] foes;
-        var wave = GetWave(CurrentWave);
-        if (!wave.useRandomFoes && wave.foes.Length > 0)
-            foes = wave.foes;
-        else
-            foes = GetRandomFoes();
+        //PlayerItem[] characters;
+        //StageFoe[] foes;
+        //var wave = GetWave(CurrentWave);
+        //if (!wave.useRandomFoes && wave.foes.Length > 0)
+        //    foes = wave.foes;
+        //else
+        //    foes = GetRandomFoes();
 
-        characters = new PlayerItem[foes.Length];
-        for (var i = 0; i < characters.Length; ++i)
-        {
-            var foe = foes[i];
-            if (foe != null && !string.IsNullOrEmpty(foe.characterId))
-            {
-                var character = PlayerItem.CreateActorItemWithLevel(ICharacter.DataMap[foe.characterId], foe.level, GetRandomFoesType(), false);
-                characters[i] = character;
-            }
-        }
+        //characters = new PlayerItem[foes.Length];
+        //for (var i = 0; i < characters.Length; ++i)
+        //{
+        //    var foe = foes[i];
+        //    if (foe != null && !string.IsNullOrEmpty(foe.characterId))
+        //    {
+        //        var character = PlayerItem.CreateActorItemWithLevel(ICharacter.DataMap[foe.characterId], foe.level, GetRandomFoesType(), false);
+        //        characters[i] = character;
+        //    }
+        //}
 
-        if (characters.Length == 0)
-            Debug.LogError("Missing Foes Data");
+        //if (characters.Length == 0)
+        //    Debug.LogError("Missing Foes Data");
 
-        foeFormation.SetCharacters(characters);
-        foeFormation.Revive();
-        ++CurrentWave;
+        //foeFormation.SetCharacters(characters);
+        //foeFormation.Revive();
+        //++CurrentWave;
     }
 
     IEnumerator MoveToNextWave()

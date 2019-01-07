@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,7 @@ public class EquipListItem : MonoBehaviour
 
 
     private EquipListUI listui;
-    private PlayerItem equipItem;
+    private IPlayerHasEquips equipItem;
 
     public Text lvName;
     // Use this for initialization
@@ -17,11 +18,11 @@ public class EquipListItem : MonoBehaviour
 
     }
 
-    public void Init(EquipListUI listui, PlayerItem equipItem)
+    public void Init(EquipListUI listui, IPlayerHasEquips equipItem)
     {
         this.listui = listui;
         this.equipItem = equipItem;
-        lvName.text = equipItem.EquipmentData.quality + "-LV" + equipItem.Level + "-" + equipItem.EquipmentData.title;
+        //lvName.text = equipItem.EquipmentData.quality + "-LV" + equipItem.Level + "-" + equipItem.EquipmentData.title;
     }
 
     public void PointDown()

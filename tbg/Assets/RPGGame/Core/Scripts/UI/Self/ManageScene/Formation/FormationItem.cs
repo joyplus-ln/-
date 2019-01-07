@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class FormationItem : MonoBehaviour
 {
     private FormationList formationList;
-    private PlayerItem currentItem;
+    private IPlayerHasCharacters currentItem;
 
     public Text lvName;
     // Use this for initialization
@@ -15,11 +16,11 @@ public class FormationItem : MonoBehaviour
 
     }
 
-    public void Init(FormationList formationList, PlayerItem currentItem)
+    public void Init(FormationList formationList, IPlayerHasCharacters currentItem)
     {
         this.formationList = formationList;
         this.currentItem = currentItem;
-        lvName.text = currentItem.CharacterData.quality + "-LV" + currentItem.Level + "-" + currentItem.CharacterData.title;
+        lvName.text = currentItem.Character.quality + "-LV" + currentItem.level + "-" + currentItem.Character.title;
     }
 
     public void Selected()

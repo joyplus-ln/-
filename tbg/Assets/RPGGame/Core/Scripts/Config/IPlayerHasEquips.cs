@@ -14,12 +14,13 @@ namespace SQLite3TableDataTmp
     public enum IPlayerHasEquipsEnum
     {
         id,
-        playerId,
-        Guid,
+        guid,
+        dataId,
         amount,
         exp,
         equipItemId,
         equipPosition,
+        level,
     }
 
     public partial class IPlayerHasEquips : SyncBase
@@ -28,11 +29,11 @@ namespace SQLite3TableDataTmp
         [Sync((int)IPlayerHasEquipsEnum.id)]
         public int id { get; private set; }  //des
 
-        [Sync((int)IPlayerHasEquipsEnum.playerId)]
-        public string playerId { get; set; }  //des
+        [Sync((int)IPlayerHasEquipsEnum.guid)]
+        public string guid { get; set; }  //des
 
-        [Sync((int)IPlayerHasEquipsEnum.Guid)]
-        public string Guid { get; set; }  //des
+        [Sync((int)IPlayerHasEquipsEnum.dataId)]
+        public string dataId { get; set; }  //des
 
         [Sync((int)IPlayerHasEquipsEnum.amount)]
         public int amount { get; set; }  //des
@@ -46,19 +47,23 @@ namespace SQLite3TableDataTmp
         [Sync((int)IPlayerHasEquipsEnum.equipPosition)]
         public string equipPosition { get; set; }  //des
 
+        [Sync((int)IPlayerHasEquipsEnum.level)]
+        public int level { get; set; }  //des
+
         public IPlayerHasEquips()
         {
         }
 
-        public IPlayerHasEquips(int Inid, string InplayerId, string InGuid, int Inamount, int Inexp, string InequipItemId, string InequipPosition)
+        public IPlayerHasEquips(int Inid, string Inguid, string IndataId, int Inamount, int Inexp, string InequipItemId, string InequipPosition, int Inlevel)
         {
             id = Inid;
-            playerId = InplayerId;
-            Guid = InGuid;
+            guid = Inguid;
+            dataId = IndataId;
             amount = Inamount;
             exp = Inexp;
             equipItemId = InequipItemId;
             equipPosition = InequipPosition;
+            level = Inlevel;
         }
 
         //-------------------------------*Self Code Begin*-------------------------------
@@ -68,7 +73,7 @@ namespace SQLite3TableDataTmp
 
         public override string ToString()
         {
-            return "IPlayerHasEquips : id = " + id + ", playerId = " + playerId + ", Guid = " + Guid + ", amount = " + amount + ", exp = " + exp + ", equipItemId = " + equipItemId + ", equipPosition = " + equipPosition;
+            return "IPlayerHasEquips : id = " + id + ", guid = " + guid + ", dataId = " + dataId + ", amount = " + amount + ", exp = " + exp + ", equipItemId = " + equipItemId + ", equipPosition = " + equipPosition + ", level = " + level;
         }
 
     }

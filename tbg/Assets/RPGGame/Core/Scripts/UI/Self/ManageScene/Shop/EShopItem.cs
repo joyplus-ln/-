@@ -28,7 +28,7 @@ public class EShopItem : MonoBehaviour
         EShopItemData heroData = new EShopItemData();
         heroData.equipId = equipId;
         data.obj = heroData;
-        DialogController.instance.ShowDialog(data, DialogController.DialogType.stack);
+        DialogController.instance.ShowDialog(DialogController.instance.ShopEquipDialog, DialogController.DialogType.stack);
     }
 }
 

@@ -183,7 +183,7 @@ public class RpguiItem : RpguiDataItem<ICharacter>
             return;
         }
 
-        var attributes = data.GetPlayerItem().Attributes;
+        var attributes = data.GetAttributes().GetSubAttributes();
 
         switch (displayStats)
         {
@@ -224,40 +224,40 @@ public class RpguiItem : RpguiDataItem<ICharacter>
                 textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_ACC, attributes.acc);
                 return;
             case DisplayStats.AttributeHpRate:
-                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_HP_RATE, attributes.hpRate);
+                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_HP_RATE, attributes.exp_hpRate);
                 return;
             case DisplayStats.AttributePAtkRate:
-                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_PATK_RATE, attributes.pAtkRate);
+                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_PATK_RATE, attributes.exp_pAtkRate);
                 return;
             case DisplayStats.AttributePDefRate:
-                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_PDEF_RATE, attributes.pDefRate);
+                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_PDEF_RATE, attributes.exp_pDefRate);
                 return;
             case DisplayStats.AttributeMAtkRate:
-                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_MATK_RATE, attributes.mAtkRate);
+                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_MATK_RATE, attributes.exp_mAtkRate);
                 return;
             case DisplayStats.AttributeMDefRate:
-                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_MDEF_RATE, attributes.mDefRate);
+                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_MDEF_RATE, attributes.exp_mDefRate);
                 return;
             case DisplayStats.AttributeSpdRate:
-                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_SPD_RATE, attributes.spdRate);
+                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_SPD_RATE, attributes.exp_spdRate);
                 return;
             case DisplayStats.AttributeEvaRate:
-                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_EVA_RATE, attributes.evaRate);
+                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_EVA_RATE, attributes.exp_evaRate);
                 return;
             case DisplayStats.AttributeAccRate:
-                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_ACC_RATE, attributes.accRate);
+                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_ACC_RATE, attributes.exp_accRate);
                 return;
             case DisplayStats.AttributeCritChance:
-                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_CRIT_CHANCE, attributes.critChance);
+                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_CRIT_CHANCE, attributes.exp_critChance);
                 return;
             case DisplayStats.AttributeCritDamageRate:
-                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_CRIT_DAMAGE_RATE, attributes.critDamageRate);
+                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_CRIT_DAMAGE_RATE, attributes.exp_critDamageRate);
                 return;
             case DisplayStats.AttributeBlockChance:
-                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_BLOCK_CHANCE, attributes.blockChance);
+                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_BLOCK_CHANCE, attributes.exp_blockChance);
                 return;
             case DisplayStats.AttributeBlockDamageRate:
-                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_BLOCK_DAMAGE_RATE, attributes.blockDamageRate);
+                textDisplayStats.text = attributes == null ? "" : RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_BLOCK_DAMAGE_RATE, attributes.exp_blockDamageRate);
                 return;
             default:
                 textDisplayStats.text = "";
@@ -267,7 +267,7 @@ public class RpguiItem : RpguiDataItem<ICharacter>
 
     public override void UpdateData()
     {
-        SetupInfo(data.GetPlayerItem());
+        //SetupInfo(data.GetPlayerItem());
         SetupSelectedAmount();
     }
 
@@ -279,13 +279,13 @@ public class RpguiItem : RpguiDataItem<ICharacter>
         SetupSelectedAmount();
     }
 
-    private void SetupInfo(PlayerItem data)
+    private void SetupInfo(IPlayerHasCharacters data)
     {
         if (data == null)
             return;
 
-        var attributes = data.Attributes;
-        var itemData = data.GetICharacter();
+        //var attributes = data.GetItemAttributes();
+        var itemData = data.Character;
 
         if (textTitle != null)
             textTitle.text = itemData == null ? "" : itemData.title;
@@ -298,37 +298,37 @@ public class RpguiItem : RpguiDataItem<ICharacter>
 
         if (nameText != null)
         {
-            nameText.text = data.GUID;
+            nameText.text = data.guid;
             nameText.color = GameInstance.GameDatabase.SsrColor;
         }
 
-        if (textAttributes != null)
-            textAttributes.text = attributes == null ? "" : attributes.GetDescription(data.EquipmentBonus);
+        //if (textAttributes != null)
+        //    textAttributes.text = attributes == null ? "" : attributes.GetDescription(data.EquipmentBonus);
 
-        // Attributes
-        if (RpguiAttributes != null)
-        {
-            //todo
-            //if (data.ActorItemData != null)
-            //    RpguiAttributes.Show();
-            //else
-            //    RpguiAttributes.Hide();
+        //// Attributes
+        //if (RpguiAttributes != null)
+        //{
+        //    //todo
+        //    //if (data.ActorItemData != null)
+        //    //    RpguiAttributes.Show();
+        //    //else
+        //    //    RpguiAttributes.Hide();
 
-            if (excludeEquipmentAttributes)
-                RpguiAttributes.SetData(attributes);
-            else
-                RpguiAttributes.SetData(attributes == null ? data.EquipmentBonus : attributes + data.EquipmentBonus);
-        }
+        //    if (excludeEquipmentAttributes)
+        //        RpguiAttributes.SetData(attributes);
+        //    else
+        //        RpguiAttributes.SetData(attributes == null ? data.EquipmentBonus : attributes + data.EquipmentBonus);
+        //}
 
         // Stats
-        if (uiLevel != null)
-        {
-            uiLevel.gameObject.SetActive(true);//(data.ActorItemData != null);
-            uiLevel.level = data.Level;
-            uiLevel.maxLevel = data.MaxLevel;
-            uiLevel.collectExp = data.CollectExp;
-            uiLevel.nextExp = data.NextExp;
-        }
+        //if (uiLevel != null)
+        //{
+        //    uiLevel.gameObject.SetActive(true);//(data.ActorItemData != null);
+        //    uiLevel.level = data.Level;
+        //    uiLevel.maxLevel = data.MaxLevel;
+        //    uiLevel.collectExp = data.CollectExp;
+        //    uiLevel.nextExp = data.NextExp;
+        //}
 
         if (RpguiEvolvePrice != null)
         {
@@ -344,23 +344,23 @@ public class RpguiItem : RpguiDataItem<ICharacter>
             RpguiSellPrice.SetData(currencyData);
         }
 
-        if (textRewardExp != null)
-            textRewardExp.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_REWARD_EXP, data.RewardExp) : data.RewardExp.ToString("N0");
+        //if (textRewardExp != null)
+        //    textRewardExp.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_REWARD_EXP, data.RewardExp) : data.RewardExp.ToString("N0");
 
-        if (characterModelContainer != null)
-        {
-            characterModelContainer.RemoveAllChildren();
-            if (data.CharacterData != null)
-            {
-                var character = Instantiate(GameInstance.Singleton.model);
-                character.Container = characterModelContainer;
-                var characterRenderers = character.GetComponentsInChildren<Renderer>();
-                foreach (var characterRenderer in characterRenderers)
-                {
-                    characterRenderer.gameObject.layer = characterModelLayer;
-                }
-            }
-        }
+        //if (characterModelContainer != null)
+        //{
+        //    characterModelContainer.RemoveAllChildren();
+        //    if (data.CharacterData != null)
+        //    {
+        //        var character = Instantiate(GameInstance.Singleton.model);
+        //        character.Container = characterModelContainer;
+        //        var characterRenderers = character.GetComponentsInChildren<Renderer>();
+        //        foreach (var characterRenderer in characterRenderers)
+        //        {
+        //            characterRenderer.gameObject.layer = characterModelLayer;
+        //        }
+        //    }
+        //}
     }
 
     public void SetupSelectedAmount()

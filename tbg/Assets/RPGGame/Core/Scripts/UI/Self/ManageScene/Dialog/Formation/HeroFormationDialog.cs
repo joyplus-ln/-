@@ -5,19 +5,13 @@ using UnityEngine;
 
 public class HeroFormationDialog : Dialog
 {
-    private HeroFormationData heroFormationData;
     // Use this for initialization
     void Start()
     {
 
     }
 
-    public override void Init(DialogData data)
-    {
-        base.Init(data);
-        heroFormationData = (HeroFormationData)data.obj;
 
-    }
 
     public void SetFormation(int index)
     {

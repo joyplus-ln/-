@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -22,17 +23,15 @@ public abstract class BaseCharacterEntity : MonoBehaviour
 
 
 
-    private PlayerItem item;
-    public PlayerItem Item
+    private IPlayerHasCharacters item;
+    public IPlayerHasCharacters Item
     {
         get { return item; }
         set
         {
-            if (value == null || item == value || value.CharacterData == null)
-                return;
             item = value;
 
-            CustomSkills.AddRange(item.CharacterData.GetBattleCustomSkills());
+            //CustomSkills.AddRange(item.CharacterData.GetBattleCustomSkills());
             for (int i = 0; i < CustomSkills.Count; i++)
             {
                 CustomSkills[i].Init();
@@ -139,9 +138,9 @@ public abstract class BaseCharacterEntity : MonoBehaviour
 
     public CalculationAttributes GetTotalAttributes()
     {
-        var result = Item.Attributes;
-        var equipmentBonus = Item.EquipmentBonus;
-        result += equipmentBonus;
+        var result = Item.GetAttributes().GetSubAttributes();
+        //var equipmentBonus = Item.EquipmentBonus;
+        //result += equipmentBonus;
 
         //var buffs = new List<BaseCharacterBuff>(Buffs.Values);
         //foreach (var buff in buffs)
@@ -161,51 +160,51 @@ public abstract class BaseCharacterEntity : MonoBehaviour
         }
 
         // If this is character item, applies rate attributes
-        result.hp += Mathf.CeilToInt(result.hpRate * result.hp);
-        result.pAtk += Mathf.CeilToInt(result.pAtkRate * result.pAtk);
-        result.pDef += Mathf.CeilToInt(result.pDefRate * result.pDef);
-        result.mAtk += Mathf.CeilToInt(result.mAtkRate * result.mAtk);
-        result.mDef += Mathf.CeilToInt(result.mDefRate * result.mDef);
-        result.spd += Mathf.CeilToInt(result.spdRate * result.spd);
-        result.eva += Mathf.CeilToInt(result.evaRate * result.eva);
-        result.acc += Mathf.CeilToInt(result.accRate * result.acc);
+        //result.hp += Mathf.CeilToInt(result.hpRate * result.hp);
+        //result.pAtk += Mathf.CeilToInt(result.pAtkRate * result.pAtk);
+        //result.pDef += Mathf.CeilToInt(result.pDefRate * result.pDef);
+        //result.mAtk += Mathf.CeilToInt(result.mAtkRate * result.mAtk);
+        //result.mDef += Mathf.CeilToInt(result.mDefRate * result.mDef);
+        //result.spd += Mathf.CeilToInt(result.spdRate * result.spd);
+        //result.eva += Mathf.CeilToInt(result.evaRate * result.eva);
+        //result.acc += Mathf.CeilToInt(result.accRate * result.acc);
 
-        var equippedItems = Item.EquippedItems.Values;
-        foreach (var equippedItem in equippedItems)
-        {
-            result.hp += Mathf.CeilToInt(equippedItem.GetItemAttributes()._hpRate * result.hp);
-            result.pAtk += Mathf.CeilToInt(equippedItem.GetItemAttributes()._pAtkRate * result.pAtk);
-            result.pDef += Mathf.CeilToInt(equippedItem.GetItemAttributes()._pDefRate * result.pDef);
-            result.mAtk += Mathf.CeilToInt(equippedItem.GetItemAttributes()._mAtkRate * result.mAtk);
-            result.mDef += Mathf.CeilToInt(equippedItem.GetItemAttributes()._mDefRate * result.mDef);
-            result.spd += Mathf.CeilToInt(equippedItem.GetItemAttributes()._spdRate * result.spd);
-            result.eva += Mathf.CeilToInt(equippedItem.GetItemAttributes()._evaRate * result.eva);
-            result.acc += Mathf.CeilToInt(equippedItem.GetItemAttributes()._accRate * result.acc);
-        }
+        //var equippedItems = Item.EquippedItems.Values;
+        //foreach (var equippedItem in equippedItems)
+        //{
+        //    result.hp += Mathf.CeilToInt(equippedItem.GetItemAttributes()._hpRate * result.hp);
+        //    result.pAtk += Mathf.CeilToInt(equippedItem.GetItemAttributes()._pAtkRate * result.pAtk);
+        //    result.pDef += Mathf.CeilToInt(equippedItem.GetItemAttributes()._pDefRate * result.pDef);
+        //    result.mAtk += Mathf.CeilToInt(equippedItem.GetItemAttributes()._mAtkRate * result.mAtk);
+        //    result.mDef += Mathf.CeilToInt(equippedItem.GetItemAttributes()._mDefRate * result.mDef);
+        //    result.spd += Mathf.CeilToInt(equippedItem.GetItemAttributes()._spdRate * result.spd);
+        //    result.eva += Mathf.CeilToInt(equippedItem.GetItemAttributes()._evaRate * result.eva);
+        //    result.acc += Mathf.CeilToInt(equippedItem.GetItemAttributes()._accRate * result.acc);
+        //}
 
-        foreach (var buff in Custom_buffs)
-        {
-            result.hp += Mathf.CeilToInt(buff.SelfAttributes._hpRate * result.hp);
-            result.pAtk += Mathf.CeilToInt(buff.SelfAttributes._pAtkRate * result.pAtk);
-            result.pDef += Mathf.CeilToInt(buff.SelfAttributes._pDefRate * result.pDef);
-            result.mAtk += Mathf.CeilToInt(buff.SelfAttributes._mAtkRate * result.mAtk);
-            result.mDef += Mathf.CeilToInt(buff.SelfAttributes._mDefRate * result.mDef);
-            result.spd += Mathf.CeilToInt(buff.SelfAttributes._spdRate * result.spd);
-            result.eva += Mathf.CeilToInt(buff.SelfAttributes._evaRate * result.eva);
-            result.acc += Mathf.CeilToInt(buff.SelfAttributes._accRate * result.acc);
-        }
+        //foreach (var buff in Custom_buffs)
+        //{
+        //    result.hp += Mathf.CeilToInt(buff.SelfAttributes._hpRate * result.hp);
+        //    result.pAtk += Mathf.CeilToInt(buff.SelfAttributes._pAtkRate * result.pAtk);
+        //    result.pDef += Mathf.CeilToInt(buff.SelfAttributes._pDefRate * result.pDef);
+        //    result.mAtk += Mathf.CeilToInt(buff.SelfAttributes._mAtkRate * result.mAtk);
+        //    result.mDef += Mathf.CeilToInt(buff.SelfAttributes._mDefRate * result.mDef);
+        //    result.spd += Mathf.CeilToInt(buff.SelfAttributes._spdRate * result.spd);
+        //    result.eva += Mathf.CeilToInt(buff.SelfAttributes._evaRate * result.eva);
+        //    result.acc += Mathf.CeilToInt(buff.SelfAttributes._accRate * result.acc);
+        //}
 
-        foreach (var cskill in CustomSkills)
-        {
-            result.hp += Mathf.CeilToInt(cskill.SelfAttributes._hpRate * result.hp);
-            result.pAtk += Mathf.CeilToInt(cskill.SelfAttributes._pAtkRate * result.pAtk);
-            result.pDef += Mathf.CeilToInt(cskill.SelfAttributes._pDefRate * result.pDef);
-            result.mAtk += Mathf.CeilToInt(cskill.SelfAttributes._mAtkRate * result.mAtk);
-            result.mDef += Mathf.CeilToInt(cskill.SelfAttributes._mDefRate * result.mDef);
-            result.spd += Mathf.CeilToInt(cskill.SelfAttributes._spdRate * result.spd);
-            result.eva += Mathf.CeilToInt(cskill.SelfAttributes._evaRate * result.eva);
-            result.acc += Mathf.CeilToInt(cskill.SelfAttributes._accRate * result.acc);
-        }
+        //foreach (var cskill in CustomSkills)
+        //{
+        //    result.hp += Mathf.CeilToInt(cskill.SelfAttributes._hpRate * result.hp);
+        //    result.pAtk += Mathf.CeilToInt(cskill.SelfAttributes._pAtkRate * result.pAtk);
+        //    result.pDef += Mathf.CeilToInt(cskill.SelfAttributes._pDefRate * result.pDef);
+        //    result.mAtk += Mathf.CeilToInt(cskill.SelfAttributes._mAtkRate * result.mAtk);
+        //    result.mDef += Mathf.CeilToInt(cskill.SelfAttributes._mDefRate * result.mDef);
+        //    result.spd += Mathf.CeilToInt(cskill.SelfAttributes._spdRate * result.spd);
+        //    result.eva += Mathf.CeilToInt(cskill.SelfAttributes._evaRate * result.eva);
+        //    result.acc += Mathf.CeilToInt(cskill.SelfAttributes._accRate * result.acc);
+        //}
         return result;
     }
 

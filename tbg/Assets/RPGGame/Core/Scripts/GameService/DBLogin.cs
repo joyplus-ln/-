@@ -7,171 +7,48 @@ using UnityEngine.Events;
 
 public class DBLogin
 {
-    public const string AUTH_NORMAL = "NORMAL";
-    public const string AUTH_GUEST = "GUEST";
-    private Dictionary<int, SQLite3TableDataTmp.IPlayer> players = new Dictionary<int, SQLite3TableDataTmp.IPlayer>();
     public DBLogin()
     {
-        players = DBManager.instance.LocalSQLite3Operate.SelectDictT<IPlayer>();
     }
-
-    public void SetPrefsLogin(string playerId, string loginToken)
-    {
-        PlayerPrefs.SetString("PLAYER_ID", playerId);
-        PlayerPrefs.SetString("LOGIN_TOKEN", loginToken);
-        PlayerPrefs.Save();
-    }
-
-    public string GetPrefsPlayerId()
-    {
-        return PlayerPrefs.GetString("PLAYER_ID");
-    }
-
-    public string GetPrefsLoginToken()
-    {
-        return PlayerPrefs.GetString("LOGIN_TOKEN");
-    }
-
-    public void Logout(UnityAction onLogout = null)
-    {
-        IPlayer.CurrentPlayer = null;
-        IPlayer.ClearData();
-        IPlayerAuth.ClearData();
-        IPlayerCurrency.ClearData();
-        PlayerFormation.ClearData();
-        //PlayerItem.ClearData();
-        PlayerOtherItem.ClearData();
-        PlayerStamina.ClearData();
-        PlayerUnlockItem.ClearData();
-        SetPrefsLogin("", "");
-        onLogout();
-    }
-
-
-
 
     #region 登录相关
 
-    public void DoLogin(string username, string password, UnityAction<PlayerResult> onFinish)
-    {
-        var result = new PlayerResult();
-        if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-            result.error = GameServiceErrorCode.EMPTY_USERNMAE_OR_PASSWORD;
-        else
-        {
-            IPlayer player = null;
-            if (!TryGetPlayer(AUTH_NORMAL, username, password, out player))
-                result.error = GameServiceErrorCode.INVALID_USERNMAE_OR_PASSWORD;
-            else
-            {
-                player = UpdatePlayerLoginToken(player);
-                GameInstance.dbPlayerData.UpdatePlayerStamina(player);
-                result.player = player;
-            }
-        }
-        onFinish(result);
-    }
 
-    public void DoRegisterOrLogin(string username, string password, UnityAction<PlayerResult> onFinish)
-    {
-        if (IsPlayerWithUsernameFound(AUTH_NORMAL, username))
-            DoLogin(username, password, onFinish);
-        else
-            DoRegister(username, password, onFinish);
-    }
 
     public void DoGuestLogin(string deviceId, UnityAction<PlayerResult> onFinish)
     {
-        var result = new PlayerResult();
-        if (string.IsNullOrEmpty(deviceId))
-        {
-            Debug.LogError("登陆失败，设备号不存在");
-            result.error = GameServiceErrorCode.EMPTY_USERNMAE_OR_PASSWORD;
-        }
-        else if (IsPlayerWithUsernameFound(AUTH_GUEST, deviceId))
-        {
-            IPlayer player = null;
-            if (!TryGetPlayer(AUTH_GUEST, deviceId, deviceId, out player))
-            {
-                Debug.LogError("登陆失败");
-                result.error = GameServiceErrorCode.INVALID_USERNMAE_OR_PASSWORD;
-            }
-            else
-            {
-                player = UpdatePlayerLoginToken(player);
-                GameInstance.dbPlayerData.UpdatePlayerStamina(player);
-                result.player = player;
-            }
-        }
-        else
-        {
-            var player = InsertNewPlayer(AUTH_GUEST, deviceId, deviceId);
-            result.player = player;
-        }
-        onFinish(result);
+        //var result = new PlayerResult();
+        //if (string.IsNullOrEmpty(deviceId))
+        //{
+        //    Debug.LogError("登陆失败，设备号不存在");
+        //    result.error = GameServiceErrorCode.EMPTY_USERNMAE_OR_PASSWORD;
+        //}
+        //else if (IsPlayerWithUsernameFound(AUTH_GUEST, deviceId))
+        //{
+        //    IPlayer player = null;
+        //    if (!TryGetPlayer(AUTH_GUEST, deviceId, deviceId, out player))
+        //    {
+        //        Debug.LogError("登陆失败");
+        //        result.error = GameServiceErrorCode.INVALID_USERNMAE_OR_PASSWORD;
+        //    }
+        //    else
+        //    {
+        //        player = UpdatePlayerLoginToken(player);
+        //        GameInstance.dbPlayerData.UpdatePlayerStamina(player);
+        //        result.player = player;
+        //    }
+        //}
+        //else
+        //{
+        //    var player = InsertNewPlayer(AUTH_GUEST, deviceId, deviceId);
+        //    result.player = player;
+        //}
+        //onFinish(result);
     }
 
-    public void DoValidateLoginToken(bool refreshToken, UnityAction<PlayerResult> onFinish)
-    {
-        var playerId = GetPrefsPlayerId();
-        var loginToken = GetPrefsLoginToken();
 
-        var result = new PlayerResult();
-        var player = GetPlayerByLoginToken(playerId, loginToken);
-        if (player == null)
-            result.error = GameServiceErrorCode.INVALID_LOGIN_TOKEN;
-        else
-        {
-            if (refreshToken)
-                player = UpdatePlayerLoginToken(player);
-            GameInstance.dbPlayerData.UpdatePlayerStamina(player);
-            result.player = player;
-        }
-        onFinish(result);
-    }
 
-    public void DoSetProfileName(string profileName, UnityAction<PlayerResult> onFinish)
-    {
-        var cplayer = IPlayer.CurrentPlayer;
-        var playerId = cplayer.guid;
-        var loginToken = cplayer.loginToken;
-        var result = new PlayerResult();
-        var player = GetPlayerByLoginToken(playerId, loginToken);
-        IPlayer iplayer = IPlayer.DataMap.Values.ToList().Find(x => x.profileName == profileName);
-        //var playerWithName = GameInstance.dbDataUtils.ExecuteScalar("SELECT COUNT(*) FROM player WHERE profileName=@profileName", new SqliteParameter("profileName", profileName));
-        if (player == null)
-            result.error = GameServiceErrorCode.INVALID_LOGIN_TOKEN;
-        else if (string.IsNullOrEmpty(profileName))
-            result.error = GameServiceErrorCode.EMPTY_PROFILE_NAME;
-        else if (iplayer != null)
-            result.error = GameServiceErrorCode.EXISTED_PROFILE_NAME;
-        else
-        {
-            player.profileName = profileName;
-            //GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE player SET profileName=@profileName WHERE id=@id",
-            //    new SqliteParameter("@profileName", player.profileName),
-            //    new SqliteParameter("@id", player.guid));
-            IPlayer.DataMap[player.guid].profileName = profileName;
-            IPlayer.UpdataDataMap();
-            result.player = player;
-        }
-        onFinish(result);
-    }
 
-    public void DoRegister(string username, string password, UnityAction<PlayerResult> onFinish)
-    {
-        var result = new PlayerResult();
-        if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-            result.error = GameServiceErrorCode.EMPTY_USERNMAE_OR_PASSWORD;
-        else if (IsPlayerWithUsernameFound(AUTH_NORMAL, username))
-            result.error = GameServiceErrorCode.EXISTED_USERNAME;
-        else
-        {
-            var player = InsertNewPlayer(AUTH_NORMAL, username, password);
-            result.player = player;
-        }
-        onFinish(result);
-    }
 
     #endregion
 
@@ -179,7 +56,7 @@ public class DBLogin
 
     private bool IsPlayerWithUsernameFound(string type, string username)
     {
-        int count = IPlayerAuth.DataMap.Values.Where(x => x.username == username && x.type == type).Count();
+        int count = 0;//IPlayerAuth.DataMap.Values.Where(x => x.username == username && x.type == type).Count();
         //var count = GameInstance.dbDataUtils.ExecuteScalar(@"SELECT COUNT(*) FROM playerAuth WHERE type=@type AND username=@username",
         //    new SqliteParameter("@type", type),
         //    new SqliteParameter("@username", username));
@@ -192,49 +69,49 @@ public class DBLogin
 
     private IPlayer SetNewPlayerData(IPlayer player)
     {
-        player.loginToken = System.Guid.NewGuid().ToString();
-        player.exp = 0;
+        //player.loginToken = System.Guid.NewGuid().ToString();
+        //player.exp = 0;
 
-        var gameDb = GameInstance.GameDatabase;
-        var softCurrencyTable = gameDb.softCurrency;
-        var hardCurrencyTable = gameDb.hardCurrency;
+        //var gameDb = GameInstance.GameDatabase;
+        //var softCurrencyTable = gameDb.softCurrency;
+        //var hardCurrencyTable = gameDb.hardCurrency;
 
-        var formationName = gameDb.stageFormations[0].id;
-        player.selectedFormation = formationName;
+        //var formationName = gameDb.stageFormations[0].id;
+        //player.selectedFormation = formationName;
 
-        var softCurrency = GameInstance.dbPlayerData.GetCurrency(player.guid, softCurrencyTable.id);
-        var hardCurrency = GameInstance.dbPlayerData.GetCurrency(player.guid, hardCurrencyTable.id);
-        softCurrency.amount = softCurrencyTable.startAmount + softCurrency.purchasedAmount;
-        hardCurrency.amount = hardCurrencyTable.startAmount + hardCurrency.purchasedAmount;
-        IPlayerCurrency.SetData(softCurrency);
-        IPlayerCurrency.SetData(hardCurrency);
-        IPlayerCurrency.UpdataDataMap();
-        IPlayer.UpdataDataMap();
-        //GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
-        //    new SqliteParameter("@amount", softCurrency.Amount),
-        //    new SqliteParameter("@id", softCurrency.Id));
-        //GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
-        //    new SqliteParameter("@amount", hardCurrency.Amount),
-        //    new SqliteParameter("@id", hardCurrency.Id));
+        //var softCurrency = GameInstance.dbPlayerData.GetCurrency(player.guid, softCurrencyTable.id);
+        //var hardCurrency = GameInstance.dbPlayerData.GetCurrency(player.guid, hardCurrencyTable.id);
+        //softCurrency.amount = softCurrencyTable.startAmount + softCurrency.purchasedAmount;
+        //hardCurrency.amount = hardCurrencyTable.startAmount + hardCurrency.purchasedAmount;
+        //IPlayerCurrency.SetData(softCurrency);
+        //IPlayerCurrency.SetData(hardCurrency);
+        //IPlayerCurrency.UpdataDataMap();
+        ////GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
+        ////    new SqliteParameter("@amount", softCurrency.Amount),
+        ////    new SqliteParameter("@id", softCurrency.Id));
+        ////GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
+        ////    new SqliteParameter("@amount", hardCurrency.Amount),
+        ////    new SqliteParameter("@id", hardCurrency.Id));
 
-        //GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerClearStage WHERE playerId=@playerId",
-        //    new SqliteParameter("@playerId", player.guid));
-        //GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerFormation WHERE playerId=@playerId",
-        //    new SqliteParameter("@playerId", player.guid));
-        //GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerStamina WHERE playerId=@playerId",
-        //    new SqliteParameter("@playerId", player.guid));
-        //GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerUnlockItem WHERE playerId=@playerId",
-        //    new SqliteParameter("@playerId", player.guid));
-        //todo 插入新玩家数据
-        //GameInstance.dbPlayerData.InsertStartPlayerCharacter(player);
-        //GameInstance.dbPlayerData.InsertStartEquiptem(player);
-        //GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE player SET profileName=@profileName, loginToken=@loginToken, exp=@exp, selectedFormation=@selectedFormation WHERE id=@id",
-        //    new SqliteParameter("@profileName", player.ProfileName),
-        //    new SqliteParameter("@loginToken", player.LoginToken),
-        //    new SqliteParameter("@exp", player.Exp),
-        //    new SqliteParameter("@selectedFormation", player.SelectedFormation),
-        //    new SqliteParameter("@id", player.Id));
-        return player;
+        ////GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerClearStage WHERE playerId=@playerId",
+        ////    new SqliteParameter("@playerId", player.guid));
+        ////GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerFormation WHERE playerId=@playerId",
+        ////    new SqliteParameter("@playerId", player.guid));
+        ////GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerStamina WHERE playerId=@playerId",
+        ////    new SqliteParameter("@playerId", player.guid));
+        ////GameInstance.dbDataUtils.ExecuteNonQuery(@"DELETE FROM playerUnlockItem WHERE playerId=@playerId",
+        ////    new SqliteParameter("@playerId", player.guid));
+        ////todo 插入新玩家数据
+        ////GameInstance.dbPlayerData.InsertStartPlayerCharacter(player);
+        ////GameInstance.dbPlayerData.InsertStartEquiptem(player);
+        ////GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE player SET profileName=@profileName, loginToken=@loginToken, exp=@exp, selectedFormation=@selectedFormation WHERE id=@id",
+        ////    new SqliteParameter("@profileName", player.ProfileName),
+        ////    new SqliteParameter("@loginToken", player.LoginToken),
+        ////    new SqliteParameter("@exp", player.Exp),
+        ////    new SqliteParameter("@selectedFormation", player.SelectedFormation),
+        ////    new SqliteParameter("@id", player.Id));
+        //return player;
+        return null;
     }
     /// <summary>
     /// 插入用户
@@ -245,28 +122,28 @@ public class DBLogin
     /// <returns></returns>
     private IPlayer InsertNewPlayer(string type, string username, string password)
     {
-        var playerId = System.Guid.NewGuid().ToString();
-        var playerAuth = new IPlayerAuth();
-        playerAuth.guid = IPlayerAuth.GetId(playerId, type);
-        playerAuth.playerId = playerId;
-        playerAuth.type = type;
-        playerAuth.username = username;
-        playerAuth.password = password;
-        IPlayerAuth.SetData(playerAuth);
-        IPlayerAuth.UpdataDataMap();
-        //GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerAuth (id, playerId, type, username, password) VALUES (@id, @playerId, @type, @username, @password)",
-        //    new SqliteParameter("@id", playerAuth.Id),
-        //    new SqliteParameter("@playerId", playerAuth.PlayerId),
-        //    new SqliteParameter("@type", playerAuth.Type),
-        //    new SqliteParameter("@username", playerAuth.Username),
-        //    new SqliteParameter("@password", playerAuth.Password)
-        //    );
-        var player = new IPlayer();
-        player.guid = playerId;
-        player = SetNewPlayerData(player);
-        GameInstance.dbPlayerData.UpdatePlayerStamina(player);
-        IPlayer.SetData(player);
-        IPlayer.UpdataDataMap();
+        //var playerId = System.Guid.NewGuid().ToString();
+        //var playerAuth = new IPlayerAuth();
+        //playerAuth.guid = IPlayerAuth.GetId(playerId, type);
+        //playerAuth.playerId = playerId;
+        //playerAuth.type = type;
+        //playerAuth.username = username;
+        //playerAuth.password = password;
+        //IPlayerAuth.SetData(playerAuth);
+        //IPlayerAuth.UpdataDataMap();
+        ////GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerAuth (id, playerId, type, username, password) VALUES (@id, @playerId, @type, @username, @password)",
+        ////    new SqliteParameter("@id", playerAuth.Id),
+        ////    new SqliteParameter("@playerId", playerAuth.PlayerId),
+        ////    new SqliteParameter("@type", playerAuth.Type),
+        ////    new SqliteParameter("@username", playerAuth.Username),
+        ////    new SqliteParameter("@password", playerAuth.Password)
+        ////    );
+        //var player = new IPlayer();
+        //player.guid = playerId;
+        //player = SetNewPlayerData(player);
+        //GameInstance.dbPlayerData.UpdatePlayerStamina(player);
+        //IPlayer.SetData(player);
+        //IPlayer.UpdataDataMap();
         //GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO player (id, profileName, loginToken, exp, selectedFormation,prefs) VALUES (@id, @profileName, @loginToken, @exp, @selectedFormation,@prefs)",
         //    new SqliteParameter("@id", player.Id),
         //    new SqliteParameter("@profileName", player.ProfileName),
@@ -274,23 +151,23 @@ public class DBLogin
         //    new SqliteParameter("@exp", player.Exp),
         //    new SqliteParameter("@selectedFormation", player.SelectedFormation),
         //    new SqliteParameter("@prefs", "{}"));
-        return player;
+        return null;
     }
 
     private bool TryGetPlayer(string type, string username, string password, out IPlayer player)
     {
         player = null;
-        IPlayerAuth auther = IPlayerAuth.DataMap.Values.ToList()
-            .Find(x => x.type == type && x.username == username && x.password == password);
-        if (auther == null)
-        {
-            return false;
-        }
-        player = IPlayer.DataMap.Values.ToList().Find(x => x.guid == auther.playerId);
-        if (player == null)
-        {
-            return false;
-        }
+        //IPlayerAuth auther = IPlayerAuth.DataMap.Values.ToList()
+        //    .Find(x => x.type == type && x.username == username && x.password == password);
+        //if (auther == null)
+        //{
+        //    return false;
+        //}
+        //player = IPlayer.DataMap.Values.ToList().Find(x => x.guid == auther.playerId);
+        //if (player == null)
+        //{
+        //    return false;
+        //}
         //player = null;
         //var playerAuths = GameInstance.dbDataUtils.ExecuteReader(@"SELECT * FROM playerAuth WHERE type=@type AND username=@username AND password=@password",
         //    new SqliteParameter("@type", type),
@@ -320,20 +197,19 @@ public class DBLogin
         return true;
     }
 
-    private IPlayer UpdatePlayerLoginToken(IPlayer player)
-    {
-        player.loginToken = System.Guid.NewGuid().ToString();
-        IPlayer.UpdataDataMap();
-        //GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE player SET loginToken=@loginToken WHERE id=@id",
-        //    new SqliteParameter("@loginToken", player.loginToken),
-        //    new SqliteParameter("@id", player.guid));
-        return player;
-    }
+    //private IPlayer UpdatePlayerLoginToken(IPlayer player)
+    //{
+    //    //player.loginToken = System.Guid.NewGuid().ToString();
+    //    //GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE player SET loginToken=@loginToken WHERE id=@id",
+    //    //    new SqliteParameter("@loginToken", player.loginToken),
+    //    //    new SqliteParameter("@id", player.guid));
+    //    //return player;
+    //}
 
     public IPlayer GetPlayerByLoginToken(string playerId, string loginToken)
     {
         IPlayer player = null;
-        player = IPlayer.DataMap.Values.ToList().Find(x => x.loginToken == loginToken && x.guid == playerId);
+        //player = IPlayer.DataMap.Values.ToList().Find(x => x.loginToken == loginToken && x.guid == playerId);
         return player;
     }
     #endregion

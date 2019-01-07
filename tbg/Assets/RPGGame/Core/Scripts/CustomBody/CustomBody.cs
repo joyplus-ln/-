@@ -22,8 +22,8 @@ public class CustomBody
              Mathf.CeilToInt(attributes.pAtk * pAtkRate),
              Mathf.CeilToInt(attributes.mAtk * mAtkRate),
              (int)attributes.acc,
-             attributes.critChance,
-             attributes.critDamageRate,
+             attributes.exp_critChance,
+             attributes.exp_critDamageRate,
              hitCount,
              fixDamage);
 
@@ -54,9 +54,9 @@ public class CustomBody
             self.ApplySkillAndBuff(CustomSkill.TriggerType.gobaoji);
         }
         // Block occurs
-        if (Random.value <= attributes.blockChance)
+        if (Random.value <= attributes.exp_blockChance)
         {
-            totalDmg = Mathf.CeilToInt(totalDmg / attributes.blockDamageRate);
+            totalDmg = Mathf.CeilToInt(totalDmg / attributes.exp_blockDamageRate);
             isBlock = true;
             attackInfo.gedang = true;
             self.ApplySkillAndBuff(CustomSkill.TriggerType.gogedang);

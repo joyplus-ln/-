@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 public class FormationList : MonoBehaviour
@@ -8,7 +9,7 @@ public class FormationList : MonoBehaviour
     public GameObject item;
     public Transform content;
 
-    public PlayerItem currentSelected;
+    public IPlayerHasCharacters currentSelected;
 
     public FormationManager formationManager;
     // Use this for initialization
@@ -29,19 +30,19 @@ public class FormationList : MonoBehaviour
 
     }
 
-    public void SelectedItem(PlayerItem selectedItem)
+    public void SelectedItem(IPlayerHasCharacters selectedItem)
     {
         currentSelected = selectedItem;
         DialogData dialogdata = new DialogData();
         HeroFormationData data = new HeroFormationData();
         dialogdata.obj = data;
         dialogdata.dialog = DialogController.instance.heroFormationDialog;
-        data.HeroGuid = selectedItem.GUID;
+        data.HeroGuid = selectedItem.guid;
         data.callback += () =>
         {
             formationManager.Refresh();
         };
-        DialogController.instance.ShowDialog(dialogdata, DialogController.DialogType.stack);
+        DialogController.instance.ShowDialog(DialogController.instance.heroFormationDialog, DialogController.DialogType.stack);
     }
 
     //public void Confirm(int index)

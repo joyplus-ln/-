@@ -4,7 +4,7 @@ using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RpguiPlayer : RpguiDataItem<IPlayer>
+public class RpguiPlayer : RpguiDataItem<ICharacter>
 {
     public Text textProfileName;
     public UILevel uiLevel;
@@ -18,21 +18,21 @@ public class RpguiPlayer : RpguiDataItem<IPlayer>
         SetupInfo(null);
     }
 
-    private void SetupInfo(IPlayer data)
+    private void SetupInfo(ICharacter data)
     {
         if (data == null)
-            data = new IPlayer();
+            data = new ICharacter();
 
-        if (textProfileName != null)
-            textProfileName.text = data.profileName;
+        //if (textProfileName != null)
+            //textProfileName.text = data.profileName;
 
         // Stats
         if (uiLevel != null)
         {
-            uiLevel.level = data.Level;
-            uiLevel.maxLevel = data.MaxLevel;
-            uiLevel.collectExp = data.CollectExp;
-            uiLevel.nextExp = data.NextExp;
+            //uiLevel.level = data.Level;
+            //uiLevel.maxLevel = data.MaxLevel;
+            //uiLevel.collectExp = data.CollectExp;
+            //uiLevel.nextExp = data.NextExp;
         }
     }
 

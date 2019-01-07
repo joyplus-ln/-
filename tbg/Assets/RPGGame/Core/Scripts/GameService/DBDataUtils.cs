@@ -328,91 +328,91 @@ public class DBDataUtils
 
     public void DoOpenLootBox(string lootBoxDataId, int packIndex, UnityAction<ItemResult> onFinish)
     {
-        var cplayer = IPlayer.CurrentPlayer;
-        var playerId = cplayer.guid;
-        var loginToken = cplayer.loginToken;
-        var result = new ItemResult();
-        var gameDb = GameInstance.GameDatabase;
-        var player = GameInstance.dbLogin.GetPlayerByLoginToken(playerId, loginToken);
-        LootBox lootBox;
-        if (player == null)
-            result.error = GameServiceErrorCode.INVALID_LOGIN_TOKEN;
-        else if (!gameDb.LootBoxes.TryGetValue(lootBoxDataId, out lootBox))
-            result.error = GameServiceErrorCode.INVALID_LOOT_BOX_DATA;
-        else
-        {
-            var softCurrency = GameInstance.dbPlayerData.GetCurrency(playerId, gameDb.softCurrency.id);
-            var hardCurrency = GameInstance.dbPlayerData.GetCurrency(playerId, gameDb.hardCurrency.id);
-            var requirementType = lootBox.requirementType;
-            if (packIndex > lootBox.lootboxPacks.Length - 1)
-                packIndex = 0;
-            var pack = lootBox.lootboxPacks[packIndex];
-            var price = pack.price;
-            var openAmount = pack.openAmount;
-            if (requirementType == LootBoxRequirementType.RequireSoftCurrency && price > softCurrency.amount)
-                result.error = GameServiceErrorCode.NOT_ENOUGH_SOFT_CURRENCY;
-            else if (requirementType == LootBoxRequirementType.RequireHardCurrency && price > hardCurrency.amount)
-                result.error = GameServiceErrorCode.NOT_ENOUGH_HARD_CURRENCY;
-            else
-            {
-                switch (requirementType)
-                {
-                    case LootBoxRequirementType.RequireSoftCurrency:
-                        softCurrency.amount -= price;
-                        GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
-                            new SqliteParameter("@amount", softCurrency.amount),
-                            new SqliteParameter("@id", softCurrency.id));
-                        result.updateCurrencies.Add(softCurrency);
-                        break;
-                    case LootBoxRequirementType.RequireHardCurrency:
-                        hardCurrency.amount -= price;
-                        GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
-                            new SqliteParameter("@amount", hardCurrency.amount),
-                            new SqliteParameter("@id", hardCurrency.id));
-                        result.updateCurrencies.Add(hardCurrency);
-                        break;
-                }
+        //var cplayer = IPlayer.CurrentPlayer;
+        //var playerId = cplayer.guid;
+        //var loginToken = cplayer.loginToken;
+        //var result = new ItemResult();
+        //var gameDb = GameInstance.GameDatabase;
+        //var player = GameInstance.dbLogin.GetPlayerByLoginToken(playerId, loginToken);
+        //LootBox lootBox;
+        //if (player == null)
+        //    result.error = GameServiceErrorCode.INVALID_LOGIN_TOKEN;
+        //else if (!gameDb.LootBoxes.TryGetValue(lootBoxDataId, out lootBox))
+        //    result.error = GameServiceErrorCode.INVALID_LOOT_BOX_DATA;
+        //else
+        //{
+        //    var softCurrency = GameInstance.dbPlayerData.GetCurrency(playerId, gameDb.softCurrency.id);
+        //    var hardCurrency = GameInstance.dbPlayerData.GetCurrency(playerId, gameDb.hardCurrency.id);
+        //    var requirementType = lootBox.requirementType;
+        //    if (packIndex > lootBox.lootboxPacks.Length - 1)
+        //        packIndex = 0;
+        //    var pack = lootBox.lootboxPacks[packIndex];
+        //    var price = pack.price;
+        //    var openAmount = pack.openAmount;
+        //    if (requirementType == LootBoxRequirementType.RequireSoftCurrency && price > softCurrency.amount)
+        //        result.error = GameServiceErrorCode.NOT_ENOUGH_SOFT_CURRENCY;
+        //    else if (requirementType == LootBoxRequirementType.RequireHardCurrency && price > hardCurrency.amount)
+        //        result.error = GameServiceErrorCode.NOT_ENOUGH_HARD_CURRENCY;
+        //    else
+        //    {
+        //        switch (requirementType)
+        //        {
+        //            case LootBoxRequirementType.RequireSoftCurrency:
+        //                softCurrency.amount -= price;
+        //                GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
+        //                    new SqliteParameter("@amount", softCurrency.amount),
+        //                    new SqliteParameter("@id", softCurrency.id));
+        //                result.updateCurrencies.Add(softCurrency);
+        //                break;
+        //            case LootBoxRequirementType.RequireHardCurrency:
+        //                hardCurrency.amount -= price;
+        //                GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE playerCurrency SET amount=@amount WHERE id=@id",
+        //                    new SqliteParameter("@amount", hardCurrency.amount),
+        //                    new SqliteParameter("@id", hardCurrency.id));
+        //                result.updateCurrencies.Add(hardCurrency);
+        //                break;
+        //        }
 
-                for (var i = 0; i < openAmount; ++i)
-                {
-                    var rewardItem = lootBox.RandomReward().rewardItem;
-                    var createItems = new List<PlayerItem>();
-                    var updateItems = new List<PlayerItem>();
-                    //todo 开商城的数据
-                    //if (AddItems(playerId, rewardItem.characterGuid, rewardItem.amount, out createItems, out updateItems))
-                    //{
+        //        for (var i = 0; i < openAmount; ++i)
+        //        {
+        //            var rewardItem = lootBox.RandomReward().rewardItem;
+        //            //var createItems = new List<PlayerItem>();
+        //            //var updateItems = new List<PlayerItem>();
+        //            //todo 开商城的数据
+        //            //if (AddItems(playerId, rewardItem.characterGuid, rewardItem.amount, out createItems, out updateItems))
+        //            //{
 
-                    //    foreach (var createEntry in createItems)
-                    //    {
-                    //        createEntry.characterGuid = System.Guid.NewGuid().ToString();
-                    //        ExecuteNonQuery(@"INSERT INTO playerItem (id, playerId, Guid, amount, exp, equipItemGuid, equipPosition) VALUES (@id, @playerId, @Guid, @amount, @exp, @equipItemId, @equipPosition)",
-                    //            new SqliteParameter("@id", createEntry.characterGuid),
-                    //            new SqliteParameter("@playerId", createEntry.PlayerId),
-                    //            new SqliteParameter("@Guid", createEntry.GUID),
-                    //            new SqliteParameter("@amount", createEntry.Amount),
-                    //            new SqliteParameter("@exp", createEntry.Exp),
-                    //            new SqliteParameter("@equipItemGuid", createEntry.equipItemGuid),
-                    //            new SqliteParameter("@equipPosition", createEntry.EquipPosition));
-                    //        result.createItems.Add(createEntry);
-                    //        HelperUnlockItem(player.characterGuid, rewardItem.characterGuid);
-                    //    }
-                    //    foreach (var updateEntry in updateItems)
-                    //    {
-                    //        ExecuteNonQuery(@"UPDATE playerItem SET playerId=@playerId, Guid=@Guid, amount=@amount, exp=@exp, equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
-                    //            new SqliteParameter("@playerId", updateEntry.PlayerId),
-                    //            new SqliteParameter("@Guid", updateEntry.GUID),
-                    //            new SqliteParameter("@amount", updateEntry.Amount),
-                    //            new SqliteParameter("@exp", updateEntry.Exp),
-                    //            new SqliteParameter("@equipItemGuid", updateEntry.equipItemGuid),
-                    //            new SqliteParameter("@equipPosition", updateEntry.EquipPosition),
-                    //            new SqliteParameter("@id", updateEntry.characterGuid));
-                    //        result.updateItems.Add(updateEntry);
-                    //    }
-                    //}
-                }
-            }
-        }
-        onFinish(result);
+        //            //    foreach (var createEntry in createItems)
+        //            //    {
+        //            //        createEntry.characterGuid = System.Guid.NewGuid().ToString();
+        //            //        ExecuteNonQuery(@"INSERT INTO playerItem (id, playerId, Guid, amount, exp, equipItemGuid, equipPosition) VALUES (@id, @playerId, @Guid, @amount, @exp, @equipItemId, @equipPosition)",
+        //            //            new SqliteParameter("@id", createEntry.characterGuid),
+        //            //            new SqliteParameter("@playerId", createEntry.PlayerId),
+        //            //            new SqliteParameter("@Guid", createEntry.GUID),
+        //            //            new SqliteParameter("@amount", createEntry.Amount),
+        //            //            new SqliteParameter("@exp", createEntry.Exp),
+        //            //            new SqliteParameter("@equipItemGuid", createEntry.equipItemGuid),
+        //            //            new SqliteParameter("@equipPosition", createEntry.EquipPosition));
+        //            //        result.createItems.Add(createEntry);
+        //            //        HelperUnlockItem(player.characterGuid, rewardItem.characterGuid);
+        //            //    }
+        //            //    foreach (var updateEntry in updateItems)
+        //            //    {
+        //            //        ExecuteNonQuery(@"UPDATE playerItem SET playerId=@playerId, Guid=@Guid, amount=@amount, exp=@exp, equipItemId=@equipItemId, equipPosition=@equipPosition WHERE id=@id",
+        //            //            new SqliteParameter("@playerId", updateEntry.PlayerId),
+        //            //            new SqliteParameter("@Guid", updateEntry.GUID),
+        //            //            new SqliteParameter("@amount", updateEntry.Amount),
+        //            //            new SqliteParameter("@exp", updateEntry.Exp),
+        //            //            new SqliteParameter("@equipItemGuid", updateEntry.equipItemGuid),
+        //            //            new SqliteParameter("@equipPosition", updateEntry.EquipPosition),
+        //            //            new SqliteParameter("@id", updateEntry.characterGuid));
+        //            //        result.updateItems.Add(updateEntry);
+        //            //    }
+        //            //}
+        //        }
+        //    }
+        //}
+        //onFinish(result);
     }
 
     #endregion

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,8 +17,6 @@ public class SelfHeroSelectChangeItem : MonoBehaviour
     private string equipGuid;
 
     private string characterGuid;
-
-    private PlayerItem equipItem;
 
     private string equipPosition;
 
@@ -43,13 +42,9 @@ public class SelfHeroSelectChangeItem : MonoBehaviour
 
     void ShowItem()
     {
-        //equipItem = PlayerItem.equipDataMap[equipGuid];
-        equipName.text = equipItem.EquipmentData.title;
-        equipInfo.text = equipItem.EquipmentData.quality;
-        if (equipItem.EquipItemGuid.Length > 0)
-        {
-            //equipedName.text = PlayerItem.characterDataMap[equipItem.EquipItemGuid].CharacterData.title;
-        }
+        equipName.text = IPlayerHasEquips.DataMap[equipGuid].IEquipment.title;
+        equipInfo.text = IPlayerHasEquips.DataMap[equipGuid].IEquipment.quality;
+        equipedName.text = IPlayerHasEquips.DataMap[equipGuid].IEquipment.title;
     }
 
     /// <summary>

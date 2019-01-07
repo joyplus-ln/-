@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Framework.Reflection.SQLite3Helper;
 using SQLite3TableDataTmp;
 using UnityEngine;
@@ -30,7 +31,6 @@ public class DBManager
         LocalSQLite3Operate = SQLite3Factory.OpenToWrite("Dynamic.db");
         CheckTable();
         IPlayer.Init();
-        IPlayerAuth.Init();
         IPlayerBattle.Init();
         ICharacter.Init();
         IEquipment.Init();
@@ -43,6 +43,8 @@ public class DBManager
         IPlayerOtherItem.Init();
         IPlayerStamina.Init();
         IPlayerUnlockItem.Init();
+        IPlayerHasEquips.InsertNewEquips("2001");
+        IPlayerHasCharacters.InsertNewCharacter("1001");
     }
 
     void CheckTable()
@@ -54,15 +56,6 @@ public class DBManager
         if (!LocalSQLite3Operate.TableExists("IPlayerHasEquips"))
         {
             LocalSQLite3Operate.CreateTable<IPlayerHasEquips>();
-        }
-        if (!LocalSQLite3Operate.TableExists("IPlayer"))
-        {
-            LocalSQLite3Operate.CreateTable<IPlayer>();
-        }
-
-        if (!LocalSQLite3Operate.TableExists("IPlayerAuth"))
-        {
-            LocalSQLite3Operate.CreateTable<IPlayerAuth>();
         }
         if (!LocalSQLite3Operate.TableExists("IPlayerBattle"))
         {

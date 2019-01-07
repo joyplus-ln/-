@@ -20,70 +20,44 @@ namespace SQLite3TableDataTmp
                 DBManager.instance.LocalSQLite3Operate.UpdateOrInsert(dataMapValue);
             }
         }
-        public int Calculate(int maxValue, int minValue, float growth, int currentLevel, int maxLevel)
+
+        /// <summary>
+        /// 获取这个装备的基数属性,白板属性,,,成长信息
+        /// </summary>
+        /// <returns></returns>
+        public Attributes GetAttributes()
         {
-            if (currentLevel <= 0)
-                currentLevel = 1;
-            if (maxLevel <= 0)
-                maxLevel = 1;
-            if (currentLevel == 1)
-                return minValue;
-            if (currentLevel == maxLevel)
-                return maxValue;
-            return minValue + Mathf.RoundToInt((maxValue - minValue) * Mathf.Pow((float)(currentLevel - 1) / (float)(maxLevel - 1), growth));
-        }
-        public CalculationAttributes CreateCalculationAttributes(int currentLevel, int maxLevel)
-        {
-            CalculationAttributes result = new CalculationAttributes();
-            result.hp = Calculate(maxhp, minhp, hpgrowth, currentLevel, maxLevel);// hp.Calculate(currentLevel, maxLevel);
-            result.pAtk = Calculate(maxpAtk, minpAtk, pAtkgrouth, currentLevel, maxLevel);//pAtk.Calculate(currentLevel, maxLevel);
-            result.pDef = Calculate(maxpDef, minpDef, pDefgrouth, currentLevel, maxLevel);//pDef.Calculate(currentLevel, maxLevel);
-            result.mAtk = Calculate(maxmAtk, minmAtk, mAtkgrouth, currentLevel, maxLevel);//mAtk.Calculate(currentLevel, maxLevel);
-            result.mDef = Calculate(maxmDef, minmDef, mDefgrouth, currentLevel, maxLevel);//mDef.Calculate(currentLevel, maxLevel);
-            result.spd = Calculate(maxspd, minspd, spdgrouth, currentLevel, maxLevel);//pd.Calculate(currentLevel, maxLevel);
-            result.eva = Calculate(maxeva, mineva, evagrouth, currentLevel, maxLevel);//eva.Calculate(currentLevel, maxLevel);
-            result.acc = Calculate(maxacc, minacc, accgrouth, currentLevel, maxLevel);//acc.Calculate(currentLevel, maxLevel);
+            Attributes result = new Attributes();
+            result.hp.SetData(minhp, maxhp, hpgrowth);
+            result.pAtk.SetData(minpAtk, maxpAtk, pAtkgrouth);
+            result.pDef.SetData(minpDef, maxpDef, pDefgrouth);
+            result.mAtk.SetData(minmAtk, maxmAtk, mAtkgrouth);
+            result.mDef.SetData(minmDef, maxmDef, mDefgrouth);
+            result.spd.SetData(minspd, maxspd, spdgrouth);
+            result.eva.SetData(mineva, maxeva, evagrouth);
+            result.acc.SetData(minacc, maxacc, accgrouth);
+            result.exp_hp = exp_hp;
+            result.exp_patk = exp_patk;
+            result.exp_pdef = exp_pdef;
+            result.exp_matk = exp_matk;
+            result.exp_mdef = exp_mdef;
+            result.exp_spd = exp_spd;
+            result.exp_eva = exp_eva;
+            result.exp_acc = exp_acc;
+            result.exp_hpRate = exp_hpRate;
+            result.exp_pAtkRate = exp_pAtkRate;
+            result.exp_pDefRate = exp_pDefRate;
+            result.exp_mAtkRate = exp_mAtkRate;
+            result.exp_mDefRate = exp_mDefRate;
+            result.exp_spdRate = exp_spdRate;
+            result.exp_evaRate = exp_evaRate;
+            result.exp_accRate = exp_accRate;
+            result.exp_critChance = exp_critChance;
+            result.exp_critDamageRate = exp_critDamageRate;
+            result.exp_blockChance = exp_blockChance;
+            result.exp_blockDamageRate = exp_blockDamageRate;
             return result;
         }
 
-        public CalculationAttributes CreateExtraCalculationAttributes()
-        {
-            CalculationAttributes result = new CalculationAttributes();
-            result.hp = exp_hp;// hp.Calculate(currentLevel, maxLevel);
-            result.pAtk = exp_patk;//pAtk.Calculate(currentLevel, maxLevel);
-            result.pDef = exp_pdef;//pDef.Calculate(currentLevel, maxLevel);
-            result.mAtk = exp_matk;//mAtk.Calculate(currentLevel, maxLevel);
-            result.mDef = exp_mdef;//mDef.Calculate(currentLevel, maxLevel);
-            result.spd = exp_spd;//pd.Calculate(currentLevel, maxLevel);
-            result.eva = exp_eva;//eva.Calculate(currentLevel, maxLevel);
-            result.acc = exp_acc;//acc.Calculate(currentLevel, maxLevel);
-            return result;
-        }
-
-        public CalculationAttributes GetTotalAttributes()
-        {
-            var result = new CalculationAttributes();
-            result += CreateCalculationAttributes(1, Const.MaxLevel);
-
-            // If this is character item, applies rate attributes
-            result.hp += Mathf.CeilToInt(result.hpRate * result.hp);
-            result.pAtk += Mathf.CeilToInt(result.pAtkRate * result.pAtk);
-            result.pDef += Mathf.CeilToInt(result.pDefRate * result.pDef);
-            result.mAtk += Mathf.CeilToInt(result.mAtkRate * result.mAtk);
-            result.mDef += Mathf.CeilToInt(result.mDefRate * result.mDef);
-            result.spd += Mathf.CeilToInt(result.spdRate * result.spd);
-            result.eva += Mathf.CeilToInt(result.evaRate * result.eva);
-            result.acc += Mathf.CeilToInt(result.accRate * result.acc);
-
-            result.hp += Mathf.CeilToInt(result._hpRate * result.hp);
-            result.pAtk += Mathf.CeilToInt(result._pAtkRate * result.pAtk);
-            result.pDef += Mathf.CeilToInt(result._pDefRate * result.pDef);
-            result.mAtk += Mathf.CeilToInt(result._mAtkRate * result.mAtk);
-            result.mDef += Mathf.CeilToInt(result._mDefRate * result.mDef);
-            result.spd += Mathf.CeilToInt(result._spdRate * result.spd);
-            result.eva += Mathf.CeilToInt(result._evaRate * result.eva);
-            result.acc += Mathf.CeilToInt(result._accRate * result.acc);
-            return result;
-        }
     }
 }

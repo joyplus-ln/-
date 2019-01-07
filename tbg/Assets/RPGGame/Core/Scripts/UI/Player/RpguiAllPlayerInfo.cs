@@ -12,8 +12,8 @@ public class RpguiAllPlayerInfo : RPGUIBase
     
 	void Update ()
     {
-        if (RpguiPlayer != null)
-            RpguiPlayer.SetData(IPlayer.CurrentPlayer);
+        //if (RpguiPlayer != null)
+        //    RpguiPlayer.SetData(IPlayer.CurrentPlayer.guid);
         if (RpguiSoftCurrency != null)
             RpguiSoftCurrency.SetData(IPlayerCurrency.SoftCurrency);
         if (RpguiHardCurrency != null)

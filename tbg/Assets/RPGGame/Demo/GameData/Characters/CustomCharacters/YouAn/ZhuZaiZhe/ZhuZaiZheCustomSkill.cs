@@ -50,8 +50,8 @@ public class WangLingYiZhi : CustomSkill
         skilltype = SkillType.passive;
         skillName = "亡灵意志";
         des = "生命增加40%，命中增加20%";
-        SelfAttributes.hpRate = 0.4f;
-        SelfAttributes.accRate = 0.2f;
+        SelfAttributes.exp_hpRate = 0.4f;
+        SelfAttributes.exp_accRate = 0.2f;
     }
 
     //public override IEnumerator ApplyBuffLogic()

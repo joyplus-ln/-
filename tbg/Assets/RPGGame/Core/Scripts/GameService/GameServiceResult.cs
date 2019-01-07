@@ -62,11 +62,11 @@ public class FinishStageResult : PlayerResult
     public int rewardPlayerExp;
     public int rewardCharacterExp;
     public int rewardSoftCurrency;
-    public List<PlayerItem> rewardItems = new List<PlayerItem>();
+    //public List<PlayerItem> rewardItems = new List<PlayerItem>();
     public List<IPlayerCurrency> updateCurrencies = new List<IPlayerCurrency>();
-    public List<PlayerItem> createItems = new List<PlayerItem>();
-    public List<PlayerItem> updateItems = new List<PlayerItem>();
-    public Dictionary<string, PlayerItem.ItemType> deleteItemIds = new Dictionary<string, PlayerItem.ItemType>();
+    //public List<PlayerItem> createItems = new List<PlayerItem>();
+    //public List<PlayerItem> updateItems = new List<PlayerItem>();
+    //public Dictionary<string, PlayerItem.ItemType> deleteItemIds = new Dictionary<string, PlayerItem.ItemType>();
     public PlayerClearStage clearStage;
 }
 
@@ -78,20 +78,16 @@ public class CurrencyResult : GameServiceResult
 public class ItemResult : GameServiceResult
 {
     public List<IPlayerCurrency> updateCurrencies = new List<IPlayerCurrency>();
-    public List<PlayerItem> createItems = new List<PlayerItem>();
-    public List<PlayerItem> updateItems = new List<PlayerItem>();
-    public Dictionary<string, PlayerItem.ItemType> deleteItemIds = new Dictionary<string, PlayerItem.ItemType>();
+    //public List<PlayerItem> createItems = new List<PlayerItem>();
+    //public List<PlayerItem> updateItems = new List<PlayerItem>();
+    //public Dictionary<string, PlayerItem.ItemType> deleteItemIds = new Dictionary<string, PlayerItem.ItemType>();
 }
 
-public class AuthListResult : GameServiceResult
-{
-    public List<IPlayerAuth> list = new List<IPlayerAuth>();
-}
 
 public class ItemListResult : GameServiceResult
 {
-    public List<PlayerItem> characterlist = new List<PlayerItem>();
-    public List<PlayerItem> equipmentlist = new List<PlayerItem>();
+    //public List<PlayerItem> characterlist = new List<PlayerItem>();
+    //public List<PlayerItem> equipmentlist = new List<PlayerItem>();
 }
 
 public class OtherItemListResult : GameServiceResult

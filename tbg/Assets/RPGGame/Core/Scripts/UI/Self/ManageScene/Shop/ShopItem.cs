@@ -29,7 +29,7 @@ public class ShopItem : MonoBehaviour
         ShopItemData heroData = new ShopItemData();
         heroData.heroid = heruid;
         data.obj = heroData;
-        DialogController.instance.ShowDialog(data, DialogController.DialogType.stack);
+        DialogController.instance.ShowDialog(DialogController.instance.ShopHeroDialog, DialogController.DialogType.stack);
     }
 }
 

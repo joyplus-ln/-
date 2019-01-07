@@ -8,7 +8,6 @@ public class Dialog : MonoBehaviour
 
     public Action close;
 
-    private DialogData data;
     // Use this for initialization
     protected virtual void Start()
     {
@@ -24,8 +23,7 @@ public class Dialog : MonoBehaviour
         }
     }
 
-    public virtual void Init(DialogData data)
+    public virtual void Init()
     {
-        this.data = data;
     }
 }

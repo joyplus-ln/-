@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 public class WearEquipment : MonoBehaviour
@@ -14,7 +15,7 @@ public class WearEquipment : MonoBehaviour
 
     }
 
-    public void SetData(PlayerItem selectedItem)
+    public void SetData(IPlayerHasCharacters selectedItem)
     {
         weapon.Clear();
         cloth.Clear();

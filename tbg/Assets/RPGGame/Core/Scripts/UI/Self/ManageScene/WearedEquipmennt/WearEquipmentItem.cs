@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,9 +14,9 @@ public class WearEquipmentItem : MonoBehaviour {
 		
 	}
 
-    public void SetData(PlayerItem item)
+    public void SetData(IPlayerHasCharacters item)
     {
-        nameText.text = item.EquipmentData.title;
+        nameText.text = "unknown";
     }
 
     public void Onclick()

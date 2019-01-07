@@ -19,6 +19,6 @@ public class ShiXue : CustomSkill
 
     public override void BeforeFight()
     {
-        SelfAttributes._mAtkRate = (1 - (selfOnly.Hp / selfOnly.MaxHp));
+        SelfAttributes.exp_mAtkRate = (1 - (selfOnly.Hp / selfOnly.MaxHp));
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 public class SelfHeroEquipSelectDialog : Dialog
@@ -10,10 +11,11 @@ public class SelfHeroEquipSelectDialog : Dialog
 
 
     public UIAttributeShow AttributeShow;
-    private SelfHeroEquipSelectData shopItemData;
-
     public GameObject equipOn;
     public GameObject equipOff;
+    private string equipGuid;
+    private string HeroGuid;
+    private Const.EquipPosition equipType;
 
 
     // Use this for initialization
@@ -22,22 +24,27 @@ public class SelfHeroEquipSelectDialog : Dialog
 
     }
 
-    public override void Init(DialogData data)
+    public override void Init()
     {
-        base.Init(data);
-        shopItemData = (SelfHeroEquipSelectData)data.obj;
-        RefreshUi();
+        
+    }
 
+    public void SetData(string equipGuid, string HeroGuid, Const.EquipPosition equipType)
+    {
+        this.equipGuid = equipGuid;
+        this.HeroGuid = HeroGuid;
+        this.equipType = equipType;
+        RefreshUi();
     }
 
     void RefreshUi()
     {
-        if (shopItemData.equipGuid.Length > 0)
+        if (equipGuid.Length > 0)
         {
             equipOn.SetActive(false);
             equipOff.SetActive(true);
             AttributeShow.gameObject.SetActive(true);
-            //AttributeShow.SetupInfo(DBManager.instance.GetConfigEquipments()[shopItemData.equipGuid].GetItemAttributes());
+            AttributeShow.SetupInfo(IPlayerHasEquips.DataMap[equipGuid].IEquipment.GetAttributes().GetCreateCalculationAttributes());
         }
         else
         {
@@ -52,40 +59,32 @@ public class SelfHeroEquipSelectDialog : Dialog
         DialogData openDialogData = new DialogData();
         openDialogData.dialog = DialogController.instance.selfHeroSelectChangeEquipDialog;
         SelfHeroSelectChangeEquipData selfHeroSelectChangeEquipData = new SelfHeroSelectChangeEquipData();
-        selfHeroSelectChangeEquipData.heroGuid = shopItemData.heroGuid;
-        selfHeroSelectChangeEquipData.equipType = shopItemData.equipType;
+        selfHeroSelectChangeEquipData.heroGuid = equipGuid;
+        selfHeroSelectChangeEquipData.equipType = equipType;
         openDialogData.obj = selfHeroSelectChangeEquipData;
         selfHeroSelectChangeEquipData.callBack = CallBack;
-        DialogController.instance.ShowDialog(openDialogData, DialogController.DialogType.stack);
+        DialogController.instance.ShowDialog(DialogController.instance.selfHeroSelectChangeEquipDialog, DialogController.DialogType.stack);
 
     }
 
     void CallBack(string selectedGuid)
     {
-        shopItemData.equipGuid = selectedGuid;
+        equipGuid = selectedGuid;
         RefreshUi();
     }
 
     public void UnEquip()
     {
-        GameInstance.dbBattle.DoUnEquipItem(shopItemData.equipGuid, (result) =>
-        {
-            //PlayerItem.SetDataRange(result.updateItems);
-            Close();
-            if (shopItemData.callback != null)
-            {
-                shopItemData.callback.Invoke();
-            }
-        });
+        //GameInstance.dbBattle.DoUnEquipItem(equipGuid, (result) =>
+        //{
+        //    //PlayerItem.SetDataRange(result.updateItems);
+        //    Close();
+        //    if (shopItemData.callback != null)
+        //    {
+        //        shopItemData.callback.Invoke();
+        //    }
+        //});
     }
 
 
-}
-
-public class SelfHeroEquipSelectData
-{
-    public string heroGuid;
-    public string equipGuid;
-    public Const.EquipPosition equipType;
-    public Action callback;
 }

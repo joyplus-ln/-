@@ -15,7 +15,7 @@ public class YanShiJia : CustomSkill
         skillName = "";
         des = "";
         spendPower = 0;
-        SelfAttributes.blockChance = 0.5f;
+        SelfAttributes.exp_blockChance = 0.5f;
     }
 
     public override void Beigedang()
@@ -51,8 +51,8 @@ public class YanShiBaoBuff : CustomBuff
     public YanShiBaoBuff()
     {
         buffText = "";
-        SelfAttributes.pDefRate = -0.2f;
-        SelfAttributes.mDefRate = -0.2f;
+        SelfAttributes.exp_pDefRate = -0.2f;
+        SelfAttributes.exp_mDefRate = -0.2f;
         guid = "YanShiBaoBuff";
         turns = 3;
     }
@@ -65,8 +65,8 @@ public class YanShiBaoBuff : CustomBuff
         }
         if (buffGiver == selfOnly.Custombody.lastAttacker)
         {
-            SelfAttributes.pDefRate += -0.02f;
-            SelfAttributes.mDefRate += -0.02f;
+            SelfAttributes.exp_pDefRate += -0.02f;
+            SelfAttributes.exp_mDefRate += -0.02f;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,56 +20,49 @@ namespace SQLite3TableDataTmp
                 DBManager.instance.LocalSQLite3Operate.UpdateOrInsert(dataMapValue);
             }
         }
-        public static CalculationAttributes GetTowerExtraAttributes(bool IsBos)
+
+        public IEquipment IEquipment
         {
-
-            CalculationAttributes extraAttributes = new CalculationAttributes();
-            int playerlevel = IPlayer.CurrentPlayer.Level;
-            int towerLevel = PlayerSQLPrefs.yzTowerCurrentLevel;
-            int totalWeight = (playerlevel * 10 + towerLevel * 15 + 5) * 50;
-            extraAttributes.SetExtraAtt(totalWeight);
-
-            return extraAttributes;
+            get { return IEquipment.DataMap[dataId]; }
         }
 
-        public static PlayerItem CreateActorItemWithLevel(ICharacter itemData, int level, Const.StageType type, bool isplayer)
+
+        public static Dictionary<string, IPlayerHasEquips> GetHeroEquipses(string guid)
         {
-            if (level <= 0)
-                level = 1;
-            //var itemTier = itemData.itemTier;
-            var sumExp = 0;
-            var result = new PlayerItem(PlayerItem.ItemType.character);
-            result.itemType = PlayerItem.ItemType.character;
-            for (var i = 1; i < level; ++i)
+            Dictionary<string, IPlayerHasEquips> list = new Dictionary<string, IPlayerHasEquips>();
+            foreach (var hasEquips in DataMap.Values)
             {
-                //sumExp += itemTier.expTable.Calculate(i + 1, itemTier.maxLevel);
-                sumExp += Const.NextEXP;
+                if (hasEquips.equipItemId.Equals(guid))
+                {
+                    if (!list.ContainsKey(hasEquips.equipPosition))
+                    {
+                        list.Add(hasEquips.equipPosition, hasEquips);
+                    }
+                    else
+                    {
+                        Debug.LogError("出错了，一个英雄身上穿了两件装备");
+                    }
+                }
+
             }
-            result.ItemID = itemData.guid;
-            //if(!isplayer)
-            //result.GUID = itemData.;
-            result.Exp = sumExp;
-            result.ExtrAttributesData = GetExtraAttributes(type);
-            return result;
-        }
-        static CalculationAttributes GetExtraAttributes(Const.StageType type)
-        {
-            switch (type)
-            {
-                case Const.StageType.Normal:
-                    return null;
-                    break;
-                case Const.StageType.Tower:
-                    return FormulaUtils.GetTowerExtraAttributes(false);
-                    break;
-            }
-            return null;
+            return list;
         }
 
-        public PlayerItem GetPlayerItem()
+        public static void InsertNewEquips(string dataId)
         {
-            return new PlayerItem(PlayerItem.ItemType.equip);
+            if (IEquipment.DataMap.ContainsKey(dataId))
+            {
+                string guid = Guid.NewGuid().ToString();
+                DataMap.Add(guid, new IPlayerHasEquips(DataMap.Count + 1, guid, dataId, 1, 0, "", "", 1));
+                UpdataDataMap();
+            }
+            else
+            {
+                Debug.LogError("插入失败");
+            }
         }
+
+
     }
 }
 

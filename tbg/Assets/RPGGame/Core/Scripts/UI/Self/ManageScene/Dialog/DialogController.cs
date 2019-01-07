@@ -35,90 +35,85 @@ public class DialogController : MonoBehaviour
     #endregion
     public enum DialogType
     {
-        replace,
+        back,
         dontShow,
         wait,
         stack
     }
-    private DialogData currentDialog = null;
-    private Stack<DialogData> dialogQueue = new Stack<DialogData>();
-    public void ShowDialog(DialogData dialog, DialogType type)
+    private Dialog currentDialog = null;
+    private Stack<Dialog> dialogQueue = new Stack<Dialog>();
+    public Dialog ShowDialog(Dialog dialog, DialogType type)
     {
+        Dialog cdialog = null;
         switch (type)
         {
-            case DialogType.replace:
+            case DialogType.back:
+                Back(dialog);
                 break;
             case DialogType.dontShow:
                 break;
             case DialogType.wait:
-                Wait(dialog);
+                cdialog = Wait(dialog);
                 break;
             case DialogType.stack:
-                Stack(dialog);
+                cdialog = Stack(dialog);
                 break;
         }
+
+        return cdialog;
     }
 
-    void Replace(DialogData dialog)
+    Dialog Back(Dialog dialog)
+    {
+        currentDialog = dialog;
+        dialog.gameObject.SetActive(true);
+        return dialog;
+    }
+
+
+    Dialog Wait(Dialog dialog)
     {
         if (currentDialog != null)
         {
-            currentDialog.dialog.Close();
-            currentDialog = CreatDialog(dialog);
-        }
-    }
-
-    void DontShow(DialogData dialog)
-    {
-        if (currentDialog != null)
-        {
-            return;
-        }
-    }
-
-    void Wait(DialogData dialog)
-    {
-        if (currentDialog != null)
-        {
-            dialogQueue.Push(dialog);
+            Dialog cDialog = CreatDialog(dialog);
+            cDialog.gameObject.SetActive(false);
+            dialogQueue.Push(cDialog);
+            return cDialog;
         }
         else
         {
             currentDialog = CreatDialog(dialog);
+            return currentDialog;
         }
     }
 
-    void Stack(DialogData dialog)
+    Dialog Stack(Dialog dialog)
     {
         if (currentDialog != null)
         {
-            currentDialog.CreaatedGameObject.SetActive(false);
+            currentDialog.gameObject.SetActive(false);
             dialogQueue.Push(currentDialog);
             currentDialog = CreatDialog(dialog);
+            return currentDialog;
         }
         else
         {
             currentDialog = CreatDialog(dialog);
+            return currentDialog;
         }
     }
 
-    DialogData CreatDialog(DialogData dialog)
+    Dialog CreatDialog(Dialog dialog)
     {
         Dialog insDialog = null;
-        if (dialog.CreaatedGameObject != null)
-        {
-            insDialog = dialog.CreaatedGameObject.GetComponent<Dialog>();
-        }
-        else
-        {
-            insDialog = Instantiate(dialog.dialog);
-            insDialog.name += dialogQueue.Count;
-            insDialog.Init(dialog);
-            dialog.CreaatedGameObject = insDialog.gameObject;
-        }
+
+        insDialog = Instantiate(dialog);
+        insDialog.name += dialogQueue.Count;
+        insDialog.Init();
+
 
         insDialog.close += Close;
-        return dialog;
+        return insDialog;
     }
 
     /// <summary>
@@ -130,20 +125,13 @@ public class DialogController : MonoBehaviour
         {
             currentDialog = null;
         }
-        if (dialogQueue.Count != 0)
+        if (dialogQueue.Count > 0)
         {
-            DialogData dialog = dialogQueue.Pop();
+            Dialog dialog = dialogQueue.Pop();
             if (dialog != null)
             {
-                if (dialog.CreaatedGameObject != null)
-                {
-                    currentDialog = dialog;
-                    dialog.CreaatedGameObject.SetActive(true);
-                }
-                else
-                {
-                    ShowDialog(dialog, DialogType.wait);
-                }
+                currentDialog = dialog;
+                ShowDialog(dialog, DialogType.wait);
             }
         }
 

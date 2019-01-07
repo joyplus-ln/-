@@ -35,7 +35,7 @@ public class PlayerClearStage : BasePlayerData, IIPlayerClearStage
 
     public static bool TryGetData(string dataId, out PlayerClearStage data)
     {
-        return TryGetData(IPlayer.CurrentPlayerId, dataId, out data);
+        return TryGetData(IPlayer.CurrentPlayer.guid, dataId, out data);
     }
 
     public static bool RemoveData(string id)
@@ -76,7 +76,7 @@ public class PlayerClearStage : BasePlayerData, IIPlayerClearStage
 
     public static void RemoveDataRange()
     {
-        RemoveDataRange(IPlayer.CurrentPlayerId);
+        RemoveDataRange(IPlayer.CurrentPlayer.guid);
     }
 
     public static bool IsUnlock(string playerId, BaseStage checkStage)
@@ -105,6 +105,6 @@ public class PlayerClearStage : BasePlayerData, IIPlayerClearStage
 
     public static bool IsUnlock(BaseStage checkStage)
     {
-        return IsUnlock(IPlayer.CurrentPlayerId, checkStage);
+        return IsUnlock(IPlayer.CurrentPlayer.guid, checkStage);
     }
 }

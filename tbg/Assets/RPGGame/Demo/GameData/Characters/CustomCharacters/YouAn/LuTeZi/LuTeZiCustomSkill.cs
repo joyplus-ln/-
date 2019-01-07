@@ -40,8 +40,8 @@ public class PoZhan : CustomSkill
         skillName = "破绽";
         des = "攻击增加25%,生命增加15%";
         spendPower = 0;
-        SelfAttributes.pAtkRate = 0.25f;
-        SelfAttributes.hpRate = 0.15f;
+        SelfAttributes.exp_pAtkRate = 0.25f;
+        SelfAttributes.exp_hpRate = 0.15f;
     }
 
 

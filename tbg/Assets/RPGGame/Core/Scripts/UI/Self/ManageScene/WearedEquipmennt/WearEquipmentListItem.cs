@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class WearEquipmentListItem : MonoBehaviour {
 
     WearEquipmentList wearEquipmentList;
-    PlayerItem playerItem;
+    IPlayerHasEquips playerItem;
 
     public Text lvName;
 	// Use this for initialization
@@ -17,11 +18,11 @@ public class WearEquipmentListItem : MonoBehaviour {
 	
 
 
-    internal void Init(WearEquipmentList wearEquipmentList, PlayerItem playerItem)
+    internal void Init(WearEquipmentList wearEquipmentList, IPlayerHasEquips playerItem)
     {
         this.wearEquipmentList = wearEquipmentList;
         this.playerItem = playerItem;
-        lvName.text = playerItem.EquipmentData.quality + "-LV" + playerItem.Level + "-" + playerItem.EquipmentData.title;
+        //lvName.text = playerItem.EquipmentData.quality + "-LV" + playerItem.Level + "-" + playerItem.EquipmentData.title;
     }
 
     public void Click()

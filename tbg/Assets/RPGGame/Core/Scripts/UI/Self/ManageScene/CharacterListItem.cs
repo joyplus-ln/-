@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterListItem : MonoBehaviour
 {
     private CharacterListUI listui;
-    public PlayerItem characterItem;
+    public IPlayerHasCharacters characterItem;
 
     public Text lvName;
 
@@ -15,12 +16,12 @@ public class CharacterListItem : MonoBehaviour
     {
     }
 
-    public void Init(CharacterListUI listui, PlayerItem characterItem)
+    public void Init(CharacterListUI listui, IPlayerHasCharacters characterItem)
     {
         this.listui = listui;
         this.characterItem = characterItem;
-        lvName.text = characterItem.CharacterData.quality + "-LV" + characterItem.Level + "-" +
-                      characterItem.CharacterData.title;
+        lvName.text = characterItem.Character.quality + "-LV" + characterItem.level + "-" +
+                      characterItem.Character.title;
     }
 
     public void PointDown()
@@ -34,17 +35,12 @@ public class CharacterListItem : MonoBehaviour
         listui.SelectedGameObject.GetComponent<RectTransform>().anchorMin = Vector2.zero;
         listui.SelectedGameObject.GetComponent<RectTransform>().anchorMax = Vector2.one;
         listui.SelectedItem(this, characterItem);
-        Debug.LogError("equipment:" + characterItem.EquippedItems.Count);
         ShowSelectHeroDialog();
     }
 
     public void ShowSelectHeroDialog()
     {
-        DialogData data = new DialogData();
-        data.dialog = DialogController.instance.SelfHeroSelectDialog;
-        SelfHeroSelectData selfHeroSelectData = new SelfHeroSelectData();
-        selfHeroSelectData.heroGuid = characterItem.GUID;
-        data.obj = selfHeroSelectData;
-        DialogController.instance.ShowDialog(data, DialogController.DialogType.wait);
+        Dialog data = DialogController.instance.ShowDialog(DialogController.instance.SelfHeroSelectDialog, DialogController.DialogType.wait);
+        ((SelfHeroSelectDialog)data).SetData(characterItem.guid);
     }
 }

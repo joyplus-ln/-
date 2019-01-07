@@ -40,9 +40,9 @@ public class NormalStage : BaseStage
         return WeightedRandomizer.From(weight).TakeOne();
     }
 
-    public override List<PlayerItem> GetCharacters()
+    public override List<ICharacter> GetCharacters()
     {
-        var dict = new Dictionary<string, PlayerItem>();
+        var dict = new Dictionary<string, ICharacter>();
         foreach (var randomFoe in randomFoes)
         {
             foreach (var foe in randomFoe.foes)
@@ -51,30 +51,30 @@ public class NormalStage : BaseStage
                 if (!string.IsNullOrEmpty(foe.characterId))
                 {
 
-                    var newEntry = PlayerItem.CreateActorItemWithLevel(ICharacter.DataMap[foe.characterId], foe.level, Const.StageType.Normal, false);
-                    newEntry.GUID = ICharacter.DataMap[foe.characterId].guid + "_" + foe.level;
-                    dict[ICharacter.DataMap[foe.characterId].guid + "_" + foe.level] = newEntry;
+                    //var newEntry = PlayerItem.CreateActorItemWithLevel(ICharacter.DataMap[foe.characterId], foe.level, Const.StageType.Normal, false);
+                    //newEntry.GUID = ICharacter.DataMap[foe.characterId].guid + "_" + foe.level;
+                    //dict[ICharacter.DataMap[foe.characterId].guid + "_" + foe.level] = newEntry;
                 }
             }
         }
-        foreach (var wave in waves)
-        {
-            if (wave.useRandomFoes)
-                continue;
+        //foreach (var wave in waves)
+        //{
+        //    if (wave.useRandomFoes)
+        //        continue;
 
-            var foes = wave.foes;
-            foreach (var foe in foes)
-            {
-                var item = ICharacter.DataMap[foe.characterId];
-                if (item != null)
-                {
-                    var newEntry = PlayerItem.CreateActorItemWithLevel(item, foe.level, Const.StageType.Normal, false);
-                    newEntry.GUID = ICharacter.DataMap[foe.characterId].guid + "_" + foe.level;
-                    dict[ICharacter.DataMap[foe.characterId].guid + "_" + foe.level] = newEntry;
-                }
-            }
-        }
-        return new List<PlayerItem>(dict.Values);
+        //    var foes = wave.foes;
+        //    foreach (var foe in foes)
+        //    {
+        //        var item = ICharacter.DataMap[foe.characterId];
+        //        if (item != null)
+        //        {
+        //            var newEntry = PlayerItem.CreateActorItemWithLevel(item, foe.level, Const.StageType.Normal, false);
+        //            newEntry.GUID = ICharacter.DataMap[foe.characterId].guid + "_" + foe.level;
+        //            dict[ICharacter.DataMap[foe.characterId].guid + "_" + foe.level] = newEntry;
+        //        }
+        //    }
+        //}
+        return new List<ICharacter>(dict.Values);
     }
 }
 

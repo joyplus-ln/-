@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 public class WearEquipmentList : MonoBehaviour
@@ -43,7 +44,7 @@ public class WearEquipmentList : MonoBehaviour
         StartCoroutine(CreatItem(name));
     }
 
-    public void Click(PlayerItem clickitem)
+    public void Click(IPlayerHasEquips clickitem)
     {
         Debug.LogError(characterListUI == null);
         Debug.LogError(characterListUI.GetSelectedPlayerItem() == null);

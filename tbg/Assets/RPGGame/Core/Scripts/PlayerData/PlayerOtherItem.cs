@@ -94,7 +94,7 @@ public class PlayerOtherItem : BasePlayerData, IIPlayerOtherItem
 
     public static void RemoveDataRange()
     {
-        RemoveDataRange(IPlayer.CurrentPlayerId);
+        RemoveDataRange(IPlayer.CurrentPlayer.guid);
     }
 
     public static void AddOneItem(string id, int num)

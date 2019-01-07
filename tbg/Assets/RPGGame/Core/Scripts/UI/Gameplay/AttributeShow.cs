@@ -128,86 +128,86 @@ public class AttributeShow : MonoBehaviour
 
         if (textHpRate != null)
         {
-            textHpRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_HP_RATE, data.hpRate, true) : RPGLanguageManager.FormatNumber(data.hpRate, true);
+            textHpRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_HP_RATE, data.exp_hpRate, true) : RPGLanguageManager.FormatNumber(data.exp_hpRate, true);
             if (hideInfoIfEmpty && containerHpRate != null)
-                containerHpRate.SetActive(Mathf.Abs(data.hpRate) > 0);
+                containerHpRate.SetActive(Mathf.Abs(data.exp_hpRate) > 0);
         }
 
         if (textPAtkRate != null)
         {
-            textPAtkRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_PATK_RATE, data.pAtkRate, true) : RPGLanguageManager.FormatNumber(data.pAtkRate, true);
+            textPAtkRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_PATK_RATE, data.exp_pAtkRate, true) : RPGLanguageManager.FormatNumber(data.exp_pAtkRate, true);
             if (hideInfoIfEmpty && containerPAtkRate != null)
-                containerPAtkRate.SetActive(Mathf.Abs(data.pAtkRate) > 0);
+                containerPAtkRate.SetActive(Mathf.Abs(data.exp_pAtkRate) > 0);
         }
 
         if (textPDefRate != null)
         {
-            textPDefRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_PDEF_RATE, data.pDefRate, true) : RPGLanguageManager.FormatNumber(data.pDefRate, true);
+            textPDefRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_PDEF_RATE, data.exp_pDefRate, true) : RPGLanguageManager.FormatNumber(data.exp_pDefRate, true);
             if (hideInfoIfEmpty && containerPDefRate != null)
-                containerPDefRate.SetActive(Mathf.Abs(data.pDefRate) > 0);
+                containerPDefRate.SetActive(Mathf.Abs(data.exp_pDefRate) > 0);
         }
 
         if (textMAtkRate != null)
         {
-            textMAtkRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_MATK_RATE, data.mAtkRate, true) : RPGLanguageManager.FormatNumber(data.mAtkRate, true);
+            textMAtkRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_MATK_RATE, data.exp_mAtkRate, true) : RPGLanguageManager.FormatNumber(data.exp_mAtkRate, true);
             if (hideInfoIfEmpty && containerMAtkRate != null)
-                containerMAtkRate.SetActive(Mathf.Abs(data.mAtkRate) > 0);
+                containerMAtkRate.SetActive(Mathf.Abs(data.exp_mAtkRate) > 0);
         }
 
         if (textMDefRate != null)
         {
-            textMDefRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_MDEF_RATE, data.mDefRate, true) : RPGLanguageManager.FormatNumber(data.mDefRate, true);
+            textMDefRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_MDEF_RATE, data.exp_mDefRate, true) : RPGLanguageManager.FormatNumber(data.exp_mDefRate, true);
             if (hideInfoIfEmpty && containerMDefRate != null)
-                containerMDefRate.SetActive(Mathf.Abs(data.mDefRate) > 0);
+                containerMDefRate.SetActive(Mathf.Abs(data.exp_mDefRate) > 0);
         }
 
         if (textSpdRate != null)
         {
-            textSpdRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_SPD_RATE, data.spdRate, true) : RPGLanguageManager.FormatNumber(data.spdRate, true);
+            textSpdRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_SPD_RATE, data.exp_spdRate, true) : RPGLanguageManager.FormatNumber(data.exp_spdRate, true);
             if (hideInfoIfEmpty && containerSpdRate != null)
-                containerSpdRate.SetActive(Mathf.Abs(data.spdRate) > 0);
+                containerSpdRate.SetActive(Mathf.Abs(data.exp_spdRate) > 0);
         }
 
         if (textEvaRate != null)
         {
-            textEvaRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_EVA_RATE, data.evaRate, true) : RPGLanguageManager.FormatNumber(data.evaRate, true);
+            textEvaRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_EVA_RATE, data.exp_evaRate, true) : RPGLanguageManager.FormatNumber(data.exp_evaRate, true);
             if (hideInfoIfEmpty && containerEvaRate != null)
-                containerEvaRate.SetActive(Mathf.Abs(data.evaRate) > 0);
+                containerEvaRate.SetActive(Mathf.Abs(data.exp_evaRate) > 0);
         }
 
         if (textAccRate != null)
         {
-            textAccRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_ACC_RATE, data.accRate, true) : RPGLanguageManager.FormatNumber(data.accRate, true);
+            textAccRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_ACC_RATE, data.exp_accRate, true) : RPGLanguageManager.FormatNumber(data.exp_accRate, true);
             if (hideInfoIfEmpty && containerAccRate != null)
-                containerAccRate.SetActive(Mathf.Abs(data.accRate) > 0);
+                containerAccRate.SetActive(Mathf.Abs(data.exp_accRate) > 0);
         }
 
         if (textCritChance != null)
         {
-            textCritChance.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_CRIT_CHANCE, data.critChance, true) : RPGLanguageManager.FormatNumber(data.critChance, true);
+            textCritChance.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_CRIT_CHANCE, data.exp_critChance, true) : RPGLanguageManager.FormatNumber(data.exp_critChance, true);
             if (hideInfoIfEmpty && containerCritChance != null)
-                containerCritChance.SetActive(Mathf.Abs(data.critChance) > 0);
+                containerCritChance.SetActive(Mathf.Abs(data.exp_critChance) > 0);
         }
 
         if (textCritDamageRate != null)
         {
-            textCritDamageRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_CRIT_DAMAGE_RATE, data.critDamageRate, true) : RPGLanguageManager.FormatNumber(data.critDamageRate, true);
+            textCritDamageRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_CRIT_DAMAGE_RATE, data.exp_critDamageRate, true) : RPGLanguageManager.FormatNumber(data.exp_critDamageRate, true);
             if (hideInfoIfEmpty && containerCritDamageRate != null)
-                containerCritDamageRate.SetActive(Mathf.Abs(data.critDamageRate) > 0);
+                containerCritDamageRate.SetActive(Mathf.Abs(data.exp_critDamageRate) > 0);
         }
 
         if (textBlockChance != null)
         {
-            textBlockChance.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_BLOCK_CHANCE, data.blockChance, true) : RPGLanguageManager.FormatNumber(data.blockChance, true);
+            textBlockChance.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_BLOCK_CHANCE, data.exp_blockChance, true) : RPGLanguageManager.FormatNumber(data.exp_blockChance, true);
             if (hideInfoIfEmpty && containerBlockChance != null)
-                containerBlockChance.SetActive(Mathf.Abs(data.blockChance) > 0);
+                containerBlockChance.SetActive(Mathf.Abs(data.exp_blockChance) > 0);
         }
 
         if (textBlockDamageRate != null)
         {
-            textBlockDamageRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_BLOCK_DAMAGE_RATE, data.blockDamageRate, true) : RPGLanguageManager.FormatNumber(data.blockDamageRate, true);
+            textBlockDamageRate.text = useFormatForInfo ? RPGLanguageManager.FormatInfo(GameText.TITLE_ATTRIBUTE_BLOCK_DAMAGE_RATE, data.exp_blockDamageRate, true) : RPGLanguageManager.FormatNumber(data.exp_blockDamageRate, true);
             if (hideInfoIfEmpty && containerBlockDamageRate != null)
-                containerBlockDamageRate.SetActive(Mathf.Abs(data.blockDamageRate) > 0);
+                containerBlockDamageRate.SetActive(Mathf.Abs(data.exp_blockDamageRate) > 0);
         }
     }
 }

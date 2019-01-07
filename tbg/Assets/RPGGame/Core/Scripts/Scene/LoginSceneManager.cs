@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LoginSceneManager : MonoBehaviour
 {
     public static LoginSceneManager Singleton { get; private set; }
-    public RpguiAuthentication loginDialog;
-    public RpguiAuthentication registerDialog;
     public GameObject clickStartObject;
+    public GameObject InputNameGameObject;
+    public Text inputText;
     private void Awake()
     {
         if (Singleton != null)
@@ -16,56 +18,26 @@ public class LoginSceneManager : MonoBehaviour
             return;
         }
         Singleton = this;
-        HideLoginDialog();
         ShowClickStart();
     }
 
     public void OnClickStart()
     {
-        GameInstance.dbLogin.DoValidateLoginToken(true, OnValidateLoginTokenSuccess);
+        //GameInstance.dbLogin.DoValidateLoginToken(true, OnValidateLoginTokenSuccess);
+        if (IPlayer.CurrentPlayer == null)
+        {
+            InputNameGameObject.SetActive(true);
+        }
+        else
+        {
+            RPGSceneManager.LoadScene(RPGSceneManager.ManagerScene);
+
+        }
         HideClickStart();
     }
 
-    private void OnValidateLoginTokenSuccess(PlayerResult result)
-    {
-        var gameInstance = GameInstance.Singleton;
-        if (result.error.Length > 1)
-        {
-            OnValidateLoginTokenError(result.error);
-            return;
-        }
-        gameInstance.OnGameServiceLogin(result);
-    }
 
-    private void OnValidateLoginTokenError(string error)
-    {
-        var gameInstance = GameInstance.Singleton;
-        ShowLoginDialog();
-    }
 
-    public void ShowLoginDialog()
-    {
-        if (loginDialog != null)
-            loginDialog.Show();
-    }
-
-    public void HideLoginDialog()
-    {
-        if (loginDialog != null)
-            loginDialog.Hide();
-    }
-
-    public void ShowRegisterDialog()
-    {
-        if (registerDialog != null)
-            registerDialog.Show();
-    }
-
-    public void HideRegisterDialog()
-    {
-        if (registerDialog != null)
-            registerDialog.Hide();
-    }
 
     public void ShowClickStart()
     {
@@ -78,4 +50,30 @@ public class LoginSceneManager : MonoBehaviour
         if (clickStartObject != null)
             clickStartObject.SetActive(false);
     }
+
+
+    public void OnClickGuestLogin()
+    {
+        var duid = SystemInfo.deviceUniqueIdentifier;
+        string name = inputText.text;
+        if (!string.IsNullOrEmpty(name))
+        {
+            IPlayer player = new IPlayer();
+            player.guid = duid;
+            player.Level = 1;
+            player.exp = 0;
+            player.profileName = name;
+            IPlayer.InsertNewPlayer(player);
+            IPlayerStamina iPlayerStamina = new IPlayerStamina(1, duid, duid, 1, 1, duid);
+            IPlayerStamina.SetData(iPlayerStamina);
+            IPlayerStamina.UpdataDataMap();
+            RPGSceneManager.LoadScene(RPGSceneManager.ManagerScene);
+        }
+        else
+        {
+            Debug.LogError("名字不可以为空");
+        }
+
+    }
+
 }

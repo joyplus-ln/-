@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 public abstract class BaseStage : BaseGameData
@@ -17,24 +18,24 @@ public abstract class BaseStage : BaseGameData
     [Header("Unlock")]
     public BaseStage[] unlockStages;
 
-    public virtual List<PlayerItem> GetCharacters()
+    public virtual List<ICharacter> GetCharacters()
     {
-        return new List<PlayerItem>();
+        return new List<ICharacter>();
     }
 
-    public virtual List<PlayerItem> GetRewardItems()
+    public virtual List<IPlayerHasCharacters> GetRewardItems()
     {
-        var dict = new Dictionary<string, PlayerItem>();
-        foreach (var rewardItem in rewardItems)
-        {
-            var item = rewardItem.item;
-            var newEntry = new PlayerItem(PlayerItem.ItemType.other);
-            newEntry.ItemID = item.itemid;
-            newEntry.GUID = item.itemid;
-            newEntry.Amount = 1;
-            dict[item.itemid] = newEntry;
-        }
-        return new List<PlayerItem>(dict.Values);
+        var dict = new Dictionary<string, IPlayerHasCharacters>();
+        //foreach (var rewardItem in rewardItems)
+        //{
+        //    var item = rewardItem.item;
+        //    var newEntry = new PlayerItem(PlayerItem.ItemType.other);
+        //    newEntry.ItemID = item.itemid;
+        //    newEntry.GUID = item.itemid;
+        //    newEntry.Amount = 1;
+        //    dict[item.itemid] = newEntry;
+        //}
+        return null;
     }
 
     public virtual string ToJson()

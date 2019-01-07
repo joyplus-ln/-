@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -28,6 +29,13 @@ public class Int32Attribute : Attribute<int>
         result.maxValue = maxValue;
         result.growth = growth;
         return result;
+    }
+
+    public void SetData(int min, int max, float growth)
+    {
+        this.minValue = min;
+        this.maxValue = max;
+        this.growth = growth;
     }
 
     public override int Calculate(int currentLevel, int maxLevel)
@@ -89,88 +97,160 @@ public class SingleAttribute : Attribute<float>
 [Serializable]
 public class Attributes
 {
-    [Tooltip("Max Hp, When battle if character's Hp = 0, The character will die")]
     public Int32Attribute hp = new Int32Attribute();
-    [Tooltip("P.Attack (P stands for physical), This will minus to pDef to calculate damage")]
     public Int32Attribute pAtk = new Int32Attribute();
-    [Tooltip("P.Defend (P stands for physical), pAtk will minus to this to calculate damage")]
     public Int32Attribute pDef = new Int32Attribute();
-    [Tooltip("M.Attack (M stands for magical), This will minus to mDef to calculate damage")]
     public Int32Attribute mAtk = new Int32Attribute();
-    [Tooltip("M.Defend (M stands for magical), mAtk will minus to this to calculate damage")]
     public Int32Attribute mDef = new Int32Attribute();
-    [Tooltip("Speed, Character with higher speed will have more chance to attack")]
     public Int32Attribute spd = new Int32Attribute();
-    [Tooltip("Evasion, Character with higher evasion will have more chance to avoid damage from character with lower accuracy")]
     public Int32Attribute eva = new Int32Attribute();
-    [Tooltip("Accuracy, Character with higher accuracy will have more chance to take damage to character with lower evasion")]
     public Int32Attribute acc = new Int32Attribute();
 
-    public Attributes Clone()
+    public int exp_hp;
+    public int exp_patk;
+    public int exp_pdef;
+    public int exp_matk;
+    public int exp_mdef;
+    public int exp_spd;
+    public int exp_eva;
+    public int exp_acc;
+    public float exp_hpRate;
+    public float exp_pAtkRate;
+    public float exp_pDefRate;
+    public float exp_mAtkRate;
+    public float exp_mDefRate;
+    public float exp_spdRate;
+    public float exp_evaRate;
+    public float exp_accRate;
+    public float exp_critChance;
+    public float exp_critDamageRate;
+    public float exp_blockChance;
+    public float exp_blockDamageRate;
+
+    public int level = 1;
+
+    public Attributes()
     {
-        Attributes result = new Attributes();
-        result.hp = hp.Clone();
-        result.pAtk = pAtk.Clone();
-        result.pDef = pDef.Clone();
-        result.mAtk = mAtk.Clone();
-        result.mDef = mDef.Clone();
-        result.spd = spd.Clone();
-        result.eva = eva.Clone();
-        result.acc = acc.Clone();
-        return result;
+
     }
 
-    public CalculationAttributes CreateCalculationAttributes(int currentLevel, int maxLevel)
+    public Attributes(int level)
+    {
+        this.level = level;
+    }
+
+    //public Attributes Clone()
+    //{
+    //    Attributes result = new Attributes();
+    //    result.hp = hp.Clone();
+    //    result.pAtk = pAtk.Clone();
+    //    result.pDef = pDef.Clone();
+    //    result.mAtk = mAtk.Clone();
+    //    result.mDef = mDef.Clone();
+    //    result.spd = spd.Clone();
+    //    result.eva = eva.Clone();
+    //    result.acc = acc.Clone();
+    //    return result;
+    //}
+
+    /// <summary>
+    /// 获取未计算之前的属性,用于展示面板
+    /// </summary>
+    /// <param name="currentLevel"></param>
+    /// <param name="maxLevel"></param>
+    /// <returns></returns>
+    public CalculationAttributes GetCreateCalculationAttributes( int maxLevel = Const.MaxLevel)
     {
         CalculationAttributes result = new CalculationAttributes();
-        result.hp = hp.Calculate(currentLevel, maxLevel);
-        result.pAtk = pAtk.Calculate(currentLevel, maxLevel);
-        result.pDef = pDef.Calculate(currentLevel, maxLevel);
-        result.mAtk = mAtk.Calculate(currentLevel, maxLevel);
-        result.mDef = mDef.Calculate(currentLevel, maxLevel);
-        result.spd = spd.Calculate(currentLevel, maxLevel);
-        result.eva = eva.Calculate(currentLevel, maxLevel);
-        result.acc = acc.Calculate(currentLevel, maxLevel);
+        result.hp = hp.Calculate(level, maxLevel);
+        result.pAtk = pAtk.Calculate(level, maxLevel);
+        result.pDef = pDef.Calculate(level, maxLevel);
+        result.mAtk = mAtk.Calculate(level, maxLevel);
+        result.mDef = mDef.Calculate(level, maxLevel);
+        result.spd = spd.Calculate(level, maxLevel);
+        result.eva = eva.Calculate(level, maxLevel);
+        result.acc = acc.Calculate(level, maxLevel);
+        result.exp_hpRate = exp_hpRate;
+        result.exp_pAtkRate = exp_pAtkRate;
+        result.exp_pDefRate = exp_pDefRate;
+        result.exp_mAtkRate = exp_mAtkRate;
+        result.exp_mDefRate = exp_mDefRate;
+        result.exp_spdRate = exp_spdRate;
+        result.exp_evaRate = exp_evaRate;
+        result.exp_accRate = exp_accRate;
+        result.exp_critChance = exp_critChance;
+        result.exp_critDamageRate = exp_critDamageRate;
+        result.exp_blockChance = exp_blockChance;
+        result.exp_blockDamageRate = exp_blockDamageRate;
+        return result;
+    }
+    /// <summary>
+    /// 获取计算后的最终属性,用于战斗计算
+    /// </summary>
+    /// <param name="level"></param>
+    /// <returns></returns>
+    public CalculationAttributes GetSubAttributes()
+    {
+        var result = GetCreateCalculationAttributes();
+
+        result.hp += exp_hp;
+        result.pAtk += exp_patk;
+        result.pDef += exp_pdef;
+        result.mAtk += exp_matk;
+        result.mDef += exp_mdef;
+        result.spd += exp_spd;
+        result.eva += exp_eva;
+        result.acc += exp_acc;
+
+        result.hp += Mathf.CeilToInt(result.exp_hpRate * result.hp);
+        result.pAtk += Mathf.CeilToInt(result.exp_pAtkRate * result.pAtk);
+        result.pDef += Mathf.CeilToInt(result.exp_pDefRate * result.pDef);
+        result.mAtk += Mathf.CeilToInt(result.exp_mAtkRate * result.mAtk);
+        result.mDef += Mathf.CeilToInt(result.exp_mDefRate * result.mDef);
+        result.spd += Mathf.CeilToInt(result.exp_spdRate * result.spd);
+        result.eva += Mathf.CeilToInt(result.exp_evaRate * result.eva);
+        result.acc += Mathf.CeilToInt(result.exp_accRate * result.acc);
+
         return result;
     }
 
-    public Attributes CreateOverrideMaxLevelAttributes(int defaultMaxLevel, int newMaxLevel)
-    {
-        Attributes attributes = new Attributes();
-        var hp = this.hp.Clone();
-        hp.maxValue = this.hp.Calculate(newMaxLevel, defaultMaxLevel);
-        attributes.hp = hp;
+    //public Attributes CreateOverrideMaxLevelAttributes(int defaultMaxLevel, int newMaxLevel)
+    //{
+    //    Attributes attributes = new Attributes();
+    //    var hp = this.hp.Clone();
+    //    hp.maxValue = this.hp.Calculate(newMaxLevel, defaultMaxLevel);
+    //    attributes.hp = hp;
 
-        var pAtk = this.pAtk.Clone();
-        pAtk.maxValue = this.pAtk.Calculate(newMaxLevel, defaultMaxLevel);
-        attributes.pAtk = pAtk;
+    //    var pAtk = this.pAtk.Clone();
+    //    pAtk.maxValue = this.pAtk.Calculate(newMaxLevel, defaultMaxLevel);
+    //    attributes.pAtk = pAtk;
 
-        var pDef = this.pDef.Clone();
-        pDef.maxValue = this.pDef.Calculate(newMaxLevel, defaultMaxLevel);
-        attributes.pDef = pDef;
+    //    var pDef = this.pDef.Clone();
+    //    pDef.maxValue = this.pDef.Calculate(newMaxLevel, defaultMaxLevel);
+    //    attributes.pDef = pDef;
 
-        var mAtk = this.mAtk.Clone();
-        mAtk.maxValue = this.mAtk.Calculate(newMaxLevel, defaultMaxLevel);
-        attributes.mAtk = mAtk;
+    //    var mAtk = this.mAtk.Clone();
+    //    mAtk.maxValue = this.mAtk.Calculate(newMaxLevel, defaultMaxLevel);
+    //    attributes.mAtk = mAtk;
 
-        var mDef = this.mDef.Clone();
-        mDef.maxValue = this.mDef.Calculate(newMaxLevel, defaultMaxLevel);
-        attributes.mDef = mDef;
+    //    var mDef = this.mDef.Clone();
+    //    mDef.maxValue = this.mDef.Calculate(newMaxLevel, defaultMaxLevel);
+    //    attributes.mDef = mDef;
 
-        var spd = this.spd.Clone();
-        spd.maxValue = this.spd.Calculate(newMaxLevel, defaultMaxLevel);
-        attributes.spd = spd;
+    //    var spd = this.spd.Clone();
+    //    spd.maxValue = this.spd.Calculate(newMaxLevel, defaultMaxLevel);
+    //    attributes.spd = spd;
 
-        var eva = this.eva.Clone();
-        eva.maxValue = this.eva.Calculate(newMaxLevel, defaultMaxLevel);
-        attributes.eva = eva;
+    //    var eva = this.eva.Clone();
+    //    eva.maxValue = this.eva.Calculate(newMaxLevel, defaultMaxLevel);
+    //    attributes.eva = eva;
 
-        var acc = this.acc.Clone();
-        acc.maxValue = this.acc.Calculate(newMaxLevel, defaultMaxLevel);
-        attributes.acc = acc;
+    //    var acc = this.acc.Clone();
+    //    acc.maxValue = this.acc.Calculate(newMaxLevel, defaultMaxLevel);
+    //    attributes.acc = acc;
 
-        return attributes;
-    }
+    //    return attributes;
+    //}
 
     public static Attributes operator *(Attributes a, float b)
     {
@@ -185,81 +265,47 @@ public class Attributes
         result.acc = a.acc * b;
         return result;
     }
+
 }
 
 [Serializable]
 public class CalculationAttributes
 {
-    [Header("Fix attributes")]
-    [Tooltip("C.hp (C stands for Character) = C.hp + this")]
     public float hp;
-    [Tooltip("C.pAtk (C stands for Character) = C.pAtk + this")]
     public float pAtk;
-    [Tooltip("C.pDef (C stands for Character) = C.pDef + this")]
     public float pDef;
-    [Tooltip("C.mAtk (C stands for Character) = C.mAtk + this")]
     public float mAtk;
-    [Tooltip("C.mDef (C stands for Character) = C.mDef + this")]
     public float mDef;
-    [Tooltip("C.Spd (C stands for Character) = C.Spd + this")]
     public float spd;
     /// <summary>
     /// 回避
     /// </summary>
-    [Tooltip("C.Eva (C stands for Character) = C.Eva + this")]
     public float eva;
     /// <summary>
     /// 命中
     /// </summary>
-    [Tooltip("C.Acc (C stands for Character) = C.Acc + this")]
     public float acc;
-    [Header("Rate attributes")]
-    [Tooltip("C.hp (C stands for Character) = C.hp + (this * C.hp)")]
-    public float hpRate;
-    [Tooltip("C.pAtk (C stands for Character) = C.pAtk + (this * C.pAtk)")]
-    public float pAtkRate;
-    [Tooltip("C.pDef (C stands for Character) = C.pDef + (this * C.pDef)")]
-    public float pDefRate;
-    [Tooltip("C.mAtk (C stands for Character) = C.mAtk + (this * C.mAtk)")]
-    public float mAtkRate;
-    [Tooltip("C.mDef (C stands for Character) = C.mDef + (this * C.mDef)")]
-    public float mDefRate;
-    [Tooltip("C.Spd (C stands for Character) = C.Spd + (this * C.Spd)")]
-    public float spdRate;
-    [Tooltip("C.Eva (C stands for Character) = C.Eva + (this * C.Eva)")]
-    public float evaRate;
-    [Tooltip("C.Acc (C stands for Character) = C.Acc + (this * C.Acc)")]
-    public float accRate;
+
+    public float exp_hpRate;
+    public float exp_pAtkRate;
+    public float exp_pDefRate;
+    public float exp_mAtkRate;
+    public float exp_mDefRate;
+    public float exp_spdRate;
+    public float exp_evaRate;
+    public float exp_accRate;
+
     /// <summary>
     /// 暴击 0-1
     /// </summary>
-    [Header("Critical attributes")]
-    [Range(0f, 1f)]
-    [Tooltip("Chance to critical attack")]
-    public float critChance;
+    public float exp_critChance;
     [Range(1f, 100f)]
-    [Tooltip("Damage when critical attack = this * Damage")]
-    public float critDamageRate;
-    [Header("Block attributes")]
+    public float exp_critDamageRate;
     //格挡    
-    [Range(0f, 1f)]
-    [Tooltip("Chance to block")]
-    public float blockChance;
+    public float exp_blockChance;
     [Range(1f, 100f)]
-    [Tooltip("Damage when block = this / Damage")]
-    public float blockDamageRate;
+    public float exp_blockDamageRate;
 
-
-    public float _hpRate;
-    public float _pAtkRate;
-    public float _pDefRate;
-    public float _mAtkRate;
-    public float _mDefRate;
-    public float _spdRate;
-    public float _evaRate;
-    public float _accRate;
-    public float _critDamageRate;
-    public float _blockDamageRate;
 
     public CalculationAttributes Clone()
     {
@@ -273,22 +319,22 @@ public class CalculationAttributes
         result.eva = eva;
         result.acc = acc;
 
-        result.hpRate = hpRate;
-        result.pAtkRate = pAtkRate;
-        result.pDefRate = pDefRate;
-        result.mAtkRate = mAtkRate;
-        result.mDefRate = mDefRate;
-        result.spdRate = spdRate;
-        result.evaRate = evaRate;
-        result.accRate = accRate;
+        result.exp_hpRate = exp_hpRate;
+        result.exp_pAtkRate = exp_pAtkRate;
+        result.exp_pDefRate = exp_pDefRate;
+        result.exp_mAtkRate = exp_mAtkRate;
+        result.exp_mDefRate = exp_mDefRate;
+        result.exp_spdRate = exp_spdRate;
+        result.exp_evaRate = exp_evaRate;
+        result.exp_accRate = exp_accRate;
 
-        result.critChance = critChance;
-        result.critDamageRate = critDamageRate;
-
-        result.blockChance = blockChance;
-        result.blockDamageRate = blockDamageRate;
+        result.exp_critChance = exp_critChance;
+        result.exp_critDamageRate = exp_critDamageRate;
+        result.exp_blockChance = exp_blockChance;
+        result.exp_blockDamageRate = exp_blockDamageRate;
         return result;
     }
+
 
     #region Calculating between CalculationAttributes and CalculationAttributes
     public static CalculationAttributes operator +(CalculationAttributes a, CalculationAttributes b)
@@ -303,20 +349,19 @@ public class CalculationAttributes
         result.eva += b.eva;
         result.acc += b.acc;
 
-        result.hpRate += b.hpRate;
-        result.pAtkRate += b.pAtkRate;
-        result.pDefRate += b.pDefRate;
-        result.mAtkRate += b.mAtkRate;
-        result.mDefRate += b.mDefRate;
-        result.spdRate += b.spdRate;
-        result.evaRate += b.evaRate;
-        result.accRate += b.accRate;
+        result.exp_hpRate += b.exp_hpRate;
+        result.exp_pAtkRate += b.exp_pAtkRate;
+        result.exp_pDefRate += b.exp_pDefRate;
+        result.exp_mAtkRate += b.exp_mAtkRate;
+        result.exp_mDefRate += b.exp_mDefRate;
+        result.exp_spdRate += b.exp_spdRate;
+        result.exp_evaRate += b.exp_evaRate;
+        result.exp_accRate += b.exp_accRate;
 
-        result.critChance += b.critChance;
-        result.critDamageRate += b.critDamageRate;
-
-        result.blockChance += b.blockChance;
-        result.blockDamageRate += b.blockDamageRate;
+        result.exp_critChance += b.exp_critChance;
+        result.exp_critDamageRate += b.exp_critDamageRate;
+        result.exp_blockChance += b.exp_blockChance;
+        result.exp_blockDamageRate += b.exp_blockDamageRate;
         return result;
     }
 
@@ -332,20 +377,20 @@ public class CalculationAttributes
         result.eva -= b.eva;
         result.acc -= b.acc;
 
-        result.hpRate -= b.hpRate;
-        result.pAtkRate -= b.pAtkRate;
-        result.pDefRate -= b.pDefRate;
-        result.mAtkRate -= b.mAtkRate;
-        result.mDefRate -= b.mDefRate;
-        result.spdRate -= b.spdRate;
-        result.evaRate -= b.evaRate;
-        result.accRate -= b.accRate;
+        result.exp_hpRate -= b.exp_hpRate;
+        result.exp_pAtkRate -= b.exp_pAtkRate;
+        result.exp_pDefRate -= b.exp_pDefRate;
+        result.exp_mAtkRate -= b.exp_mAtkRate;
+        result.exp_mDefRate -= b.exp_mDefRate;
+        result.exp_spdRate -= b.exp_spdRate;
+        result.exp_evaRate -= b.exp_evaRate;
+        result.exp_accRate -= b.exp_accRate;
 
-        result.critChance -= b.critChance;
-        result.critDamageRate -= b.critDamageRate;
+        result.exp_critChance -= b.exp_critChance;
+        result.exp_critDamageRate -= b.exp_critDamageRate;
 
-        result.blockChance -= b.blockChance;
-        result.blockDamageRate -= b.blockDamageRate;
+        result.exp_blockChance -= b.exp_blockChance;
+        result.exp_blockDamageRate -= b.exp_blockDamageRate;
         return result;
     }
 
@@ -361,129 +406,23 @@ public class CalculationAttributes
         result.eva = Mathf.CeilToInt(a.eva * b);
         result.acc = Mathf.CeilToInt(a.acc * b);
 
-        result.hpRate = a.hpRate * b;
-        result.pAtkRate = a.pAtkRate * b;
-        result.pDefRate = a.pDefRate * b;
-        result.mAtkRate = a.mAtkRate * b;
-        result.mDefRate = a.mDefRate * b;
-        result.spdRate = a.spdRate * b;
-        result.evaRate = a.evaRate * b;
-        result.accRate = a.accRate * b;
-
-        result.critChance = a.critChance * b;
-        result.critDamageRate = a.critDamageRate * b;
-
-        result.blockChance = a.blockChance * b;
-        result.blockDamageRate = a.blockDamageRate * b;
+        result.exp_hpRate = a.exp_hpRate * b;
+        result.exp_pAtkRate = a.exp_pAtkRate * b;
+        result.exp_pDefRate = a.exp_pDefRate * b;
+        result.exp_mAtkRate = a.exp_mAtkRate * b;
+        result.exp_mDefRate = a.exp_mDefRate * b;
+        result.exp_spdRate = a.exp_spdRate * b;
+        result.exp_evaRate = a.exp_evaRate * b;
+        result.exp_accRate = a.exp_accRate * b;
+        result.exp_critChance = a.exp_critChance * b;
+        result.exp_critDamageRate = a.exp_critDamageRate * b;
+        result.exp_blockChance = a.exp_blockChance * b;
+        result.exp_blockDamageRate = a.exp_blockDamageRate * b;
         return result;
     }
     #endregion
 
-    public string GetDescription(CalculationAttributes bonusAttributes)
-    {
-        var result = "";
 
-        if (hp != 0 || bonusAttributes.hp != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_HP, hp, bonusAttributes.hp);
-            result += "\n";
-        }
-        if (pAtk != 0 || bonusAttributes.pAtk != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_PATK, pAtk, bonusAttributes.pAtk);
-            result += "\n";
-        }
-        if (pDef != 0 || bonusAttributes.pDef != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_PDEF, pDef, bonusAttributes.pDef);
-            result += "\n";
-        }
-        if (mAtk != 0 || bonusAttributes.mAtk != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_MATK, mAtk, bonusAttributes.mAtk);
-            result += "\n";
-        }
-        if (mDef != 0 || bonusAttributes.mDef != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_MDEF, mDef, bonusAttributes.mDef);
-            result += "\n";
-        }
-        if (spd != 0 || bonusAttributes.spd != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_SPD, spd, bonusAttributes.spd);
-            result += "\n";
-        }
-        if (eva != 0 || bonusAttributes.eva != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_EVA, eva, bonusAttributes.eva);
-            result += "\n";
-        }
-        if (acc != 0 || bonusAttributes.acc != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_ACC, acc, bonusAttributes.acc);
-            result += "\n";
-        }
-        if (hpRate != 0 || bonusAttributes.hpRate != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_HP_RATE, hpRate, bonusAttributes.hpRate, true);
-            result += "\n";
-        }
-        if (pAtkRate != 0 || bonusAttributes.pAtkRate != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_PATK_RATE, pAtkRate, bonusAttributes.pAtkRate, true);
-            result += "\n";
-        }
-        if (pDefRate != 0 || bonusAttributes.pDefRate != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_PDEF_RATE, pDefRate, bonusAttributes.pDefRate, true);
-            result += "\n";
-        }
-        if (mAtkRate != 0 || bonusAttributes.mAtkRate != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_MATK_RATE, mAtkRate, bonusAttributes.mAtkRate, true);
-            result += "\n";
-        }
-        if (mDefRate != 0 || bonusAttributes.mDefRate != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_MDEF_RATE, mDefRate, bonusAttributes.mDefRate, true);
-            result += "\n";
-        }
-        if (spdRate != 0 || bonusAttributes.spdRate != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_SPD_RATE, spdRate, bonusAttributes.spdRate, true);
-            result += "\n";
-        }
-        if (evaRate != 0 || bonusAttributes.evaRate != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_EVA_RATE, evaRate, bonusAttributes.evaRate, true);
-            result += "\n";
-        }
-        if (accRate != 0 || bonusAttributes.accRate != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_ACC_RATE, accRate, bonusAttributes.accRate, true);
-            result += "\n";
-        }
-        if (critChance != 0 || bonusAttributes.critChance != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_CRIT_CHANCE, critChance, bonusAttributes.critChance, true);
-            result += "\n";
-        }
-        if (critDamageRate != 0 || bonusAttributes.critDamageRate != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_CRIT_DAMAGE_RATE, critDamageRate, bonusAttributes.critDamageRate, true);
-            result += "\n";
-        }
-        if (blockChance != 0 || bonusAttributes.blockChance != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_BLOCK_CHANCE, blockChance, bonusAttributes.blockChance, true);
-            result += "\n";
-        }
-        if (blockDamageRate != 0 || bonusAttributes.blockDamageRate != 0)
-        {
-            result += RPGLanguageManager.FormatAttribute(GameText.TITLE_ATTRIBUTE_BLOCK_DAMAGE_RATE, blockDamageRate, bonusAttributes.blockDamageRate, true);
-        }
-        return result;
-    }
 
     public void SetExtraAtt(int totalWeight)
     {

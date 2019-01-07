@@ -15,7 +15,7 @@ public class SelfHeroSelectChangeEquipDialog : Dialog
 
     public GameObject item;
 
-    private string characterGuid;
+    private string heroGuid;
 
 
     private SelfHeroSelectChangeEquipData selfHeroSelectChangeEquipData;
@@ -31,24 +31,22 @@ public class SelfHeroSelectChangeEquipDialog : Dialog
 
     }
 
-    public override void Init(DialogData data)
+    public override void Init()
     {
-        base.Init(data);
-        selfHeroSelectChangeEquipData = (SelfHeroSelectChangeEquipData)data.obj;
-        characterGuid = selfHeroSelectChangeEquipData.heroGuid;
+        heroGuid = selfHeroSelectChangeEquipData.heroGuid;
         ShowItems();
     }
 
     void ShowItems()
     {
         GameObject instItem = null;
-        foreach (var key in IPlayerHasCharacters.DataMap.Keys)
+        foreach (var key in IPlayerHasEquips.DataMap.Keys)
         {
             //todo
-            if (IPlayerHasEquips.DataMap[key].equipPosition == selfHeroSelectChangeEquipData.equipType.ToString())
+            if (IEquipment.DataMap[IPlayerHasEquips.DataMap[key].dataId].equippablePosition == selfHeroSelectChangeEquipData.equipType.ToString())
             {
                 instItem = Instantiate(item);
-                instItem.GetComponent<SelfHeroSelectChangeItem>().SetInfo(key, characterGuid, selfHeroSelectChangeEquipData.equipType.ToString(), selectedImage, CallBack);
+                instItem.GetComponent<SelfHeroSelectChangeItem>().SetInfo(key, heroGuid, selfHeroSelectChangeEquipData.equipType.ToString(), selectedImage, CallBack);
                 instItem.transform.SetParent(content, false);
             }
         }
@@ -70,21 +68,17 @@ public class SelfHeroSelectChangeEquipDialog : Dialog
     void CallBack(string equipGuid)
     {
         this.selectedEquipGuid = equipGuid;
-        //UiAttributeShow.SetupInfo(PlayerItem.equipDataMap[equipGuid].GetItemAttributes());
+        UiAttributeShow.SetupInfo(IPlayerHasEquips.DataMap[selectedEquipGuid].IEquipment.GetAttributes().GetCreateCalculationAttributes());
     }
 
 
-    //public void EquipThisItem()
-    //{
-    //    if (selectedEquipGuid.Length > 0 && PlayerItem.equipDataMap.ContainsKey(selectedEquipGuid))
-    //    {
-    //        GameInstance.dbBattle.DoEquipItem(characterGuid, selectedEquipGuid, selfHeroSelectChangeEquipData.equipType.ToString(), (result) =>
-    //        {
-    //            PlayerItem.SetDataRange(result.updateItems);
-    //            Close();
-    //        });
-    //    }
-    //}
+    public void EquipThisItem()
+    {
+        IPlayerHasEquips.DataMap[selectedEquipGuid].equipItemId = heroGuid;
+        IPlayerHasEquips.DataMap[selectedEquipGuid].equipPosition = selfHeroSelectChangeEquipData.equipType.ToString();
+        IPlayerHasEquips.UpdataDataMap();
+        Close();
+    }
 }
 
 public class SelfHeroSelectChangeEquipData

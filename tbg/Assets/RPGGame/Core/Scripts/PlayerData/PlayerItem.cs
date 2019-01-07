@@ -6,7 +6,7 @@ using SQLite3TableDataTmp;
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
+public class PlayerItemTemp : BasePlayerData, ILevel//, IPlayerItem
 {
     //public static readonly Dictionary<string, PlayerItem> DataMap = new Dictionary<string, PlayerItem>();
     //在角色拥有表中唯一
@@ -54,7 +54,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         set { Itemtype = value; }
     }
 
-    public PlayerItem(ItemType itemType)
+    public PlayerItemTemp(ItemType itemType)
     {
         itemid = "";
         PlayerId = "";
@@ -66,10 +66,10 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         this.itemType = itemType;
     }
 
-    public PlayerItem Clone()
+    public PlayerItemTemp Clone()
     {
-        var result = new PlayerItem(itemType);
-        CloneTo(this, result);
+        var result = new PlayerItemTemp(itemType);
+        //CloneTo(this, result);
         return result;
     }
 
@@ -82,7 +82,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         to.Exp = from.Exp;
         to.EquipItemGuid = from.EquipItemGuid;
         to.EquipPosition = from.EquipPosition;
-        to.itemType = from.itemType;
+        //to.itemType = from.itemType;
 
     }
 
@@ -91,9 +91,9 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         return ICharacter.DataMap[Guid];
     }
 
-    public PlayerItem CreateLevelUpItem(int increaseExp)
+    public PlayerItemTemp CreateLevelUpItem(int increaseExp)
     {
-        PlayerItem result = Clone();
+        PlayerItemTemp result = Clone();
         result.Exp += increaseExp;
         return result;
     }
@@ -196,7 +196,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         if (CharacterData != null)
         {
             var result = new CalculationAttributes();
-            result += CharacterData.CreateCalculationAttributes(Level, MaxLevel);
+            //result += CharacterData.CreateCalculationAttributes(Level, MaxLevel);
             if (GameDatabase != null)
                 result += GameDatabase.characterBaseAttributes;
             if (ExtrAttributesData != null)
@@ -207,8 +207,8 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         if (EquipmentData != null)
         {
             var result = new CalculationAttributes();
-            result += EquipmentData.CreateCalculationAttributes(Level, MaxLevel);
-            result += EquipmentData.CreateExtraCalculationAttributes();
+            //result += EquipmentData.CreateCalculationAttributes(Level, MaxLevel);
+            //result += EquipmentData.CreateExtraCalculationAttributes();
             return result;
         }
         Debug.LogError("属性 null 不属于 char or equip");
@@ -234,7 +234,7 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
             if (CharacterData != null)
             {
                 var result = new CalculationAttributes();
-                result += CharacterData.CreateCalculationAttributes(Level, MaxLevel);
+                //result += CharacterData.CreateCalculationAttributes(Level, MaxLevel);
                 if (GameDatabase != null)
                     result += GameDatabase.characterBaseAttributes;
                 if (ExtrAttributesData != null)
@@ -244,8 +244,8 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
             if (EquipmentData != null)
             {
                 var result = new CalculationAttributes();
-                result += EquipmentData.CreateCalculationAttributes(Level, MaxLevel);
-                result += EquipmentData.CreateExtraCalculationAttributes();
+                //result += EquipmentData.CreateCalculationAttributes(Level, MaxLevel);
+                //result += EquipmentData.CreateExtraCalculationAttributes();
                 return result;
             }
             return null;
@@ -266,39 +266,39 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
         }
     }
 
-    public PlayerItem EquippedByItem
+    public PlayerItemTemp EquippedByItem
     {
         get
         {
             IPlayerHasEquips equippedByItem;
-            if (EquipmentData != null && !string.IsNullOrEmpty(EquipItemGuid) && IPlayerHasEquips.DataMap.TryGetValue(EquipItemGuid, out equippedByItem))
-                return equippedByItem.GetPlayerItem();
+            //if (EquipmentData != null && !string.IsNullOrEmpty(EquipItemGuid) && IPlayerHasEquips.DataMap.TryGetValue(EquipItemGuid, out equippedByItem))
+            //    return equippedByItem.GetPlayerItem();
             return null;
         }
     }
 
-    public Dictionary<string, PlayerItem> EquippedItems
+    public Dictionary<string, PlayerItemTemp> EquippedItems
     {
         get
         {
-            var result = new Dictionary<string, PlayerItem>();
+            //var result = new Dictionary<string, PlayerItemTemp>();
 
-            if (CharacterData == null)
-                return result;
+            //if (CharacterData == null)
+            //    return result;
 
-            var valueList = IPlayerHasEquips.DataMap.Values;
-            var list = valueList.Where(entry =>
-                entry.playerId == PlayerId &&
-                entry.Guid == GUID &&
-                !string.IsNullOrEmpty(entry.equipPosition) &&
-                entry.amount > 0).ToList();
+            //var valueList = IPlayerHasEquips.DataMap.Values;
+            //var list = valueList.Where(entry =>
+            //    entry.playerId == PlayerId &&
+            //    entry.Guid == GUID &&
+            //    !string.IsNullOrEmpty(entry.equipPosition) &&
+            //    entry.amount > 0).ToList();
 
-            foreach (var entry in list)
-            {
-                result.Add(entry.equipPosition, entry.GetPlayerItem());
-            }
+            //foreach (var entry in list)
+            //{
+            //    result.Add(entry.equipPosition, entry.GetPlayerItem());
+            //}
 
-            return result;
+            return null;
         }
     }
 
@@ -364,13 +364,13 @@ public class PlayerItem : BasePlayerData, ILevel, IPlayerItem
 
 
 
-    public static PlayerItem CreateActorItemWithLevel(ICharacter itemData, int level, Const.StageType type, bool isplayer)
+    public static PlayerItemTemp CreateActorItemWithLevel(ICharacter itemData, int level, Const.StageType type, bool isplayer)
     {
         if (level <= 0)
             level = 1;
         //var itemTier = itemData.itemTier;
         var sumExp = 0;
-        var result = new PlayerItem(ItemType.character);
+        var result = new PlayerItemTemp(ItemType.character);
         result.itemType = ItemType.character;
         for (var i = 1; i < level; ++i)
         {

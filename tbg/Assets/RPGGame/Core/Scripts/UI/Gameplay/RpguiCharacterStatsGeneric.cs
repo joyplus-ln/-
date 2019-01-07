@@ -62,8 +62,8 @@ public class RpguiCharacterStatsGeneric : RPGUIBase
         if (textHp != null)
             textHp.text = character.Hp + "/" + character.MaxHp;
 
-        if (nameText != null)
-            nameText.text = character.Item.CharacterData.title;
+        //if (nameText != null)
+            //nameText.text = character.Item.CharacterData.title;
 
 
         if (imageHpGage != null)
@@ -75,13 +75,13 @@ public class RpguiCharacterStatsGeneric : RPGUIBase
         //if (imageIcon != null)
         //    imageIcon.sprite = itemData.icon;
 
-        if (uiLevel != null)
-        {
-            uiLevel.level = character.Item.Level;
-            uiLevel.maxLevel = character.Item.MaxLevel;
-            uiLevel.collectExp = character.Item.CollectExp;
-            uiLevel.nextExp = character.Item.NextExp;
-        }
+        //if (uiLevel != null)
+        //{
+        //    uiLevel.level = character.Item.Level;
+        //    uiLevel.maxLevel = character.Item.MaxLevel;
+        //    uiLevel.collectExp = character.Item.CollectExp;
+        //    uiLevel.nextExp = character.Item.NextExp;
+        //}
 
         var i = 0;
         var custom_buffKeys = character.Buffs_custom.Keys;

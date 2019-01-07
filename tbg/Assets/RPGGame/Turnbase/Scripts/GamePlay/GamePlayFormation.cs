@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 public class GamePlayFormation : BaseGamePlayFormation
@@ -20,7 +21,7 @@ public class GamePlayFormation : BaseGamePlayFormation
             SetFormationCharacters();
     }
 
-    public override BaseCharacterEntity SetCharacter(int position, PlayerItem item)
+    public override BaseCharacterEntity SetCharacter(int position, IPlayerHasCharacters item)
     {
         var character = base.SetCharacter(position, item) as CharacterEntity;
 

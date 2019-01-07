@@ -41,7 +41,7 @@ public class JuShiHuDunBuff : CustomBuff
 
     public override void Init()
     {
-        SelfAttributes.pDefRate = 0.2f;
-        SelfAttributes.mDefRate = 0.2f;
+        SelfAttributes.exp_pDefRate = 0.2f;
+        SelfAttributes.exp_mDefRate = 0.2f;
     }
 }

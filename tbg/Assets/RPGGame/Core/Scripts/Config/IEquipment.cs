@@ -44,7 +44,7 @@ namespace SQLite3TableDataTmp
         minacc,
         maxacc,
         accgrouth,
-        equippablePositions,
+        equippablePosition,
         exp_hp,
         exp_patk,
         exp_pdef,
@@ -163,32 +163,32 @@ namespace SQLite3TableDataTmp
         [Sync((int)IEquipmentEnum.accgrouth)]
         public float accgrouth { get; set; }  //des
 
-        [Sync((int)IEquipmentEnum.equippablePositions)]
-        public int equippablePositions { get; set; }  //des
+        [Sync((int)IEquipmentEnum.equippablePosition)]
+        public string equippablePosition { get; set; }  //des
 
         [Sync((int)IEquipmentEnum.exp_hp)]
-        public float exp_hp { get; set; }  //des
+        public int exp_hp { get; set; }  //des
 
         [Sync((int)IEquipmentEnum.exp_patk)]
-        public float exp_patk { get; set; }  //des
+        public int exp_patk { get; set; }  //des
 
         [Sync((int)IEquipmentEnum.exp_pdef)]
-        public float exp_pdef { get; set; }  //des
+        public int exp_pdef { get; set; }  //des
 
         [Sync((int)IEquipmentEnum.exp_matk)]
-        public float exp_matk { get; set; }  //des
+        public int exp_matk { get; set; }  //des
 
         [Sync((int)IEquipmentEnum.exp_mdef)]
-        public float exp_mdef { get; set; }  //des
+        public int exp_mdef { get; set; }  //des
 
         [Sync((int)IEquipmentEnum.exp_spd)]
-        public float exp_spd { get; set; }  //des
+        public int exp_spd { get; set; }  //des
 
         [Sync((int)IEquipmentEnum.exp_eva)]
-        public float exp_eva { get; set; }  //des
+        public int exp_eva { get; set; }  //des
 
         [Sync((int)IEquipmentEnum.exp_acc)]
-        public float exp_acc { get; set; }  //des
+        public int exp_acc { get; set; }  //des
 
         [Sync((int)IEquipmentEnum.exp_hpRate)]
         public float exp_hpRate { get; set; }  //des
@@ -230,7 +230,7 @@ namespace SQLite3TableDataTmp
         {
         }
 
-        public IEquipment(int Inid, string Inguid, string Intitle, string Indescription, string Inregion, string Inquality, int Incategory, int Inminhp, int Inmaxhp, float Inhpgrowth, int InminpAtk, int InmaxpAtk, float InpAtkgrouth, int InminpDef, int InmaxpDef, float InpDefgrouth, int InminmAtk, int InmaxmAtk, float InmAtkgrouth, int InminmDef, int InmaxmDef, float InmDefgrouth, int Inminspd, int Inmaxspd, float Inspdgrouth, int Inmineva, int Inmaxeva, float Inevagrouth, int Inminacc, int Inmaxacc, float Inaccgrouth, int InequippablePositions, float Inexp_hp, float Inexp_patk, float Inexp_pdef, float Inexp_matk, float Inexp_mdef, float Inexp_spd, float Inexp_eva, float Inexp_acc, float Inexp_hpRate, float Inexp_pAtkRate, float Inexp_pDefRate, float Inexp_mAtkRate, float Inexp_mDefRate, float Inexp_spdRate, float Inexp_evaRate, float Inexp_accRate, float Inexp_critChance, float Inexp_critDamageRate, float Inexp_blockChance, float Inexp_blockDamageRate)
+        public IEquipment(int Inid, string Inguid, string Intitle, string Indescription, string Inregion, string Inquality, int Incategory, int Inminhp, int Inmaxhp, float Inhpgrowth, int InminpAtk, int InmaxpAtk, float InpAtkgrouth, int InminpDef, int InmaxpDef, float InpDefgrouth, int InminmAtk, int InmaxmAtk, float InmAtkgrouth, int InminmDef, int InmaxmDef, float InmDefgrouth, int Inminspd, int Inmaxspd, float Inspdgrouth, int Inmineva, int Inmaxeva, float Inevagrouth, int Inminacc, int Inmaxacc, float Inaccgrouth, string InequippablePosition, int Inexp_hp, int Inexp_patk, int Inexp_pdef, int Inexp_matk, int Inexp_mdef, int Inexp_spd, int Inexp_eva, int Inexp_acc, float Inexp_hpRate, float Inexp_pAtkRate, float Inexp_pDefRate, float Inexp_mAtkRate, float Inexp_mDefRate, float Inexp_spdRate, float Inexp_evaRate, float Inexp_accRate, float Inexp_critChance, float Inexp_critDamageRate, float Inexp_blockChance, float Inexp_blockDamageRate)
         {
             id = Inid;
             guid = Inguid;
@@ -263,7 +263,7 @@ namespace SQLite3TableDataTmp
             minacc = Inminacc;
             maxacc = Inmaxacc;
             accgrouth = Inaccgrouth;
-            equippablePositions = InequippablePositions;
+            equippablePosition = InequippablePosition;
             exp_hp = Inexp_hp;
             exp_patk = Inexp_patk;
             exp_pdef = Inexp_pdef;
@@ -293,7 +293,7 @@ namespace SQLite3TableDataTmp
 
         public override string ToString()
         {
-            return "IEquipment : id = " + id + ", guid = " + guid + ", title = " + title + ", description = " + description + ", region = " + region + ", quality = " + quality + ", category = " + category + ", minhp = " + minhp + ", maxhp = " + maxhp + ", hpgrowth = " + hpgrowth + ", minpAtk = " + minpAtk + ", maxpAtk = " + maxpAtk + ", pAtkgrouth = " + pAtkgrouth + ", minpDef = " + minpDef + ", maxpDef = " + maxpDef + ", pDefgrouth = " + pDefgrouth + ", minmAtk = " + minmAtk + ", maxmAtk = " + maxmAtk + ", mAtkgrouth = " + mAtkgrouth + ", minmDef = " + minmDef + ", maxmDef = " + maxmDef + ", mDefgrouth = " + mDefgrouth + ", minspd = " + minspd + ", maxspd = " + maxspd + ", spdgrouth = " + spdgrouth + ", mineva = " + mineva + ", maxeva = " + maxeva + ", evagrouth = " + evagrouth + ", minacc = " + minacc + ", maxacc = " + maxacc + ", accgrouth = " + accgrouth + ", equippablePositions = " + equippablePositions + ", exp_hp = " + exp_hp + ", exp_patk = " + exp_patk + ", exp_pdef = " + exp_pdef + ", exp_matk = " + exp_matk + ", exp_mdef = " + exp_mdef + ", exp_spd = " + exp_spd + ", exp_eva = " + exp_eva + ", exp_acc = " + exp_acc + ", exp_hpRate = " + exp_hpRate + ", exp_pAtkRate = " + exp_pAtkRate + ", exp_pDefRate = " + exp_pDefRate + ", exp_mAtkRate = " + exp_mAtkRate + ", exp_mDefRate = " + exp_mDefRate + ", exp_spdRate = " + exp_spdRate + ", exp_evaRate = " + exp_evaRate + ", exp_accRate = " + exp_accRate + ", exp_critChance = " + exp_critChance + ", exp_critDamageRate = " + exp_critDamageRate + ", exp_blockChance = " + exp_blockChance + ", exp_blockDamageRate = " + exp_blockDamageRate;
+            return "IEquipment : id = " + id + ", guid = " + guid + ", title = " + title + ", description = " + description + ", region = " + region + ", quality = " + quality + ", category = " + category + ", minhp = " + minhp + ", maxhp = " + maxhp + ", hpgrowth = " + hpgrowth + ", minpAtk = " + minpAtk + ", maxpAtk = " + maxpAtk + ", pAtkgrouth = " + pAtkgrouth + ", minpDef = " + minpDef + ", maxpDef = " + maxpDef + ", pDefgrouth = " + pDefgrouth + ", minmAtk = " + minmAtk + ", maxmAtk = " + maxmAtk + ", mAtkgrouth = " + mAtkgrouth + ", minmDef = " + minmDef + ", maxmDef = " + maxmDef + ", mDefgrouth = " + mDefgrouth + ", minspd = " + minspd + ", maxspd = " + maxspd + ", spdgrouth = " + spdgrouth + ", mineva = " + mineva + ", maxeva = " + maxeva + ", evagrouth = " + evagrouth + ", minacc = " + minacc + ", maxacc = " + maxacc + ", accgrouth = " + accgrouth + ", equippablePosition = " + equippablePosition + ", exp_hp = " + exp_hp + ", exp_patk = " + exp_patk + ", exp_pdef = " + exp_pdef + ", exp_matk = " + exp_matk + ", exp_mdef = " + exp_mdef + ", exp_spd = " + exp_spd + ", exp_eva = " + exp_eva + ", exp_acc = " + exp_acc + ", exp_hpRate = " + exp_hpRate + ", exp_pAtkRate = " + exp_pAtkRate + ", exp_pDefRate = " + exp_pDefRate + ", exp_mAtkRate = " + exp_mAtkRate + ", exp_mDefRate = " + exp_mDefRate + ", exp_spdRate = " + exp_spdRate + ", exp_evaRate = " + exp_evaRate + ", exp_accRate = " + exp_accRate + ", exp_critChance = " + exp_critChance + ", exp_critDamageRate = " + exp_critDamageRate + ", exp_blockChance = " + exp_blockChance + ", exp_blockDamageRate = " + exp_blockDamageRate;
         }
 
     }

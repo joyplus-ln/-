@@ -33,18 +33,18 @@ public class CharacterListUI : MonoBehaviour
         foreach (var key in IPlayerHasCharacters.DataMap.Keys)
         {
             yield return items = Instantiate(item);
-            items.GetComponent<CharacterListItem>().Init(this, IPlayerHasCharacters.DataMap[key].GetPlayerItem());
+            items.GetComponent<CharacterListItem>().Init(this, IPlayerHasCharacters.DataMap[key]);
             items.transform.SetParent(content, false);
         }
 
     }
 
-    public void SelectedItem(CharacterListItem currentSelectedItem, PlayerItem selectedItem)
+    public void SelectedItem(CharacterListItem currentSelectedItem, IPlayerHasCharacters selectedItem)
     {
         this.currentSelectedItem = currentSelectedItem;
     }
 
-    public PlayerItem GetSelectedPlayerItem()
+    public IPlayerHasCharacters GetSelectedPlayerItem()
     {
         return currentSelectedItem.characterItem;
     }

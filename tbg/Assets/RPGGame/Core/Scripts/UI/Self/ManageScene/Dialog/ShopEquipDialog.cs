@@ -11,10 +11,8 @@ public class ShopEquipDialog : Dialog
 		
 	}
 
-    public override void Init(DialogData data)
+    public override void Init()
     {
-        base.Init(data);
-        EShopItemData shopItemData = (EShopItemData)data.obj;
-        AttributeShow.SetupInfo(GameInstance.GameDatabase.equipments[shopItemData.equipId].GetTotalAttributes());
+        //AttributeShow.SetupInfo(GameInstance.GameDatabase.equipments[shopItemData.equipId].GetTotalAttributes());
     }
 }

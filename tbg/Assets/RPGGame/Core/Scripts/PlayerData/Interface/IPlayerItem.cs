@@ -7,7 +7,7 @@
     int Exp { get; set; }
     string EquipItemGuid { get; set; }
     string EquipPosition { get; set; }
-    PlayerItem.ItemType itemType { get; set; }
+    //PlayerItem.ItemType itemType { get; set; }
 
 
 }

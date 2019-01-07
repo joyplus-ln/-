@@ -121,7 +121,7 @@ namespace SQLite3TableDataTmp
 
         public static bool TryGetData(string dataId, out IPlayerCurrency data)
         {
-            return TryGetData(IPlayer.CurrentPlayerId, dataId, out data);
+            return TryGetData(IPlayer.CurrentPlayer.guid, dataId, out data);
         }
 
         public static bool RemoveData(string id)
@@ -162,7 +162,7 @@ namespace SQLite3TableDataTmp
 
         public static void RemoveDataRange()
         {
-            RemoveDataRange(IPlayer.CurrentPlayerId);
+            RemoveDataRange(IPlayer.CurrentPlayer.guid);
         }
 
     }

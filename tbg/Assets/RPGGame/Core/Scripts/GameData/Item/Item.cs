@@ -202,26 +202,26 @@ public abstract class BaseActorItem : BaseItem
     public CalculationAttributes GetTotalAttributes()
     {
         var result = new CalculationAttributes();
-        result += attributes.CreateCalculationAttributes(1, Const.MaxLevel);
+        //result += attributes.CreateCalculationAttributes(1, Const.MaxLevel);
 
         // If this is character item, applies rate attributes
-        result.hp += Mathf.CeilToInt(result.hpRate * result.hp);
-        result.pAtk += Mathf.CeilToInt(result.pAtkRate * result.pAtk);
-        result.pDef += Mathf.CeilToInt(result.pDefRate * result.pDef);
-        result.mAtk += Mathf.CeilToInt(result.mAtkRate * result.mAtk);
-        result.mDef += Mathf.CeilToInt(result.mDefRate * result.mDef);
-        result.spd += Mathf.CeilToInt(result.spdRate * result.spd);
-        result.eva += Mathf.CeilToInt(result.evaRate * result.eva);
-        result.acc += Mathf.CeilToInt(result.accRate * result.acc);
+        //result.hp += Mathf.CeilToInt(result.hpRate * result.hp);
+        //result.pAtk += Mathf.CeilToInt(result.pAtkRate * result.pAtk);
+        //result.pDef += Mathf.CeilToInt(result.pDefRate * result.pDef);
+        //result.mAtk += Mathf.CeilToInt(result.mAtkRate * result.mAtk);
+        //result.mDef += Mathf.CeilToInt(result.mDefRate * result.mDef);
+        //result.spd += Mathf.CeilToInt(result.spdRate * result.spd);
+        //result.eva += Mathf.CeilToInt(result.evaRate * result.eva);
+        //result.acc += Mathf.CeilToInt(result.accRate * result.acc);
 
-        result.hp += Mathf.CeilToInt(result._hpRate * result.hp);
-        result.pAtk += Mathf.CeilToInt(result._pAtkRate * result.pAtk);
-        result.pDef += Mathf.CeilToInt(result._pDefRate * result.pDef);
-        result.mAtk += Mathf.CeilToInt(result._mAtkRate * result.mAtk);
-        result.mDef += Mathf.CeilToInt(result._mDefRate * result.mDef);
-        result.spd += Mathf.CeilToInt(result._spdRate * result.spd);
-        result.eva += Mathf.CeilToInt(result._evaRate * result.eva);
-        result.acc += Mathf.CeilToInt(result._accRate * result.acc);
+        //result.hp += Mathf.CeilToInt(result._hpRate * result.hp);
+        //result.pAtk += Mathf.CeilToInt(result._pAtkRate * result.pAtk);
+        //result.pDef += Mathf.CeilToInt(result._pDefRate * result.pDef);
+        //result.mAtk += Mathf.CeilToInt(result._mAtkRate * result.mAtk);
+        //result.mDef += Mathf.CeilToInt(result._mDefRate * result.mDef);
+        //result.spd += Mathf.CeilToInt(result._spdRate * result.spd);
+        //result.eva += Mathf.CeilToInt(result._evaRate * result.eva);
+        //result.acc += Mathf.CeilToInt(result._accRate * result.acc);
         return result;
     }
 }

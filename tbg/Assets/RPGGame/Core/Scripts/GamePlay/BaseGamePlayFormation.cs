@@ -19,14 +19,14 @@ public class BaseGamePlayFormation : MonoBehaviour
             if (PlayerFormation.TryGetData(formationName, i, out playerFormation))
             {
                 var characterGuid = playerFormation.characterGuid;
-                ICharacter item = null;
-                if (!string.IsNullOrEmpty(characterGuid) && ICharacter.DataMap.TryGetValue(characterGuid, out item))
-                    SetCharacter(i, item.GetPlayerItem());
+                IPlayerHasCharacters item = null;
+                if (!string.IsNullOrEmpty(characterGuid) && IPlayerHasCharacters.DataMap.TryGetValue(characterGuid, out item))
+                    SetCharacter(i, item);
             }
         }
     }
 
-    public virtual void SetCharacters(PlayerItem[] items)
+    public virtual void SetCharacters(IPlayerHasCharacters[] items)
     {
         ClearCharacters();
         for (var i = 0; i < containers.Length; ++i)
@@ -38,10 +38,10 @@ public class BaseGamePlayFormation : MonoBehaviour
         }
     }
 
-    public virtual BaseCharacterEntity SetCharacter(int position, PlayerItem item)
+    public virtual BaseCharacterEntity SetCharacter(int position, IPlayerHasCharacters item)
     {
-        if (position < 0 || position >= containers.Length || item == null || item.CharacterData == null)
-            return null;
+        //if (position < 0 || position >= containers.Length || item == null || item.CharacterData == null)
+            //return null;
 
 
         var container = containers[position];

@@ -15,7 +15,7 @@ namespace SQLite3TableDataTmp
     {
         id,
         guid,
-        playerId,
+        dataId,
         amount,
         exp,
         equipItemId,
@@ -32,8 +32,8 @@ namespace SQLite3TableDataTmp
         [Sync((int)IPlayerHasCharactersEnum.guid)]
         public string guid { get; set; }  //des
 
-        [Sync((int)IPlayerHasCharactersEnum.playerId)]
-        public string playerId { get; set; }  //des
+        [Sync((int)IPlayerHasCharactersEnum.dataId)]
+        public string dataId { get; set; }  //des
 
         [Sync((int)IPlayerHasCharactersEnum.amount)]
         public int amount { get; set; }  //des
@@ -54,11 +54,11 @@ namespace SQLite3TableDataTmp
         {
         }
 
-        public IPlayerHasCharacters(int Inid, string Inguid, string InplayerId, int Inamount, int Inexp, string InequipItemId, string InequipPosition, int Inlevel)
+        public IPlayerHasCharacters(int Inid, string Inguid, string IndataId, int Inamount, int Inexp, string InequipItemId, string InequipPosition, int Inlevel)
         {
             id = Inid;
             guid = Inguid;
-            playerId = InplayerId;
+            dataId = IndataId;
             amount = Inamount;
             exp = Inexp;
             equipItemId = InequipItemId;
@@ -73,7 +73,7 @@ namespace SQLite3TableDataTmp
 
         public override string ToString()
         {
-            return "IPlayerHasCharacters : id = " + id + ", guid = " + guid + ", playerId = " + playerId + ", amount = " + amount + ", exp = " + exp + ", equipItemId = " + equipItemId + ", equipPosition = " + equipPosition + ", level = " + level;
+            return "IPlayerHasCharacters : id = " + id + ", guid = " + guid + ", dataId = " + dataId + ", amount = " + amount + ", exp = " + exp + ", equipItemId = " + equipItemId + ", equipPosition = " + equipPosition + ", level = " + level;
         }
 
     }

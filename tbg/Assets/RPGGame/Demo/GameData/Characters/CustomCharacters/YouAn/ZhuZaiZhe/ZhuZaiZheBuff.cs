@@ -18,7 +18,7 @@ public class WangLingYiZhiBuff : CustomBuff
     }
     public override void BattleStart()
     {
-        SelfAttributes.hpRate = 0.4f;
+        SelfAttributes.exp_hpRate = 0.4f;
         selfOnly.Custombody.CustomText("气血增加40%");
         SelfAttributes.acc = 0.2f;
         selfOnly.Custombody.CustomText("命中增加20%");

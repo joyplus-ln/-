@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 
 public class EquipListUI : MonoBehaviour
@@ -40,9 +41,9 @@ public class EquipListUI : MonoBehaviour
 
     }
 
-    public void SelectedItem(EquipListItem currentSelectedItem, PlayerItem selectedItem)
+    public void SelectedItem(EquipListItem currentSelectedItem, IPlayerHasEquips selectedItem)
     {
         this.currentSelectedItem = currentSelectedItem;
-        AttributeShowScript.SetupInfo(selectedItem.Attributes);
+        //AttributeShowScript.SetupInfo(selectedItem.Attributes);
     }
 }

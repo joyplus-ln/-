@@ -67,6 +67,6 @@ public class PlayerBattle : BasePlayerData, IIPlayerBattle
 
     public static void RemoveDataRange()
     {
-        RemoveDataRange(IPlayer.CurrentPlayerId);
+        RemoveDataRange(IPlayer.CurrentPlayer.guid);
     }
 }

@@ -14,11 +14,9 @@ public class ShopHeroDialog : Dialog
 
     }
 
-    public override void Init(DialogData data)
+    public override void Init()
     {
-        base.Init(data);
-        shopItemData = (ShopItemData)data.obj;
-        AttributeShow.SetupInfo(ICharacter.DataMap[shopItemData.heroid].GetTotalAttributes());
+        //AttributeShow.SetupInfo(ICharacter.DataMap[shopItemData.heroid].GetTotalAttributes());
     }
 
     public void BuyItem()

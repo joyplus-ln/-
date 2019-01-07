@@ -63,7 +63,7 @@ public class TestUtils
     [MenuItem("Test/DialogTest")]
     public static void DialogTest()
     {
-        DialogController.instance.ShowDialog(new DialogData() { dialog = DialogController.instance.ShopHeroDialog }, DialogController.DialogType.wait);
+        //DialogController.instance.ShowDialog(new DialogData() { dialog = DialogController.instance.ShopHeroDialog }, DialogController.DialogType.wait);
     }
     [MenuItem("Test/DialogTest0")]
     public static void DialogTest0()
@@ -74,6 +74,6 @@ public class TestUtils
     [MenuItem("Test/DialogTest2")]
     public static void DialogTest2()
     {
-        DialogController.instance.ShowDialog(new DialogData() { dialog = DialogController.instance.ShopHeroDialog }, DialogController.DialogType.stack);
+        //DialogController.instance.ShowDialog(new DialogData() { dialog = DialogController.instance.ShopHeroDialog }, DialogController.DialogType.stack);
     }
 }
