@@ -23,10 +23,17 @@ public class FormationManager : MonoBehaviour
     void ShowFormation()
     {
         Clear();
-        List<PlayerFormation> list = PlayerFormation.DataMap.Values.Where(a => a.playerId == IPlayer.CurrentPlayer.guid).ToList();
-        for (int i = 0; i < list.Count; i++)
+        for (int i = 0; i < 5; i++)
         {
-            formations[list[i].Position].Show(list[i]);
+            if (IPlayerFormation.DataMap.ContainsKey(i + 1) && !string.IsNullOrEmpty(IPlayerFormation.DataMap[i + 1].itemId))
+            {
+                formations[i].Show(i + 1, IPlayerFormation.DataMap[i + 1]);
+            }
+            else
+            {
+                formations[i].Show(i + 1, null);
+            }
+
         }
     }
 
@@ -34,7 +41,7 @@ public class FormationManager : MonoBehaviour
     {
         for (int i = 0; i < formations.Length; i++)
         {
-            formations[i].Show(null);
+            formations[i].Show(i + 1, null);
         }
     }
 

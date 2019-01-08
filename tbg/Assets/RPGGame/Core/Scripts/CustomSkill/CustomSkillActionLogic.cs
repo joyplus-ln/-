@@ -18,7 +18,7 @@ public class CustomSkillActionLogic
         if (!self.Custombody.CanUseKill())
         {
             // cmstate 只能使用 normal attack
-            self.Action = 0;
+            self.Action = CharacterEntity.ACTION_ATTACK;
         }
 
         if (self.SelectedCustomSkill == null || !self.SelectedCustomSkill.CanUse())
@@ -57,14 +57,14 @@ public class CustomSkillActionLogic
     {
         // Random Action
         // Dictionary of actionId, weight
-        Dictionary<int, int> actions = new Dictionary<int, int>();
+        Dictionary<string, int> actions = new Dictionary<string, int>();
         actions.Add(CharacterEntity.ACTION_ATTACK, 5);
-        for (var i = 0; i < self.CustomSkills.Count; ++i)
+        foreach (string key in self.Item.GetCustomSkills().Keys)
         {
-            var skill = self.CustomSkills[i];
+            var skill = self.Item.GetCustomSkills()[key];
             if (skill == null || !skill.CanUse())
                 continue;
-            actions.Add(i, 5);
+            actions.Add(key, 5);
         }
         self.Action = WeightedRandomizer.From(actions).TakeOne();
         // Random Target
@@ -119,7 +119,7 @@ public class CustomSkillActionLogic
     {
         bool canUseSkill = true;
         CharacterEntity mustTarget = null;
-        foreach (var buff in self.Buffs_custom.Values)
+        foreach (var buff in self.Item.GetBuffs().Values)
         {
             if (!buff.CanUseSkill())
                 canUseSkill = false;
@@ -128,7 +128,7 @@ public class CustomSkillActionLogic
         }
         if (!canUseSkill)
         {
-            self.Action = 0;
+            self.Action = CharacterEntity.ACTION_ATTACK;
         }
         if (mustTarget != null)
         {
@@ -207,9 +207,9 @@ public class CustomSkillActionLogic
         }
         var selfEnsmys = self.Manager.GetAllies(self);
         var enemyfoes = self.Manager.GetFoes(self);
-        for (int i = 0; i < self.CustomSkills.Count; i++)
+        foreach (string key in self.Item.GetCustomSkills().Keys)
         {
-            self.CustomSkills[i].SetNewEntitys(self, selfEnsmys, enemyfoes);
+            self.Item.GetCustomSkills()[key].SetNewEntitys(self, selfEnsmys, enemyfoes);
         }
     }
     //buff放到技能里边放

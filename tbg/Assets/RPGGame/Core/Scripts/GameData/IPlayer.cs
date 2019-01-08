@@ -46,6 +46,9 @@ public class IPlayer
 
     public int Level { get; set; }
 
+    public int TowerAbsLevel { get; set; }
+    public int TowerCurrentLevel { get; set; }
+
     public IPlayer()
     {
     }
@@ -66,7 +69,7 @@ public class IPlayer
 
     public string ToString()
     {
-        return "IPlayer :  "  + ", guid = " + guid + ", profileName = " + profileName + ", exp = " + exp + ", selectedFormation = " + selectedFormation + ", prefs = " + prefs;
+        return "IPlayer :  " + ", guid = " + guid + ", profileName = " + profileName + ", exp = " + exp + ", selectedFormation = " + selectedFormation + ", prefs = " + prefs;
     }
 
 }

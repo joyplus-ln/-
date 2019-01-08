@@ -25,7 +25,7 @@ namespace SQLite3TableDataTmp
 
             CalculationAttributes extraAttributes = new CalculationAttributes();
             int playerlevel = IPlayer.CurrentPlayer.Level;
-            int towerLevel = PlayerSQLPrefs.yzTowerCurrentLevel;
+            int towerLevel = IPlayer.CurrentPlayer.TowerCurrentLevel;
             int totalWeight = (playerlevel * 10 + towerLevel * 15 + 5) * 50;
             extraAttributes.SetExtraAtt(totalWeight);
 
@@ -72,6 +72,21 @@ namespace SQLite3TableDataTmp
             {
                 return ICharacter.DataMap[dataId];
             }
+        }
+
+        /// <summary>
+        /// 获取带着装备的属性
+        /// </summary>
+        /// <returns></returns>
+        public CalculationAttributes GetCalculationAttributesWithProp()
+        {
+            CalculationAttributes result = Character.GetAttributes(level).GetCreateCalculationAttributes();
+            Dictionary<string, IPlayerHasEquips> hasEquips = IPlayerHasEquips.GetHeroEquipses(guid);
+            foreach (IPlayerHasEquips playerHasEquips in hasEquips.Values)
+            {
+                result += playerHasEquips.IEquipment.GetAttributes().GetCreateCalculationAttributes();
+            }
+            return result;
         }
 
         /// <summary>

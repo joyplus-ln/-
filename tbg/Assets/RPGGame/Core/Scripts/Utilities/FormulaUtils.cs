@@ -29,7 +29,7 @@ public class FormulaUtils
 
         CalculationAttributes extraAttributes = new CalculationAttributes();
         int playerlevel = IPlayer.CurrentPlayer.Level;
-        int towerLevel = PlayerSQLPrefs.yzTowerCurrentLevel;
+        int towerLevel = IPlayer.CurrentPlayer.TowerCurrentLevel;
         int totalWeight = (playerlevel * 10 + towerLevel * 15 + 5) * 50;
         extraAttributes.SetExtraAtt(totalWeight);
 

@@ -63,6 +63,8 @@ public class LoginSceneManager : MonoBehaviour
             player.Level = 1;
             player.exp = 0;
             player.profileName = name;
+            player.TowerAbsLevel = 1;
+            player.TowerCurrentLevel = 1;
             IPlayer.InsertNewPlayer(player);
             IPlayerStamina iPlayerStamina = new IPlayerStamina(1, duid, duid, 1, 1, duid);
             IPlayerStamina.SetData(iPlayerStamina);

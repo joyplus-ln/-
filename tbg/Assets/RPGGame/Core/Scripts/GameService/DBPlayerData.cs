@@ -69,19 +69,6 @@ public class DBPlayerData
         //onFinish(result);
     }
 
-    /// <summary>
-    /// 保存用户存档
-    /// </summary>
-    public void SavePlayerLocalInfo()
-    {
-        GameInstance.dbDataUtils.ExecuteNonQuery(@"UPDATE player SET prefs=@prefs WHERE id=@id",
-            new SqliteParameter("@prefs", JsonConvert.SerializeObject(PlayerSQLPrefs.localConfig)),
-            new SqliteParameter("@id", IPlayer.CurrentPlayer.guid));
-    }
-
-
-
-
     public bool DecreasePlayerStamina(IPlayer player, Stamina staminaTable, int decreaseAmount)
     {
         var stamina = GetStamina(player.guid, staminaTable.id);

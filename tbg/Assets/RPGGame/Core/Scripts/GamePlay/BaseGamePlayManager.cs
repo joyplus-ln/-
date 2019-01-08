@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public abstract class BaseGamePlayManager : MonoBehaviour
 {
-    public static string BattleSession { get; private set; }
+    //public static string BattleSession { get; private set; }
     public static BaseStage PlayingStage { get; protected set; }
     [Header("Combat Texts")]
     public Transform combatTextContainer;
@@ -34,12 +34,12 @@ public abstract class BaseGamePlayManager : MonoBehaviour
 
     public void SpawnCriticalText(int amount, BaseCharacterEntity character)
     {
-        SpawnCombatText(combatCriticalPrefab, amount, character,"暴击");
+        SpawnCombatText(combatCriticalPrefab, amount, character, "暴击");
     }
 
     public void SpawnBlockText(int amount, BaseCharacterEntity character)
     {
-        SpawnCombatText(combatBlockPrefab, amount, character,"格挡");
+        SpawnCombatText(combatBlockPrefab, amount, character, "格挡");
     }
 
     public void SpawnAddHealText(string custr, int amount, BaseCharacterEntity character)
@@ -55,7 +55,7 @@ public abstract class BaseGamePlayManager : MonoBehaviour
     //毒
     public void SpawnPoisonText(int amount, BaseCharacterEntity character)
     {
-        SpawnCombatText(combatPoisonPrefab, amount, character,"中毒");
+        SpawnCombatText(combatPoisonPrefab, amount, character, "中毒");
     }
 
     public void SpawnMissText(BaseCharacterEntity character)
@@ -96,14 +96,14 @@ public abstract class BaseGamePlayManager : MonoBehaviour
     protected virtual void WinGame()
     {
         var deadCharacters = CountDeadCharacters();
-        GameInstance.dbBattle.DoFinishStage(GetStageType(), BattleSession, DBBattle.BATTLE_RESULT_WIN, deadCharacters, (result) =>
-         {
-             isEnding = true;
-             Time.timeScale = 1;
-             RPGSceneManager.LoadScene(RPGSceneManager.ManagerScene);
-             RpguiWin.SetData(result);
-             RpguiWin.Show();
-         });
+        //GameInstance.dbBattle.DoFinishStage(GetStageType(), BattleSession, DBBattle.BATTLE_RESULT_WIN, deadCharacters, (result) =>
+        //{
+        isEnding = true;
+        Time.timeScale = 1;
+        RPGSceneManager.LoadScene(RPGSceneManager.ManagerScene);
+        // RpguiWin.SetData(result);
+        RpguiWin.Show();
+        //});
     }
 
     protected IEnumerator LoseGameRoutine()
@@ -117,12 +117,12 @@ public abstract class BaseGamePlayManager : MonoBehaviour
     public void Giveup(UnityAction onError)
     {
         var deadCharacters = CountDeadCharacters();
-        GameInstance.dbBattle.DoFinishStage(GetStageType(), BattleSession, DBBattle.BATTLE_RESULT_LOSE, deadCharacters, (result) =>
-         {
-             isEnding = true;
-             Time.timeScale = 1;
-             RPGSceneManager.LoadScene(RPGSceneManager.ManagerScene);
-         });
+        //GameInstance.dbBattle.DoFinishStage(GetStageType(), BattleSession, DBBattle.BATTLE_RESULT_LOSE, deadCharacters, (result) =>
+        //{
+        isEnding = true;
+        Time.timeScale = 1;
+        RPGSceneManager.LoadScene(RPGSceneManager.ManagerScene);
+        // });
     }
 
     public void Restart()
@@ -133,21 +133,21 @@ public abstract class BaseGamePlayManager : MonoBehaviour
     public static void StartStage(BaseStage data)
     {
         PlayingStage = data;
-        GameInstance.dbBattle.DoStartStage(data.Id, (result) =>
-        {
-            BattleSession = result.session;
-            RPGSceneManager.LoadScene(RPGSceneManager.ManagerScene);
-        });
+        //GameInstance.dbBattle.DoStartStage(data.Id, (result) =>
+        //{
+        //BattleSession = result.session;
+        RPGSceneManager.LoadScene(RPGSceneManager.BattleScene);
+        //});
     }
 
     public static void StartTowerStage(BaseStage data, int level)
     {
         PlayingStage = data;
-        GameInstance.dbBattle.DoStartTowerStage(data.Id + "_" + level, (result) =>
-        {
-            BattleSession = result.session;
-            RPGSceneManager.LoadScene(RPGSceneManager.ManagerScene);
-        });
+        //GameInstance.dbBattle.DoStartTowerStage(data.Id + "_" + level, (result) =>
+        //{
+        //BattleSession = result.session;
+        RPGSceneManager.LoadScene(RPGSceneManager.BattleScene);
+        //});
     }
 
     public virtual void OnRevive()

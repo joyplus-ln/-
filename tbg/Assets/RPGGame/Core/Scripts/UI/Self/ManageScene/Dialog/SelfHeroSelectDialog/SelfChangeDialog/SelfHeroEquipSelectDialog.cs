@@ -16,6 +16,7 @@ public class SelfHeroEquipSelectDialog : Dialog
     private string equipGuid;
     private string HeroGuid;
     private Const.EquipPosition equipType;
+    private Action callBack;
 
 
     // Use this for initialization
@@ -26,20 +27,21 @@ public class SelfHeroEquipSelectDialog : Dialog
 
     public override void Init()
     {
-        
+
     }
 
-    public void SetData(string equipGuid, string HeroGuid, Const.EquipPosition equipType)
+    public void SetData(string equipGuid, string HeroGuid, Const.EquipPosition equipType, Action callBack)
     {
         this.equipGuid = equipGuid;
         this.HeroGuid = HeroGuid;
         this.equipType = equipType;
+        this.callBack = callBack;
         RefreshUi();
     }
 
     void RefreshUi()
     {
-        if (equipGuid.Length > 0)
+        if (!string.IsNullOrEmpty(equipGuid))
         {
             equipOn.SetActive(false);
             equipOff.SetActive(true);
@@ -54,16 +56,26 @@ public class SelfHeroEquipSelectDialog : Dialog
         }
     }
 
+    public override void Close()
+    {
+        if (callBack != null)
+        {
+            callBack.Invoke();
+        }
+        base.Close();
+    }
+
     public void ClickChangeEquip()
     {
-        DialogData openDialogData = new DialogData();
-        openDialogData.dialog = DialogController.instance.selfHeroSelectChangeEquipDialog;
-        SelfHeroSelectChangeEquipData selfHeroSelectChangeEquipData = new SelfHeroSelectChangeEquipData();
-        selfHeroSelectChangeEquipData.heroGuid = equipGuid;
-        selfHeroSelectChangeEquipData.equipType = equipType;
-        openDialogData.obj = selfHeroSelectChangeEquipData;
-        selfHeroSelectChangeEquipData.callBack = CallBack;
-        DialogController.instance.ShowDialog(DialogController.instance.selfHeroSelectChangeEquipDialog, DialogController.DialogType.stack);
+        //DialogData openDialogData = new DialogData();
+        //openDialogData.dialog = DialogController.instance.selfHeroSelectChangeEquipDialog;
+        //SelfHeroSelectChangeEquipData selfHeroSelectChangeEquipData = new SelfHeroSelectChangeEquipData();
+        //selfHeroSelectChangeEquipData.heroGuid = equipGuid;
+        //selfHeroSelectChangeEquipData.equipType = equipType;
+        //openDialogData.obj = selfHeroSelectChangeEquipData;
+        //selfHeroSelectChangeEquipData.callBack = CallBack;
+        Dialog dialog = DialogController.instance.ShowDialog(DialogController.instance.selfHeroSelectChangeEquipDialog, DialogController.DialogType.stack);
+        ((SelfHeroSelectChangeEquipDialog)dialog).SetData(HeroGuid, equipType, CallBack);
 
     }
 

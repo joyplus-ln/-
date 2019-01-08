@@ -24,7 +24,6 @@ public class TowerGamePlayManager : BaseGamePlayManager
     [Header("UI")]
     public Transform uiCharacterStatsContainer;
     public RpguiCharacterStats RpguiCharacterStatsPrefab;
-    public RpguiCharacterActionManager RpguiCharacterActionManager;
     public CharacterEntity ActiveCharacter { get; private set; }
     public int CurrentWave { get; private set; }
     public TowerStage CastedStage { get { return PlayingStage as TowerStage; } }
@@ -46,7 +45,7 @@ public class TowerGamePlayManager : BaseGamePlayManager
         if (inputCamera == null)
             inputCamera = Camera.main;
         // Setup uis
-        RpguiCharacterActionManager.Hide();
+        //RpguiCharacterActionManager.Hide();
         // Setup player formation
         playerFormation.isPlayerFormation = true;
         playerFormation.foeFormation = foeFormation;
@@ -76,7 +75,7 @@ public class TowerGamePlayManager : BaseGamePlayManager
         {
             if (IsAutoPlay)
             {
-                RpguiCharacterActionManager.Hide();
+                //RpguiCharacterActionManager.Hide();
                 if (ActiveCharacter != null)
                     ActiveCharacter.RandomAction();
             }
@@ -199,8 +198,8 @@ public class TowerGamePlayManager : BaseGamePlayManager
             {
                 if (IsAutoPlay)
                     ActiveCharacter.RandomAction();
-                else
-                    RpguiCharacterActionManager.Show();
+                //else
+                    //RpguiCharacterActionManager.Show();
             }
             else
             {

@@ -47,6 +47,11 @@ public class SelfHeroEquipSHow : MonoBehaviour
         //dialogdata.equipType = this.equipType;
         //data.obj = dialogdata;
         Dialog data = DialogController.instance.ShowDialog(DialogController.instance.SelfHeroEquipSelectDialog, DialogController.DialogType.stack);
-        ((SelfHeroEquipSelectDialog)data).SetData(EquipGuid, HeroGuid, this.equipType);
+        ((SelfHeroEquipSelectDialog)data).SetData(EquipGuid, HeroGuid, this.equipType, CallBack);
+    }
+
+    public void CallBack()
+    {
+
     }
 }

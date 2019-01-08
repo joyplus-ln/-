@@ -8,19 +8,20 @@
 using System.Collections.Generic;
 using Framework.Reflection.SQLite3Helper;
 using Framework.Reflection.Sync;
+using UnityEngine;
 
 
 namespace SQLite3TableDataTmp
 {
-   
+
 
     public partial class IPlayerFormation
     {
-        public static Dictionary<string, IPlayerFormation> DataMap = new Dictionary<string, IPlayerFormation>();
+        public static Dictionary<int, IPlayerFormation> DataMap = new Dictionary<int, IPlayerFormation>();
 
         public static void Init()
         {
-            DataMap = DBManager.instance.LocalSQLite3Operate.SelectDictT_ST<IPlayerFormation>();
+            DataMap = DBManager.instance.LocalSQLite3Operate.SelectDictT<IPlayerFormation>();
         }
         public static void UpdataDataMap()
         {
@@ -28,6 +29,11 @@ namespace SQLite3TableDataTmp
             {
                 DBManager.instance.LocalSQLite3Operate.UpdateOrInsert(dataMapValue);
             }
+        }
+
+        public IPlayerHasCharacters GetHasCharacter()
+        {
+            return IPlayerHasCharacters.DataMap[itemId];
         }
     }
 }

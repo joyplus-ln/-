@@ -23,6 +23,10 @@ public class SelfHeroSelectDialog : Dialog
 
     private void OnEnable()
     {
+        if (!string.IsNullOrEmpty(heroGuid))
+        {
+            RefreshUI();
+        }
     }
 
 
@@ -33,7 +37,7 @@ public class SelfHeroSelectDialog : Dialog
 
     void ShowSkill()
     {
-        //skillList.SetData(PlayerItem.characterDataMap[shopItemData.heroGuid].CharacterData.GetCustomSkills());
+        skillList.SetData(new List<CustomSkill>(IPlayerHasCharacters.DataMap[heroGuid].Character.GetCustomSkills().Values));
     }
 
     public void SetData(string heroGuid)
@@ -42,16 +46,11 @@ public class SelfHeroSelectDialog : Dialog
         RefreshUI();
     }
 
+
+
     void RefreshUI()
     {
-        //shopItemData
-        AttributeShow.SetupInfo(IPlayerHasCharacters.DataMap[heroGuid].GetAttributes().GetCreateCalculationAttributes());
-        //List<PlayerItem> equipments = PlayerItem.equipDataMap.Values.ToList()
-        //    .FindAll(x => x.EquipItemGuid == shopItemData.heroGuid);
-        //List<PlayerItem> equipments_weapon = equipments.FindAll(x => x.EquipPosition == "weapon");
-        //if (equipments_weapon.Count > 0)
-        //{
-
+        AttributeShow.SetupInfo(IPlayerHasCharacters.DataMap[heroGuid].GetCalculationAttributesWithProp());
         Dictionary<string, IPlayerHasEquips> hasEquips = IPlayerHasEquips.GetHeroEquipses(heroGuid);
         if (hasEquips.ContainsKey("weapon"))
         {

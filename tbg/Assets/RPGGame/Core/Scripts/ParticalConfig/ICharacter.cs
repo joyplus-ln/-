@@ -7,6 +7,7 @@ namespace SQLite3TableDataTmp
     public partial class ICharacter
     {
         public static Dictionary<string, ICharacter> DataMap = new Dictionary<string, ICharacter>();
+        private Dictionary<string, CustomSkill> skill = null;
 
         public static void Init()
         {
@@ -60,9 +61,23 @@ namespace SQLite3TableDataTmp
 
 
 
-        public List<CustomSkill> GetBattleCustomSkills()
+
+
+        public Dictionary<string, CustomSkill> GetCustomSkills()
         {
-            return new List<CustomSkill>();
+            if (skill == null)
+            {
+                skill = new Dictionary<string, CustomSkill>();
+                string[] skillId = customSkill.Split(',');
+                for (int i = 0; i < skillId.Length; i++)
+                {
+                    if (!string.IsNullOrEmpty(skillId[i]))
+                    {
+                        skill.Add(skillId[i],SkillUtils.MakeCustomSkill(skillId[i]));
+                    }
+                }
+            }
+            return skill;
         }
 
     }

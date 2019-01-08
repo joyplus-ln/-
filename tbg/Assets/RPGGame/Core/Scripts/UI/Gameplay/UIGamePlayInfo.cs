@@ -108,7 +108,7 @@ public class UIGamePlayInfo : MonoBehaviour
     public void SetBuffs()
     {
         if (SelfEntity == null) return;
-        Dictionary<string, CustomBuff> Buffs_custom = SelfEntity.Buffs_custom;
+        Dictionary<string, CustomBuff> Buffs_custom = SelfEntity.Item.GetBuffs();
         int i = 0;
 
         foreach (var key in Buffs_custom.Keys)

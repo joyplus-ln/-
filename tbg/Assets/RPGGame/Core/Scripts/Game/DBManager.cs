@@ -43,8 +43,8 @@ public class DBManager
         IPlayerOtherItem.Init();
         IPlayerStamina.Init();
         IPlayerUnlockItem.Init();
-        IPlayerHasEquips.InsertNewEquips("2001");
-        IPlayerHasCharacters.InsertNewCharacter("1001");
+        //IPlayerHasEquips.InsertNewEquips("2001");
+        //IPlayerHasCharacters.InsertNewCharacter("1001");
     }
 
     void CheckTable()

@@ -11,22 +11,27 @@ public class BaseGamePlayFormation : MonoBehaviour
 
     public virtual void SetFormationCharacters()
     {
-        var formationName = IPlayer.CurrentPlayer.selectedFormation;
         ClearCharacters();
         for (var i = 0; i < containers.Length; ++i)
         {
-            PlayerFormation playerFormation = null;
-            if (PlayerFormation.TryGetData(formationName, i, out playerFormation))
+            foreach (int key in IPlayerFormation.DataMap.Keys)
             {
-                var characterGuid = playerFormation.characterGuid;
-                IPlayerHasCharacters item = null;
-                if (!string.IsNullOrEmpty(characterGuid) && IPlayerHasCharacters.DataMap.TryGetValue(characterGuid, out item))
-                    SetCharacter(i, item);
+                if (key >= 1 && key <= 5)
+                {
+                    if (!string.IsNullOrEmpty(IPlayerFormation.DataMap[key].itemId))
+                    {
+                        SetCharacter(i, new BattleItem(IPlayerHasCharacters.DataMap[IPlayerFormation.DataMap[key].itemId], Const.StageType.Normal));
+                    }
+                }
             }
+            //if (PlayerFormation.TryGetData(formationName, i, out playerFormation))
+            //{
+            //    SetCharacter(i, new BattleItem(IPlayerHasCharacters.DataMap[characterGuid], Const.StageType.Normal));
+            //}
         }
     }
 
-    public virtual void SetCharacters(IPlayerHasCharacters[] items)
+    public virtual void SetCharacters(BattleItem[] items)
     {
         ClearCharacters();
         for (var i = 0; i < containers.Length; ++i)
@@ -38,10 +43,10 @@ public class BaseGamePlayFormation : MonoBehaviour
         }
     }
 
-    public virtual BaseCharacterEntity SetCharacter(int position, IPlayerHasCharacters item)
+    public virtual BaseCharacterEntity SetCharacter(int position, BattleItem item)
     {
         //if (position < 0 || position >= containers.Length || item == null || item.CharacterData == null)
-            //return null;
+        //return null;
 
 
         var container = containers[position];

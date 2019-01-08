@@ -24,7 +24,7 @@ public class SkillListShow : MonoBehaviour
         if (entity != null)
         {
             textBuilder.Remove(0, textBuilder.Length);
-            for (int i = 0; i < entity.CustomSkills.Count; i++)
+            for (int i = 0; i < entity.Item.GetCustomSkills().Count; i++)
             {
                 textBuilder.Append("0cd");
             }

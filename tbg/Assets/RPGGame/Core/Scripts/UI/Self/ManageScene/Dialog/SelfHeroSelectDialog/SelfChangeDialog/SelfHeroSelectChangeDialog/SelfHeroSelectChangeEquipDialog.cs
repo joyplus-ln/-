@@ -17,13 +17,13 @@ public class SelfHeroSelectChangeEquipDialog : Dialog
 
     private string heroGuid;
 
-
-    private SelfHeroSelectChangeEquipData selfHeroSelectChangeEquipData;
-
     /// <summary>
     /// 当前选择的这件装备的guid
     /// </summary>
     private string selectedEquipGuid;
+
+    private Const.EquipPosition equipType;
+    private Action<string> callBack;
 
     // Use this for initialization
     void Start()
@@ -33,9 +33,16 @@ public class SelfHeroSelectChangeEquipDialog : Dialog
 
     public override void Init()
     {
-        heroGuid = selfHeroSelectChangeEquipData.heroGuid;
+    }
+
+    public void SetData(string heroGuid, Const.EquipPosition equipType, Action<string> callBack)
+    {
+        this.heroGuid = heroGuid;
+        this.equipType = equipType;
+        this.callBack = callBack;
         ShowItems();
     }
+
 
     void ShowItems()
     {
@@ -43,10 +50,10 @@ public class SelfHeroSelectChangeEquipDialog : Dialog
         foreach (var key in IPlayerHasEquips.DataMap.Keys)
         {
             //todo
-            if (IEquipment.DataMap[IPlayerHasEquips.DataMap[key].dataId].equippablePosition == selfHeroSelectChangeEquipData.equipType.ToString())
+            if (IEquipment.DataMap[IPlayerHasEquips.DataMap[key].dataId].equippablePosition == equipType.ToString())
             {
                 instItem = Instantiate(item);
-                instItem.GetComponent<SelfHeroSelectChangeItem>().SetInfo(key, heroGuid, selfHeroSelectChangeEquipData.equipType.ToString(), selectedImage, CallBack);
+                instItem.GetComponent<SelfHeroSelectChangeItem>().SetInfo(key, heroGuid, equipType.ToString(), selectedImage, CallBack);
                 instItem.transform.SetParent(content, false);
             }
         }
@@ -55,9 +62,9 @@ public class SelfHeroSelectChangeEquipDialog : Dialog
     public override void Close()
     {
         base.Close();
-        if (selfHeroSelectChangeEquipData.callBack != null)
+        if (callBack != null)
         {
-            selfHeroSelectChangeEquipData.callBack.Invoke(selectedEquipGuid);
+            callBack.Invoke(selectedEquipGuid);
         }
     }
 
@@ -75,15 +82,8 @@ public class SelfHeroSelectChangeEquipDialog : Dialog
     public void EquipThisItem()
     {
         IPlayerHasEquips.DataMap[selectedEquipGuid].equipItemId = heroGuid;
-        IPlayerHasEquips.DataMap[selectedEquipGuid].equipPosition = selfHeroSelectChangeEquipData.equipType.ToString();
+        IPlayerHasEquips.DataMap[selectedEquipGuid].equipPosition = equipType.ToString();
         IPlayerHasEquips.UpdataDataMap();
         Close();
     }
-}
-
-public class SelfHeroSelectChangeEquipData
-{
-    public string heroGuid;
-    public Const.EquipPosition equipType;
-    public Action<string> callBack;
 }

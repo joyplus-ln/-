@@ -23,24 +23,16 @@ public abstract class BaseCharacterEntity : MonoBehaviour
 
 
 
-    private IPlayerHasCharacters item;
-    public IPlayerHasCharacters Item
+    private BattleItem item;
+    public BattleItem Item
     {
         get { return item; }
         set
         {
             item = value;
-
-            //CustomSkills.AddRange(item.CharacterData.GetBattleCustomSkills());
-            for (int i = 0; i < CustomSkills.Count; i++)
-            {
-                CustomSkills[i].Init();
-            }
             Revive();
         }
     }
-    public readonly Dictionary<string, CustomBuff> Buffs_custom = new Dictionary<string, CustomBuff>();
-    public readonly List<CustomSkill> CustomSkills = new List<CustomSkill>();
     public BaseGamePlayFormation Formation { get; protected set; }
     public int Position { get; protected set; }
 
@@ -123,22 +115,22 @@ public abstract class BaseCharacterEntity : MonoBehaviour
         //    buff.BuffRemove();
         //    Buffs.Remove(key);
         //}
-        var customkeys = new List<string>(Buffs_custom.Keys);
+        var customkeys = new List<string>(Item.GetBuffs().Keys);
         for (var i = customkeys.Count - 1; i >= 0; --i)
         {
             var key = customkeys[i];
-            if (!Buffs_custom.ContainsKey(key))
+            if (!Item.GetBuffs().ContainsKey(key))
                 continue;
 
-            var buff_c = Buffs_custom[key];
+            var buff_c = Item.GetBuffs()[key];
             buff_c.BuffRemove();
-            Buffs_custom.Remove(key);
+            Item.GetBuffs().Remove(key);
         }
     }
 
     public CalculationAttributes GetTotalAttributes()
     {
-        var result = Item.GetAttributes().GetSubAttributes();
+        var result = Item.GetAllCalculationAttributes();
         //var equipmentBonus = Item.EquipmentBonus;
         //result += equipmentBonus;
 
@@ -148,16 +140,7 @@ public abstract class BaseCharacterEntity : MonoBehaviour
         //    result += buff.Attributes;
         //}
 
-        var Custom_buffs = new List<CustomBuff>(Buffs_custom.Values);
-        foreach (var buff in Custom_buffs)
-        {
-            result += buff.SelfAttributes;
-        }
 
-        foreach (var cskill in CustomSkills)
-        {
-            result += cskill.SelfAttributes;
-        }
 
         // If this is character item, applies rate attributes
         //result.hp += Mathf.CeilToInt(result.hpRate * result.hp);
@@ -222,13 +205,13 @@ public abstract class BaseCharacterEntity : MonoBehaviour
     public virtual void ApplyCustomBuff(CustomBuff buff)
     {
         buff.SetSelf(this as CharacterEntity);
-        if (Buffs_custom.ContainsKey(buff.guid))
+        if (Item.GetBuffs().ContainsKey(buff.guid))
         {
-            Buffs_custom[buff.guid] = buff;
+            Item.GetBuffs()[buff.guid] = buff;
             Debug.Log("有这个buff" + buff.guid);
             return;
         }
-        Buffs_custom.Add(buff.guid, buff);
+        Item.GetBuffs().Add(buff.guid, buff);
         buff.BattleStart();
     }
 }

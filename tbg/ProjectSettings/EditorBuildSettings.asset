@@ -17,3 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/RPGGame/Demo/Scenes/BattleScene.unity
     guid: 967cb20e45e726d48b41aa35e120c407
+  - enabled: 1
+    path: Assets/RPGGame/Demo/Scenes/TowerBattleScene.unity
+    guid: add1fc1354588d34f9e22991b6dc5f29
+  m_configObjects: {}

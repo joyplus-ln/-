@@ -84,13 +84,13 @@ public class RpguiCharacterStatsGeneric : RPGUIBase
         //}
 
         var i = 0;
-        var custom_buffKeys = character.Buffs_custom.Keys;
+        var custom_buffKeys = character.Item.GetBuffs().Keys;
         foreach (var buffKey in custom_buffKeys)
         {
             if (i >= RpguiBuffs.Length)
                 break;
             var ui = RpguiBuffs[i];
-            ui.custombuff = character.Buffs_custom[buffKey];
+            ui.custombuff = character.Item.GetBuffs()[buffKey];
             ui.Show();
             ++i;
         }

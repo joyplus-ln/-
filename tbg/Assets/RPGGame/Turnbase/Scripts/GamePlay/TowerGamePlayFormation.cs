@@ -17,7 +17,7 @@ public class TowerGamePlayFormation : BaseGamePlayFormation
             SetFormationCharacters();
     }
 
-    public override BaseCharacterEntity SetCharacter(int position, IPlayerHasCharacters item)
+    public override BaseCharacterEntity SetCharacter(int position, BattleItem item)
     {
         var character = base.SetCharacter(position, item) as CharacterEntity;
 

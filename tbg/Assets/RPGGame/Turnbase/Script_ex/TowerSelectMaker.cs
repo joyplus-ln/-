@@ -29,31 +29,31 @@ public class TowerSelectMaker : MonoBehaviour
 
     public void Cengjia()
     {
-        PlayerSQLPrefs.yzTowerCurrentLevel++;
+        IPlayer.CurrentPlayer.TowerCurrentLevel++;
         RefreshStates();
     }
 
     public void CengJian()
     {
-        PlayerSQLPrefs.yzTowerCurrentLevel--;
+        IPlayer.CurrentPlayer.TowerCurrentLevel--;
         RefreshStates();
     }
 
     void RefreshStates()
     {
-        if (PlayerSQLPrefs.yzTowerCurrentLevel > PlayerSQLPrefs.yzTowerABSLevel)
-            PlayerSQLPrefs.yzTowerCurrentLevel = PlayerSQLPrefs.yzTowerABSLevel;
+        if (IPlayer.CurrentPlayer.TowerCurrentLevel > IPlayer.CurrentPlayer.TowerAbsLevel)
+            IPlayer.CurrentPlayer.TowerCurrentLevel = IPlayer.CurrentPlayer.TowerAbsLevel;
 
-        jian.interactable = PlayerSQLPrefs.yzTowerCurrentLevel <= 1;
-        jia.interactable = PlayerSQLPrefs.yzTowerCurrentLevel >= PlayerSQLPrefs.yzTowerABSLevel;
+        jian.interactable = IPlayer.CurrentPlayer.TowerCurrentLevel <= 1;
+        jia.interactable = IPlayer.CurrentPlayer.TowerCurrentLevel >= IPlayer.CurrentPlayer.TowerAbsLevel;
 
-        MaxTowerLevelText.text = String.Format("Max {0}", PlayerSQLPrefs.yzTowerABSLevel);
-        CengText.text = String.Format("当前 {0}", PlayerSQLPrefs.yzTowerCurrentLevel);
+        MaxTowerLevelText.text = String.Format("Max {0}", IPlayer.CurrentPlayer.TowerAbsLevel);
+        CengText.text = String.Format("当前 {0}", IPlayer.CurrentPlayer.TowerCurrentLevel);
     }
 
     public void Go()
     {
         Debug.Log("开始塔冒险");
-        BaseGamePlayManager.StartTowerStage(GameInstance.GameDatabase.towerStages[0], PlayerSQLPrefs.yzTowerCurrentLevel);
+        BaseGamePlayManager.StartTowerStage(GameInstance.GameDatabase.towerStages[0], IPlayer.CurrentPlayer.TowerCurrentLevel);
     }
 }

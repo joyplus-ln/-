@@ -100,11 +100,11 @@ public class CustomBody
         List<BaseCharacterEntity> charList = GamePlayManager.Singleton.GetAllies(self);
         for (int i = 0; i < charList.Count; i++)
         {
-            for (int j = 0; j < charList[i].CustomSkills.Count; j++)
+            foreach (string key in charList[i].Item.GetCustomSkills().Keys)
             {
-                charList[i].CustomSkills[j].Trigger(CustomSkill.TriggerType.friendsReceiveDamage);
+                charList[i].Item.GetCustomSkills()[key].Trigger(CustomSkill.TriggerType.friendsReceiveDamage);
             }
-            foreach (var buff in charList[i].Buffs_custom.Values)
+            foreach (var buff in charList[i].Item.GetBuffs().Values)
             {
                 buff.Trigger(CustomSkill.TriggerType.friendsReceiveDamage);
             }
@@ -116,11 +116,12 @@ public class CustomBody
         List<BaseCharacterEntity> charList = GamePlayManager.Singleton.GetAllies(self);
         for (int i = 0; i < charList.Count; i++)
         {
-            for (int j = 0; j < charList[i].CustomSkills.Count; j++)
+            foreach (string key in charList[i].Item.GetCustomSkills().Keys)
             {
-                charList[i].CustomSkills[j].Trigger(CustomSkill.TriggerType.friendsAttack);
+                charList[i].Item.GetCustomSkills()[key].Trigger(CustomSkill.TriggerType.friendsAttack);
             }
-            foreach (var buff in charList[i].Buffs_custom.Values)
+
+            foreach (var buff in charList[i].Item.GetBuffs().Values)
             {
                 buff.Trigger(CustomSkill.TriggerType.friendsAttack);
             }
@@ -189,7 +190,7 @@ public class CustomBody
     public bool CanUseKill()
     {
         bool canuse = true;
-        foreach (var buff in self.Buffs_custom.Values)
+        foreach (var buff in self.Item.GetBuffs().Values)
         {
             if (!buff.CanDoAction())
                 canuse = false;

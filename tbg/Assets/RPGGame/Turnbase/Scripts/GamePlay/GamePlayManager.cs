@@ -26,7 +26,6 @@ public class GamePlayManager : BaseGamePlayManager
     [Header("UI")]
     public Transform uiCharacterStatsContainer;
     public RpguiCharacterStats RpguiCharacterStatsPrefab;
-    public RpguiCharacterActionManager RpguiCharacterActionManager;
     public UseSkillManager uiUseSkillManager;
     public CharacterEntity ActiveCharacter { get; private set; }
     public int CurrentWave { get; private set; }
@@ -51,7 +50,6 @@ public class GamePlayManager : BaseGamePlayManager
         if (inputCamera == null)
             inputCamera = Camera.main;
         // Setup uis
-        RpguiCharacterActionManager.Hide();
         uiUseSkillManager.Hide();
         // Setup player formation
         playerFormation.foeFormation = foeFormation;
@@ -88,7 +86,6 @@ public class GamePlayManager : BaseGamePlayManager
         {
             if (IsAutoPlay)
             {
-                RpguiCharacterActionManager.Hide();
                 uiUseSkillManager.Hide();
                 if (ActiveCharacter != null)
                     ActiveCharacter.RandomAction();
@@ -141,31 +138,31 @@ public class GamePlayManager : BaseGamePlayManager
 
     public void NextWave()
     {
-        //PlayerItem[] characters;
-        //StageFoe[] foes;
-        //var wave = GetWave(CurrentWave);
-        //if (!wave.useRandomFoes && wave.foes.Length > 0)
-        //    foes = wave.foes;
-        //else
-        //    foes = GetRandomFoes();
+        BattleItem[] characters;
+        StageFoe[] foes;
+        var wave = GetWave(CurrentWave);
+        if (!wave.useRandomFoes && wave.foes.Length > 0)
+            foes = wave.foes;
+        else
+            foes = GetRandomFoes();
 
-        //characters = new PlayerItem[foes.Length];
-        //for (var i = 0; i < characters.Length; ++i)
-        //{
-        //    var foe = foes[i];
-        //    if (foe != null && !string.IsNullOrEmpty(foe.characterId))
-        //    {
-        //        var character = PlayerItem.CreateActorItemWithLevel(ICharacter.DataMap[foe.characterId], foe.level, GetRandomFoesType(), false);
-        //        characters[i] = character;
-        //    }
-        //}
+        characters = new BattleItem[foes.Length];
+        for (var i = 0; i < characters.Length; ++i)
+        {
+            var foe = foes[i];
+            if (foe != null && !string.IsNullOrEmpty(foe.characterId))
+            {
+                var character = new BattleItem(ICharacter.DataMap[foe.characterId], foe.level, GetRandomFoesType());
+                characters[i] = character;
+            }
+        }
 
-        //if (characters.Length == 0)
-        //    Debug.LogError("Missing Foes Data");
+        if (characters.Length == 0)
+            Debug.LogError("Missing Foes Data");
 
-        //foeFormation.SetCharacters(characters);
-        //foeFormation.Revive();
-        //++CurrentWave;
+        foeFormation.SetCharacters(characters);
+        foeFormation.Revive();
+        ++CurrentWave;
     }
 
     IEnumerator MoveToNextWave()
@@ -227,7 +224,7 @@ public class GamePlayManager : BaseGamePlayManager
                     ActiveCharacter.RandomAction();
                 else
                 {
-                    RpguiCharacterActionManager.Show();
+                    //RpguiCharacterActionManager.Show();
                     uiUseSkillManager.SetData(ActiveCharacter);
                 }
             }
@@ -287,7 +284,7 @@ public class GamePlayManager : BaseGamePlayManager
                     ActiveCharacter.RandomAction();
                 else
                 {
-                    RpguiCharacterActionManager.Show();
+                    //RpguiCharacterActionManager.Show();
                     uiUseSkillManager.SetData(ActiveCharacter);
                 }
             }

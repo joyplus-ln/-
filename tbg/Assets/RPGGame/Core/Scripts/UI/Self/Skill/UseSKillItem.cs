@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class UseSKillItem : MonoBehaviour
 {
     private UseSkillManager manager;
-    private int skillIndex;
+    private string skillId;
 
     /// <summary>
     /// 技能类型描述
@@ -18,10 +18,10 @@ public class UseSKillItem : MonoBehaviour
     private CustomSkill skill;
 
     public Text PowerText;
-    public void SetData(UseSkillManager manager, int skillIndex, CustomSkill skill)
+    public void SetData(UseSkillManager manager, string skillId, CustomSkill skill)
     {
         this.manager = manager;
-        this.skillIndex = skillIndex;
+        this.skillId = skillId;
         this.skill = skill;
         SkillText.text = skill.skilltype == SkillType.passive ? "被动" : "主动";
         if (!skill.PowerEnough())
@@ -49,7 +49,7 @@ public class UseSKillItem : MonoBehaviour
 
     public void Selected()
     {
-        manager.ActiveCharacter.SetAction(skillIndex, Const.SkillType.Custom);
+        manager.ActiveCharacter.SetAction(skillId, Const.SkillType.Custom);
         manager.SelectedTransform.SetParent(transform, false);
     }
 
@@ -67,7 +67,7 @@ public class UseSKillItem : MonoBehaviour
     /// </summary>
     public void RestartAndSelected()
     {
-        manager.ActiveCharacter.SetAction(skillIndex, Const.SkillType.Custom);
+        manager.ActiveCharacter.SetAction(skillId, Const.SkillType.Custom);
         manager.SelectedTransform.SetParent(transform, false);
     }
 }

@@ -15,8 +15,6 @@ namespace SQLite3TableDataTmp
     {
         id,
         guid,
-        playerId,
-        position,
         itemId,
     }
 
@@ -29,12 +27,6 @@ namespace SQLite3TableDataTmp
         [Sync((int)IPlayerFormationEnum.guid)]
         public string guid { get; set; }  //des
 
-        [Sync((int)IPlayerFormationEnum.playerId)]
-        public string playerId { get; set; }  //des
-
-        [Sync((int)IPlayerFormationEnum.position)]
-        public string position { get; set; }  //des
-
         [Sync((int)IPlayerFormationEnum.itemId)]
         public string itemId { get; set; }  //des
 
@@ -42,12 +34,10 @@ namespace SQLite3TableDataTmp
         {
         }
 
-        public IPlayerFormation(int Inid, string Inguid, string InplayerId, string Inposition, string InitemId)
+        public IPlayerFormation(int Inid, string Inguid, string InitemId)
         {
             id = Inid;
             guid = Inguid;
-            playerId = InplayerId;
-            position = Inposition;
             itemId = InitemId;
         }
 
@@ -58,7 +48,7 @@ namespace SQLite3TableDataTmp
 
         public override string ToString()
         {
-            return "IPlayerFormation : id = " + id + ", guid = " + guid + ", playerId = " + playerId + ", position = " + position + ", itemId = " + itemId;
+            return "IPlayerFormation : id = " + id + ", guid = " + guid + ", itemId = " + itemId;
         }
 
     }

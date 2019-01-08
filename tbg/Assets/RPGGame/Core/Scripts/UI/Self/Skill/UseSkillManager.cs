@@ -18,18 +18,30 @@ public class UseSkillManager : MonoBehaviour
     public void SetData(CharacterEntity ActiveCharacter)
     {
         this.ActiveCharacter = ActiveCharacter;
-        for (int i = 0; i < useSKillItems.Count; i++)
+        int index = 0;
+        foreach (string key in ActiveCharacter.Item.GetCustomSkills().Keys)
         {
-            if (i < ActiveCharacter.CustomSkills.Count)
-            {
-                useSKillItems[i].SetData(this, i, ActiveCharacter.CustomSkills[i]);
-                useSKillItems[i].gameObject.SetActive(true);
-            }
-            else
-            {
-                useSKillItems[i].gameObject.SetActive(false);
-            }
+            useSKillItems[index].SetData(this, key, ActiveCharacter.Item.GetCustomSkills()[key]);
+            useSKillItems[index].gameObject.SetActive(true);
+            index++;
         }
+
+        for (int i = index; i < useSKillItems.Count; i++)
+        {
+            useSKillItems[i].gameObject.SetActive(false);
+        }
+        //for (int i = 0; i < useSKillItems.Count; i++)
+        //{
+        //    if (i < ActiveCharacter.Item.GetCustomSkills().Count)
+        //    {
+        //        useSKillItems[i].SetData(this, i, ActiveCharacter.CustomSkills[i]);
+        //        useSKillItems[i].gameObject.SetActive(true);
+        //    }
+        //    else
+        //    {
+        //        useSKillItems[i].gameObject.SetActive(false);
+        //    }
+        //}
         //刷新
         useSKillItems[0].RestartAndSelected();
     }

@@ -13,7 +13,7 @@ public class CharacterEntity : BaseCharacterEntity
     public const string ANIM_KEY_ACTION_STATE = "ActionState";
     public const string ANIM_KEY_DO_ACTION = "DoAction";
     public const string ANIM_KEY_HURT = "Hurt";
-    public const int ACTION_ATTACK = -100;
+    public const string ACTION_ATTACK = "Normal";
     [HideInInspector]
     public bool forcePlayMoving;
     [HideInInspector]
@@ -31,7 +31,7 @@ public class CharacterEntity : BaseCharacterEntity
     public TowerGamePlayManager TowerManager { get { return TowerGamePlayManager.Singleton; } }
     public bool IsActiveCharacter { get { return Manager.ActiveCharacter == this; } }
     public bool IsPlayerCharacter { get { return Formation != null && (CastedFormation != null && CastedFormation.isPlayerFormation || TowerCastedFormation != null && TowerCastedFormation.isPlayerFormation); } }
-    public int Action { get; set; }
+    public string Action { get; set; }
     public bool IsDoingAction { get; set; }
     public Const.SkillType skilltype;
     public bool IsMovingToTarget { get; private set; }
@@ -40,10 +40,12 @@ public class CharacterEntity : BaseCharacterEntity
     {
         get
         {
-            if (Action < 0) return null;
-            if (Action >= CustomSkills.Count)
-                return null;
-            return CustomSkills[Action];
+            if (Item.GetCustomSkills().ContainsKey(Action))
+            {
+                return Item.GetCustomSkills()[Action];
+            }
+
+            return null;
         }
     }
 
@@ -137,7 +139,7 @@ public class CharacterEntity : BaseCharacterEntity
         return customBody.Attack(target, pAtkRate, mAtkRate, hitCount, fixDamage);
     }
 
-    public AttackInfo ReceiveDamage(CharacterEntity attacker,int pAtk, int mAtk, int acc, float critChance, float critDamageRate,
+    public AttackInfo ReceiveDamage(CharacterEntity attacker, int pAtk, int mAtk, int acc, float critChance, float critDamageRate,
         int hitCount = 1, int fixDamage = 0)
     {
         return customBody.ReceiveDamage(attacker, pAtk, mAtk, acc, critChance, critDamageRate, hitCount, fixDamage);
@@ -152,14 +154,14 @@ public class CharacterEntity : BaseCharacterEntity
 
     public bool IsStun()
     {
-        var keys = new List<string>(Buffs_custom.Keys);
+        var keys = new List<string>(Item.GetBuffs().Keys);
         for (var i = keys.Count - 1; i >= 0; --i)
         {
             var key = keys[i];
-            if (!Buffs_custom.ContainsKey(key))
+            if (!Item.GetBuffs().ContainsKey(key))
                 continue;
 
-            var buff = Buffs_custom[key];
+            var buff = Item.GetBuffs()[key];
             if (buff.CanDoAction())
                 return true;
         }
@@ -167,29 +169,28 @@ public class CharacterEntity : BaseCharacterEntity
     }
     public void DecreaseBuffsTurn()
     {
-        var keys = new List<string>(Buffs_custom.Keys);
+        var keys = new List<string>(Item.GetBuffs().Keys);
         for (var i = keys.Count - 1; i >= 0; --i)
         {
             var key = keys[i];
-            if (!Buffs_custom.ContainsKey(key))
+            if (!Item.GetBuffs().ContainsKey(key))
                 continue;
 
-            var buff = Buffs_custom[key];
+            var buff = Item.GetBuffs()[key];
             buff.ReduceTurnsCount();
             if (buff.IsEnd())
             {
                 buff.BuffRemove();
-                Buffs_custom.Remove(key);
+                Item.GetBuffs().Remove(key);
             }
         }
     }
 
     public void DecreaseSkillsTurn()
     {
-        for (var i = CustomSkills.Count - 1; i >= 0; --i)
+        foreach (CustomSkill customSkill in Item.GetCustomSkills().Values)
         {
-            var skill = CustomSkills[i];
-            skill.IncreaseTurnsCount();
+            customSkill.IncreaseTurnsCount();
         }
     }
     #endregion
@@ -267,9 +268,9 @@ public class CharacterEntity : BaseCharacterEntity
         //CacheAnimator.SetBool(ANIM_KEY_DO_ACTION, false);
     }
 
-    public bool SetAction(int action, Const.SkillType skilltype)
+    public bool SetAction(string action, Const.SkillType skilltype)
     {
-        if (action == ACTION_ATTACK || (action >= 0))//action >= 0&& action < Skills.Count
+        if (action == ACTION_ATTACK || !string.IsNullOrEmpty(action))//action >= 0&& action < Skills.Count
         {
             Action = action;
             this.skilltype = skilltype;
@@ -331,11 +332,11 @@ public class CharacterEntity : BaseCharacterEntity
     public void ApplySkillAndBuff(CustomSkill.TriggerType type)
     {
 
-        foreach (var custombuff in Buffs_custom.Values)
+        foreach (var custombuff in Item.GetBuffs().Values)
         {
             custombuff.Trigger(type);
         }
-        foreach (var customskill in CustomSkills)
+        foreach (var customskill in Item.GetCustomSkills().Values)
         {
             customskill.Trigger(type);
         }

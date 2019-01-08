@@ -131,7 +131,7 @@ public class DialogController : MonoBehaviour
             if (dialog != null)
             {
                 currentDialog = dialog;
-                ShowDialog(dialog, DialogType.wait);
+                ShowDialog(dialog, DialogType.back);
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SQLite3TableDataTmp;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,13 +14,13 @@ public class FormationItemShow : MonoBehaviour
 
     }
 
-    public void Show(PlayerFormation item)
+    public void Show(int index,IPlayerFormation item)
     {
         if (item == null)
         {
             nameText.text = "";
             return;
         }
-        //nameText.text = item.Position + ":" + PlayerItem.characterDataMap[item.characterGuid].CharacterData.title;
+        nameText.text = index + ":" + item.GetHasCharacter().Character.title;
     }
 }

@@ -22,7 +22,7 @@ namespace SQLite3TableDataTmp
         }
 
         /// <summary>
-        /// 获取这个装备的基数属性,白板属性,,,成长信息
+        /// 获取这个装备的基数属性,白板属性,,,成长信息,展示用
         /// </summary>
         /// <returns></returns>
         public Attributes GetAttributes()
