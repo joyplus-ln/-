@@ -68,16 +68,33 @@ namespace SQLite3TableDataTmp
             if (skill == null)
             {
                 skill = new Dictionary<string, CustomSkill>();
+                skill.Add(Const.NormalAttack, SkillUtils.MakeCustomSkill("NormalAttack"));
                 string[] skillId = customSkill.Split(',');
                 for (int i = 0; i < skillId.Length; i++)
                 {
                     if (!string.IsNullOrEmpty(skillId[i]))
                     {
-                        skill.Add(skillId[i],SkillUtils.MakeCustomSkill(skillId[i]));
+                        skill.Add(skillId[i], SkillUtils.MakeCustomSkill(skillId[i]));
                     }
                 }
+
             }
             return skill;
+        }
+
+        public Dictionary<string, CustomSkill> GetCloneCustomSkills()
+        {
+            Dictionary<string, CustomSkill> cloneskill = new Dictionary<string, CustomSkill>();
+            cloneskill.Add(Const.NormalAttack, SkillUtils.MakeCustomSkill("NormalAttack"));
+            string[] skillId = customSkill.Split(',');
+            for (int i = 0; i < skillId.Length; i++)
+            {
+                if (!string.IsNullOrEmpty(skillId[i]))
+                {
+                    cloneskill.Add(skillId[i], SkillUtils.MakeCustomSkill(skillId[i]));
+                }
+            }
+            return cloneskill;
         }
 
     }

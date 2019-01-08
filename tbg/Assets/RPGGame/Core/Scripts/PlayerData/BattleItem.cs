@@ -25,14 +25,14 @@ public class BattleItem
     public BattleItem(ICharacter icharacter, int level, Const.StageType type)
     {
         this.icharacter = icharacter;
-        skills = icharacter.GetCustomSkills();
+        skills = icharacter.GetCloneCustomSkills();
         isEnemy = true;
     }
 
     public BattleItem(IPlayerHasCharacters ihascharacter, Const.StageType type)
     {
         this.ihascharacter = ihascharacter;
-        skills = ihascharacter.Character.GetCustomSkills();
+        skills = ihascharacter.Character.GetCloneCustomSkills();
         isEnemy = false;
     }
     public CalculationAttributes GetCalculationAttributes()

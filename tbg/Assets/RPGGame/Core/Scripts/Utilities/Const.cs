@@ -13,6 +13,8 @@ public class Const
     public const int LevelUpPrice = 4000;
     //LevelUpPrice
 
+    public const string NormalAttack = "NormalAttack";
+
     public enum StageType
     {
         Normal,

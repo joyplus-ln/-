@@ -18,7 +18,7 @@ public class CustomSkillActionLogic
         if (!self.Custombody.CanUseKill())
         {
             // cmstate 只能使用 normal attack
-            self.Action = CharacterEntity.ACTION_ATTACK;
+            self.Action = Const.NormalAttack;
         }
 
         if (self.SelectedCustomSkill == null || !self.SelectedCustomSkill.CanUse())
@@ -58,7 +58,7 @@ public class CustomSkillActionLogic
         // Random Action
         // Dictionary of actionId, weight
         Dictionary<string, int> actions = new Dictionary<string, int>();
-        actions.Add(CharacterEntity.ACTION_ATTACK, 5);
+        actions.Add(Const.NormalAttack, 5);
         foreach (string key in self.Item.GetCustomSkills().Keys)
         {
             var skill = self.Item.GetCustomSkills()[key];
@@ -68,7 +68,7 @@ public class CustomSkillActionLogic
         }
         self.Action = WeightedRandomizer.From(actions).TakeOne();
         // Random Target
-        if (self.Action == CharacterEntity.ACTION_ATTACK)
+        if (self.Action == Const.NormalAttack)
         {
             var foes = self.Manager.GetFoes(self);
             Random.InitState(System.DateTime.Now.Millisecond);
@@ -103,9 +103,9 @@ public class CustomSkillActionLogic
         if (self.IsDoingAction)
             return;
 
-        if (self.Action == CharacterEntity.ACTION_ATTACK)
-            self.StartCoroutine(DoAttackActionRoutine());
-        else
+        //if (self.Action == CharacterEntity.ACTION_ATTACK)
+        //    self.StartCoroutine(DoAttackActionRoutine());
+        //else
         {
             self.SelectedCustomSkill.OnUseSkill();
             self.StartCoroutine(DoSkillActionRoutine());
@@ -128,7 +128,7 @@ public class CustomSkillActionLogic
         }
         if (!canUseSkill)
         {
-            self.Action = CharacterEntity.ACTION_ATTACK;
+            self.Action = Const.NormalAttack;
         }
         if (mustTarget != null)
         {

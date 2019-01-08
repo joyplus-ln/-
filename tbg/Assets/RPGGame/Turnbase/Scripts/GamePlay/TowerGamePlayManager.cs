@@ -158,7 +158,13 @@ public class TowerGamePlayManager : BaseGamePlayManager
     public void NewTurn()
     {
         if (ActiveCharacter != null)
+        {
             ActiveCharacter.currentTimeCount = 0;
+        }
+        else
+        {
+            Debug.LogError("ActiveCharacter null");
+        }
 
         CharacterEntity activatingCharacter = null;
         var maxTime = int.MinValue;
@@ -199,7 +205,7 @@ public class TowerGamePlayManager : BaseGamePlayManager
                 if (IsAutoPlay)
                     ActiveCharacter.RandomAction();
                 //else
-                    //RpguiCharacterActionManager.Show();
+                //RpguiCharacterActionManager.Show();
             }
             else
             {
@@ -222,7 +228,7 @@ public class TowerGamePlayManager : BaseGamePlayManager
         var foeTeamFormation = !character.IsPlayerCharacter ? playerFormation : foeFormation;
         allyTeamFormation.SetCharactersSelectable(false);
         foeTeamFormation.SetCharactersSelectable(false);
-        if (character.Action == CharacterEntity.ACTION_ATTACK)
+        if (character.Action == Const.NormalAttack)
             foeTeamFormation.SetCharactersSelectable(true);
         else
         {

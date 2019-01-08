@@ -14,6 +14,8 @@ public class UseSKillItem : MonoBehaviour
     /// </summary>
     public Text SkillText;
 
+    public Text SkillName;
+
     public Text SkillDesText;
     private CustomSkill skill;
 
@@ -24,6 +26,7 @@ public class UseSKillItem : MonoBehaviour
         this.skillId = skillId;
         this.skill = skill;
         SkillText.text = skill.skilltype == SkillType.passive ? "被动" : "主动";
+        SkillName.text = skill.skillName;
         if (!skill.PowerEnough())
         {
             PowerText.text = "能量不足";

@@ -8,21 +8,10 @@ using UnityEngine;
 //[RequireComponent(typeof(TargetingRigidbody))]
 public class CharacterEntity : BaseCharacterEntity
 {
-    public const string ANIM_KEY_IS_DEAD = "IsDead";
-    public const string ANIM_KEY_SPEED = "Speed";
-    public const string ANIM_KEY_ACTION_STATE = "ActionState";
-    public const string ANIM_KEY_DO_ACTION = "DoAction";
-    public const string ANIM_KEY_HURT = "Hurt";
-    public const string ACTION_ATTACK = "Normal";
-    [HideInInspector]
     public bool forcePlayMoving;
-    [HideInInspector]
     public bool forceHideCharacterStats;
-    [HideInInspector]
     public int currentTimeCount;
-    [HideInInspector]
     public bool selectable;
-    [HideInInspector]
     public RpguiCharacterStats RpguiCharacterStats;
 
     public GamePlayFormation CastedFormation { get { return Formation as GamePlayFormation; } }
@@ -270,7 +259,7 @@ public class CharacterEntity : BaseCharacterEntity
 
     public bool SetAction(string action, Const.SkillType skilltype)
     {
-        if (action == ACTION_ATTACK || !string.IsNullOrEmpty(action))//action >= 0&& action < Skills.Count
+        if (!string.IsNullOrEmpty(action))//action >= 0&& action < Skills.Count
         {
             Action = action;
             this.skilltype = skilltype;
@@ -291,7 +280,7 @@ public class CharacterEntity : BaseCharacterEntity
 
     public void ResetStates()
     {
-        Action = ACTION_ATTACK;
+        Action = Const.NormalAttack;
         ActionTarget = null;
         IsDoingAction = false;
     }
@@ -361,25 +350,25 @@ public class CharacterEntity : BaseCharacterEntity
     {
         if (target == null || target.Hp <= 0)
             return false;
-        if (Action == CharacterEntity.ACTION_ATTACK)
-        {
-            // Cannot attack self or same team character
-            if (target == this || IsSameTeamWith(target))
-                return false;
-            ActionTarget = target;
-            DoAttackAction();
-            return true;
-        }
+        //if (Action == Const.NormalAttack)
+        //{
+        //    // Cannot attack self or same team character
+        //    if (target == this || IsSameTeamWith(target))
+        //        return false;
+        //    ActionTarget = target;
+        //    DoAttackAction();
+        //    return true;
+        //}
         return customSkillActionLogic.DoAction(target);
 
     }
 
-    void DoAttackAction()
-    {
-        if (IsDoingAction)
-            return;
-        StartCoroutine(DoAttackActionRoutine());
-    }
+    //void DoAttackAction()
+    //{
+    //    if (IsDoingAction)
+    //        return;
+    //    StartCoroutine(DoAttackActionRoutine());
+    //}
     public IEnumerator DoAttackActionRoutine()
     {
         IsDoingAction = true;

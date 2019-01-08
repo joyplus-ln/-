@@ -35,8 +35,13 @@ public class TieBiTongQiangBuff : CustomBuff
     {
         buffText = "C";
         turns = 2;
-        MustCharacterEntity = selfOnly.ActionTarget;
         guid = "TieBiTongQiangBuff";
+    }
+
+    public override void SetSelf(CharacterEntity selfOnly)
+    {
+        base.SetSelf(selfOnly);
+        MustCharacterEntity = selfOnly.ActionTarget;
     }
 
     public override bool CanUseSkill()
@@ -71,8 +76,13 @@ public class MuBiaoJiZhongBuff : CustomBuff
     {
         buffText = "C";
         turns = 2;
-        MustCharacterEntity = selfOnly.ActionTarget;
         guid = "MuBiaoJiZhongBuff";
+    }
+
+    public override void SetSelf(CharacterEntity selfOnly)
+    {
+        base.SetSelf(selfOnly);
+        MustCharacterEntity = selfOnly.ActionTarget;
     }
 
     public override bool CanUseSkill()

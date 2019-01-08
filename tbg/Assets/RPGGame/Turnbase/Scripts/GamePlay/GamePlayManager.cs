@@ -309,7 +309,7 @@ public class GamePlayManager : BaseGamePlayManager
         var foeTeamFormation = !character.IsPlayerCharacter ? playerFormation : foeFormation;
         allyTeamFormation.SetCharactersSelectable(false);
         foeTeamFormation.SetCharactersSelectable(false);
-        if (character.Action == CharacterEntity.ACTION_ATTACK)
+        if (character.Action == Const.NormalAttack)
             foeTeamFormation.SetCharactersSelectable(true);
         else
         {
