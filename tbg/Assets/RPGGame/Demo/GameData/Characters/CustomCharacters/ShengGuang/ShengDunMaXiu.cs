@@ -11,7 +11,7 @@ public class TieBiTongQiang : CustomSkill
 {
     public TieBiTongQiang()
     {
-        skillName = "";
+        skillName = "铁壁铜墙";
         spendPower = 18;
         des = "";
     }

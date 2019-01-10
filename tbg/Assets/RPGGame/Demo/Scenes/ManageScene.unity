@@ -1010,7 +1010,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 22
+    m_FontSize: 40
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
@@ -2667,11 +2667,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 1364240749047956, guid: fe5eee33f7d7be34a8256fd66ff9e512, type: 3}
   content: {fileID: 271892445}
-  currentSelected:
-    amount: 0
-    exp: 0
-    equipPosition: 
-    Itemtype: 0
   formationManager: {fileID: 1289221227}
 --- !u!1001 &278729637
 PrefabInstance:
@@ -3163,7 +3158,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 22
+    m_FontSize: 40
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
@@ -13437,7 +13432,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 114687024512132420, guid: a0e4879f5fefb9d409c3bdba514d6109, type: 3}
     - {fileID: 114088624959564624, guid: a0e4879f5fefb9d409c3bdba514d6109, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a0e4879f5fefb9d409c3bdba514d6109, type: 3}
 --- !u!1 &1039729674
@@ -18565,7 +18559,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 22
+    m_FontSize: 40
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
@@ -19935,7 +19929,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 22
+    m_FontSize: 40
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2
@@ -23379,7 +23373,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 22
+    m_FontSize: 40
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 2

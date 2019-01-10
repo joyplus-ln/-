@@ -27,7 +27,14 @@ public class UILevel : MonoBehaviour, ILevel
     // Options
     public bool useFormatForInfo;
 
-    void Update()
+    private void Start()
+    {
+        init();
+    }
+
+
+
+    void init()
     {
         var rate = (float)CollectExp / (float)NextExp;
         var isReachMaxLevel = false;
