@@ -14,7 +14,6 @@ public class CharacterListUI : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        
     }
 
     private void OnEnable()
