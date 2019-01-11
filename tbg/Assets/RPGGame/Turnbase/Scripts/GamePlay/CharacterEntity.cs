@@ -15,11 +15,9 @@ public class CharacterEntity : BaseCharacterEntity
     public RpguiCharacterStats RpguiCharacterStats;
 
     public GamePlayFormation CastedFormation { get { return Formation as GamePlayFormation; } }
-    public TowerGamePlayFormation TowerCastedFormation { get { return Formation as TowerGamePlayFormation; } }
     public GamePlayManager Manager { get { return GamePlayManager.Singleton; } }
-    public TowerGamePlayManager TowerManager { get { return TowerGamePlayManager.Singleton; } }
     public bool IsActiveCharacter { get { return Manager.ActiveCharacter == this; } }
-    public bool IsPlayerCharacter { get { return Formation != null && (CastedFormation != null && CastedFormation.isPlayerFormation || TowerCastedFormation != null && TowerCastedFormation.isPlayerFormation); } }
+    public bool IsPlayerCharacter { get { return Formation != null && (CastedFormation != null && CastedFormation.isPlayerFormation); } }
     public string Action { get; set; }
     public bool IsDoingAction { get; set; }
     public Const.SkillType skilltype;
@@ -240,15 +238,6 @@ public class CharacterEntity : BaseCharacterEntity
     {
         targetCharacter = character;
         return MoveTo(character.TempTransform.position, speed);
-    }
-
-    public void TurnToEnemyFormation()
-    {
-        Quaternion headingRotation;
-        if (CastedFormation != null && CastedFormation.TryGetHeadingToFoeRotation(out headingRotation))
-            TempTransform.rotation = headingRotation;
-        if (TowerCastedFormation != null && TowerCastedFormation.TryGetHeadingToFoeRotation(out headingRotation))
-            TempTransform.rotation = headingRotation;
     }
 
     public void ClearActionState()

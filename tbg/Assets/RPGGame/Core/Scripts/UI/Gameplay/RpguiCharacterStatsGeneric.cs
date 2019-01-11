@@ -62,8 +62,8 @@ public class RpguiCharacterStatsGeneric : RPGUIBase
         if (textHp != null)
             textHp.text = character.Hp + "/" + character.MaxHp;
 
-        //if (nameText != null)
-            //nameText.text = character.Item.CharacterData.title;
+        if (nameText != null)
+            nameText.text = character.Item.GetCharacter().title;
 
 
         if (imageHpGage != null)

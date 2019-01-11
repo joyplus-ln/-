@@ -12,6 +12,20 @@ public class BattleItem
     private Dictionary<string, CustomSkill> skills = new Dictionary<string, CustomSkill>();
     private Dictionary<string, CustomBuff> buffs = new Dictionary<string, CustomBuff>();
 
+    public IPlayerHasCharacters GetHasCharacters()
+    {
+        return ihascharacter;
+    }
+
+    public ICharacter GetCharacter()
+    {
+        if (isEnemy)
+        {
+            return icharacter;
+        }
+        return ICharacter.DataMap[ihascharacter.dataId];
+    }
+
     public Dictionary<string, CustomSkill> GetCustomSkills()
     {
         return skills;

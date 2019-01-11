@@ -16,14 +16,72 @@ public class GamePlayFormation : BaseGamePlayFormation
 
     private void Start()
     {
-        Debug.Log(gameObject.name);
         if (isPlayerFormation)
-            SetFormationCharacters();
+            SetOurFormationCharacters();
     }
 
-    public override BaseCharacterEntity SetCharacter(int position, BattleItem item)
+    /// <summary>
+    /// 设置自己的队伍
+    /// </summary>
+    public void SetOurFormationCharacters()
     {
-        var character = base.SetCharacter(position, item) as CharacterEntity;
+        ClearCharacters();
+        for (var i = 0; i < containers.Length; ++i)
+        {
+            if (IPlayerFormation.DataMap.ContainsKey(i + 1))
+            {
+                if (!string.IsNullOrEmpty(IPlayerFormation.DataMap[i + 1].itemId))
+                {
+                    SetCharacter(i, new BattleItem(IPlayerHasCharacters.DataMap[IPlayerFormation.DataMap[i + 1].itemId], Const.StageType.Normal));
+                }
+            }
+            //foreach (int key in IPlayerFormation.DataMap.Keys)
+            //{
+            //    if (key >= 1 && key <= 5)
+            //    {
+            //        if (!string.IsNullOrEmpty(IPlayerFormation.DataMap[key].itemId))
+            //        {
+            //            SetCharacter(i, new BattleItem(IPlayerHasCharacters.DataMap[IPlayerFormation.DataMap[key].itemId], Const.StageType.Normal));
+            //        }
+            //    }
+            //}
+        }
+    }
+
+    public void SetCharacters(BattleItem[] items)
+    {
+        ClearCharacters();
+        for (var i = 0; i < containers.Length; ++i)
+        {
+            if (items.Length <= i)
+                break;
+            var item = items[i];
+            SetCharacter(i, item);
+        }
+    }
+
+    public BaseCharacterEntity MakeCharacter(int position, BattleItem item)
+    {
+        //if (position < 0 || position >= containers.Length || item == null || item.CharacterData == null)
+        //return null;
+
+
+        var container = containers[position];
+        container.RemoveAllChildren();
+
+        var character = Instantiate(GameInstance.Singleton.model);
+        character.SetFormation(this, position);
+        character.Item = item;
+        Characters[position] = character;
+        character.transform.rotation = Quaternion.Euler(0, 0, 0);
+        character.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        (character as CharacterEntity).customSkillActionLogic.InitBattleCustomSkill();
+        return character;
+    }
+
+    public BaseCharacterEntity SetCharacter(int position, BattleItem item)
+    {
+        var character = MakeCharacter(position, item) as CharacterEntity;
 
         if (character == null)
             return null;
