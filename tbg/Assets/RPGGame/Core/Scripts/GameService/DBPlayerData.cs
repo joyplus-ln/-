@@ -215,34 +215,6 @@ public class DBPlayerData
         //}
     }
 
-    /// <summary>
-    /// 增加角色
-    /// </summary>
-    public void InsertCharacter(string itemid)
-    {
-        //{
-        //    if (!ICharacter.DataMap.ContainsKey(itemid)) return;
-
-        //    {
-        //        PlayerItem currentItem = new PlayerItem(PlayerItem.ItemType.character);
-        //        currentItem.ItemID = itemid;//id,@id,
-        //        currentItem.GUID = System.Guid.NewGuid().ToString();
-        //        GameInstance.dbDataUtils.ExecuteNonQuery(@"INSERT INTO playerHasCharacters (itemid,playerId, Guid, amount, exp) VALUES ( @itemid,@playerId, @Guid, @amount, @exp)",
-        //            new SqliteParameter("@itemid", currentItem.ItemID),
-        //            new SqliteParameter("@playerId", IPlayer.CurrentPlayer.guid),
-        //            new SqliteParameter("@Guid", currentItem.GUID),
-        //            new SqliteParameter("@amount", currentItem.Amount),
-        //            new SqliteParameter("@exp", currentItem.Exp)
-        //            );
-        //        var result = new ItemResult();
-        //        result.createItems = new List<PlayerItem>();
-        //        result.createItems.Add(currentItem);
-        //        //PlayerItem.SetDataRange(result.createItems);
-        //        //HelperUnlockItem(player.characterGuid, startItem.guid);
-
-        //    }
-        //}
-    }
 
     /// <summary>
     /// 插入初始otheritem

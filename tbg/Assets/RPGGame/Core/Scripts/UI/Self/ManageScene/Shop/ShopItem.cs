@@ -24,16 +24,7 @@ public class ShopItem : MonoBehaviour
 
     public void Click()
     {
-        DialogData data = new DialogData();
-        data.dialog = DialogController.instance.ShopHeroDialog;
-        ShopItemData heroData = new ShopItemData();
-        heroData.heroid = heruid;
-        data.obj = heroData;
-        DialogController.instance.ShowDialog(DialogController.instance.ShopHeroDialog, DialogController.DialogType.stack);
+        Dialog dialog = DialogController.instance.ShowDialog(DialogController.instance.ShopHeroDialog, DialogController.DialogType.stack);
+        ((ShopHeroDialog)dialog).SetData(heruid);
     }
-}
-
-public class ShopItemData
-{
-    public string heroid;
 }

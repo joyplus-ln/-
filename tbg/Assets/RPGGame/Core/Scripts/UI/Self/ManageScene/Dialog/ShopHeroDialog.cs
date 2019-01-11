@@ -7,21 +7,29 @@ public class ShopHeroDialog : Dialog
 {
 
     public UIAttributeShow AttributeShow;
-    private ShopItemData shopItemData;
+
+    private string heroid;
     // Use this for initialization
     void Start()
     {
 
     }
 
+    public void SetData(string heroId)
+    {
+        this.heroid = heroId;
+        AttributeShow.SetupInfo(ICharacter.DataMap[heroid].GetAttributes().GetSubAttributes());
+    }
+
     public override void Init()
     {
-        //AttributeShow.SetupInfo(ICharacter.DataMap[shopItemData.heroid].GetTotalAttributes());
+
     }
 
     public void BuyItem()
     {
-        GameInstance.dbPlayerData.InsertCharacter(shopItemData.heroid);
+        IPlayerHasCharacters.InsertNewCharacter(heroid);
+        Close();
     }
 
 
