@@ -7,13 +7,13 @@ using UnityEngine;
 
     public class AssetBundleBuildPanel : EditorWindow
     {
-        [MenuItem("ABSystem/Builder Panel")]
+        [MenuItem("FastFramework/AssetBundle/Builder Panel")]
         static void Open()
         {
             GetWindow<AssetBundleBuildPanel>("ABSystem", true);
         }
 
-        [MenuItem("ABSystem/Builde AssetBundles")]
+        [MenuItem("FastFramework/AssetBundle/Builde AssetBundles")]
         static void BuildAssetBundles()
         {
             AssetBundleBuildConfig config = LoadAssetAtPath<AssetBundleBuildConfig>(savePath);
